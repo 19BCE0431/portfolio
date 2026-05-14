@@ -1,0 +1,8 @@
+Resume placeholder
+
+Add your resume PDF at:
+  public/resume.pdf
+
+It will be available at:
+  /resume.pdf
+
