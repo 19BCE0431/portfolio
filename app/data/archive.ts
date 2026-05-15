@@ -1,5 +1,6 @@
 export type ArchiveFilter =
   | "All"
+  | "AI-Assisted"
   | "Applied AI"
   | "Automation"
   | "Business Intelligence"
@@ -8,6 +9,7 @@ export type ArchiveFilter =
   | "MBA";
 
 export type ArchiveCategory =
+  | "AI-Assisted Product Building"
   | "Applied AI & Data Science"
   | "Automation & Operations"
   | "Market / Business Intelligence"
@@ -29,10 +31,15 @@ export type ArchiveProject = {
   impact: string;
   learning: string;
   futureDirection: string;
+  sections?: {
+    title: string;
+    body: string[];
+  }[];
 };
 
 export const archiveFilters: ArchiveFilter[] = [
   "All",
+  "AI-Assisted",
   "Applied AI",
   "Automation",
   "Business Intelligence",
@@ -42,6 +49,89 @@ export const archiveFilters: ArchiveFilter[] = [
 ];
 
 export const archiveProjects: ArchiveProject[] = [
+  {
+    slug: "living-ai-portfolio-system",
+    title: "Living AI Portfolio System",
+    category: "AI-Assisted Product Building",
+    filter: "AI-Assisted",
+    status: "Building",
+    shortDescription:
+      "A self-directed experiment in building a living professional system - combining portfolio design, content strategy, AI-assisted development, project archiving, and a future weekly insight engine.",
+    context:
+      "Designed as a living portfolio that can evolve with my MBA journey, applied work, writing, and professional direction.",
+    problem:
+      "Traditional portfolios often become static resume pages. I wanted something that could keep showing how I think, what I am learning, and how my direction is changing.",
+    contribution:
+      "Directed the product vision, content strategy, positioning, aesthetic direction, archive structure, journal foundation, and automation roadmap while using AI tools to accelerate implementation and iteration.",
+    tools: [
+      "Product direction",
+      "Content strategy",
+      "Next.js",
+      "GitHub Actions",
+      "AI-assisted development",
+    ],
+    impact:
+      "Created a maintainable portfolio system with project archiving, journal publishing, weekly insight drafts, LinkedIn draft structure, and approval-first automation.",
+    learning:
+      "AI is most useful when the human direction is clear. Taste, judgment, review, and positioning still decide whether the output feels credible.",
+    futureDirection:
+      "Evolve the system into weekly AI, product, business, and market insight posts with source-backed writing, LinkedIn adaptations, visual prompts, and human-reviewed publishing.",
+    sections: [
+      {
+        title: "Opening summary",
+        body: [
+          "This portfolio is not designed as a static resume site. It is a living professional system that can grow with my MBA journey, project work, writing, and interests across product, marketing, strategy, Data Science, Applied AI, and business decision-making.",
+        ],
+      },
+      {
+        title: "Why I built it",
+        body: [
+          "I wanted a portfolio that could reflect more than a list of roles. It needed to show how I think, what I am building, what I am learning, and how my direction is evolving.",
+          "Most portfolios become outdated because they are treated as finished pages. I wanted mine to become a system: a place where project evidence, MBA reflections, market notes, and future insight writing can keep accumulating in a disciplined way.",
+        ],
+      },
+      {
+        title: "My role",
+        body: [
+          "I led the product direction, content strategy, positioning, design taste, archive structure, iteration planning, automation roadmap, and review process.",
+          "AI tools helped accelerate implementation, exploration, drafting, and refinement. The direction, trade-offs, content choices, and final judgment were human-led.",
+        ],
+      },
+      {
+        title: "What the system includes",
+        body: [
+          "The system brings together a premium personal portfolio, an archive of applied work, a journal foundation, a weekly insight generation pipeline, LinkedIn draft structure, future WhatsApp notification flow, GitHub/Vercel deployment workflow, and human-review-first publishing.",
+        ],
+      },
+      {
+        title: "Product thinking behind it",
+        body: [
+          "The product logic is clarity over clutter, evidence over claims, scalable content structure, fast iteration, safe automation, and professional credibility.",
+          "The system is built so new MBA projects, product notes, market observations, and Applied AI work can be added without rethinking the whole site each time.",
+        ],
+      },
+      {
+        title: "AI and automation angle",
+        body: [
+          "This is an experiment in AI-assisted execution. AI can compress the time between an idea and a working implementation, but quality still depends on taste, review, positioning, and judgment.",
+          "The automation roadmap is intentionally approval-first. Drafts can be generated, but publishing decisions remain human.",
+        ],
+      },
+      {
+        title: "What I learned",
+        body: [
+          "AI is powerful when the user has clear direction. Prompting alone is not enough; product judgment matters.",
+          "Content still needs human taste. Automation needs safety, review, and a clear reason to exist. A portfolio can become a system, not just a page.",
+        ],
+      },
+      {
+        title: "Future direction",
+        body: [
+          "The next version will support weekly AI, product, business, and market insight articles, shorter LinkedIn adaptations, AI-generated visual prompts where appropriate, source-backed writing, and gradual additions from MBA, marketing, strategy, and product work.",
+        ],
+      },
+    ],
+  },
   {
     slug: "applied-image-search",
     title: "Visual Product Discovery",
@@ -81,7 +171,7 @@ export const archiveProjects: ArchiveProject[] = [
     impact:
       "Created a faster signal layer for operational response and diagnosis.",
     learning:
-      "Data Science work matters most when it connects signals to urgency and clear follow-up decisions.",
+      "Decision support matters most when it connects signals to urgency and clear follow-up decisions.",
     futureDirection:
       "Extend the case with alert examples, diagnosis workflows, and how teams can prioritize causes.",
   },
@@ -338,9 +428,9 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "Retail",
     status: "Learning",
     shortDescription:
-      "A small learning note on customer education, trust, category understanding, and local retail behavior.",
+      "A subtle learning note on customer education, trust, category understanding, and local retail behavior.",
     context:
-      "Ongoing observation of local saree retail and the everyday details behind customer choice.",
+      "Ongoing observation of everyday customer choice through a family retail context.",
     problem:
       "Retail growth is not only about visibility; it depends on trust, education, category understanding, aspiration, and price perception.",
     contribution:
@@ -351,7 +441,7 @@ export const archiveProjects: ArchiveProject[] = [
     learning:
       "Retail taught me how trust, aspiration, pricing, and education influence customer decisions.",
     futureDirection:
-      "Develop into concise notes on saree retail, customer education, and purchase behavior.",
+      "Develop into concise notes on retail trust, customer education, and purchase behavior.",
   },
   {
     slug: "mba-case-notes",
@@ -366,7 +456,7 @@ export const archiveProjects: ArchiveProject[] = [
     problem:
       "The portfolio needs a place for business-school work that is not yet a polished public case study.",
     contribution:
-      "Creating a structure for future product teardowns, marketing notes, strategy cases, consumer-behavior observations, and market analysis.",
+      "Creating a structure for future product notes, marketing work, strategy cases, consumer-behavior observations, and market analysis.",
     tools: ["Product thinking", "Marketing", "Strategy", "Consumer behavior"],
     impact:
       "Future-ready structure for adding stronger MBA work as it develops.",
@@ -378,10 +468,10 @@ export const archiveProjects: ArchiveProject[] = [
 ];
 
 export const homepageProjectSlugs = [
+  "living-ai-portfolio-system",
   "applied-image-search",
   "document-intelligence-system",
   "competitor-price-intelligence",
-  "cm-silks-retail-learning",
   "mba-case-notes",
 ];
 

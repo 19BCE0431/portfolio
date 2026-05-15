@@ -9,6 +9,7 @@ pnpm-debug.log*
 
 # env
 .env
+.env.local
 .env.*.local
 
 # OS
@@ -21,4 +22,3 @@ dist/
 # local artifacts
 verification-*.png
 *.heic
-
