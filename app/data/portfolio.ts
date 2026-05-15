@@ -24,16 +24,16 @@ export const navItems = [
 
 export const thesisPoints = [
   {
-    label: "Technical foundation",
-    text: "Before the MBA, I built practical Data Science and Applied AI work across search, RAG, OCR, scraping, prediction, dashboards, and automation.",
+    label: "Reading the customer",
+    text: "I am learning to start with the person making the choice: what they understand, what they trust, what feels inconvenient, and what moves them to act.",
   },
   {
-    label: "MBA direction",
-    text: "At IIM Sirmaur, I am learning to frame that work through product choices, marketing problems, strategy, pricing signals, and business decisions.",
+    label: "Using the technical base",
+    text: "My Data Science and Applied AI work gives me a builder's view of search, prediction, automation, dashboards, and decision-support workflows.",
   },
   {
-    label: "Customer context",
-    text: "The question I keep returning to is simple: what customer behavior does this reveal, and what better decision can it support?",
+    label: "Moving toward judgment",
+    text: "The MBA is helping me connect those tools to product choices, market signals, marketing problems, strategy, and business outcomes.",
   },
 ];
 

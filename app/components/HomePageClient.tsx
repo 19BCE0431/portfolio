@@ -4,10 +4,14 @@ import {
   ArrowUpRight,
   BookOpenText,
   BriefcaseBusiness,
+  Camera,
+  ChefHat,
+  CircleDot,
   Layers3,
   Mail,
   MoveRight,
   PenLine,
+  Pencil,
   Route,
   Sparkles,
 } from "lucide-react";
@@ -60,6 +64,48 @@ const narrativeCards = [
     title: "Thinking in evidence",
     text: "The archive and journal are designed to show applied work, decisions supported, and how my direction is developing over time.",
     icon: BookOpenText,
+  },
+];
+
+const directionNotes = [
+  {
+    title: "Product",
+    text: "How does a product earn trust, become easy to adopt, and stay useful after the first impression?",
+  },
+  {
+    title: "Marketing",
+    text: "What makes people notice, compare, remember, and finally choose one offer over another?",
+  },
+  {
+    title: "Strategy",
+    text: "Where should a business place its bets when the market is moving and the signals are imperfect?",
+  },
+  {
+    title: "AI workflows",
+    text: "Where can automation reduce effort without removing the judgment that keeps the work credible?",
+  },
+];
+
+const personalNotes = [
+  {
+    title: "Games that slow me down",
+    text: "Chess keeps me patient. Badminton keeps me moving. Both remind me that timing matters as much as effort.",
+    icon: CircleDot,
+  },
+  {
+    title: "Small creative habits",
+    text: "Photography, sketching, and cooking are how I pay attention to form, texture, sequence, and taste outside a screen.",
+    icon: Camera,
+  },
+  {
+    title: "Everyday market watching",
+    text: "I notice brands, store layouts, price cues, and the small reasons people pause before they buy.",
+    icon: Pencil,
+  },
+  {
+    title: "Tools I keep testing",
+    text: "I like trying new AI tools, not for novelty, but to understand where they genuinely change a workflow.",
+    icon: ChefHat,
   },
 ];
 
@@ -232,22 +278,20 @@ function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: premiumEase }}
         >
-          {profile.name} · MBA at IIM Sirmaur
+          MBA at IIM Sirmaur · CSE and Data Science foundation
         </motion.p>
         <HeadingReveal
           as="h1"
-          lines={["MBA lens.", "Technical depth.", "Product direction."]}
-          mobileLines={["MBA lens.", "Technical depth.", "Product direction."]}
-          className="display-tight max-w-[880px] text-[clamp(2.75rem,13vw,6rem)] font-semibold leading-[0.98] text-[var(--foreground)] md:text-[clamp(4.65rem,7.4vw,7.8rem)] md:leading-[0.91]"
+          lines={["Learning how", "people choose,", "and how products", "should respond."]}
+          mobileLines={["Learning how", "people choose,", "and products", "respond."]}
+          className="display-tight max-w-[950px] text-[clamp(2.68rem,12.2vw,5.8rem)] font-semibold leading-[0.98] text-[var(--foreground)] md:text-[clamp(4.4rem,7.1vw,7.6rem)] md:leading-[0.92]"
           delay={0.06}
         />
         <Reveal delay={0.1}>
           <p className="mt-6 max-w-[760px] text-pretty-balance text-[clamp(1.02rem,4.2vw,1.26rem)] leading-[1.62] text-[var(--muted-strong)] md:mt-8 md:text-[clamp(1.16rem,2vw,1.48rem)] md:leading-[1.52]">
-            I am an MBA candidate at IIM Sirmaur, building toward product
-            management, marketing, strategy, AI-enabled workflows, and
-            business decision-making. My Computer Science and Data Science
-            foundation helps me connect market questions with practical
-            execution.
+            I came from building models, dashboards, and automation. Now, as an
+            MBA candidate, I am learning to read the customer, the market, and
+            the decision behind the tool.
           </p>
         </Reveal>
         <Reveal delay={0.16}>
@@ -256,7 +300,7 @@ function Hero() {
               Email
             </ActionLink>
             <ActionLink href="/archive" icon={<MoveRight className="h-4 w-4 text-[var(--steel)]" />}>
-              View archive
+              See the work
             </ActionLink>
             <ActionLink href="/journal" icon={<PenLine className="h-4 w-4 text-[var(--clay)]" />}>
               Read journal
@@ -325,6 +369,40 @@ function ThesisCard({
   );
 }
 
+function Direction() {
+  return (
+    <section className="section-shell relative scroll-mt-28 py-16 md:py-28">
+      <div className="grid gap-10 lg:grid-cols-[0.68fr_1fr] lg:gap-16">
+        <Reveal>
+          <SectionLabel>What I am building toward</SectionLabel>
+          <HeadingReveal
+            lines={["Less resume.", "More direction."]}
+            mobileLines={["Less resume.", "More direction."]}
+            className="max-w-[680px] text-[clamp(2.25rem,10vw,4.9rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.96]"
+          />
+        </Reveal>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {directionNotes.map((note, index) => (
+            <Reveal key={note.title} delay={index * 0.04}>
+              <article className="premium-panel group h-full p-5 transition duration-500 hover:-translate-y-1 hover:bg-white md:p-7">
+                <div className="flex items-start justify-between gap-4">
+                  <p className="editorial-kicker">{note.title}</p>
+                  <span className="grid h-8 w-8 place-items-center rounded-full border border-black/10 text-[12px] text-[var(--sage)] transition group-hover:translate-x-1">
+                    0{index + 1}
+                  </span>
+                </div>
+                <p className="mt-8 text-[1.05rem] leading-[1.62] text-[var(--muted-strong)]">
+                  {note.text}
+                </p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Thesis() {
   const shouldReduceMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
@@ -339,17 +417,16 @@ function Thesis() {
       <div className="grid gap-10 lg:grid-cols-[0.78fr_1fr] lg:gap-20">
         <div className="lg:sticky lg:top-32 lg:h-max">
           <Reveal>
-            <SectionLabel>Thesis</SectionLabel>
+            <SectionLabel>Shift in progress</SectionLabel>
             <HeadingReveal
-              lines={["The work is moving", "from execution to judgment."]}
-              mobileLines={["From execution", "to judgment."]}
+              lines={["From building the tool", "to understanding the choice."]}
+              mobileLines={["From building", "the tool to", "understanding", "the choice."]}
               className="max-w-[700px] text-[clamp(2.25rem,10vw,4.9rem)] font-semibold leading-[1.01] tracking-[0] lg:leading-[0.96]"
             />
             <p className="mt-6 max-w-[620px] text-[1rem] leading-[1.68] text-[var(--muted-strong)] md:text-[1.14rem]">
-              I started by building automation, prediction, document
-              intelligence, image-led discovery, pricing dashboards, and
-              alerts. The MBA is teaching me to ask the next question: what
-              decision changes because this exists?
+              The technical work taught me how to make things run. The MBA is
+              teaching me to ask whether the thing should exist, who it serves,
+              and what decision it helps someone make.
             </p>
             <div className="mt-8 h-px overflow-hidden bg-black/10">
               <motion.div
@@ -387,20 +464,20 @@ function Background() {
         <div className="grid gap-10 lg:grid-cols-[0.75fr_1fr] lg:items-end lg:gap-20">
           <Reveal>
             <SectionLabel>Background</SectionLabel>
-            <HeadingReveal
-              lines={["Business-school chapter,", "technical foundation."]}
-              mobileLines={["Business-school", "chapter,", "technical foundation."]}
+          <HeadingReveal
+            lines={["A business-school chapter", "with a builder's memory."]}
+            mobileLines={["Business school,", "builder's", "memory."]}
               className="max-w-[780px] text-[clamp(2.35rem,10vw,5.4rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.96]"
             />
           </Reveal>
           <Reveal delay={0.08}>
             <p className="max-w-[720px] text-pretty-balance text-[clamp(1.04rem,2vw,1.28rem)] leading-[1.68] text-[var(--deep-muted)]">
-              At IIM Sirmaur, I am building toward product management,
-              marketing, strategy, and consumer-behavior work. Before the MBA,
-              I studied CSE at VIT Vellore and worked in Bangalore as a Data
-              Science Intern, then Data Science Engineer. At BigHaat, my work
-              touched order behavior, content workflows, logistics, pricing
-              intelligence, and decision support.
+              At IIM Sirmaur, I am learning the language of product, marketing,
+              strategy, and consumer behavior. Before this, I studied CSE at VIT
+              Vellore and worked in Bangalore as a Data Science Intern, then
+              Data Science Engineer. At BigHaat, my work touched order behavior,
+              content workflows, logistics, pricing intelligence, and decision
+              support.
             </p>
           </Reveal>
         </div>
@@ -496,8 +573,9 @@ function FeaturedCaseStudy() {
               />
               <p className="mt-6 max-w-[620px] text-[1rem] leading-[1.68] text-[var(--muted-strong)] md:text-[1.15rem]">
                 A living professional system designed to evolve with my MBA
-                journey, projects, writing, and career direction. AI accelerates
-                execution; human taste, positioning, and review shape the work.
+                journey, projects, writing, and career direction. I direct the
+                taste, positioning, structure, and review; AI helps compress the
+                distance between idea and implementation.
               </p>
             </div>
             <div className="mt-8">
@@ -560,14 +638,17 @@ function ArchivePreview() {
           <SectionLabel>Selected archive</SectionLabel>
           <HeadingReveal
             lines={["Work that shaped how I think."]}
-            mobileLines={["Evidence,", "not just claims."]}
+            mobileLines={["Work that", "shaped how", "I think."]}
             className="max-w-[680px] text-[clamp(2.35rem,10vw,5.1rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.96]"
           />
         </Reveal>
         <Reveal delay={0.08}>
           <div className="max-w-[720px]">
             <p className="text-[clamp(1.02rem,1.7vw,1.22rem)] leading-[1.68] text-[var(--muted-strong)]">
-              A curated preview of projects, experiments, and learning notes — from applied AI and data science work to product, pricing, and market-facing decisions. Each piece is framed by what it changed, what it taught me, and how it shaped my business lens.
+              A curated preview of projects, experiments, and learning notes
+              from Applied AI, Data Science, product intelligence, pricing, and
+              market-facing decisions. Each piece is framed by what it changed,
+              what it taught me, and how it shaped my business lens.
             </p>
             <Link href="/archive" className="mt-6 inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--foreground)]">
               View full project library
@@ -595,16 +676,17 @@ function JournalPreview({ posts }: { posts: JournalPost[] }) {
         <Reveal>
           <SectionLabel>Journal</SectionLabel>
           <HeadingReveal
-            lines={["Notes on products,", "markets, AI, and decisions."]}
-            mobileLines={["Products,", "markets, AI,", "and decisions."]}
+            lines={["Things I am reading,", "noticing, and learning."]}
+            mobileLines={["Reading,", "noticing,", "learning."]}
             className="max-w-[760px] text-[clamp(2.35rem,10vw,5rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.96]"
           />
         </Reveal>
         <Reveal delay={0.08}>
           <p className="max-w-[680px] text-[clamp(1.02rem,1.65vw,1.2rem)] leading-[1.68] text-[var(--muted-strong)]">
             A thinking-in-public library for product strategy, market signals,
-            Applied AI, consumer behavior, and business decisions. Drafts stay
-            private until they are reviewed and worth publishing.
+            Applied AI, consumer behavior, brand lessons, and business
+            decisions. Drafts stay private until they are reviewed and worth
+            publishing.
           </p>
           <Link href="/journal" className="mt-6 inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--foreground)]">
             {hasPosts ? "View insight library" : "View journal foundation"}
@@ -659,17 +741,61 @@ function JournalPreview({ posts }: { posts: JournalPost[] }) {
   );
 }
 
+function PersonalNote() {
+  return (
+    <section className="section-shell relative scroll-mt-28 py-20 md:py-32">
+      <div className="grid gap-10 lg:grid-cols-[0.82fr_1fr] lg:gap-16">
+        <Reveal>
+          <SectionLabel>Outside the case notes</SectionLabel>
+          <HeadingReveal
+            lines={["I like paying attention", "to how people move."]}
+            mobileLines={["Paying", "attention", "outside work."]}
+            className="max-w-[760px] text-[clamp(2.35rem,10vw,5rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.96]"
+          />
+          <p className="mt-6 max-w-[660px] text-[1.02rem] leading-[1.7] text-[var(--muted-strong)] md:text-[1.16rem]">
+            When I am not working through cases, dashboards, or product ideas,
+            I am usually playing chess, getting in a badminton session, going
+            for an early morning run, taking photos, sketching, cooking, or
+            noticing why a customer pauses in front of one shelf and not
+            another.
+          </p>
+        </Reveal>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {personalNotes.map((note, index) => {
+            const Icon = note.icon;
+            return (
+              <Reveal key={note.title} delay={index * 0.04}>
+                <article className="premium-panel h-full p-5 md:p-6">
+                  <Icon className="h-5 w-5 text-[var(--sage)]" />
+                  <h3 className="mt-7 text-[1.18rem] font-semibold leading-[1.2]">
+                    {note.title}
+                  </h3>
+                  <p className="mt-4 text-[0.95rem] leading-[1.65] text-[var(--muted)]">
+                    {note.text}
+                  </p>
+                </article>
+              </Reveal>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function HomePageClient({ journalPosts }: { journalPosts: JournalPost[] }) {
   return (
     <>
-      <SiteNav />
+        <SiteNav />
       <main>
         <Hero />
+        <Direction />
         <Thesis />
         <Background />
         <FeaturedCaseStudy />
         <ArchivePreview />
         <JournalPreview posts={journalPosts} />
+        <PersonalNote />
       </main>
     </>
   );
