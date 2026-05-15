@@ -33,7 +33,7 @@ export function Footer() {
               Contact
             </p>
             <h2 className="max-w-[880px] break-words text-[clamp(1.95rem,9vw,4.2rem)] font-semibold leading-[1.04] tracking-[0] text-white/92 md:text-[clamp(2.8rem,6vw,6rem)] md:leading-[0.95]">
-              Useful conversations are welcome.
+              Let’s connect.
             </h2>
             <p className="mt-5 max-w-[680px] text-[clamp(1rem,4vw,1.14rem)] leading-[1.64] text-white/58 md:mt-7">
               Especially around product management, marketing, strategy,
