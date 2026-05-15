@@ -1,180 +1,333 @@
-export type JournalStatus = "draft" | "published";
+import fs from "node:fs";
+import path from "node:path";
 
-export type JournalSection = {
-  heading: string;
-  body: string[];
+export type JournalStatus = "draft" | "review" | "published";
+
+export type JournalCategory =
+  | "AI & Business"
+  | "Product Strategy"
+  | "Indian Consumer Behavior"
+  | "Market Signals"
+  | "Brand & Marketing Lessons"
+  | "Business History with Modern Relevance"
+  | "MBA Learning Notes"
+  | "Data Science Applied to Decisions";
+
+export type JournalSource = {
+  title: string;
+  url: string;
+  publisher?: string;
+  datePublished?: string;
+  accessed?: string;
+  claimSupported?: string;
 };
+
+export type JournalVisualPrompt = {
+  prompt: string;
+  altText?: string;
+  suggestedUse?: string;
+};
+
+export type JournalBlock =
+  | { type: "heading"; text: string }
+  | { type: "paragraph"; text: string }
+  | { type: "list"; items: string[] };
 
 export type JournalPost = {
   title: string;
   slug: string;
   date: string;
   status: JournalStatus;
+  category: JournalCategory;
   tags: string[];
   summary: string;
+  heroImage?: string;
+  heroImagePrompt?: string;
+  supportingVisualPrompts: JournalVisualPrompt[];
+  suggestedVisualStyle?: string;
+  imageCredit?: string;
+  imageSource?: string;
+  imageLicense?: string;
+  altText?: string;
+  ogImage?: string;
+  heroImageAlt?: string;
+  sourceLinks: JournalSource[];
+  keyInsight?: string;
   readingTime: string;
-  intro: string;
-  sections: JournalSection[];
-  takeaways: string[];
-  linkedInNote: string;
+  canonicalUrl?: string;
+  approvalStatus?: string;
+  body: string;
+  blocks: JournalBlock[];
 };
 
-export const journalPosts: JournalPost[] = [
-  {
-    title: "Product Teardown Notes",
-    slug: "product-teardown-notes",
-    date: "2026-05-15",
-    status: "published",
-    tags: ["Product", "User Experience", "MBA"],
-    summary:
-      "A lightweight template for studying products through user need, adoption, friction, and business value.",
-    readingTime: "3 min read",
-    intro:
-      "This is a working note format for future product teardowns. The goal is not to sound like a product expert, but to build a repeatable way of observing how products create value.",
-    sections: [
-      {
-        heading: "What I Want To Notice",
-        body: [
-          "A useful teardown should begin with the user problem before it jumps into features. I want to observe who the product serves, what behavior it makes easier, and where friction still remains.",
-          "For my portfolio, this format should connect product thinking with my Data Science background: what signals matter, what decisions the product supports, and how the experience could be measured.",
-        ],
-      },
-      {
-        heading: "A Simple Structure",
-        body: [
-          "The future teardown format will cover context, target user, core job-to-be-done, onboarding, activation moment, retention loop, business model, and one practical improvement idea.",
-          "Each post should stay short enough to skim. The point is to show judgment and curiosity, not to over-explain a product from the outside.",
-        ],
-      },
-      {
-        heading: "How This Helps",
-        body: [
-          "Writing these notes will help me practice moving from technical execution to product and business judgment. It also creates material that can later be adapted into sharper LinkedIn posts.",
-        ],
-      },
-    ],
-    takeaways: [
-      "Start with the user problem, not the feature list.",
-      "Separate observation from recommendation.",
-      "Use metrics as decision signals, not decoration.",
-    ],
-    linkedInNote:
-      "Can become a short LinkedIn carousel or text post: product, user friction, insight, one recommendation.",
-  },
-  {
-    title: "AI and Business Systems",
-    slug: "ai-and-business-systems",
-    date: "2026-05-15",
-    status: "draft",
-    tags: ["Applied AI", "Business Intelligence", "Decision Support"],
-    summary:
-      "A draft space for reflecting on when AI workflows actually improve business decisions.",
-    readingTime: "4 min read",
-    intro:
-      "A placeholder for future notes on Applied AI work, automation, retrieval, alerts, and decision support.",
-    sections: [
-      {
-        heading: "Draft Direction",
-        body: [
-          "This note should grow from real examples where AI reduced manual work, improved information access, or helped teams respond faster.",
-        ],
-      },
-    ],
-    takeaways: [
-      "AI work should be tied to a clear decision or workflow.",
-      "Automation is useful when it reduces repeated effort or delay.",
-    ],
-    linkedInNote:
-      "Can become a practical LinkedIn post on the difference between impressive AI demos and useful operating workflows.",
-  },
-  {
-    title: "Indian Consumer Behavior Observations",
-    slug: "indian-consumer-behavior-observations",
-    date: "2026-05-15",
-    status: "draft",
-    tags: ["Consumer Behavior", "Marketing", "India"],
-    summary:
-      "A draft collection of grounded observations about trust, price perception, aspiration, and category education.",
-    readingTime: "4 min read",
-    intro:
-      "A placeholder for observations from coursework, retail exposure, and market examples.",
-    sections: [
-      {
-        heading: "Draft Direction",
-        body: [
-          "This note should avoid broad claims about India and instead focus on specific buying situations, trade-offs, and customer language.",
-        ],
-      },
-    ],
-    takeaways: [
-      "Consumer behavior should be observed in context.",
-      "Price, trust, and aspiration often interact rather than move separately.",
-    ],
-    linkedInNote:
-      "Can become a concise LinkedIn reflection on one consumer behavior pattern and one business implication.",
-  },
-  {
-    title: "MBA Reflections",
-    slug: "mba-reflections",
-    date: "2026-05-15",
-    status: "draft",
-    tags: ["MBA", "Strategy", "Learning"],
-    summary:
-      "A future home for reflections from cases, classes, group work, and the shift from engineering to management thinking.",
-    readingTime: "3 min read",
-    intro:
-      "A placeholder for short, grounded reflections from the IIM Sirmaur MBA chapter.",
-    sections: [
-      {
-        heading: "Draft Direction",
-        body: [
-          "This should focus on what changed in my thinking after a case, class, or project, not generic MBA lessons.",
-        ],
-      },
-    ],
-    takeaways: [
-      "Good reflection should point to a specific change in judgment.",
-      "Cases become useful when connected to real decisions.",
-    ],
-    linkedInNote:
-      "Can become a short LinkedIn post on one MBA learning moment and how it changed my approach.",
-  },
-  {
-    title: "Retail Learning Notes",
-    slug: "retail-learning-notes",
-    date: "2026-05-15",
-    status: "draft",
-    tags: ["Retail", "Customer Behavior", "Marketing"],
-    summary:
-      "A subtle space for retail and customer-behavior observations without making retail the main career identity.",
-    readingTime: "3 min read",
-    intro:
-      "A placeholder for practical notes on local retail, category education, trust, and purchase behavior.",
-    sections: [
-      {
-        heading: "Draft Direction",
-        body: [
-          "This should stay observational and specific: how customers compare options, what creates confidence, and where content can help.",
-        ],
-      },
-    ],
-    takeaways: [
-      "Retail learning is most useful when it reveals customer decision patterns.",
-      "Trust and education can matter as much as visibility.",
-    ],
-    linkedInNote:
-      "Can become a grounded LinkedIn note about one retail observation and what it suggests for marketing.",
-  },
+export const journalCategories: JournalCategory[] = [
+  "AI & Business",
+  "Product Strategy",
+  "Indian Consumer Behavior",
+  "Market Signals",
+  "Brand & Marketing Lessons",
+  "Business History with Modern Relevance",
+  "MBA Learning Notes",
+  "Data Science Applied to Decisions",
 ];
 
-export const publishedJournalPosts = journalPosts.filter(
-  (post) => post.status === "published",
-);
+const JOURNAL_DIR = path.join(process.cwd(), "content", "journal");
+const NON_POST_FILES = new Set(["README.md", "blog-post.schema.md"]);
 
-export const draftJournalPosts = journalPosts.filter(
-  (post) => post.status === "draft",
-);
+export function getAllJournalPosts() {
+  if (!fs.existsSync(JOURNAL_DIR)) {
+    return [];
+  }
+
+  return fs
+    .readdirSync(JOURNAL_DIR)
+    .filter((file) => file.endsWith(".md") && !NON_POST_FILES.has(file))
+    .map((file) => readJournalPost(path.join(JOURNAL_DIR, file)))
+    .sort((first, second) => Date.parse(second.date) - Date.parse(first.date));
+}
+
+export function getPublishedJournalPosts() {
+  return getAllJournalPosts().filter((post) => post.status === "published");
+}
+
+export function getVisibleJournalPosts() {
+  const posts = getAllJournalPosts();
+
+  if (process.env.NODE_ENV === "production") {
+    return posts.filter((post) => post.status === "published");
+  }
+
+  return posts;
+}
+
+export function getVisibleJournalPost(slug: string) {
+  return getVisibleJournalPosts().find((post) => post.slug === slug);
+}
 
 export function getPublishedJournalPost(slug: string) {
-  return publishedJournalPosts.find((post) => post.slug === slug);
+  return getPublishedJournalPosts().find((post) => post.slug === slug);
+}
+
+export function getRecentPublishedJournalPosts(limit = 3) {
+  return getPublishedJournalPosts().slice(0, limit);
+}
+
+export function getRelatedJournalPosts(post: JournalPost, limit = 2) {
+  return getPublishedJournalPosts()
+    .filter((candidate) => candidate.slug !== post.slug)
+    .sort((first, second) => {
+      const firstScore = first.category === post.category ? 1 : 0;
+      const secondScore = second.category === post.category ? 1 : 0;
+      return secondScore - firstScore;
+    })
+    .slice(0, limit);
+}
+
+function readJournalPost(filePath: string): JournalPost {
+  const raw = fs.readFileSync(filePath, "utf8");
+  const { frontmatter, body } = parseMarkdownWithFrontmatter(raw);
+  const slug = String(frontmatter.slug || path.basename(filePath, ".md")).trim();
+  const title = String(frontmatter.title || titleFromSlug(slug)).trim();
+  const cleanedBody = removeDuplicateTitle(body, title);
+
+  return {
+    title,
+    slug,
+    date: String(frontmatter.date || "").trim(),
+    status: normalizeStatus(frontmatter.status),
+    category: normalizeCategory(frontmatter.category, frontmatter.tags),
+    tags: Array.isArray(frontmatter.tags) ? frontmatter.tags : [],
+    summary: String(frontmatter.summary || "").trim(),
+    heroImage: String(frontmatter.heroImage || "").trim(),
+    heroImagePrompt: String(frontmatter.heroImagePrompt || "").trim(),
+    supportingVisualPrompts: Array.isArray(frontmatter.supportingVisualPrompts)
+      ? frontmatter.supportingVisualPrompts
+      : [],
+    suggestedVisualStyle: String(frontmatter.suggestedVisualStyle || "").trim(),
+    imageCredit: String(frontmatter.imageCredit || "").trim(),
+    imageSource: String(frontmatter.imageSource || "").trim(),
+    imageLicense: String(frontmatter.imageLicense || "").trim(),
+    altText: String(frontmatter.altText || "").trim(),
+    ogImage: String(frontmatter.ogImage || "").trim(),
+    heroImageAlt: String(frontmatter.heroImageAlt || "").trim(),
+    sourceLinks: Array.isArray(frontmatter.sourceLinks)
+      ? frontmatter.sourceLinks
+      : [],
+    keyInsight: String(frontmatter.keyInsight || "").trim(),
+    readingTime:
+      String(frontmatter.readingTime || "").trim() ||
+      `${estimateReadingTime(cleanedBody)} min read`,
+    canonicalUrl: String(frontmatter.canonicalUrl || "").trim(),
+    approvalStatus: String(frontmatter.approvalStatus || "").trim(),
+    body: cleanedBody,
+    blocks: markdownToBlocks(cleanedBody),
+  };
+}
+
+function parseMarkdownWithFrontmatter(markdown: string) {
+  const match = markdown.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  if (!match) {
+    return { frontmatter: {}, body: markdown };
+  }
+
+  return {
+    frontmatter: parseFrontmatter(match[1]),
+    body: match[2],
+  };
+}
+
+function parseFrontmatter(raw: string) {
+  const data: Record<string, unknown> = {};
+  const lines = raw.split(/\r?\n/);
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    const match = line.match(/^([A-Za-z0-9_]+):\s*(.*)$/);
+
+    if (!match) {
+      continue;
+    }
+
+    const key = match[1];
+    const value = match[2];
+
+    if (key === "tags" || key === "hashtags") {
+      const items: string[] = [];
+      while (/^\s+-\s+/.test(lines[index + 1] || "")) {
+        index += 1;
+        items.push(stripYamlValue(lines[index].replace(/^\s+-\s+/, "")));
+      }
+      data[key] = items;
+      continue;
+    }
+
+    if (key === "sourceLinks" || key === "supportingVisualPrompts") {
+      const items: Record<string, string>[] = [];
+      while (/^\s+/.test(lines[index + 1] || "")) {
+        index += 1;
+        const itemLine = lines[index];
+        const itemStart = itemLine.match(/^\s+-\s+([A-Za-z0-9_]+):\s*(.*)$/);
+        if (itemStart) {
+          items.push({
+            [itemStart[1]]: stripYamlValue(itemStart[2]),
+          });
+          continue;
+        }
+
+        const nested = itemLine.match(/^\s+([A-Za-z0-9_]+):\s*(.*)$/);
+        if (nested && items.length) {
+          items[items.length - 1] = {
+            ...items[items.length - 1],
+            [nested[1]]: stripYamlValue(nested[2]),
+          };
+        }
+      }
+      data[key] = items;
+      continue;
+    }
+
+    data[key] = stripYamlValue(value);
+  }
+
+  return data;
+}
+
+function stripYamlValue(value: string) {
+  return String(value || "").trim().replace(/^["']|["']$/g, "");
+}
+
+function normalizeStatus(value: unknown): JournalStatus {
+  if (value === "published" || value === "review" || value === "draft") {
+    return value;
+  }
+
+  return "draft";
+}
+
+function normalizeCategory(value: unknown, tags: unknown): JournalCategory {
+  const text = `${String(value || "")} ${Array.isArray(tags) ? tags.join(" ") : ""}`.toLowerCase();
+
+  if (text.includes("history")) return "Business History with Modern Relevance";
+  if (text.includes("marketing") || text.includes("brand")) return "Brand & Marketing Lessons";
+  if (text.includes("consumer") || text.includes("india") || text.includes("retail") || text.includes("ecommerce")) {
+    return "Indian Consumer Behavior";
+  }
+  if (text.includes("mba")) return "MBA Learning Notes";
+  if (text.includes("market") || text.includes("signal")) return "Market Signals";
+  if (text.includes("product")) return "Product Strategy";
+  if (text.includes("data") || text.includes("automation")) return "Data Science Applied to Decisions";
+  return "AI & Business";
+}
+
+function removeDuplicateTitle(body: string, title: string) {
+  const lines = body.trim().split(/\r?\n/);
+  if (lines[0]?.replace(/^#\s+/, "").trim() === title) {
+    return lines.slice(1).join("\n").trim();
+  }
+
+  return body.trim();
+}
+
+function markdownToBlocks(markdown: string): JournalBlock[] {
+  const blocks: JournalBlock[] = [];
+  const lines = markdown.split(/\r?\n/);
+  let paragraph: string[] = [];
+  let listItems: string[] = [];
+
+  const flushParagraph = () => {
+    if (paragraph.length) {
+      blocks.push({ type: "paragraph", text: paragraph.join(" ").trim() });
+      paragraph = [];
+    }
+  };
+
+  const flushList = () => {
+    if (listItems.length) {
+      blocks.push({ type: "list", items: listItems });
+      listItems = [];
+    }
+  };
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+
+    if (!line || line.startsWith("<!--")) {
+      flushParagraph();
+      flushList();
+      continue;
+    }
+
+    if (line.startsWith("## ")) {
+      flushParagraph();
+      flushList();
+      blocks.push({ type: "heading", text: line.replace(/^##\s+/, "") });
+      continue;
+    }
+
+    if (line.startsWith("- ")) {
+      flushParagraph();
+      listItems.push(line.replace(/^-\s+/, ""));
+      continue;
+    }
+
+    flushList();
+    paragraph.push(line);
+  }
+
+  flushParagraph();
+  flushList();
+  return blocks;
+}
+
+function estimateReadingTime(markdown: string) {
+  const words = markdown.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / 220));
+}
+
+function titleFromSlug(slug: string) {
+  return slug
+    .split("-")
+    .filter(Boolean)
+    .map((word) => word[0]?.toUpperCase() + word.slice(1))
+    .join(" ");
 }

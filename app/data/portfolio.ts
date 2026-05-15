@@ -24,16 +24,16 @@ export const navItems = [
 
 export const thesisPoints = [
   {
-    label: "Data Science",
-    text: "I started by building practical work: search, RAG, OCR, scraping, prediction, anomaly detection, dashboards, and operational automation.",
+    label: "Technical foundation",
+    text: "Before the MBA, I built practical Data Science and Applied AI work across search, RAG, OCR, scraping, prediction, dashboards, and automation.",
   },
   {
-    label: "Business Judgment",
-    text: "The MBA is helping me move from execution to sharper questions around product choices, marketing problems, pricing signals, and strategy.",
+    label: "MBA direction",
+    text: "At IIM Sirmaur, I am learning to frame that work through product choices, marketing problems, strategy, pricing signals, and business decisions.",
   },
   {
-    label: "Customer Context",
-    text: "I am especially interested in how analysis becomes useful when it reflects real customer behavior, adoption barriers, and decision trade-offs.",
+    label: "Customer context",
+    text: "The question I keep returning to is simple: what customer behavior does this reveal, and what better decision can it support?",
   },
 ];
 
@@ -61,12 +61,13 @@ export const backgroundCards = [
   {
     label: "Current direction",
     value: "Product, marketing, strategy",
-    detail: "Data Science · Applied AI · Business Intelligence · Consumer behavior",
+    detail:
+      "Product management · Marketing · Strategy · Consumer behavior · Applied AI",
   },
   {
     label: "Retail note",
     value: "Customer behavior observations",
-    detail: "Retail and customer-behavior observations through CM Silks",
+    detail: "Retail and customer-behavior observations through a family retail context",
   },
 ];
 
@@ -81,19 +82,19 @@ export const credibilityMarkers = [
 export const journalItems = [
   {
     label: "Drafting",
-    title: "Product notes from a data science background",
+    title: "Product and market notes from an MBA lens",
     description:
-      "Short reflections on how technical work changes when the starting point becomes user need, adoption, and business value.",
+      "Short reflections on products, market signals, adoption, and the business decisions behind them.",
   },
   {
     label: "Collecting",
-    title: "Retail and customer behavior notes",
+    title: "Consumer behavior observations",
     description:
-      "Notes on customer education, trust, category understanding, and how purchase decisions form in local retail.",
+      "Notes on customer education, trust, category understanding, and how purchase decisions form in everyday contexts.",
   },
   {
     label: "Drafting",
-    title: "Applied AI that improves operating decisions",
+    title: "Applied AI that supports better decisions",
     description:
       "Practical notes from search, RAG, OCR, scraping, prediction, dashboards, and alerting work.",
   },

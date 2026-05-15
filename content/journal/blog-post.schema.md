@@ -12,6 +12,17 @@ category: ""
 tags: []
 summary: ""
 heroImage: ""
+heroImagePrompt: ""
+supportingVisualPrompts:
+  - prompt: ""
+    altText: ""
+    suggestedUse: ""
+suggestedVisualStyle: ""
+imageCredit: ""
+imageSource: ""
+imageLicense: ""
+altText: ""
+ogImage: ""
 heroImageAlt: ""
 sourceLinks:
   - title: ""
