@@ -135,7 +135,7 @@ export const archiveProjects: ArchiveProject[] = [
   {
     slug: "applied-image-search",
     title: "Image-Led Product Discovery",
-    category: "Applied AI & Data Science",
+    category: "AI + DATA SCIENCE",
     filter: "Applied AI",
     status: "Shipped",
     shortDescription:
@@ -178,7 +178,7 @@ export const archiveProjects: ArchiveProject[] = [
   {
     slug: "document-intelligence-system",
     title: "Faster Product Lookup with RAG",
-    category: "Applied AI & Data Science",
+    category: "AI + DATA SCIENCE",
     filter: "Applied AI",
     status: "Built",
     shortDescription:
@@ -221,7 +221,7 @@ export const archiveProjects: ArchiveProject[] = [
   {
     slug: "competitor-price-intelligence",
     title: "Competitor Pricing Intelligence",
-    category: "Market / Business Intelligence",
+    category: "Business Intelligence",
     filter: "Business Intelligence",
     status: "Built",
     shortDescription:
@@ -285,7 +285,7 @@ export const archiveProjects: ArchiveProject[] = [
   {
     slug: "crop-advisory-enhancement",
     title: "Crop Advisory Model Improvement",
-    category: "Applied AI & Data Science",
+    category: "AI + DATA SCIENCE",
     filter: "Applied AI",
     status: "Improved",
     shortDescription:
@@ -307,7 +307,7 @@ export const archiveProjects: ArchiveProject[] = [
   {
     slug: "cancellation-prediction",
     title: "Cancellation Risk Prediction",
-    category: "Applied AI & Data Science",
+    category: "AI + DATA SCIENCE",
     filter: "Applied AI",
     status: "Built",
     shortDescription:
