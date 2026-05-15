@@ -212,7 +212,7 @@ function Hero() {
         </motion.p>
         <HeadingReveal
           as="h1"
-          lines={["Data science execution,", "business decisions."]}
+          lines={["From data science execution to", "business decision-making"]}
           mobileLines={[
             "Data science",
             "execution,",
@@ -392,14 +392,13 @@ function Background() {
             <HeadingReveal
               lines={[
                 "CSE foundation,",
-                "data science work,",
-                "and an MBA lens.",
+                " data science work,",
+                " and an MBA lens.",
               ]}
               mobileLines={[
                 "CSE foundation,",
-                "data science",
-                "work,",
-                "and an MBA lens.",
+                " data science",
+                " and an MBA lens.",
               ]}
               className="max-w-[700px] text-[clamp(2.05rem,9.4vw,3.45rem)] font-semibold leading-[1.03] tracking-[-0.01em] md:text-[clamp(2.25rem,5.55vw,5.2rem)] md:leading-[0.98]"
             />
@@ -491,14 +490,13 @@ function ArchivePreview() {
           <HeadingReveal
             lines={[
               "Data Science work,",
-              "business signals,",
-              "and evolving MBA notes.",
+              " business signals,",
+              " and evolving MBA notes.",
             ]}
             mobileLines={[
               "Data Science",
-              "work,",
-              "business signals,",
-              "and MBA notes.",
+              " business signals,",
+              " and MBA notes.",
             ]}
             className="text-[clamp(2.05rem,9.2vw,3.35rem)] font-semibold leading-[1.03] tracking-[-0.01em] md:text-[clamp(2.25rem,5.25vw,4.95rem)] md:leading-[0.99]"
           />
