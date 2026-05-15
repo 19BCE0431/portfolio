@@ -1,17 +1,36 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 
 function ScrollProgress() {
   const shouldReduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
+  const scrollProgress = useMotionValue(0);
+  const scaleX = useSpring(scrollProgress, {
     stiffness: 120,
     damping: 28,
     mass: 0.4,
   });
+
+  useEffect(() => {
+    if (shouldReduceMotion) return;
+
+    const update = () => {
+      const scrollable =
+        document.documentElement.scrollHeight - window.innerHeight;
+      scrollProgress.set(scrollable > 0 ? window.scrollY / scrollable : 0);
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [scrollProgress, shouldReduceMotion]);
 
   if (shouldReduceMotion) {
     return null;

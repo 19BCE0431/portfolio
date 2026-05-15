@@ -29,6 +29,14 @@ export function ProjectCard({
     if (shouldReduceMotion) return;
 
     const rect = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty(
+      "--x",
+      `${((event.clientX - rect.left) / rect.width) * 100}%`,
+    );
+    event.currentTarget.style.setProperty(
+      "--y",
+      `${((event.clientY - rect.top) / rect.height) * 100}%`,
+    );
     arrowX.set((event.clientX - rect.left - rect.width / 2) * 0.02);
     arrowY.set((event.clientY - rect.top - rect.height / 2) * 0.02);
   };
@@ -51,7 +59,7 @@ export function ProjectCard({
         href={`/archive/${project.slug}`}
         onMouseMove={handlePointerMove}
         onMouseLeave={resetPointer}
-        className={`group relative flex h-full cursor-pointer flex-col justify-between overflow-hidden rounded-[8px] border p-4 backdrop-blur transition duration-500 focus:outline-none focus:ring-2 focus:ring-black/15 sm:p-6 ${
+        className={`group hover-light relative flex h-full cursor-pointer flex-col justify-between overflow-hidden rounded-[8px] border p-4 backdrop-blur transition duration-500 focus:outline-none focus:ring-2 focus:ring-black/15 sm:p-6 ${
           featured
             ? "border-black/15 bg-[rgba(16,18,18,0.92)] text-white shadow-[0_36px_110px_rgba(16,18,18,0.16)] hover:border-black/20"
             : "premium-card-shadow border-black/10 bg-[rgba(255,253,248,0.74)] hover:border-black/20 hover:bg-[rgba(255,253,248,0.96)] hover:shadow-[0_34px_94px_rgba(16,18,18,0.09)]"

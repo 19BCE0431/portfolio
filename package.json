@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build --webpack",
+    "analyze:content-performance": "node scripts/analyze-content-performance.js",
     "generate:weekly-insight": "node scripts/generate-weekly-insight.js",
     "validate:weekly-publish": "node scripts/validate-weekly-publish.js",
     "start": "next start",
