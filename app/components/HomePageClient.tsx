@@ -559,7 +559,7 @@ function ArchivePreview() {
         <Reveal>
           <SectionLabel>Selected archive</SectionLabel>
           <HeadingReveal
-            lines={["Evidence,", "not just claims."]}
+            lines={["Work that shaped how I think."]}
             mobileLines={["Evidence,", "not just claims."]}
             className="max-w-[680px] text-[clamp(2.35rem,10vw,5.1rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.96]"
           />
@@ -567,10 +567,7 @@ function ArchivePreview() {
         <Reveal delay={0.08}>
           <div className="max-w-[720px]">
             <p className="text-[clamp(1.02rem,1.7vw,1.22rem)] leading-[1.68] text-[var(--muted-strong)]">
-              A focused preview of applied work across discovery, document
-              intelligence, pricing intelligence, and MBA case notes. Each item
-              is framed by the problem, the decision it supported, and what I
-              learned while building it.
+              A curated preview of projects, experiments, and learning notes — from applied AI and data science work to product, pricing, and market-facing decisions. Each piece is framed by what it changed, what it taught me, and how it shaped my business lens.
             </p>
             <Link href="/archive" className="mt-6 inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--foreground)]">
               View full project library
