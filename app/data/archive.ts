@@ -10,9 +10,9 @@ export type ArchiveFilter =
 
 export type ArchiveCategory =
   | "AI-Assisted Product Building"
-  | "Applied AI & Data Science"
+  | "AI + DATA SCIENCE"
   | "Automation & Operations"
-  | "Market / Business Intelligence"
+  | "Business Intelligence"
   | "B.Tech Projects"
   | "Retail Learning"
   | "MBA Case Notes";
@@ -134,7 +134,7 @@ export const archiveProjects: ArchiveProject[] = [
   },
   {
     slug: "applied-image-search",
-    title: "Visual Product Discovery",
+    title: "Image-Led Product Discovery",
     category: "Applied AI & Data Science",
     filter: "Applied AI",
     status: "Shipped",
@@ -177,7 +177,7 @@ export const archiveProjects: ArchiveProject[] = [
   },
   {
     slug: "document-intelligence-system",
-    title: "Document Intelligence for Faster Lookup",
+    title: "Faster Product Lookup with RAG",
     category: "Applied AI & Data Science",
     filter: "Applied AI",
     status: "Built",
@@ -445,7 +445,7 @@ export const archiveProjects: ArchiveProject[] = [
   },
   {
     slug: "mba-case-notes",
-    title: "MBA Case & Market Notes",
+    title: "MBA Case Notes & Market Signals",
     category: "MBA Case Notes",
     filter: "MBA",
     status: "Building",
