@@ -12,11 +12,23 @@ category: ""
 tags: []
 summary: ""
 heroImage: ""
+portfolioHeroImagePrompt: ""
 heroImagePrompt: ""
+linkedinImagePrompt: ""
+linkedinImageAltText: ""
+carouselPrompt: ""
 supportingVisualPrompts:
   - prompt: ""
     altText: ""
     suggestedUse: ""
+carouselOutline:
+  - ""
+visualStyle: ""
+imageGeneratedByAI: true
+imageDisclosure:
+  recommendedUse: ""
+  copyrightStatus: ""
+  disclosureNote: ""
 suggestedVisualStyle: ""
 imageCredit: ""
 imageSource: ""
@@ -38,12 +50,17 @@ approvalStatus: "not_requested" # not_requested | changes_requested | approved
 linkedinShortPost:
   draftPath: ""
   status: "draft" # draft | approved | posted
+  engagementQuestion: ""
 ---
 ```
 
 ## Strong Opening Hook
 
 Start with a specific observation, tension, question, or surprising business implication.
+
+## Short Story / Context
+
+Set up the topic with enough context to make the reader care. Avoid general knowledge dumps.
 
 ## What Happened
 
@@ -56,6 +73,10 @@ Explain the business, product, strategy, marketing, or consumer behavior relevan
 ## The Hidden Lesson
 
 Move beyond summary. Identify the less obvious takeaway a student, PM, marketer, analyst, or business learner should notice.
+
+## India / MBA / Student Relevance
+
+Explain why this matters for Indian readers, MBA students, product/marketing learners, or early professionals. Keep the connection natural.
 
 ## My Interpretation
 

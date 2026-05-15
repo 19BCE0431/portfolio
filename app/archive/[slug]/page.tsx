@@ -16,6 +16,15 @@ type ProjectPageProps = {
   }>;
 };
 
+const livingSystemFlow = [
+  "Vision",
+  "Content direction",
+  "Archive structure",
+  "Weekly insight drafts",
+  "Human review",
+  "Publishing workflow",
+];
+
 export function generateStaticParams() {
   return archiveProjects.map((project) => ({
     slug: project.slug,
@@ -105,6 +114,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const titleLines = getTitleLines(project.title);
   const mobileTitleLines = getMobileTitleLines(project.title);
   const detailSections = project.sections;
+  const isLivingSystem = project.slug === "living-ai-portfolio-system";
 
   return (
     <>
@@ -184,6 +194,43 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </div>
             </div>
           </Reveal>
+
+          {isLivingSystem && (
+            <Reveal>
+              <section className="editorial-panel relative mt-10 overflow-hidden p-5 md:mt-16 md:p-8">
+                <div className="signal-grid pointer-events-none absolute inset-0 opacity-[0.13]" />
+                <div className="relative z-10 grid gap-8 lg:grid-cols-[0.62fr_1fr] lg:items-end">
+                  <div>
+                    <p className="editorial-kicker">System logic</p>
+                    <h2 className="mt-4 max-w-[580px] text-[clamp(1.8rem,5vw,3.5rem)] font-semibold leading-[1] tracking-[0]">
+                      AI-assisted, human-directed.
+                    </h2>
+                    <p className="mt-5 max-w-[620px] text-[1rem] leading-[1.68] text-[var(--muted-strong)]">
+                      The system is designed around human taste and approval:
+                      AI accelerates drafts, structure, and implementation,
+                      while direction, positioning, and publishing decisions
+                      remain reviewed by me.
+                    </p>
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-3">
+                    {livingSystemFlow.map((step, index) => (
+                      <div
+                        key={step}
+                        className="rounded-[8px] border border-black/10 bg-white/42 p-4 backdrop-blur"
+                      >
+                        <span className="text-[11px] font-semibold text-[var(--sage)]">
+                          0{index + 1}
+                        </span>
+                        <p className="mt-4 text-[0.95rem] leading-[1.45] text-[var(--muted-strong)]">
+                          {step}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            </Reveal>
+          )}
 
           <div className="mt-10 md:mt-24">
             {detailSections ? (

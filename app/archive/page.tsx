@@ -14,6 +14,10 @@ export const metadata: Metadata = {
 };
 
 export default function ArchivePage() {
+  const buildingCount = archiveProjects.filter((project) =>
+    /building|built|operational|shipped/i.test(project.status),
+  ).length;
+
   return (
     <>
       <SiteNav />
@@ -44,12 +48,30 @@ export default function ArchivePage() {
             </Reveal>
             <Reveal delay={0.08}>
               <p className="max-w-[700px] text-[clamp(0.98rem,4vw,1.24rem)] leading-[1.62] text-[var(--muted-strong)]">
-                A project library built to grow with my MBA journey. It brings
-                together AI-assisted product building, Applied AI, Data Science,
-                automation, market intelligence, engineering projects, retail
-                observations, and MBA notes. Each item is framed by the problem,
-                the decision it supported, and the learning it produced.
+                A working archive for applied projects, MBA notes, automation
+                experiments, and market-facing observations. Each item is
+                framed by the problem, the decision it supported, and the
+                learning it left behind.
               </p>
+              <div className="mt-7 grid gap-2 sm:grid-cols-3">
+                {[
+                  ["Items", archiveProjects.length],
+                  ["Applied / built", buildingCount],
+                  ["Living system", "01"],
+                ].map(([label, value]) => (
+                  <div
+                    key={label}
+                    className="rounded-[8px] border border-black/10 bg-white/45 px-3 py-3 backdrop-blur"
+                  >
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
+                      {label}
+                    </p>
+                    <p className="mt-2 text-[1.2rem] font-semibold leading-none">
+                      {value}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </Reveal>
           </div>
         </section>

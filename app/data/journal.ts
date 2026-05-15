@@ -28,6 +28,18 @@ export type JournalVisualPrompt = {
   suggestedUse?: string;
 };
 
+export type JournalImageDisclosure = {
+  recommendedUse?: string;
+  copyrightStatus?: string;
+  disclosureNote?: string;
+};
+
+export type JournalLinkedInShortPost = {
+  draftPath?: string;
+  status?: "draft" | "approved" | "posted" | string;
+  engagementQuestion?: string;
+};
+
 export type JournalBlock =
   | { type: "heading"; text: string }
   | { type: "paragraph"; text: string }
@@ -42,9 +54,17 @@ export type JournalPost = {
   tags: string[];
   summary: string;
   heroImage?: string;
+  portfolioHeroImagePrompt?: string;
   heroImagePrompt?: string;
+  linkedinImagePrompt?: string;
+  linkedinImageAltText?: string;
+  carouselPrompt?: string;
+  carouselOutline: string[];
   supportingVisualPrompts: JournalVisualPrompt[];
+  visualStyle?: string;
   suggestedVisualStyle?: string;
+  imageGeneratedByAI?: boolean;
+  imageDisclosure?: JournalImageDisclosure;
   imageCredit?: string;
   imageSource?: string;
   imageLicense?: string;
@@ -56,6 +76,7 @@ export type JournalPost = {
   readingTime: string;
   canonicalUrl?: string;
   approvalStatus?: string;
+  linkedinShortPost?: JournalLinkedInShortPost;
   body: string;
   blocks: JournalBlock[];
 };
@@ -139,11 +160,27 @@ function readJournalPost(filePath: string): JournalPost {
     tags: Array.isArray(frontmatter.tags) ? frontmatter.tags : [],
     summary: String(frontmatter.summary || "").trim(),
     heroImage: String(frontmatter.heroImage || "").trim(),
+    portfolioHeroImagePrompt: String(frontmatter.portfolioHeroImagePrompt || "").trim(),
     heroImagePrompt: String(frontmatter.heroImagePrompt || "").trim(),
+    linkedinImagePrompt: String(frontmatter.linkedinImagePrompt || "").trim(),
+    linkedinImageAltText: String(frontmatter.linkedinImageAltText || "").trim(),
+    carouselPrompt: String(frontmatter.carouselPrompt || "").trim(),
+    carouselOutline: Array.isArray(frontmatter.carouselOutline)
+      ? frontmatter.carouselOutline
+      : [],
     supportingVisualPrompts: Array.isArray(frontmatter.supportingVisualPrompts)
       ? frontmatter.supportingVisualPrompts
       : [],
+    visualStyle: String(frontmatter.visualStyle || "").trim(),
     suggestedVisualStyle: String(frontmatter.suggestedVisualStyle || "").trim(),
+    imageGeneratedByAI: parseBoolean(frontmatter.imageGeneratedByAI),
+    imageDisclosure: isRecord(frontmatter.imageDisclosure)
+      ? {
+          recommendedUse: String(frontmatter.imageDisclosure.recommendedUse || "").trim(),
+          copyrightStatus: String(frontmatter.imageDisclosure.copyrightStatus || "").trim(),
+          disclosureNote: String(frontmatter.imageDisclosure.disclosureNote || "").trim(),
+        }
+      : undefined,
     imageCredit: String(frontmatter.imageCredit || "").trim(),
     imageSource: String(frontmatter.imageSource || "").trim(),
     imageLicense: String(frontmatter.imageLicense || "").trim(),
@@ -159,6 +196,13 @@ function readJournalPost(filePath: string): JournalPost {
       `${estimateReadingTime(cleanedBody)} min read`,
     canonicalUrl: String(frontmatter.canonicalUrl || "").trim(),
     approvalStatus: String(frontmatter.approvalStatus || "").trim(),
+    linkedinShortPost: isRecord(frontmatter.linkedinShortPost)
+      ? {
+          draftPath: String(frontmatter.linkedinShortPost.draftPath || "").trim(),
+          status: String(frontmatter.linkedinShortPost.status || "").trim(),
+          engagementQuestion: String(frontmatter.linkedinShortPost.engagementQuestion || "").trim(),
+        }
+      : undefined,
     body: cleanedBody,
     blocks: markdownToBlocks(cleanedBody),
   };
@@ -226,10 +270,43 @@ function parseFrontmatter(raw: string) {
       continue;
     }
 
+    if (key === "carouselOutline") {
+      const items: string[] = [];
+      while (/^\s+-\s+/.test(lines[index + 1] || "")) {
+        index += 1;
+        items.push(stripYamlValue(lines[index].replace(/^\s+-\s+/, "")));
+      }
+      data[key] = items;
+      continue;
+    }
+
+    if (key === "linkedinShortPost" || key === "imageDisclosure") {
+      const nestedObject: Record<string, string> = {};
+      while (/^\s+/.test(lines[index + 1] || "")) {
+        index += 1;
+        const nested = lines[index].match(/^\s+([A-Za-z0-9_]+):\s*(.*)$/);
+        if (nested) {
+          nestedObject[nested[1]] = stripYamlValue(nested[2]);
+        }
+      }
+      data[key] = nestedObject;
+      continue;
+    }
+
     data[key] = stripYamlValue(value);
   }
 
   return data;
+}
+
+function parseBoolean(value: unknown) {
+  if (value === true || value === "true") return true;
+  if (value === false || value === "false") return false;
+  return undefined;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 function stripYamlValue(value: string) {

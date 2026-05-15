@@ -22,3 +22,5 @@ dist/
 # local artifacts
 verification-*.png
 *.heic
+weekly-insight-manifest.json
+linkedin-post-result.json

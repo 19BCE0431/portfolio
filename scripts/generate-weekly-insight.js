@@ -12,6 +12,13 @@ const OUTPUT_DIRS = {
   journal: path.join(ROOT, "content", "journal"),
   linkedinDrafts: path.join(ROOT, "content", "linkedin-drafts"),
   generatedAssets: path.join(ROOT, "content", "generated-assets"),
+  analytics: path.join(ROOT, "content", "analytics"),
+  analyticsReports: path.join(ROOT, "content", "analytics", "reports"),
+};
+
+const ANALYTICS_FILES = {
+  linkedIn: path.join(ROOT, "content", "analytics", "linkedin-performance.csv"),
+  journal: path.join(ROOT, "content", "analytics", "journal-performance.csv"),
 };
 
 const WEEKLY_CATEGORIES = [
@@ -23,6 +30,90 @@ const WEEKLY_CATEGORIES = [
   "Business History with Modern Relevance",
   "MBA Learning Notes",
   "Data Science Applied to Decisions",
+];
+
+const CONTENT_PILLARS = [
+  {
+    category: "AI & Business",
+    audienceValue: "how AI changes work, pricing, adoption, marketing, or decision-making",
+  },
+  {
+    category: "Product Strategy",
+    audienceValue: "what product choices reveal about distribution, friction, behavior, and timing",
+  },
+  {
+    category: "Indian Consumer Behavior",
+    audienceValue: "how Indian customers choose, trust, save, spend, switch, or repeat",
+  },
+  {
+    category: "Market Signals",
+    audienceValue: "how pricing, supply chains, macro events, and category shifts shape decisions",
+  },
+  {
+    category: "Brand & Marketing Lessons",
+    audienceValue: "how brands create memory, trust, value perception, and behavior change",
+  },
+  {
+    category: "Business History with Modern Relevance",
+    audienceValue: "older business decisions that still affect today's markets, money, and choices",
+  },
+  {
+    category: "MBA Learning Notes",
+    audienceValue: "what a student can learn from a current business event without turning it into exam prep",
+  },
+  {
+    category: "Data Science Applied to Decisions",
+    audienceValue: "how data, automation, and analytics improve judgment instead of becoming dashboards for their own sake",
+  },
+];
+
+const DISCOVERY_QUERIES = [
+  {
+    query: '("AI" OR "artificial intelligence") ("product" OR "workflow" OR "marketing") ("India" OR "business")',
+    categoryHint: "AI & Business",
+    lens: "AI workflow adoption and business impact",
+  },
+  {
+    query: '("quick commerce" OR "ecommerce" OR "retail") ("India" OR "Indian consumers") ("strategy" OR "pricing" OR "brand")',
+    categoryHint: "Indian Consumer Behavior",
+    lens: "Indian consumer behavior and product strategy",
+  },
+  {
+    query: '("product strategy" OR "pricing strategy" OR "distribution") ("brand" OR "consumer behavior" OR "market signal")',
+    categoryHint: "Product Strategy",
+    lens: "product, pricing, and distribution lessons",
+  },
+  {
+    query: '("supply chain" OR "shipping route" OR "gold" OR "lithium" OR "rupee") ("India" OR "inflation" OR "business")',
+    categoryHint: "Market Signals",
+    lens: "business history, market signals, and India relevance",
+  },
+  {
+    query: '("OpenAI" OR "Google AI" OR "Microsoft AI") ("students" OR "marketing" OR "business" OR "product managers")',
+    categoryHint: "AI & Business",
+    lens: "AI product moves through an MBA and early-career lens",
+  },
+];
+
+const TOPIC_SCORE_WEIGHTS = {
+  usefulness: 1.3,
+  novelty: 1,
+  shareability: 1,
+  commentPotential: 0.95,
+  clarity: 1,
+  credibility: 1.15,
+  visualPotential: 0.7,
+  personalFit: 1.2,
+  historicalFit: 0.8,
+};
+
+const BANNED_STYLE_PHRASES = [
+  "in today's fast-paced world",
+  "ai is changing everything",
+  "game changer",
+  "revolutionizing",
+  "unlocking potential",
+  "dynamic landscape",
 ];
 
 const RSS_FEEDS = [
@@ -50,14 +141,14 @@ const RSS_FEEDS = [
 
 const FALLBACK_TOPICS = [
   {
-    title: "AI tools are moving from novelty to everyday workflow decisions",
+    title: "Why OpenAI's latest product moves matter for Indian MBA students",
     category: "AI & Business",
     summary:
-      "A conservative fallback topic for weeks when no live source feed is available. Use it to analyze how teams decide where AI belongs in real work.",
+      "Use this only as a review scaffold when live discovery is unavailable. The angle is how AI product changes affect student workflows, marketing work, and early product careers.",
     sourceLinks: [
       {
-        title: "Google News search: AI tools workflow business",
-        url: "https://news.google.com/search?q=AI%20tools%20workflow%20business",
+        title: "Google News search: OpenAI product launch business students India",
+        url: "https://news.google.com/search?q=OpenAI%20product%20launch%20business%20students%20India",
         publisher: "Google News",
         datePublished: "",
         accessed: "",
@@ -66,14 +157,110 @@ const FALLBACK_TOPICS = [
     ],
   },
   {
-    title: "What product teams can learn from AI feature packaging",
+    title: "What quick commerce teaches about speed as product strategy",
     category: "Product Strategy",
     summary:
-      "A fallback topic for studying how companies turn technical capability into product packaging, pricing, and adoption.",
+      "A review scaffold for studying how speed becomes a product promise, a cost structure, and a consumer habit in Indian markets.",
     sourceLinks: [
       {
-        title: "Google News search: AI product launch pricing packaging",
-        url: "https://news.google.com/search?q=AI%20product%20launch%20pricing%20packaging",
+        title: "Google News search: quick commerce India speed product strategy",
+        url: "https://news.google.com/search?q=quick%20commerce%20India%20speed%20product%20strategy",
+        publisher: "Google News",
+        datePublished: "",
+        accessed: "",
+        claimSupported: "Source discovery only. Replace with specific sources before publishing.",
+      },
+    ],
+  },
+  {
+    title: "What Zudio teaches about value fashion and consumer psychology",
+    category: "Indian Consumer Behavior",
+    summary:
+      "A review scaffold for understanding value perception, store experience, and repeat behavior in Indian retail without overclaiming.",
+    sourceLinks: [
+      {
+        title: "Google News search: Zudio value fashion consumer psychology India",
+        url: "https://news.google.com/search?q=Zudio%20value%20fashion%20consumer%20psychology%20India",
+        publisher: "Google News",
+        datePublished: "",
+        accessed: "",
+        claimSupported: "Source discovery only. Replace with specific sources before publishing.",
+      },
+    ],
+  },
+  {
+    title: "Why gold is emotional in India, not just financial",
+    category: "Indian Consumer Behavior",
+    summary:
+      "A review scaffold for connecting culture, trust, family decisions, savings behavior, and market signals around gold.",
+    sourceLinks: [
+      {
+        title: "Google News search: gold India consumer behavior savings culture",
+        url: "https://news.google.com/search?q=gold%20India%20consumer%20behavior%20savings%20culture",
+        publisher: "Google News",
+        datePublished: "",
+        accessed: "",
+        claimSupported: "Source discovery only. Replace with specific sources before publishing.",
+      },
+    ],
+  },
+  {
+    title: "How one shipping route can affect inflation",
+    category: "Market Signals",
+    summary:
+      "A review scaffold for explaining how distant logistics shocks move through costs, pricing, and consumer decisions.",
+    sourceLinks: [
+      {
+        title: "Google News search: shipping route inflation India business prices",
+        url: "https://news.google.com/search?q=shipping%20route%20inflation%20India%20business%20prices",
+        publisher: "Google News",
+        datePublished: "",
+        accessed: "",
+        claimSupported: "Source discovery only. Replace with specific sources before publishing.",
+      },
+    ],
+  },
+  {
+    title: "Why the 1944 Bretton Woods meeting still affects your rupee today",
+    category: "Business History with Modern Relevance",
+    summary:
+      "A review scaffold for turning business history into a modern explanation of currency, trade, and policy signals.",
+    sourceLinks: [
+      {
+        title: "Google News search: Bretton Woods rupee dollar system business history",
+        url: "https://news.google.com/search?q=Bretton%20Woods%20rupee%20dollar%20system%20business%20history",
+        publisher: "Google News",
+        datePublished: "",
+        accessed: "",
+        claimSupported: "Source discovery only. Replace with specific sources before publishing.",
+      },
+    ],
+  },
+  {
+    title: "How pricing becomes a market signal",
+    category: "Market Signals",
+    summary:
+      "A review scaffold for studying how price communicates scarcity, quality, positioning, and willingness to pay.",
+    sourceLinks: [
+      {
+        title: "Google News search: pricing as market signal business strategy",
+        url: "https://news.google.com/search?q=pricing%20as%20market%20signal%20business%20strategy",
+        publisher: "Google News",
+        datePublished: "",
+        accessed: "",
+        claimSupported: "Source discovery only. Replace with specific sources before publishing.",
+      },
+    ],
+  },
+  {
+    title: "Why India's lithium story matters for business learners",
+    category: "Market Signals",
+    summary:
+      "A review scaffold for connecting resources, supply chains, EV economics, policy, and long-term market positioning.",
+    sourceLinks: [
+      {
+        title: "Google News search: India lithium discovery business EV supply chain",
+        url: "https://news.google.com/search?q=India%20lithium%20discovery%20business%20EV%20supply%20chain",
         publisher: "Google News",
         datePublished: "",
         accessed: "",
@@ -102,16 +289,19 @@ async function main() {
     args.status || process.env.WEEKLY_INSIGHT_STATUS || "review",
     autoPublish,
   );
-  const useAi = Boolean(args["use-ai"] || process.env.WEEKLY_INSIGHT_USE_OPENAI === "true");
   const dryRun = Boolean(args["dry-run"]);
+  const useAi = Boolean(
+    args["use-ai"] || (!dryRun && process.env.WEEKLY_INSIGHT_USE_OPENAI === "true"),
+  );
   const manifestPath = args.manifest ? path.resolve(ROOT, String(args.manifest)) : "";
   const forcedTopic = args.topic ? String(args.topic) : "";
 
   await ensureOutputDirs();
+  const performanceInsights = await loadPerformanceInsights();
 
   const candidate = forcedTopic
-    ? createManualCandidate(forcedTopic, date)
-    : await discoverBestTopic(date);
+    ? prepareManualCandidate(forcedTopic, date, performanceInsights)
+    : await discoverBestTopic(date, performanceInsights);
 
   const draft = await createDraft(candidate, {
     date,
@@ -119,6 +309,7 @@ async function main() {
     autoPublish,
     useAi,
     portfolioBaseUrl: process.env.WEEKLY_INSIGHT_PORTFOLIO_BASE_URL || "",
+    performanceInsights,
   });
 
   const files = await buildOutputFiles(draft, candidate, { date, status });
@@ -204,7 +395,7 @@ function resolveStatus(status, autoPublish) {
   return "review";
 }
 
-async function discoverBestTopic(date) {
+async function discoverBestTopic(date, performanceInsights = emptyPerformanceInsights()) {
   const [serpCandidates, newsCandidates, rssCandidates] = await Promise.all([
     fetchSerpApiCandidates(date),
     fetchNewsApiCandidates(date),
@@ -219,10 +410,24 @@ async function discoverBestTopic(date) {
   ]);
 
   const scored = candidates
-    .map((candidate) => ({ ...candidate, score: scoreCandidate(candidate, date) }))
+    .map((candidate) => {
+      const enriched = withResearchSourceHints(candidate, date);
+      const topicScore = scoreCandidate(enriched, date, performanceInsights);
+      return {
+        ...enriched,
+        topicScore,
+        score: topicScore.total,
+      };
+    })
     .sort((first, second) => second.score - first.score);
 
-  return scored[0];
+  const selected = scored[0];
+  return {
+    ...selected,
+    candidatePool: scored.slice(0, 8).map(toCandidateScoreSummary),
+    performanceInsights: summarizePerformanceInsights(performanceInsights),
+    selectedTopicRationale: buildSelectionRationale(selected),
+  };
 }
 
 async function fetchSerpApiCandidates(date) {
@@ -230,44 +435,46 @@ async function fetchSerpApiCandidates(date) {
     return [];
   }
 
-  const query = [
-    "AI product launch business strategy",
-    "product strategy AI marketing consumer behavior",
-    "India digital consumer behavior ecommerce AI",
-  ].join(" OR ");
+  const batches = await Promise.all(
+    DISCOVERY_QUERIES.map(async (discovery) => {
+      const url = new URL("https://serpapi.com/search.json");
+      url.searchParams.set("engine", "google_news");
+      url.searchParams.set("q", discovery.query);
+      url.searchParams.set("api_key", process.env.SERP_API_KEY);
 
-  const url = new URL("https://serpapi.com/search.json");
-  url.searchParams.set("engine", "google_news");
-  url.searchParams.set("q", query);
-  url.searchParams.set("api_key", process.env.SERP_API_KEY);
+      try {
+        const data = await fetchJson(url.toString());
+        const results = Array.isArray(data.news_results) ? data.news_results : [];
 
-  try {
-    const data = await fetchJson(url.toString());
-    const results = Array.isArray(data.news_results) ? data.news_results : [];
-
-    return results.slice(0, 12).map((item) => ({
-      title: cleanText(item.title || "Untitled news result"),
-      url: item.link || "",
-      publisher: item.source || "Google News",
-      datePublished: item.date || "",
-      accessed: date,
-      summary: cleanText(item.snippet || ""),
-      category: inferCategory(`${item.title || ""} ${item.snippet || ""}`),
-      sourceLinks: [
-        {
-          title: cleanText(item.title || "Google News result"),
+        return results.slice(0, 6).map((item) => ({
+          title: cleanText(item.title || "Untitled news result"),
           url: item.link || "",
           publisher: item.source || "Google News",
           datePublished: item.date || "",
           accessed: date,
-          claimSupported: "Discovery source for the selected weekly topic.",
-        },
-      ],
-    }));
-  } catch (error) {
-    console.warn(`SERP API source collection skipped: ${readableError(error)}`);
-    return [];
-  }
+          summary: cleanText(item.snippet || ""),
+          category: inferCategory(`${item.title || ""} ${item.snippet || ""}`) || discovery.categoryHint,
+          discoveryQuery: discovery.query,
+          topicLens: discovery.lens,
+          sourceLinks: [
+            {
+              title: cleanText(item.title || "Google News result"),
+              url: item.link || "",
+              publisher: item.source || "Google News",
+              datePublished: item.date || "",
+              accessed: date,
+              claimSupported: `Discovery source for ${discovery.lens}. Verify factual claims before publishing.`,
+            },
+          ],
+        }));
+      } catch (error) {
+        console.warn(`SERP API source collection skipped for ${discovery.categoryHint}: ${readableError(error)}`);
+        return [];
+      }
+    }),
+  );
+
+  return batches.flat();
 }
 
 async function fetchNewsApiCandidates(date) {
@@ -275,40 +482,48 @@ async function fetchNewsApiCandidates(date) {
     return [];
   }
 
-  const url = new URL("https://newsapi.org/v2/everything");
-  url.searchParams.set("q", '(AI OR "artificial intelligence") AND (product OR business OR marketing OR consumer OR startup)');
-  url.searchParams.set("language", "en");
-  url.searchParams.set("sortBy", "publishedAt");
-  url.searchParams.set("pageSize", "12");
-  url.searchParams.set("apiKey", process.env.NEWS_API_KEY);
+  const batches = await Promise.all(
+    DISCOVERY_QUERIES.map(async (discovery) => {
+      const url = new URL("https://newsapi.org/v2/everything");
+      url.searchParams.set("q", discovery.query);
+      url.searchParams.set("language", "en");
+      url.searchParams.set("sortBy", "publishedAt");
+      url.searchParams.set("pageSize", "6");
+      url.searchParams.set("apiKey", process.env.NEWS_API_KEY);
 
-  try {
-    const data = await fetchJson(url.toString());
-    const articles = Array.isArray(data.articles) ? data.articles : [];
+      try {
+        const data = await fetchJson(url.toString());
+        const articles = Array.isArray(data.articles) ? data.articles : [];
 
-    return articles.map((article) => ({
-      title: cleanText(article.title || "Untitled article"),
-      url: article.url || "",
-      publisher: article.source?.name || "News API",
-      datePublished: article.publishedAt || "",
-      accessed: date,
-      summary: cleanText(article.description || ""),
-      category: inferCategory(`${article.title || ""} ${article.description || ""}`),
-      sourceLinks: [
-        {
-          title: cleanText(article.title || "News API article"),
+        return articles.map((article) => ({
+          title: cleanText(article.title || "Untitled article"),
           url: article.url || "",
           publisher: article.source?.name || "News API",
           datePublished: article.publishedAt || "",
           accessed: date,
-          claimSupported: "Discovery source for the selected weekly topic.",
-        },
-      ],
-    }));
-  } catch (error) {
-    console.warn(`News API source collection skipped: ${readableError(error)}`);
-    return [];
-  }
+          summary: cleanText(article.description || ""),
+          category: inferCategory(`${article.title || ""} ${article.description || ""}`) || discovery.categoryHint,
+          discoveryQuery: discovery.query,
+          topicLens: discovery.lens,
+          sourceLinks: [
+            {
+              title: cleanText(article.title || "News API article"),
+              url: article.url || "",
+              publisher: article.source?.name || "News API",
+              datePublished: article.publishedAt || "",
+              accessed: date,
+              claimSupported: `Discovery source for ${discovery.lens}. Verify factual claims before publishing.`,
+            },
+          ],
+        }));
+      } catch (error) {
+        console.warn(`News API source collection skipped for ${discovery.categoryHint}: ${readableError(error)}`);
+        return [];
+      }
+    }),
+  );
+
+  return batches.flat();
 }
 
 async function fetchRssCandidates(date) {
@@ -429,30 +644,435 @@ function dedupeCandidates(candidates) {
   return clean;
 }
 
-function scoreCandidate(candidate, currentDate) {
+function scoreCandidate(candidate, currentDate, performanceInsights = emptyPerformanceInsights()) {
   const text = `${candidate.title || ""} ${candidate.summary || ""}`.toLowerCase();
   const age = daysOld(candidate.datePublished, currentDate);
+  const hasDirectSource = Boolean(candidate.url && !candidate.url.includes("news.google.com/search"));
+  const sourceCount = Array.isArray(candidate.sourceLinks) ? candidate.sourceLinks.length : 0;
+  const analyticsFit = scoreAnalyticsFit(candidate, performanceInsights);
 
-  let score = 0;
-  score += age <= 7 ? 20 : age <= 21 ? 14 : age <= 45 ? 8 : 2;
-  score += countMatches(text, ["launch", "release", "pricing", "enterprise", "consumer", "workflow", "strategy"]) * 5;
-  score += countMatches(text, ["ai", "model", "automation", "agent", "data", "product", "platform"]) * 4;
-  score += countMatches(text, ["india", "retail", "ecommerce", "marketing", "brand", "startup", "business"]) * 4;
-  score += countMatches(text, ["why", "how", "shift", "lesson", "changes", "future", "failure"]) * 3;
+  const recency = clampScore(age <= 7 ? 10 : age <= 21 ? 8 : age <= 45 ? 5 : 2);
+  const indiaRelevance = scoreByTerms(text, ["india", "indian", "rupee", "zudio", "zepto", "swiggy", "gold", "lithium", "retail", "ecommerce"]);
+  const businessRelevance = scoreByTerms(text, ["pricing", "market", "business", "strategy", "revenue", "inflation", "brand", "consumer", "supply chain"]);
+  const productMarketingLesson = scoreByTerms(text, ["product", "workflow", "adoption", "marketing", "distribution", "friction", "packaging", "launch"]);
+  const sourceAvailability = clampScore((hasDirectSource ? 6 : 2) + Math.min(sourceCount, 4));
+
+  const dimensions = {
+    usefulness: clampScore(3 + businessRelevance * 0.45 + productMarketingLesson * 0.35 + indiaRelevance * 0.2),
+    novelty: clampScore(2 + scoreByTerms(text, ["why", "hidden", "signals", "friction", "behavior", "history", "route", "gold", "lithium", "pricing"]) * 0.7),
+    shareability: clampScore(2 + scoreByTerms(text, ["why", "what", "how", "india", "consumer", "students", "mba", "pricing", "gold", "zudio", "zepto"]) * 0.65),
+    commentPotential: clampScore(2 + scoreByTerms(text, ["problem", "strategy", "distribution", "pricing", "behavior", "market", "brand", "consumer"]) * 0.65),
+    clarity: clampScore(text.length > 40 && text.length < 260 ? 8 : text.length <= 40 ? 6 : 5),
+    credibility: sourceAvailability,
+    visualPotential: clampScore(2 + scoreByTerms(text, ["map", "route", "gold", "lithium", "pricing", "workflow", "consumer", "brand", "market"]) * 0.75),
+    personalFit: clampScore(3 + scoreByTerms(text, ["mba", "student", "product", "marketing", "strategy", "consumer", "ai", "automation", "data", "business"]) * 0.5),
+    historicalFit: analyticsFit.historicalFit,
+  };
+
+  let total = Object.entries(dimensions).reduce((sum, [key, value]) => {
+    return sum + value * (TOPIC_SCORE_WEIGHTS[key] || 1);
+  }, 0);
+
+  total += recency * 0.9;
+  total += indiaRelevance * 0.55;
+  total += businessRelevance * 0.5;
+  total += productMarketingLesson * 0.45;
+  total += analyticsFit.totalBoost;
 
   if (candidate.fallback) {
-    score -= 15;
+    total -= 7;
   }
 
-  if (candidate.url && !candidate.url.includes("news.google.com/search")) {
-    score += 5;
-  }
-
-  return score;
+  return {
+    ...dimensions,
+    recency,
+    indiaRelevance,
+    businessRelevance,
+    productMarketingLesson,
+    sourceAvailability,
+    analyticsBoost: analyticsFit.totalBoost,
+    historicalPillarFit: analyticsFit.pillarFit,
+    hookPerformance: analyticsFit.hookFit,
+    audienceResponse: analyticsFit.audienceResponse,
+    total: Math.round(total),
+  };
 }
 
 function countMatches(text, terms) {
   return terms.reduce((count, term) => count + (text.includes(term) ? 1 : 0), 0);
+}
+
+function scoreByTerms(text, terms) {
+  return clampScore(countMatches(text, terms) * 2);
+}
+
+function clampScore(value) {
+  return Math.max(0, Math.min(10, Math.round(value)));
+}
+
+async function loadPerformanceInsights() {
+  const [linkedInRows, journalRows] = await Promise.all([
+    readCsvIfExists(ANALYTICS_FILES.linkedIn),
+    readCsvIfExists(ANALYTICS_FILES.journal),
+  ]);
+
+  const linkedIn = linkedInRows
+    .map(normalizeLinkedInAnalyticsRow)
+    .filter((row) => row.postSlug || row.topic);
+  const journal = journalRows
+    .map(normalizeJournalAnalyticsRow)
+    .filter((row) => row.articleSlug);
+
+  return {
+    linkedIn,
+    journal,
+    topPillars: rankAnalyticsGroups(groupAnalyticsBy(linkedIn, "pillar"), scoreLinkedInAnalyticsGroup),
+    topHooks: rankAnalyticsGroups(groupAnalyticsBy(linkedIn, "hookType"), scoreLinkedInAnalyticsGroup),
+    topFormats: rankAnalyticsGroups(groupAnalyticsBy(linkedIn, "format"), scoreLinkedInAnalyticsGroup),
+    topJournalSources: rankAnalyticsGroups(groupAnalyticsBy(journal, "source"), scoreJournalAnalyticsGroup),
+    bestTopics: [...linkedIn]
+      .sort((first, second) => second.performanceScore - first.performanceScore)
+      .slice(0, 8)
+      .map((row) => ({
+        topic: row.topic,
+        pillar: row.pillar,
+        hookType: row.hookType,
+        format: row.format,
+        score: row.performanceScore,
+        clicks: row.clicks,
+        comments: row.comments,
+      })),
+  };
+}
+
+function emptyPerformanceInsights() {
+  return {
+    linkedIn: [],
+    journal: [],
+    topPillars: [],
+    topHooks: [],
+    topFormats: [],
+    topJournalSources: [],
+    bestTopics: [],
+  };
+}
+
+function scoreAnalyticsFit(candidate, performanceInsights = emptyPerformanceInsights()) {
+  const category = normalizeCategory(candidate.category || inferCategory(candidate.title));
+  const hookType = inferHookType(candidate.title);
+  const text = `${candidate.title || ""} ${candidate.summary || ""}`.toLowerCase();
+
+  const pillar = performanceInsights.topPillars.find((item) => item.key === category);
+  const hook = performanceInsights.topHooks.find((item) => item.key === hookType);
+  const matchingTopic = performanceInsights.bestTopics.find((item) => {
+    const topic = String(item.topic || "").toLowerCase();
+    return topic && topic.split(/\s+/).some((word) => word.length > 4 && text.includes(word));
+  });
+
+  const pillarFit = pillar ? clampScore(4 + pillar.normalizedScore) : 0;
+  const hookFit = hook ? clampScore(3 + hook.normalizedScore) : 0;
+  const audienceResponse = matchingTopic
+    ? clampScore(4 + Math.min(6, matchingTopic.comments + matchingTopic.clicks * 0.4))
+    : 0;
+  const historicalFit = clampScore(pillarFit * 0.45 + hookFit * 0.25 + audienceResponse * 0.3);
+
+  return {
+    pillarFit,
+    hookFit,
+    audienceResponse,
+    historicalFit,
+    totalBoost: Math.round(historicalFit * 1.15),
+  };
+}
+
+function summarizePerformanceInsights(performanceInsights = emptyPerformanceInsights()) {
+  return {
+    linkedInRows: performanceInsights.linkedIn.length,
+    journalRows: performanceInsights.journal.length,
+    topPillars: performanceInsights.topPillars.slice(0, 3).map(toAnalyticsSummary),
+    topHooks: performanceInsights.topHooks.slice(0, 3).map(toAnalyticsSummary),
+    topFormats: performanceInsights.topFormats.slice(0, 3).map(toAnalyticsSummary),
+    bestTopics: performanceInsights.bestTopics.slice(0, 3),
+  };
+}
+
+function toAnalyticsSummary(item) {
+  return {
+    key: item.key,
+    score: item.score,
+    count: item.count,
+  };
+}
+
+async function readCsvIfExists(filePath) {
+  if (!existsSync(filePath)) {
+    return [];
+  }
+
+  const raw = await fs.readFile(filePath, "utf8");
+  return parseCsv(raw);
+}
+
+function parseCsv(raw) {
+  const rows = parseCsvRows(raw).filter((row) => row.some((cell) => cell.trim()));
+  if (rows.length <= 1) {
+    return [];
+  }
+
+  const headers = rows[0].map((header) => header.trim());
+  return rows.slice(1).map((row) => {
+    const record = {};
+    headers.forEach((header, index) => {
+      record[header] = row[index] ? row[index].trim() : "";
+    });
+    return record;
+  });
+}
+
+function parseCsvRows(raw) {
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let inQuotes = false;
+
+  for (let index = 0; index < raw.length; index += 1) {
+    const char = raw[index];
+    const next = raw[index + 1];
+
+    if (char === '"' && inQuotes && next === '"') {
+      cell += '"';
+      index += 1;
+      continue;
+    }
+
+    if (char === '"') {
+      inQuotes = !inQuotes;
+      continue;
+    }
+
+    if (char === "," && !inQuotes) {
+      row.push(cell);
+      cell = "";
+      continue;
+    }
+
+    if ((char === "\n" || char === "\r") && !inQuotes) {
+      if (char === "\r" && next === "\n") {
+        index += 1;
+      }
+      row.push(cell);
+      rows.push(row);
+      row = [];
+      cell = "";
+      continue;
+    }
+
+    cell += char;
+  }
+
+  if (cell || row.length) {
+    row.push(cell);
+    rows.push(row);
+  }
+
+  return rows;
+}
+
+function normalizeLinkedInAnalyticsRow(row) {
+  const impressions = numericValue(row.impressions);
+  const reactions = numericValue(row.reactions);
+  const comments = numericValue(row.comments);
+  const reposts = numericValue(row.reposts);
+  const clicks = numericValue(row.clicks);
+  const profileVisits = numericValue(row.profileVisits);
+  const engagementRate =
+    numericValue(row.engagementRate) ||
+    (impressions
+      ? ((reactions + comments * 2 + reposts * 3 + clicks * 2 + profileVisits) / impressions) * 100
+      : 0);
+
+  return {
+    ...row,
+    impressions,
+    reactions,
+    comments,
+    reposts,
+    clicks,
+    profileVisits,
+    engagementRate,
+    performanceScore: Math.round(engagementRate * 10 + comments * 2 + clicks * 1.5 + reposts * 2),
+  };
+}
+
+function normalizeJournalAnalyticsRow(row) {
+  const pageViews = numericValue(row.pageViews);
+  const readTime = numericValue(row.readTime);
+  const clicksFromLinkedIn = numericValue(row.clicksFromLinkedIn);
+
+  return {
+    ...row,
+    pageViews,
+    readTime,
+    clicksFromLinkedIn,
+    performanceScore: Math.round(pageViews + clicksFromLinkedIn * 2 + readTime * 0.2),
+  };
+}
+
+function groupAnalyticsBy(rows, key) {
+  return rows.reduce((groups, row) => {
+    const groupKey = cleanText(row[key] || "unknown") || "unknown";
+    groups[groupKey] = groups[groupKey] || [];
+    groups[groupKey].push(row);
+    return groups;
+  }, {});
+}
+
+function rankAnalyticsGroups(groups, scoreFn) {
+  const ranked = Object.entries(groups)
+    .filter(([key]) => key && key !== "unknown")
+    .map(([key, rows]) => ({
+      key,
+      count: rows.length,
+      score: scoreFn(rows),
+    }))
+    .sort((first, second) => second.score - first.score);
+
+  const topScore = ranked[0]?.score || 0;
+  return ranked.map((item) => ({
+    ...item,
+    normalizedScore: topScore ? clampScore((item.score / topScore) * 10) : 0,
+  }));
+}
+
+function scoreLinkedInAnalyticsGroup(rows) {
+  const impressions = rows.reduce((total, row) => total + numericValue(row.impressions), 0);
+  const comments = rows.reduce((total, row) => total + numericValue(row.comments), 0);
+  const clicks = rows.reduce((total, row) => total + numericValue(row.clicks), 0);
+  const engagement = rows.reduce((total, row) => total + numericValue(row.engagementRate), 0) / rows.length;
+  return Math.round(engagement * 10 + comments * 2 + clicks + impressions * 0.01);
+}
+
+function scoreJournalAnalyticsGroup(rows) {
+  return Math.round(
+    rows.reduce((total, row) => total + numericValue(row.pageViews) + numericValue(row.clicksFromLinkedIn) * 2, 0),
+  );
+}
+
+function inferHookType(title) {
+  const lower = String(title || "").trim().toLowerCase();
+
+  if (lower.startsWith("why ")) return "why";
+  if (lower.startsWith("what ")) return "what";
+  if (lower.startsWith("how ")) return "how";
+  if (lower.includes("teaches")) return "lesson";
+  if (lower.includes("?")) return "question";
+  return "insight";
+}
+
+function numericValue(value) {
+  const parsed = Number(String(value || "").replace(/%$/, ""));
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function withResearchSourceHints(candidate, date) {
+  const topic = candidate.title || "";
+  const sourceLinks = Array.isArray(candidate.sourceLinks) ? [...candidate.sourceLinks] : [];
+  const existingUrls = new Set(sourceLinks.map((source) => source.url).filter(Boolean));
+
+  const hints = [
+    {
+      title: `Google News search: ${topic}`,
+      url: `https://news.google.com/search?q=${encodeURIComponent(topic)}`,
+      publisher: "Google News",
+      datePublished: "",
+      accessed: date,
+      claimSupported: "Source discovery only. Use this to find current coverage, then cite specific sources.",
+    },
+    {
+      title: `Google News search: ${topic} India business analysis`,
+      url: `https://news.google.com/search?q=${encodeURIComponent(`${topic} India business analysis`)}`,
+      publisher: "Google News",
+      datePublished: "",
+      accessed: date,
+      claimSupported: "Source discovery only for India and business relevance. Replace with credible source links before publishing.",
+    },
+  ];
+
+  for (const hint of hints) {
+    if (!existingUrls.has(hint.url)) {
+      sourceLinks.push(hint);
+      existingUrls.add(hint.url);
+    }
+  }
+
+  return {
+    ...candidate,
+    sourceLinks,
+  };
+}
+
+function toCandidateScoreSummary(candidate) {
+  return {
+    title: candidate.title,
+    category: candidate.category,
+    summary: candidate.summary || "",
+    total: candidate.topicScore?.total || candidate.score || 0,
+    scores: {
+      usefulness: candidate.topicScore?.usefulness || 0,
+      novelty: candidate.topicScore?.novelty || 0,
+      shareability: candidate.topicScore?.shareability || 0,
+      commentPotential: candidate.topicScore?.commentPotential || 0,
+      clarity: candidate.topicScore?.clarity || 0,
+      credibility: candidate.topicScore?.credibility || 0,
+      visualPotential: candidate.topicScore?.visualPotential || 0,
+      personalFit: candidate.topicScore?.personalFit || 0,
+      historicalFit: candidate.topicScore?.historicalFit || 0,
+    },
+    drivers: {
+      recency: candidate.topicScore?.recency || 0,
+      indiaRelevance: candidate.topicScore?.indiaRelevance || 0,
+      businessRelevance: candidate.topicScore?.businessRelevance || 0,
+      productMarketingLesson: candidate.topicScore?.productMarketingLesson || 0,
+      sourceAvailability: candidate.topicScore?.sourceAvailability || 0,
+      analyticsBoost: candidate.topicScore?.analyticsBoost || 0,
+      historicalPillarFit: candidate.topicScore?.historicalPillarFit || 0,
+      hookPerformance: candidate.topicScore?.hookPerformance || 0,
+      audienceResponse: candidate.topicScore?.audienceResponse || 0,
+    },
+    sourceCount: Array.isArray(candidate.sourceLinks) ? candidate.sourceLinks.length : 0,
+  };
+}
+
+function buildSelectionRationale(candidate) {
+  const score = candidate.topicScore || {};
+  const reasons = [];
+
+  if ((score.usefulness || 0) >= 7) reasons.push("it has a practical learning angle for MBA, product, marketing, or early-career readers");
+  if ((score.indiaRelevance || 0) >= 6) reasons.push("it connects to Indian markets or consumer behavior");
+  if ((score.commentPotential || 0) >= 7) reasons.push("it can invite a thoughtful discussion rather than a passive news-summary read");
+  if ((score.visualPotential || 0) >= 7) reasons.push("it can be supported by a clean visual or carousel");
+  if ((score.credibility || 0) >= 6) reasons.push("it has enough source material to begin a review-backed draft");
+  if ((score.analyticsBoost || 0) > 0) reasons.push("past content analytics suggest this direction has audience response");
+
+  if (!reasons.length) {
+    reasons.push("it is the strongest available topic after balancing relevance, clarity, sources, and portfolio fit");
+  }
+
+  return `Selected because ${reasons.join(", ")}.`;
+}
+
+function prepareManualCandidate(topic, date, performanceInsights) {
+  const enriched = withResearchSourceHints(createManualCandidate(topic, date), date);
+  const topicScore = scoreCandidate(enriched, date, performanceInsights);
+
+  return {
+    ...enriched,
+    topicScore,
+    score: topicScore.total,
+    candidatePool: [toCandidateScoreSummary({ ...enriched, topicScore, score: topicScore.total })],
+    performanceInsights: summarizePerformanceInsights(performanceInsights),
+    selectedTopicRationale: buildSelectionRationale({ ...enriched, topicScore }),
+  };
 }
 
 function daysOld(dateValue, fallbackDate) {
@@ -504,20 +1124,53 @@ async function createDraftWithOpenAI(candidate, options) {
   const prompt = {
     instruction:
       options.autoPublish
-        ? "Create a publication-ready weekly portfolio blog and LinkedIn draft for Mohit. Use only the provided sources. Mark unsupported claims as TODO so validation can block publishing. Avoid generic AI-newsletter language, clickbait, fake expertise, and overconfident predictions."
-        : "Create a grounded weekly portfolio blog draft and LinkedIn draft for Mohit. Use only the provided sources. Mark unsupported claims as TODO. Avoid generic AI-newsletter language, clickbait, fake expertise, and overconfident predictions.",
+        ? "Create a publication-ready weekly portfolio blog and LinkedIn draft for Mohit. Use only the provided sources. Mark unsupported claims as TODO so validation can block publishing. The topic must be explained through an MBA, product, marketing, Indian business, or consumer-behavior lens."
+        : "Create a grounded weekly portfolio blog draft and LinkedIn draft for Mohit. Use only the provided sources. Mark unsupported claims as TODO. The topic must be explained through an MBA, product, marketing, Indian business, or consumer-behavior lens.",
     candidate,
+    contentPillars: CONTENT_PILLARS,
+    topicScoring: candidate.topicScore,
+    selectedTopicRationale: candidate.selectedTopicRationale,
+    performanceInsights: candidate.performanceInsights || summarizePerformanceInsights(options.performanceInsights),
     style: {
-      voice: "intelligent, story-driven, premium, sharp, personal but not overly personal, practical, readable",
-      audience: "MBA students, product managers, marketers, analysts, founders, and business-curious readers",
+      voice: "sharp, story-driven, human, useful, practical, premium, readable, not academic, not clickbait",
+      audience:
+        "MBA students, product management aspirants, marketing and strategy learners, business-curious students, early professionals, and Indian readers interested in business, AI, economy, brands, and consumer behavior",
+      avoidPhrases: BANNED_STYLE_PHRASES,
       requiredSections: [
         "Strong opening hook",
+        "Short story/context",
         "What happened",
         "Why it matters",
-        "Hidden business, product, or consumer behavior lesson",
+        "Hidden business, product, or marketing lesson",
+        "India, MBA, or student relevance",
         "My interpretation",
         "Key takeaways",
+        "Sources/further reading",
         ...(options.autoPublish ? [] : ["Review TODOs"]),
+      ],
+      articleRules: [
+        "Do not write general knowledge or exam-prep content.",
+        "Do not summarize news for its own sake.",
+        "Teach one practical idea that a product, marketing, strategy, MBA, or business learner can use.",
+        "Separate sourced facts from Mohit's interpretation.",
+        "Use short paragraphs and specific examples.",
+        "Do not claim deep expertise or insider knowledge.",
+      ],
+      linkedinRules: [
+        "Start with a strong first line.",
+        "Use 2 to 3 sentences of context.",
+        "Include 3 to 5 crisp points.",
+        "Link to the full portfolio article.",
+        "End with one thoughtful engagement question.",
+        "Use minimal hashtags.",
+      ],
+      visualRules: [
+        "Generate a portfolio hero image prompt.",
+        "Generate a LinkedIn image prompt.",
+        "Generate an optional carousel outline.",
+        "Add alt text and image disclosure metadata.",
+        "Visuals should be premium, editorial, abstract, modern, and copyright-safe.",
+        "Avoid logos, fake screenshots, copyrighted UI, neon, cyberpunk, and corporate stock imagery.",
       ],
     },
     outputSchema: {
@@ -527,9 +1180,15 @@ async function createDraftWithOpenAI(candidate, options) {
       tags: ["string"],
       summary: "string",
       keyInsight: "string",
+      portfolioHeroImagePrompt: "string",
       heroImagePrompt: "string",
       heroAltText: "string",
+      linkedinImagePrompt: "string",
+      linkedinImageAltText: "string",
+      carouselPrompt: "string",
       suggestedVisualStyle: "string",
+      visualStyle: "string",
+      altText: "string",
       visualPrompts: [
         {
           prompt: "string",
@@ -537,6 +1196,14 @@ async function createDraftWithOpenAI(candidate, options) {
           suggestedUse: "string",
         },
       ],
+      carouselOutline: ["string"],
+      imageDisclosureMetadata: {
+        recommendedUse: "string",
+        copyrightStatus: "string",
+        disclosureNote: "string",
+      },
+      imageGeneratedByAI: true,
+      engagementQuestion: "string",
       articleMarkdown: "string",
       linkedinMarkdown: "string",
     },
@@ -602,11 +1269,12 @@ function createTemplateDraft(candidate, options) {
   const category = candidate.category || inferCategory(candidate.title);
   const tags = buildTags(candidate, category);
   const baseTitle = candidate.title.replace(/\s+-\s+.*$/, "").trim();
-  const title = titleCase(`What ${baseTitle} reveals about business judgment`);
+  const title = titleCase(baseTitle.match(/^(why|what|how)\b/i) ? baseTitle : `What ${baseTitle} reveals about business decisions`);
   const slug = slugify(title);
   const articleUrl = buildArticleUrl(options.portfolioBaseUrl, slug);
   const sourceTitle = candidate.sourceLinks?.[0]?.title || candidate.title;
   const sourcePublisher = candidate.sourceLinks?.[0]?.publisher || candidate.publisher || "source";
+  const engagementQuestion = buildEngagementQuestion(candidate);
 
   const articleMarkdown = `# ${title}
 
@@ -614,7 +1282,13 @@ function createTemplateDraft(candidate, options) {
 
 ## Strong Opening Hook
 
-The useful question is not whether this development is exciting. It is what it reveals about how a technical shift becomes a business decision.
+The interesting part is not the headline. It is the choice underneath it: what people trust, what businesses price, what teams adopt, and what customers quietly refuse.
+
+## Short Story / Context
+
+This draft starts from **${escapeMarkdown(candidate.title)}** and treats it as a business-learning topic, not a news summary.
+
+For review, the first source signal is **${escapeMarkdown(sourceTitle)}** from ${escapeMarkdown(sourcePublisher)}. Replace this paragraph with a tighter story once the specific facts are checked.
 
 ## What Happened
 
@@ -626,53 +1300,60 @@ TODO before publishing: replace this conservative summary with verified details 
 
 ## Why It Matters
 
-For an MBA, product, marketing, or strategy reader, the important layer is not the announcement alone. It is the decision around adoption: who the product is for, what behavior it changes, what workflow it enters, and what tradeoff a customer or business team must make.
+For an MBA, product, marketing, or strategy reader, the useful layer is the decision around adoption: who this affects, what behavior it changes, what tradeoff it creates, and how a business should read the signal.
 
-## The Hidden Business Lesson
+## The Hidden Business / Product Lesson
 
-The best technology stories are rarely only about capability. They are about packaging, timing, trust, distribution, and whether the user understands the job the product is supposed to do.
+The strongest angle to sharpen during review is this: the market rarely rewards capability by itself. It rewards capability that is packaged clearly, priced believably, distributed well, and trusted by the people expected to use it.
 
-That is the angle this draft should sharpen during review: not "AI is moving fast," but "what changed in the business decision because of this development?"
+This piece should explain the decision lesson behind the event: what becomes easier, what becomes harder, and what a product, marketing, or strategy team should watch next.
+
+## India / MBA / Student Relevance
+
+For Indian students and early professionals, the point is not to memorize the event. The point is to practice reading signals: price, convenience, trust, distribution, brand memory, or workflow change.
+
+TODO before publishing: add the most relevant India or student angle from verified sources.
 
 ## My Interpretation
 
-I read this as a reminder that applied AI becomes meaningful only when it supports a real decision. A model, feature, or automation flow is useful when it helps a team choose faster, serve a customer better, reduce friction, or see a market signal earlier.
+I read this as a useful prompt for business judgment. A trend becomes worth studying when it changes how someone chooses: a customer, a team, a brand, a product manager, or a market.
 
-The question I would carry forward is simple: does this development make the product easier to trust, easier to adopt, or easier to connect to business outcomes?
+The question I would carry forward is simple: does this development reduce friction, reveal demand, improve trust, or change the economics of a decision?
 
 ## Key Takeaways
 
-- Look beyond the launch and identify the workflow or customer behavior it changes.
-- Separate technical novelty from business usefulness.
-- Check whether the product decision improves trust, speed, cost, convenience, or clarity.
-- Keep the final article grounded in verified sources, not broad market claims.
+- Look past the headline and identify the behavior or decision it changes.
+- Ask whether the business lesson is about pricing, trust, speed, distribution, brand, or workflow.
+- Keep the India or student relevance specific, not forced.
+- Use sources to support facts and keep interpretation clearly marked.
 
 ## Review TODOs
 
 - Verify the primary source and add at least one supporting source.
 - Replace any generic phrasing with source-specific details.
 - Add the clearest business, product, marketing, or consumer behavior lesson.
+- Add one thoughtful LinkedIn question that invites comments without baiting.
 - Confirm the article link and hero image prompt before publishing.
 
-## Sources
+## Sources / Further Reading
 
 ${formatMarkdownSources(candidate.sourceLinks)}
 `;
 
-  const linkedinMarkdown = `The most interesting part of this week's topic is not the announcement itself.
+  const linkedinMarkdown = `${candidate.title} is worth studying beyond the headline.
 
-It is the business question underneath it: what changes when a technical capability becomes a real product or workflow decision?
+The useful question is: what choice does it change for a customer, a product team, a marketer, or a business learner?
 
 My working read:
 
-- The product lesson is in adoption, not novelty.
-- The business value depends on trust, timing, and packaging.
-- The marketing question is whether customers understand the job this solves.
-- The strategy question is whether this creates a durable behavior shift.
+- The signal matters more than the announcement.
+- The lesson is likely in adoption, pricing, trust, distribution, or friction.
+- The India/MBA angle should be specific enough to teach something practical.
+- The final article needs verified sources before it moves out of review.
 
-Full draft for review: ${articleUrl}
+Full article: ${articleUrl}
 
-What would you look for first: technical capability, customer behavior, or business model impact?
+${engagementQuestion}
 
 #AI #ProductStrategy #Business`;
 
@@ -685,19 +1366,29 @@ What would you look for first: technical capability, customer behavior, or busin
       summary:
         "A review-ready weekly insight draft on how a recent AI, product, or business development connects to practical business judgment.",
       keyInsight:
-        "The strongest story is not the technical announcement. It is the decision, behavior, or business tradeoff the announcement changes.",
+        "The strongest story is not the announcement. It is the behavior, decision, or business tradeoff the event changes.",
+      portfolioHeroImagePrompt:
+        "Create a premium editorial abstract hero image for a business insight article. Show layered market signals, product decisions, consumer-choice paths, and subtle analytical lines on a warm off-white and charcoal palette. No logos, no product screenshots, no faces, no copyrighted UI, no neon, no crypto styling, no fake corporate stock-photo look.",
       heroImagePrompt:
-        "Create a premium editorial abstract image for a business/product insight article. Show a calm strategy workspace with subtle AI signal lines, a decision map, and restrained data patterns. Use warm neutral light, refined contrast, no logos, no product screenshots, no faces, no copyrighted UI, no neon, no crypto styling, and no fake corporate stock-photo look.",
+        "Create a premium editorial abstract hero image for a business insight article. Show layered market signals, product decisions, consumer-choice paths, and subtle analytical lines on a warm off-white and charcoal palette. No logos, no product screenshots, no faces, no copyrighted UI, no neon, no crypto styling, no fake corporate stock-photo look.",
       heroAltText:
-        "Abstract editorial visual of AI signals, product decisions, and business strategy notes.",
+        "Abstract editorial visual of market signals, product decisions, and consumer choice paths.",
+      linkedinImagePrompt:
+        "Create a square LinkedIn-safe editorial visual with one clear central metaphor for the article topic: market signals becoming business decisions. Use refined contrast, warm neutral lighting, clean negative space, no brand logos, no real screenshots, no cartoon style.",
+      linkedinImageAltText:
+        "Editorial visual showing market signals turning into product and business decisions.",
+      carouselPrompt:
+        "Design a 5 to 7 slide LinkedIn carousel as a premium editorial infographic. Use one idea per slide, large mobile-readable type, restrained warm neutral palette, simple arrows or market-signal lines, no logos, no fake screenshots, and no clutter.",
       suggestedVisualStyle:
         "Premium editorial, abstract, warm neutral palette, thin linework, restrained depth, portfolio-ready, LinkedIn-safe.",
+      visualStyle:
+        "Premium editorial infographic, abstract market map, muted economic diagram, cinematic product strategy visual, minimal business illustration, elegant data visualization.",
       visualPrompts: [
         {
           prompt:
-            "A minimal diagram-style visual showing technical capability moving into product packaging, customer adoption, and business outcome. Use thin lines, calm contrast, no brand marks, and no real UI.",
+            "A minimal diagram-style visual showing a market signal moving into customer behavior, product response, and business outcome. Use thin lines, calm contrast, no brand marks, and no real UI.",
           altText:
-            "Abstract diagram showing technical capability flowing into product adoption and business outcomes.",
+            "Abstract diagram showing a market signal flowing into customer behavior and business outcomes.",
           suggestedUse: "Inline explainer visual",
         },
         {
@@ -708,6 +1399,20 @@ What would you look for first: technical capability, customer behavior, or busin
           suggestedUse: "Supporting visual or LinkedIn preview variant",
         },
       ],
+      carouselOutline: [
+        "Slide 1: The headline is not the lesson",
+        "Slide 2: What changed",
+        "Slide 3: The hidden business or product signal",
+        "Slide 4: Why it matters for Indian MBA/product/marketing readers",
+        "Slide 5: What to watch next",
+      ],
+      imageDisclosureMetadata: {
+        recommendedUse: "AI-generated abstract visual or self-created diagram only",
+        copyrightStatus: "No third-party logos, screenshots, or copyrighted imagery",
+        disclosureNote: "Visual prompt intended for a copyright-safe editorial image.",
+      },
+      imageGeneratedByAI: true,
+      engagementQuestion,
       articleMarkdown,
       linkedinMarkdown,
     },
@@ -719,7 +1424,7 @@ What would you look for first: technical capability, customer behavior, or busin
 function normalizeDraft(rawDraft, candidate, options) {
   const title = cleanText(rawDraft.title || candidate.title || "Weekly Business Insight");
   const slug = slugify(rawDraft.slug || title);
-  const category = rawDraft.category || candidate.category || inferCategory(title);
+  const category = normalizeCategory(rawDraft.category || candidate.category || inferCategory(title));
 
   return {
     title,
@@ -728,13 +1433,27 @@ function normalizeDraft(rawDraft, candidate, options) {
     tags: Array.isArray(rawDraft.tags) && rawDraft.tags.length ? rawDraft.tags.slice(0, 6) : buildTags(candidate, category),
     summary: cleanText(rawDraft.summary || candidate.summary || "Weekly insight draft for review."),
     keyInsight: cleanText(rawDraft.keyInsight || "The business lesson should be sharpened during review."),
-    heroImagePrompt: cleanText(rawDraft.heroImagePrompt || ""),
-    heroAltText: cleanText(rawDraft.heroAltText || `Editorial visual for ${title}`),
+    portfolioHeroImagePrompt: cleanText(rawDraft.portfolioHeroImagePrompt || rawDraft.heroImagePrompt || ""),
+    heroImagePrompt: cleanText(rawDraft.heroImagePrompt || rawDraft.portfolioHeroImagePrompt || ""),
+    heroAltText: cleanText(rawDraft.heroAltText || rawDraft.altText || `Editorial visual for ${title}`),
+    linkedinImagePrompt: cleanText(rawDraft.linkedinImagePrompt || ""),
+    linkedinImageAltText: cleanText(rawDraft.linkedinImageAltText || `LinkedIn editorial visual for ${title}`),
+    carouselPrompt: cleanText(rawDraft.carouselPrompt || ""),
     suggestedVisualStyle: cleanText(
       rawDraft.suggestedVisualStyle ||
+        rawDraft.visualStyle ||
         "Premium editorial, abstract, business/product/AI inspired, modern, restrained, not cartoonish, not neon, not cyberpunk.",
     ),
+    visualStyle: cleanText(
+      rawDraft.visualStyle ||
+        rawDraft.suggestedVisualStyle ||
+        "Premium editorial infographic, abstract market map, muted economic diagram, cinematic product strategy visual, minimal business illustration, elegant data visualization.",
+    ),
     visualPrompts: normalizeVisualPrompts(rawDraft.visualPrompts).slice(0, 3),
+    carouselOutline: normalizeStringList(rawDraft.carouselOutline).slice(0, 7),
+    imageDisclosureMetadata: normalizeImageDisclosure(rawDraft.imageDisclosureMetadata),
+    imageGeneratedByAI: rawDraft.imageGeneratedByAI === false ? false : true,
+    engagementQuestion: cleanText(rawDraft.engagementQuestion || buildEngagementQuestion(candidate)),
     linkedinStatus: options.autoPublish ? "approved" : "draft",
     articleMarkdown: prepareArticleMarkdown(rawDraft.articleMarkdown || "", options.autoPublish),
     linkedinMarkdown: ensureLinkedInDraft(rawDraft.linkedinMarkdown || "", buildArticleUrl(options.portfolioBaseUrl, slug)),
@@ -763,6 +1482,22 @@ function normalizeVisualPrompts(value) {
       };
     })
     .filter((item) => item.prompt);
+}
+
+function normalizeStringList(value) {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value.map((item) => cleanText(item)).filter(Boolean);
+}
+
+function normalizeImageDisclosure(value) {
+  return {
+    recommendedUse: cleanText(value?.recommendedUse || "AI-generated abstract visual or self-created diagram only"),
+    copyrightStatus: cleanText(value?.copyrightStatus || "Copyright-safe visual required. Do not use logos, screenshots, or copyrighted images without permission."),
+    disclosureNote: cleanText(value?.disclosureNote || "Visual prompt metadata for human-reviewed image creation."),
+  };
 }
 
 async function buildOutputFiles(draft, candidate, options) {
@@ -804,6 +1539,7 @@ date: "${date}"
 status: "review"
 selectedTopic: ${yamlString(candidate.title)}
 category: ${yamlString(draft.category)}
+selectedTopicScore: ${yamlString(candidate.topicScore?.total || "")}
 approvalStatus: "not_requested"
 ---
 
@@ -818,9 +1554,21 @@ ${candidate.title}
 ## Why This Topic Was Selected
 
 - Category fit: ${draft.category}
-- Business relevance: product, market, workflow, customer, or strategy implications are present.
-- Audience fit: useful for MBA, product, marketing, analytics, startup, and business-curious readers.
-- Narrative potential: ${draft.keyInsight}
+- Rationale: ${candidate.selectedTopicRationale || "Selected after balancing topic score, sources, audience fit, and portfolio relevance."}
+- Key insight to sharpen: ${draft.keyInsight}
+- Audience fit: useful for MBA students, product and marketing learners, early professionals, and Indian business-curious readers.
+
+## Selected Topic Score
+
+${formatTopicScore(candidate.topicScore)}
+
+## Candidate Topic Scoreboard
+
+${formatCandidateScoreboard(candidate.candidatePool)}
+
+## Performance Signals Used
+
+${formatPerformanceSignals(candidate.performanceInsights)}
 
 ## Source Links
 
@@ -836,11 +1584,16 @@ ${formatMarkdownSources(candidate.sourceLinks)}
 
 ${draft.summary}
 
+## LinkedIn Engagement Question
+
+${draft.engagementQuestion}
+
 ## Human Review TODOs
 
 - Confirm this is the right weekly topic.
 - Replace weak or generic lines with specific evidence from sources.
 - Check every factual claim against a stored source link.
+- Confirm the LinkedIn question invites useful comments without bait.
 - Approve the blog and LinkedIn post separately.
 `;
 }
@@ -856,9 +1609,21 @@ tags:
 ${toYamlList(draft.tags)}
 summary: ${yamlString(draft.summary)}
 heroImage: ""
+portfolioHeroImagePrompt: ${yamlString(draft.portfolioHeroImagePrompt)}
 heroImagePrompt: ${yamlString(draft.heroImagePrompt)}
 supportingVisualPrompts:
 ${toYamlVisualPrompts(draft.visualPrompts)}
+linkedinImagePrompt: ${yamlString(draft.linkedinImagePrompt)}
+linkedinImageAltText: ${yamlString(draft.linkedinImageAltText)}
+carouselPrompt: ${yamlString(draft.carouselPrompt)}
+carouselOutline:
+${toYamlOptionalList(draft.carouselOutline)}
+visualStyle: ${yamlString(draft.visualStyle)}
+imageGeneratedByAI: ${draft.imageGeneratedByAI ? "true" : "false"}
+imageDisclosure:
+  recommendedUse: ${yamlString(draft.imageDisclosureMetadata.recommendedUse)}
+  copyrightStatus: ${yamlString(draft.imageDisclosureMetadata.copyrightStatus)}
+  disclosureNote: ${yamlString(draft.imageDisclosureMetadata.disclosureNote)}
 suggestedVisualStyle: ${yamlString(draft.suggestedVisualStyle)}
 imageCredit: ""
 imageSource: ""
@@ -875,6 +1640,7 @@ approvalStatus: ${yamlString(status === "published" ? "approved" : "not_requeste
 linkedinShortPost:
   draftPath: ${yamlString(relativePath(linkedinPath))}
   status: ${yamlString(draft.linkedinStatus)}
+  engagementQuestion: ${yamlString(draft.engagementQuestion)}
 ---
 
 ${draft.articleMarkdown}
@@ -889,6 +1655,18 @@ status: ${yamlString(draft.linkedinStatus)}
 createdDate: "${date}"
 approvedDate: ${yamlString(draft.linkedinStatus === "approved" ? date : "")}
 postedDate: ""
+engagementQuestion: ${yamlString(draft.engagementQuestion)}
+linkedinImagePrompt: ${yamlString(draft.linkedinImagePrompt)}
+linkedinImageAltText: ${yamlString(draft.linkedinImageAltText)}
+carouselPrompt: ${yamlString(draft.carouselPrompt)}
+carouselOutline:
+${toYamlOptionalList(draft.carouselOutline)}
+visualStyle: ${yamlString(draft.visualStyle)}
+imageGeneratedByAI: ${draft.imageGeneratedByAI ? "true" : "false"}
+imageDisclosure:
+  recommendedUse: ${yamlString(draft.imageDisclosureMetadata.recommendedUse)}
+  copyrightStatus: ${yamlString(draft.imageDisclosureMetadata.copyrightStatus)}
+  disclosureNote: ${yamlString(draft.imageDisclosureMetadata.disclosureNote)}
 hashtags:
   - "#AI"
   - "#ProductStrategy"
@@ -914,15 +1692,36 @@ licenseRequirement: "AI-generated, self-created, public domain, or clearly licen
 
 # Hero Image Prompt
 
-${draft.heroImagePrompt || "TODO: Add a copyright-safe hero image prompt before publishing."}
+${draft.portfolioHeroImagePrompt || draft.heroImagePrompt || "TODO: Add a copyright-safe hero image prompt before publishing."}
 
 Alt text: ${draft.heroAltText || "TODO: Add alt text before publishing."}
 
-Suggested visual style: ${draft.suggestedVisualStyle}
+Visual style: ${draft.visualStyle || draft.suggestedVisualStyle}
+
+## LinkedIn Image Prompt
+
+${draft.linkedinImagePrompt || "TODO: Add a LinkedIn image prompt before publishing."}
+
+Alt text: ${draft.linkedinImageAltText || "TODO: Add LinkedIn image alt text before publishing."}
+
+## Carousel Prompt
+
+${draft.carouselPrompt || "TODO: Add a LinkedIn carousel prompt if the topic would work as a visual explainer."}
+
+## Optional Carousel Outline
+
+${draft.carouselOutline.length ? draft.carouselOutline.map((item, index) => `${index + 1}. ${item}`).join("\n") : "TODO: Add a short carousel outline if the topic would work as a visual explainer."}
 
 ## Optional Visual Prompts
 
 ${draft.visualPrompts.length ? draft.visualPrompts.map((visual) => `- Prompt: ${visual.prompt}\n  Alt text: ${visual.altText}\n  Suggested use: ${visual.suggestedUse}`).join("\n") : "- TODO: Add 1 to 3 supporting visual prompts if useful."}
+
+## Image Disclosure Metadata
+
+- Image generated by AI: ${draft.imageGeneratedByAI ? "true" : "false"}
+- Recommended use: ${draft.imageDisclosureMetadata.recommendedUse}
+- Copyright status: ${draft.imageDisclosureMetadata.copyrightStatus}
+- Disclosure note: ${draft.imageDisclosureMetadata.disclosureNote}
 
 ## Visual Safety Notes
 
@@ -944,6 +1743,16 @@ function buildManifest(draft, candidate, files, options) {
     summary: draft.summary,
     category: draft.category,
     selectedTopic: candidate.title,
+    selectedTopicRationale: candidate.selectedTopicRationale || "",
+    topicScore: candidate.topicScore || null,
+    candidateTopicScoreboard: candidate.candidatePool || [],
+    performanceInsights: candidate.performanceInsights || null,
+    engagementQuestion: draft.engagementQuestion,
+    portfolioHeroImagePrompt: draft.portfolioHeroImagePrompt,
+    linkedinImagePrompt: draft.linkedinImagePrompt,
+    carouselPrompt: draft.carouselPrompt,
+    visualStyle: draft.visualStyle,
+    imageGeneratedByAI: draft.imageGeneratedByAI,
     articlePath: fileByLabel.get("portfolio blog draft") || "",
     linkedinDraftPath: fileByLabel.get("LinkedIn draft") || "",
     researchNotePath: fileByLabel.get("research note") || "",
@@ -1005,6 +1814,23 @@ async function writeFiles(files) {
 function printDryRun(candidate, files, manifest) {
   console.log("Weekly insight dry run complete.");
   console.log(`Selected topic: ${candidate.title}`);
+  if (candidate.topicScore) {
+    console.log(`Topic score: ${candidate.topicScore.total}`);
+  }
+  if (candidate.selectedTopicRationale) {
+    console.log(`Selection rationale: ${candidate.selectedTopicRationale}`);
+  }
+  if (Array.isArray(candidate.candidatePool) && candidate.candidatePool.length) {
+    console.log("Top candidate topics:");
+    for (const topic of candidate.candidatePool.slice(0, 5)) {
+      console.log(`- ${topic.title} (${topic.total})`);
+    }
+  }
+  if (candidate.performanceInsights) {
+    console.log(
+      `Analytics rows: LinkedIn ${candidate.performanceInsights.linkedInRows || 0}, journal ${candidate.performanceInsights.journalRows || 0}`,
+    );
+  }
   console.log(`Generated blog title: ${manifest.title}`);
   console.log("Files that would be created:");
   for (const file of files) {
@@ -1051,6 +1877,15 @@ function inferCategory(text) {
   }
 
   return WEEKLY_CATEGORIES[1];
+}
+
+function normalizeCategory(category) {
+  const clean = cleanText(category);
+  if (WEEKLY_CATEGORIES.includes(clean)) {
+    return clean;
+  }
+
+  return inferCategory(clean);
 }
 
 function buildTags(candidate, category) {
@@ -1108,9 +1943,86 @@ function formatMarkdownSources(sources = []) {
       const date = source.datePublished ? `, published ${source.datePublished}` : "";
       const accessed = source.accessed ? `, accessed ${source.accessed}` : "";
       const claim = source.claimSupported ? ` Claim supported: ${source.claimSupported}` : "";
-      return `- [${escapeMarkdown(title)}](${url})${publisher}${date}${accessed}.${claim}`;
+      const linkedTitle = url ? `[${escapeMarkdown(title)}](${url})` : escapeMarkdown(title);
+      return `- ${linkedTitle}${publisher}${date}${accessed}.${claim}`;
     })
     .join("\n");
+}
+
+function formatTopicScore(score = {}) {
+  if (!score || typeof score !== "object") {
+    return "- TODO: Add topic score before publishing.";
+  }
+
+  return [
+    `- Total score: ${score.total ?? "n/a"}`,
+    `- Usefulness: ${score.usefulness ?? "n/a"}/10`,
+    `- Novelty: ${score.novelty ?? "n/a"}/10`,
+    `- Shareability: ${score.shareability ?? "n/a"}/10`,
+    `- Comment potential: ${score.commentPotential ?? "n/a"}/10`,
+    `- Clarity: ${score.clarity ?? "n/a"}/10`,
+    `- Credibility: ${score.credibility ?? "n/a"}/10`,
+    `- Visual potential: ${score.visualPotential ?? "n/a"}/10`,
+    `- Personal-fit score: ${score.personalFit ?? "n/a"}/10`,
+    `- Historical fit: ${score.historicalFit ?? "n/a"}/10`,
+    `- Recency driver: ${score.recency ?? "n/a"}/10`,
+    `- India relevance driver: ${score.indiaRelevance ?? "n/a"}/10`,
+    `- Business relevance driver: ${score.businessRelevance ?? "n/a"}/10`,
+    `- Product/marketing lesson driver: ${score.productMarketingLesson ?? "n/a"}/10`,
+    `- Source availability driver: ${score.sourceAvailability ?? "n/a"}/10`,
+    `- Analytics boost: ${score.analyticsBoost ?? "n/a"}`,
+  ].join("\n");
+}
+
+function formatCandidateScoreboard(candidates = []) {
+  if (!Array.isArray(candidates) || !candidates.length) {
+    return "- TODO: Add candidate topic scorecard before publishing.";
+  }
+
+  return candidates
+    .map((candidate, index) => {
+      const scores = candidate.scores || {};
+      const drivers = candidate.drivers || {};
+      return [
+        `${index + 1}. **${escapeMarkdown(candidate.title || "Untitled topic")}**`,
+        `   - Category: ${candidate.category || "Uncategorized"}`,
+        `   - Total: ${candidate.total}`,
+        `   - Scores: usefulness ${scores.usefulness}/10, novelty ${scores.novelty}/10, shareability ${scores.shareability}/10, comments ${scores.commentPotential}/10, clarity ${scores.clarity}/10, credibility ${scores.credibility}/10, visual ${scores.visualPotential}/10, personal fit ${scores.personalFit}/10, historical fit ${scores.historicalFit}/10`,
+        `   - Drivers: recency ${drivers.recency}/10, India ${drivers.indiaRelevance}/10, business ${drivers.businessRelevance}/10, product/marketing ${drivers.productMarketingLesson}/10, sources ${drivers.sourceAvailability}/10, analytics boost ${drivers.analyticsBoost}`,
+      ].join("\n");
+    })
+    .join("\n");
+}
+
+function formatPerformanceSignals(signals = {}) {
+  if (!signals.linkedInRows && !signals.journalRows) {
+    return "- No analytics rows yet. Topic scoring used only source, audience, and portfolio-fit signals.";
+  }
+
+  return [
+    `- LinkedIn rows reviewed: ${signals.linkedInRows || 0}`,
+    `- Journal rows reviewed: ${signals.journalRows || 0}`,
+    `- Top pillars: ${formatAnalyticsList(signals.topPillars)}`,
+    `- Top hooks: ${formatAnalyticsList(signals.topHooks)}`,
+    `- Top formats: ${formatAnalyticsList(signals.topFormats)}`,
+    `- Best recent topics: ${formatBestTopicList(signals.bestTopics)}`,
+  ].join("\n");
+}
+
+function formatAnalyticsList(items = []) {
+  if (!items.length) {
+    return "none yet";
+  }
+
+  return items.map((item) => `${item.key} (${item.score})`).join(", ");
+}
+
+function formatBestTopicList(items = []) {
+  if (!items.length) {
+    return "none yet";
+  }
+
+  return items.map((item) => `${item.topic || "untitled"} (${item.score})`).join(", ");
 }
 
 function toYamlSources(sources = []) {
@@ -1144,12 +2056,42 @@ function toYamlVisualPrompts(visualPrompts = []) {
     .join("\n");
 }
 
+function toYamlOptionalList(values = []) {
+  if (!values.length) {
+    return "  []";
+  }
+
+  return values.map((value) => `  - ${yamlString(value)}`).join("\n");
+}
+
 function toYamlList(values = []) {
   if (!values.length) {
     return "  - Business";
   }
 
   return values.map((value) => `  - ${yamlString(value)}`).join("\n");
+}
+
+function buildEngagementQuestion(candidate) {
+  const text = `${candidate.title || ""} ${candidate.summary || ""}`.toLowerCase();
+
+  if (text.includes("pricing") || text.includes("price")) {
+    return "Where else do you see pricing acting as a signal, not just a number?";
+  }
+
+  if (text.includes("distribution") || text.includes("shipping") || text.includes("route")) {
+    return "Is this mostly a product problem, a distribution problem, or a market-structure problem?";
+  }
+
+  if (text.includes("india") || text.includes("indian") || text.includes("zudio") || text.includes("zepto") || text.includes("swiggy")) {
+    return "What do you think this changes for Indian businesses or Indian consumers?";
+  }
+
+  if (text.includes("ai") || text.includes("automation") || text.includes("workflow")) {
+    return "What would you watch next: adoption, pricing, trust, or workflow change?";
+  }
+
+  return "What would you watch next if you were analyzing this market?";
 }
 
 function yamlString(value) {

@@ -42,9 +42,19 @@ export default function JournalPage() {
               <p className="max-w-[700px] text-[clamp(0.96rem,3.7vw,1.24rem)] leading-[1.58] text-[var(--muted-strong)]">
                 Notes on products, markets, AI, Indian consumer behavior,
                 marketing lessons, MBA learning, and business decisions. This
-                is a thinking-in-public space, not a blog dump; drafts stay
-                private until they are reviewed and published.
+                is a thinking-in-public space; drafts stay private until they
+                are reviewed and worth publishing.
               </p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {journalCategories.slice(0, 5).map((category) => (
+                  <span
+                    key={category}
+                    className="rounded-[8px] border border-black/10 bg-white/45 px-2.5 py-1 text-[12px] text-[var(--muted-strong)] backdrop-blur"
+                  >
+                    {category}
+                  </span>
+                ))}
+              </div>
             </Reveal>
           </div>
         </section>
