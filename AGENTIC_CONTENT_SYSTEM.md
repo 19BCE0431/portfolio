@@ -10,7 +10,10 @@ No part of this system should auto-publish to the portfolio, LinkedIn, WhatsApp,
 - `content/journal/` stores portfolio blog drafts and published long-form posts.
 - `content/linkedin-drafts/` stores LinkedIn adaptations connected to a portfolio blog.
 - `content/generated-assets/` stores AI-generated or copyright-safe visual briefs, prompts, licenses, alt text, and asset metadata.
+- `content/analytics/` stores manual LinkedIn and journal performance tracking.
+- `content/analytics/reports/` stores weekly performance reports.
 - `scripts/generate-weekly-insight.js` creates one weekly research note, one portfolio blog draft, one LinkedIn draft, and one visual prompt file for review.
+- `scripts/analyze-content-performance.js` reads manual analytics and recommends future topic direction.
 
 ## Running The Weekly Generator
 
@@ -27,6 +30,7 @@ npm run generate:weekly-insight -- --dry-run
 npm run generate:weekly-insight -- --topic "AI pricing changes and product adoption"
 npm run generate:weekly-insight -- --status draft
 npm run generate:weekly-insight -- --use-ai
+npm run analyze:content-performance
 ```
 
 The generator writes files to:
@@ -35,6 +39,13 @@ The generator writes files to:
 - `content/journal/`
 - `content/linkedin-drafts/`
 - `content/generated-assets/`
+
+If analytics rows exist, the generator also reads:
+
+- `content/analytics/linkedin-performance.csv`
+- `content/analytics/journal-performance.csv`
+
+Those rows influence topic scoring as a soft signal. They never override source quality, human review, or editorial judgment.
 
 The default status is `review`. The script does not set anything to `published`, does not post to LinkedIn, and does not send WhatsApp messages.
 
@@ -112,8 +123,8 @@ Add these values as needed:
 - `SERP_API_KEY` is optional for search discovery.
 - `WEEKLY_INSIGHT_PORTFOLIO_BASE_URL` should be `https://mohitsaikrishna.in`.
 - `WEEKLY_INSIGHT_STATUS` should be `review`.
-- `WEEKLY_INSIGHT_AUTO_PUBLISH` should stay `false` unless intentionally enabling full automation.
-- `LINKEDIN_AUTO_POST` should stay `false` unless intentionally enabling LinkedIn auto-posting.
+- `WEEKLY_INSIGHT_AUTO_PUBLISH` should stay `false`; the committed weekly workflow is review-first.
+- `LINKEDIN_AUTO_POST` should stay `false`; LinkedIn posting uses the separate manual workflow.
 - `WHATSAPP_NOTIFY` should stay `false` unless intentionally enabling WhatsApp notifications.
 
 If `OPENAI_API_KEY` is missing, the workflow fails early with a clear message instead of generating weak content or silently falling back.
@@ -147,7 +158,7 @@ Merge the PR only after human review. Merging is the manual approval step that l
 
 Recommendation: keep review-first mode enabled unless Mohit intentionally chooses full automation for a specific period.
 
-Full automation is disabled by default. These flags must be explicitly configured as GitHub Actions secrets:
+Full automation is intentionally not enabled in the committed weekly workflow. The flags below are reserved for a future, separate workflow or controlled update after another review:
 
 ```text
 WEEKLY_INSIGHT_AUTO_PUBLISH=true
@@ -155,13 +166,13 @@ LINKEDIN_AUTO_POST=true
 WHATSAPP_NOTIFY=true
 ```
 
-Each flag controls a separate layer:
+Each flag should control a separate layer if full automation is added later:
 
-- `WEEKLY_INSIGHT_AUTO_PUBLISH=true` allows the weekly workflow to generate content with `status: "published"`, validate it, commit directly to `main`, and let Vercel deploy from `main`.
+- `WEEKLY_INSIGHT_AUTO_PUBLISH=true` would allow a future workflow to generate content with `status: "published"`, validate it, commit directly to `main`, and let Vercel deploy from `main`.
 - `LINKEDIN_AUTO_POST=true` allows LinkedIn posting only after auto-publish succeeds, the blog is published, the LinkedIn draft exists, and `LINKEDIN_ACCESS_TOKEN` plus `LINKEDIN_AUTHOR_URN` are configured.
 - `WHATSAPP_NOTIFY=true` allows optional WhatsApp messages after PR creation, portfolio publishing, LinkedIn posting, or workflow failure, only when WhatsApp Cloud API credentials are configured.
 
-The auto-publish safety validator runs `scripts/validate-weekly-publish.js` before the workflow can push published content. It blocks publishing when:
+The auto-publish safety validator `scripts/validate-weekly-publish.js` must run before any future workflow can push published content. It blocks publishing when:
 
 - Blog title or article body is missing.
 - Blog status is not `published`.
@@ -196,16 +207,32 @@ No secret should be hardcoded, written to generated content, printed in logs, or
 
 ## Weekly Workflow
 
-1. Research the week across AI, product, technology, business, marketing, consumer behavior, startups, and global product strategy.
+1. Research the week across AI, product, technology, business, marketing, consumer behavior, startups, India-relevant market signals, and global product strategy.
 2. Capture source links, publication dates, access dates, and the specific claims each source supports.
-3. Shortlist 3 to 5 possible topics with a one-line thesis for each.
-4. Score each topic for relevance, freshness, source quality, narrative potential, Indian/global business relevance, and practical learning value.
-5. Select one topic for drafting only after the topic has a clear business, product, consumer, or strategy lesson.
-6. Create a research note first, then draft the long-form portfolio article.
-7. Fact-check all research-backed claims against stored source links.
-8. Move the article to `review` status for human review.
-9. Create a LinkedIn draft that links back to the portfolio article.
-10. Publish only after Mohit approves the blog and the LinkedIn draft separately.
+3. Shortlist multiple possible topics with a one-line thesis for each.
+4. Score each topic for usefulness, novelty, shareability, comment potential, clarity, credibility, visual potential, and Mohit's personal-fit score.
+5. If analytics exist, add a light historical signal based on high-performing pillars, hooks, formats, clicks, and comments.
+6. Select the best combined topic, not simply the newest topic.
+7. Create a research note first, then draft the long-form portfolio article.
+8. Fact-check all research-backed claims against stored source links.
+9. Move the article to `review` status for human review.
+10. Create a LinkedIn draft that links back to the portfolio article.
+11. Publish only after Mohit approves the blog and the LinkedIn draft separately.
+
+## Content Pillars
+
+Weekly topics should usually fit one of these pillars:
+
+- AI & Business
+- Product Strategy
+- Indian Consumer Behavior
+- Market Signals
+- Brand & Marketing Lessons
+- Business History with Modern Relevance
+- MBA Learning Notes
+- Data Science Applied to Decisions
+
+The content should not become pure general knowledge, exam-prep material, or a random news summary. The lens should be useful for MBA students, product management aspirants, marketing and strategy learners, business-curious students, early professionals, and Indian readers interested in business, AI, economy, brands, and consumer behavior.
 
 ## Research Sources
 
@@ -224,7 +251,7 @@ Avoid using social media summaries, anonymous commentary, or newsletter recaps a
 A weekly topic should pass most of these checks:
 
 - It is recent enough to feel timely.
-- It matters to MBA students, product managers, marketers, analysts, founders, or business-curious readers.
+- It matters to MBA students, product aspirants, marketers, strategy learners, early professionals, or business-curious Indian readers.
 - It has a clear business, product, strategy, marketing, or consumer behavior lesson.
 - It has a surprising angle beyond the obvious headline.
 - It can connect India and global business context where useful.
@@ -232,17 +259,100 @@ A weekly topic should pass most of these checks:
 - It gives Mohit room for a grounded personal interpretation without pretending to be an expert.
 - It does not feel like another generic AI trend summary.
 
+### Topic Scoring Framework
+
+The weekly generator stores a candidate topic scoreboard in the research note. Each candidate receives 0-10 scores for:
+
+- Usefulness: will the audience learn something practical?
+- Novelty: is there a less obvious angle?
+- Shareability: would someone save or share this with a classmate or colleague?
+- Comment potential: can it invite thoughtful discussion without bait?
+- Clarity: can the topic be explained simply?
+- Credibility: are there enough source links to support the article?
+- Visual potential: can the idea become a clean hero image, chart, or carousel?
+- Personal-fit score: does it connect to Mohit's MBA, product, marketing, data science, consumer behavior, or AI workflow direction?
+
+Additional drivers include recency, India relevance, business relevance, product/marketing lesson strength, and source availability. The selected topic should have the strongest combined score, not merely the freshest headline.
+
+If performance analytics exist, the generator also considers:
+
+- Past high-performing pillars.
+- Past high-performing hook types.
+- Formats that drove clicks or comments.
+- Topics with strong LinkedIn clicks, comments, or journal visits.
+
+This is a soft learning loop, not an autopilot. A strong current topic with better sources can still beat a historically strong category.
+
+## Engagement Analytics
+
+Manual analytics live in `content/analytics/`.
+
+LinkedIn fields:
+
+- `postSlug`
+- `date`
+- `topic`
+- `pillar`
+- `hookType`
+- `format`
+- `impressions`
+- `reactions`
+- `comments`
+- `reposts`
+- `clicks`
+- `profileVisits`
+- `engagementRate`
+- `notes`
+
+Journal fields:
+
+- `articleSlug`
+- `date`
+- `pageViews`
+- `readTime`
+- `source`
+- `clicksFromLinkedIn`
+- `notes`
+
+Start manually. Do not require API access. After each weekly post, add a row from LinkedIn analytics and a row from portfolio/Vercel analytics if available.
+
+Run:
+
+```bash
+npm run analyze:content-performance
+```
+
+The script creates a report in `content/analytics/reports/` showing:
+
+- Best-performing topics.
+- Weak topics to learn from.
+- Best hooks.
+- Best pillars.
+- Best formats.
+- Journal traffic sources.
+- Recommended next-week topic direction.
+
 ## Blog Writing Rules
 
 - Open with a sharp, human hook, not a broad statement like "AI is changing the world."
+- Use a short story or context before the analysis.
 - Teach one useful idea clearly.
 - Use short paragraphs and skim-friendly sections.
-- Explain what happened, why it matters, the hidden lesson, and what a student, PM, marketer, or business learner can take away.
+- Explain what happened, why it matters, the hidden lesson, India/MBA/student relevance, and what a student, PM, marketer, or business learner can take away.
 - Separate fact from interpretation.
 - Use "I read this as..." or similar phrasing when making a personal judgment.
 - Avoid fake certainty, fake expertise, exaggerated predictions, and founder/influencer tone.
 - Avoid robotic transitions, generic summaries, and repeated buzzwords.
 - Make the article useful even if someone reads it in under 60 seconds.
+
+Avoid these phrases unless quoting a source:
+
+- "In today's fast-paced world"
+- "AI is changing everything"
+- "Game changer"
+- "Revolutionizing"
+- "Unlocking potential"
+- "Dynamic landscape"
 
 ## Human Approval Rules
 
@@ -261,9 +371,42 @@ LinkedIn drafts should adapt the portfolio article, not duplicate it.
 - Give short context without overexplaining.
 - Share one main insight and 3 to 5 crisp supporting points.
 - Link back to the full portfolio blog.
-- End with a thoughtful question or reflection.
+- End with one thoughtful engagement question.
 - Use very limited hashtags, usually 2 to 4.
 - Avoid engagement-bait, motivational filler, and exaggerated personal branding.
+
+Good engagement questions include:
+
+- What do you think this changes for Indian businesses?
+- Where else do you see this pattern?
+- Is this a product problem or a distribution problem?
+- What would you watch next if you were analyzing this market?
+
+The goal is thoughtful comments, not rage bait, hot takes, or forced virality.
+
+Every weekly LinkedIn post should include:
+
+- One thoughtful question.
+- One clear discussion angle.
+- No rage bait.
+- No fake controversy.
+- No auto-reply behavior.
+
+## Future LinkedIn Comment Workflow
+
+Do not auto-reply to LinkedIn comments yet.
+
+A future workflow may:
+
+1. Collect comments manually or through the official LinkedIn API if available and permitted.
+2. Summarize the discussion themes.
+3. Generate suggested replies in Mohit's tone.
+4. Wait for Mohit's human approval.
+5. Post only approved replies through official APIs.
+
+Browser automation, scraping, cookies, saved sessions, or password access are not allowed for comments or posting.
+
+Suggested replies should be thoughtful, concise, professional, and non-defensive. Avoid argumentative tone, fake authority, and forced agreement.
 
 ## Manual LinkedIn Posting
 
@@ -332,7 +475,8 @@ Full setup details are in `WHATSAPP_NOTIFICATION_SETUP.md`.
 - Avoid fake screenshots, misleading product visuals, or images that imply access to private information.
 - Visuals should support the article's idea, not decorate it randomly.
 - Use calm editorial visuals, diagrams, simple charts, or abstract business/product graphics where useful.
-- Weekly drafts should include `heroImagePrompt`, `supportingVisualPrompts`, `suggestedVisualStyle`, `altText`, `imageCredit`, `imageSource`, `imageLicense`, and `ogImage` fields.
+- Weekly drafts should include `portfolioHeroImagePrompt`, `linkedinImagePrompt`, `carouselPrompt`, `supportingVisualPrompts`, `carouselOutline`, `visualStyle`, `altText`, `imageGeneratedByAI`, `imageDisclosure`, `imageCredit`, `imageSource`, `imageLicense`, and `ogImage` fields.
+- Default disclosure for generated visuals should be `imageGeneratedByAI: true` and `imageDisclosure: "AI-generated editorial visual"` or the structured equivalent used in frontmatter.
 - Use `content/generated-assets/` for visual prompts and metadata. Use `public/blog-images/` only for final optimized image files that should render on the site.
 - Do not scrape images from news sites, copy product screenshots, or use brand logos unless usage is clearly allowed.
 - If no visual has been approved, leave `heroImage` blank; the article layout is designed to remain premium without an image.

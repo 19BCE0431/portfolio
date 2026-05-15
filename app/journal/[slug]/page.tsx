@@ -136,7 +136,7 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
   const shareUrl = post.canonicalUrl || `/journal/${post.slug}`;
   const takeaways = takeawaysFromPost(post.blocks);
   const sectionHeadings = post.blocks.filter((block) => block.type === "heading").slice(0, 6);
-  const hasLinkedInDraft = Boolean(post.slug);
+  const hasLinkedInDraft = Boolean(post.linkedinShortPost?.draftPath);
 
   return (
     <>
@@ -206,9 +206,9 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
                     className="object-cover"
                   />
                 </div>
-                {(post.imageCredit || post.imageLicense) && (
+                {(post.imageCredit || post.imageLicense || post.imageDisclosure?.disclosureNote) && (
                   <figcaption className="px-2 py-3 text-[12px] leading-[1.5] text-[var(--muted)]">
-                    {[post.imageCredit, post.imageLicense]
+                    {[post.imageCredit, post.imageLicense, post.imageDisclosure?.disclosureNote]
                       .filter(Boolean)
                       .join(" · ")}
                   </figcaption>

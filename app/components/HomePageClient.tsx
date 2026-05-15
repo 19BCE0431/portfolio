@@ -3,11 +3,15 @@
 import {
   ArrowUpRight,
   BookOpenText,
+  BrainCircuit,
   BriefcaseBusiness,
   Camera,
   ChefHat,
   CircleDot,
+  Compass,
+  Eye,
   Layers3,
+  LineChart,
   Mail,
   MoveRight,
   PenLine,
@@ -15,10 +19,16 @@ import {
   Route,
   Sparkles,
 } from "lucide-react";
-import { motion, type MotionValue, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  type MotionValue,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+} from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode, type RefObject } from "react";
 import { getProjectBySlug, homepageProjects } from "../data/archive";
 import type { JournalPost } from "../data/journal";
 import {
@@ -37,32 +47,39 @@ import { SiteNav } from "./SiteNav";
 const premiumEase = [0.16, 1, 0.3, 1] as const;
 
 const heroMarkers = [
-  { label: "Current chapter", value: "MBA at IIM Sirmaur" },
-  { label: "Foundation", value: "CSE, VIT Vellore" },
-  { label: "Applied work", value: "Data Science Engineer" },
+  { label: "Now", value: "MBA at IIM Sirmaur" },
+  { label: "Lens", value: "Product · Marketing · Strategy" },
+  { label: "Base", value: "CSE · Data Science · Applied AI" },
 ];
 
 const systemFlow = [
-  "Portfolio direction",
+  "Human direction",
   "Project archive",
-  "Weekly insight drafts",
-  "Human-reviewed publishing",
+  "Insight drafts",
+  "Approval-first publishing",
+];
+
+const heroSignals = [
+  "consumer choices",
+  "product adoption",
+  "market signals",
+  "AI-enabled workflows",
 ];
 
 const narrativeCards = [
   {
-    title: "Product and strategy direction",
-    text: "The MBA chapter is where I am sharpening how I frame customers, markets, positioning, adoption, and business choices.",
+    title: "Direction before output",
+    text: "The portfolio starts with the questions I am learning to ask: who is this for, what choice does it improve, and why should it matter now?",
     icon: BriefcaseBusiness,
   },
   {
-    title: "Technical foundation",
-    text: "Computer Science and Data Science experience give me a practical sense of what AI, analytics, and automation can actually do.",
+    title: "AI as acceleration, not identity",
+    text: "AI helped shorten the distance between idea and prototype. Taste, positioning, review, and final judgment still stay with me.",
     icon: Layers3,
   },
   {
-    title: "Thinking in evidence",
-    text: "The archive and journal are designed to show applied work, decisions supported, and how my direction is developing over time.",
+    title: "A system that can keep growing",
+    text: "The archive, journal, weekly drafts, and publishing workflow are designed so the site can evolve with my MBA work and professional direction.",
     icon: BookOpenText,
   },
 ];
@@ -70,19 +87,23 @@ const narrativeCards = [
 const directionNotes = [
   {
     title: "Product",
-    text: "How does a product earn trust, become easy to adopt, and stay useful after the first impression?",
+    text: "What makes a product feel useful before someone has the patience to study it?",
+    icon: Compass,
   },
   {
     title: "Marketing",
-    text: "What makes people notice, compare, remember, and finally choose one offer over another?",
+    text: "What makes people notice, compare, remember, and finally choose?",
+    icon: Eye,
   },
   {
     title: "Strategy",
-    text: "Where should a business place its bets when the market is moving and the signals are imperfect?",
+    text: "Which market signals deserve attention, and which ones only look important?",
+    icon: LineChart,
   },
   {
     title: "AI workflows",
-    text: "Where can automation reduce effort without removing the judgment that keeps the work credible?",
+    text: "Where can automation reduce effort without making the work less thoughtful?",
+    icon: BrainCircuit,
   },
 ];
 
@@ -108,6 +129,60 @@ const personalNotes = [
     icon: ChefHat,
   },
 ];
+
+function clamp(value: number, min = 0, max = 1) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function usePageScrollProgress() {
+  const progress = useMotionValue(0);
+
+  useEffect(() => {
+    const update = () => {
+      const range = Math.max(window.innerHeight * 1.4, 1);
+      progress.set(clamp(window.scrollY / range));
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [progress]);
+
+  return progress;
+}
+
+function useElementScrollProgress(ref: RefObject<HTMLElement | null>) {
+  const progress = useMotionValue(0);
+
+  useEffect(() => {
+    const update = () => {
+      const element = ref.current;
+      if (!element) return;
+
+      const rect = element.getBoundingClientRect();
+      const viewport = window.innerHeight || 1;
+      const start = viewport * 0.78;
+      const end = -rect.height * 0.22;
+      progress.set(clamp((start - rect.top) / (start - end)));
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [progress, ref]);
+
+  return progress;
+}
 
 function SmartLink({
   href,
@@ -158,7 +233,7 @@ function ActionLink({
   const className =
     variant === "dark"
       ? "group inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-[8px] border border-white/12 bg-white/[0.08] px-4 py-2.5 text-[13px] font-medium text-white/88 shadow-[0_18px_48px_rgba(0,0,0,0.16)] transition hover:border-white/22 hover:bg-white/[0.12] focus:outline-none focus:ring-2 focus:ring-white/20 sm:w-auto"
-      : "group inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.78)] px-4 py-2.5 text-[13px] font-medium text-[var(--foreground)] shadow-[0_18px_54px_rgba(16,18,18,0.06)] backdrop-blur transition hover:border-black/18 hover:bg-white focus:outline-none focus:ring-2 focus:ring-black/15 sm:w-auto";
+      : "group hover-light inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.78)] px-4 py-2.5 text-[13px] font-medium text-[var(--foreground)] shadow-[0_18px_54px_rgba(16,18,18,0.06)] backdrop-blur transition hover:border-black/18 hover:bg-white focus:outline-none focus:ring-2 focus:ring-black/15 sm:w-auto";
 
   return (
     <motion.span
@@ -213,7 +288,7 @@ function HeroVisual({ progress }: { progress: MotionValue<number> }) {
   return (
     <Reveal className="relative z-10 w-full justify-self-center lg:justify-self-end" delay={0.12}>
       <motion.div
-        className="relative mx-auto w-full max-w-[330px] sm:max-w-[390px] lg:mx-0 lg:max-w-[470px]"
+        className="relative mx-auto w-full max-w-[330px] sm:max-w-[390px] lg:mx-0 lg:max-w-[430px]"
         style={{ y: shouldReduceMotion ? 0 : portraitY }}
       >
         <div className="absolute -inset-5 rounded-[8px] bg-[linear-gradient(135deg,rgba(104,121,109,0.14),rgba(104,119,137,0.06)_48%,rgba(154,127,99,0.12))] blur-2xl" />
@@ -263,39 +338,128 @@ function HeroVisual({ progress }: { progress: MotionValue<number> }) {
   );
 }
 
+function HeroSignalPanel() {
+  return (
+    <Reveal delay={0.2}>
+      <div className="editorial-panel relative mt-4 overflow-hidden p-4 sm:p-5">
+        <div className="signal-grid pointer-events-none absolute inset-0 opacity-[0.16]" />
+        <div className="relative z-10">
+          <p className="editorial-kicker">What I am watching</p>
+          <div className="mt-4 grid gap-2">
+            {heroSignals.map((signal, index) => (
+              <div
+                key={signal}
+                className="flex items-center justify-between border-t border-black/10 pt-2 text-[0.9rem] leading-[1.4] text-[var(--muted-strong)]"
+              >
+                <span>{signal}</span>
+                <span className="text-[11px] font-semibold text-[var(--sage)]">
+                  0{index + 1}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Reveal>
+  );
+}
+
+function ScrollCue() {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      aria-hidden="true"
+      className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--muted)] md:flex"
+      initial={shouldReduceMotion ? false : { opacity: 0, y: -6 }}
+      animate={{ opacity: 0.72, y: 0 }}
+      transition={{ delay: 1.05, duration: 0.6, ease: premiumEase }}
+    >
+      <span>Scroll</span>
+      <span className="relative h-12 w-px overflow-hidden bg-black/10">
+        <motion.span
+          className="absolute left-0 top-0 h-5 w-px bg-[var(--foreground)]"
+          animate={shouldReduceMotion ? undefined : { y: [0, 28, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </span>
+    </motion.div>
+  );
+}
+
+function MobilePortraitStrip() {
+  const [portraitMissing, setPortraitMissing] = useState(false);
+
+  return (
+    <Reveal className="mt-6 lg:hidden" delay={0.2}>
+      <div className="editorial-panel grid grid-cols-[82px_1fr] items-center gap-4 overflow-hidden p-2.5">
+        <div className="relative aspect-square overflow-hidden rounded-[6px] bg-[var(--surface-cool)]">
+          {portraitMissing ? (
+            <div
+              role="img"
+              aria-label={profile.portraitAlt}
+              className="grid h-full place-items-center text-[0.8rem] font-semibold text-[var(--muted)]"
+            >
+              MSK
+            </div>
+          ) : (
+            <Image
+              src={profile.portrait}
+              alt={profile.portraitAlt}
+              fill
+              sizes="82px"
+              onError={() => setPortraitMissing(true)}
+              className="object-cover object-[52%_34%]"
+            />
+          )}
+        </div>
+        <div className="min-w-0">
+          <p className="text-[0.96rem] font-semibold leading-[1.25]">
+            {profile.shortName}
+          </p>
+          <p className="mt-1 text-[0.8rem] leading-[1.45] text-[var(--muted)]">
+            MBA at IIM Sirmaur · Product, strategy, marketing, Applied AI
+          </p>
+        </div>
+      </div>
+    </Reveal>
+  );
+}
+
 function Hero() {
   const shouldReduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll();
+  const scrollYProgress = usePageScrollProgress();
   const copyY = useTransform(scrollYProgress, [0, 0.35], [0, 22]);
 
   return (
-    <section className="section-shell relative grid min-h-[92svh] items-center gap-10 overflow-hidden pb-12 pt-24 md:pt-30 lg:grid-cols-[minmax(0,0.96fr)_minmax(360px,0.58fr)] lg:gap-20">
+    <section className="hero-shell relative grid min-h-[100svh] items-center gap-10 overflow-hidden pb-16 pt-24 md:pt-28 lg:grid-cols-[minmax(0,0.96fr)_minmax(330px,0.46fr)] lg:gap-14">
       <AmbientField progress={scrollYProgress} />
-      <motion.div className="relative z-10 max-w-[880px]" style={{ y: shouldReduceMotion ? 0 : copyY }}>
+      <motion.div className="relative z-10 max-w-[940px]" style={{ y: shouldReduceMotion ? 0 : copyY }}>
         <motion.p
-          className="mb-6 max-w-[520px] text-[12px] font-semibold uppercase leading-[1.55] tracking-[0.18em] text-[var(--muted)]"
+          className="mb-6 max-w-[660px] text-[12px] font-semibold uppercase leading-[1.55] tracking-[0.18em] text-[var(--muted)]"
           initial={shouldReduceMotion ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: premiumEase }}
         >
-          MBA at IIM Sirmaur · CSE and Data Science foundation
+          MBA at IIM Sirmaur · Product, strategy, marketing, and Applied AI
         </motion.p>
         <HeadingReveal
           as="h1"
-          lines={["Learning how", "people choose,", "and how products", "should respond."]}
-          mobileLines={["Learning how", "people choose,", "and products", "respond."]}
-          className="display-tight max-w-[950px] text-[clamp(2.68rem,12.2vw,5.8rem)] font-semibold leading-[0.98] text-[var(--foreground)] md:text-[clamp(4.4rem,7.1vw,7.6rem)] md:leading-[0.92]"
+          lines={["MBA lens.", "Builder's memory.", "Market curiosity."]}
+          mobileLines={["MBA lens.", "Builder's", "memory.", "Market", "curiosity."]}
+          className="display-tight max-w-[1040px] text-[clamp(3.05rem,14vw,6.3rem)] font-semibold leading-[0.94] text-[var(--foreground)] md:text-[clamp(4.15rem,6.35vw,7.15rem)] md:leading-[0.9]"
           delay={0.06}
         />
         <Reveal delay={0.1}>
-          <p className="mt-6 max-w-[760px] text-pretty-balance text-[clamp(1.02rem,4.2vw,1.26rem)] leading-[1.62] text-[var(--muted-strong)] md:mt-8 md:text-[clamp(1.16rem,2vw,1.48rem)] md:leading-[1.52]">
-            I came from building models, dashboards, and automation. Now, as an
-            MBA candidate, I am learning to read the customer, the market, and
-            the decision behind the tool.
+          <p className="mt-6 max-w-[800px] text-pretty-balance text-[clamp(1.06rem,4.2vw,1.3rem)] leading-[1.62] text-[var(--muted-strong)] md:mt-8 md:text-[clamp(1.18rem,2vw,1.5rem)] md:leading-[1.5]">
+            I am an MBA candidate at IIM Sirmaur with a computer science and
+            Data Science foundation, learning how products earn trust, how
+            markets send signals, and where AI-enabled workflows can improve a
+            real business decision.
           </p>
         </Reveal>
         <Reveal delay={0.16}>
-          <div className="mt-7 grid max-w-[520px] grid-cols-2 gap-2.5 sm:mt-9 sm:flex sm:max-w-none sm:flex-wrap sm:gap-3 [&>*:last-child]:col-span-2">
+          <div className="mt-7 grid max-w-[560px] grid-cols-2 gap-2.5 sm:mt-9 sm:flex sm:max-w-none sm:flex-wrap sm:gap-3 [&>*:last-child]:col-span-2">
             <ActionLink href={`mailto:${profile.email}`} icon={<Mail className="h-4 w-4 text-[var(--sage)]" />}>
               Email
             </ActionLink>
@@ -307,8 +471,9 @@ function Hero() {
             </ActionLink>
           </div>
         </Reveal>
+        <MobilePortraitStrip />
         <Reveal delay={0.2}>
-          <div className="mt-10 grid gap-3 border-y border-black/10 py-5 sm:grid-cols-3 md:mt-14">
+          <div className="mt-10 hidden gap-3 border-y border-black/10 py-5 sm:grid-cols-3 md:mt-14 md:grid">
             {heroMarkers.map((marker) => (
               <div key={marker.label}>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
@@ -322,9 +487,13 @@ function Hero() {
           </div>
         </Reveal>
       </motion.div>
-      <HeroVisual progress={scrollYProgress} />
+      <div className="relative z-10 hidden lg:block">
+        <HeroVisual progress={scrollYProgress} />
+        <HeroSignalPanel />
+      </div>
       <div className="noise-layer" />
       <div className="absolute bottom-0 left-0 right-0 h-px hairline" />
+      <ScrollCue />
     </section>
   );
 }
@@ -371,32 +540,43 @@ function ThesisCard({
 
 function Direction() {
   return (
-    <section className="section-shell relative scroll-mt-28 py-16 md:py-28">
-      <div className="grid gap-10 lg:grid-cols-[0.68fr_1fr] lg:gap-16">
+    <section className="section-shell relative scroll-mt-28 py-18 md:py-32">
+      <div className="absolute left-0 top-0 hidden h-full w-px vertical-hairline opacity-60 lg:block" />
+      <div className="grid gap-10 lg:grid-cols-[0.74fr_1fr] lg:gap-18">
         <Reveal>
-          <SectionLabel>What I am building toward</SectionLabel>
+          <SectionLabel>Direction</SectionLabel>
           <HeadingReveal
-            lines={["Less resume.", "More direction."]}
-            mobileLines={["Less resume.", "More direction."]}
-            className="max-w-[680px] text-[clamp(2.25rem,10vw,4.9rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.96]"
+            lines={["The questions", "I want my work", "to answer."]}
+            mobileLines={["Questions", "I want my", "work to", "answer."]}
+            className="max-w-[720px] text-[clamp(2.35rem,10vw,5.2rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.94]"
           />
+          <p className="mt-6 max-w-[620px] text-[1.02rem] leading-[1.7] text-[var(--muted-strong)] md:text-[1.14rem]">
+            I am trying to move from simply making things work to understanding
+            why people choose them, how they spread, and what decisions they
+            make easier.
+          </p>
         </Reveal>
         <div className="grid gap-3 sm:grid-cols-2">
-          {directionNotes.map((note, index) => (
-            <Reveal key={note.title} delay={index * 0.04}>
-              <article className="premium-panel group h-full p-5 transition duration-500 hover:-translate-y-1 hover:bg-white md:p-7">
-                <div className="flex items-start justify-between gap-4">
-                  <p className="editorial-kicker">{note.title}</p>
-                  <span className="grid h-8 w-8 place-items-center rounded-full border border-black/10 text-[12px] text-[var(--sage)] transition group-hover:translate-x-1">
-                    0{index + 1}
-                  </span>
-                </div>
-                <p className="mt-8 text-[1.05rem] leading-[1.62] text-[var(--muted-strong)]">
-                  {note.text}
-                </p>
-              </article>
-            </Reveal>
-          ))}
+          {directionNotes.map((note, index) => {
+            const Icon = note.icon;
+
+            return (
+              <Reveal key={note.title} delay={index * 0.04}>
+                <article className="editorial-panel hover-light group h-full min-h-[250px] p-5 transition duration-500 hover:-translate-y-1 hover:bg-white md:p-7">
+                  <div className="flex items-start justify-between gap-4">
+                    <Icon className="h-5 w-5 text-[var(--sage)]" />
+                    <span className="grid h-8 w-8 place-items-center rounded-full border border-black/10 text-[12px] text-[var(--sage)] transition group-hover:translate-x-1">
+                      0{index + 1}
+                    </span>
+                  </div>
+                  <p className="editorial-kicker mt-8">{note.title}</p>
+                  <p className="mt-4 text-[1.08rem] leading-[1.58] text-[var(--muted-strong)] md:text-[1.22rem]">
+                    {note.text}
+                  </p>
+                </article>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -406,10 +586,7 @@ function Direction() {
 function Thesis() {
   const shouldReduceMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start 78%", "end 26%"],
-  });
+  const scrollYProgress = useElementScrollProgress(sectionRef);
   const lineScale = useTransform(scrollYProgress, [0, 1], [0.08, 1]);
 
   return (
@@ -526,7 +703,7 @@ function Background() {
 
         <div className="mt-10 grid gap-6 border-t border-white/10 pt-8 lg:grid-cols-[0.75fr_1fr]">
           <Reveal>
-            <div>
+            <div className="relative z-10">
               <p className="editorial-kicker text-white/42">Grounded markers</p>
               <div className="mt-5 grid gap-3 text-[0.95rem] leading-[1.5] text-white/64 sm:grid-cols-2">
                 {credibilityMarkers.map((marker) => (
@@ -563,7 +740,8 @@ function FeaturedCaseStudy() {
       <div className="absolute left-0 top-10 hidden h-px w-1/2 bg-gradient-to-r from-black/20 to-transparent md:block" />
       <div className="grid gap-7 lg:grid-cols-[0.76fr_1fr] lg:items-stretch lg:gap-6">
         <Reveal>
-          <article className="premium-panel flex h-full min-h-[430px] flex-col justify-between overflow-hidden p-6 md:p-9">
+          <article className="editorial-panel hover-light relative flex h-full min-h-[460px] flex-col justify-between overflow-hidden p-6 md:p-9">
+            <div className="signal-grid pointer-events-none absolute inset-0 opacity-[0.12]" />
             <div>
               <SectionLabel>Featured case study</SectionLabel>
               <HeadingReveal
@@ -572,13 +750,13 @@ function FeaturedCaseStudy() {
                 className="max-w-[640px] text-[clamp(2.4rem,10vw,5.5rem)] font-semibold leading-[0.98] tracking-[0]"
               />
               <p className="mt-6 max-w-[620px] text-[1rem] leading-[1.68] text-[var(--muted-strong)] md:text-[1.15rem]">
-                A living professional system designed to evolve with my MBA
-                journey, projects, writing, and career direction. I direct the
-                taste, positioning, structure, and review; AI helps compress the
-                distance between idea and implementation.
+                An AI-assisted, human-directed portfolio system designed to
+                evolve with my MBA journey, projects, writing, and career
+                direction. I shaped the vision, content, positioning, and
+                review loop; AI helped accelerate implementation and iteration.
               </p>
             </div>
-            <div className="mt-8">
+            <div className="relative z-10 mt-8">
               <ActionLink href={`/archive/${project.slug}`} icon={<Route className="h-4 w-4 text-[var(--sage)]" />}>
                 Read the case study
               </ActionLink>
@@ -593,7 +771,7 @@ function FeaturedCaseStudy() {
               return (
                 <article
                   key={card.title}
-                  className={`premium-panel p-5 md:p-7 ${index === 2 ? "sm:col-span-2" : ""}`}
+                  className={`editorial-panel hover-light p-5 md:p-7 ${index === 2 ? "sm:col-span-2" : ""}`}
                 >
                   <Icon className="h-5 w-5 text-[var(--sage)]" />
                   <h3 className="mt-7 text-[1.25rem] font-semibold leading-[1.2]">
@@ -605,11 +783,11 @@ function FeaturedCaseStudy() {
                 </article>
               );
             })}
-            <article className="premium-panel overflow-hidden p-5 sm:col-span-2 md:p-7">
+            <article className="editorial-panel overflow-hidden p-5 sm:col-span-2 md:p-7">
               <p className="editorial-kicker">Roadmap</p>
               <div className="mt-6 grid gap-3 md:grid-cols-4">
                 {systemFlow.map((step, index) => (
-                  <div key={step} className="relative border-t border-black/10 pt-4">
+                  <div key={step} className="signal-node relative border-t border-black/10 pl-1 pt-4 md:pl-0">
                     <span className="text-[11px] font-semibold text-[var(--sage)]">0{index + 1}</span>
                     <p className="mt-3 text-[0.92rem] leading-[1.45] text-[var(--muted-strong)]">
                       {step}
@@ -748,16 +926,15 @@ function PersonalNote() {
         <Reveal>
           <SectionLabel>Outside the case notes</SectionLabel>
           <HeadingReveal
-            lines={["I like paying attention", "to how people move."]}
-            mobileLines={["Paying", "attention", "outside work."]}
+            lines={["The small habits", "that keep me observant."]}
+            mobileLines={["Small habits", "that keep me", "observant."]}
             className="max-w-[760px] text-[clamp(2.35rem,10vw,5rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.96]"
           />
           <p className="mt-6 max-w-[660px] text-[1.02rem] leading-[1.7] text-[var(--muted-strong)] md:text-[1.16rem]">
-            When I am not working through cases, dashboards, or product ideas,
-            I am usually playing chess, getting in a badminton session, going
-            for an early morning run, taking photos, sketching, cooking, or
-            noticing why a customer pauses in front of one shelf and not
-            another.
+            When I am away from cases, dashboards, and product ideas, I am
+            usually playing chess, getting in a badminton session, going for an
+            early morning run, taking photos, sketching, cooking, or noticing
+            the quiet reasons people choose one brand over another.
           </p>
         </Reveal>
         <div className="grid gap-3 sm:grid-cols-2">
@@ -765,7 +942,7 @@ function PersonalNote() {
             const Icon = note.icon;
             return (
               <Reveal key={note.title} delay={index * 0.04}>
-                <article className="premium-panel h-full p-5 md:p-6">
+                <article className="editorial-panel hover-light h-full p-5 md:p-6">
                   <Icon className="h-5 w-5 text-[var(--sage)]" />
                   <h3 className="mt-7 text-[1.18rem] font-semibold leading-[1.2]">
                     {note.title}

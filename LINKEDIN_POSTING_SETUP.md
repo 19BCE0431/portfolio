@@ -2,7 +2,7 @@
 
 This project supports manual LinkedIn posting for approved drafts only. It uses the official LinkedIn Posts API. It does not use browser automation, LinkedIn scraping, saved browser sessions, cookies, or passwords.
 
-The weekly workflow can also auto-post only when `WEEKLY_INSIGHT_AUTO_PUBLISH=true` and `LINKEDIN_AUTO_POST=true` are both explicitly configured. Keep `LINKEDIN_AUTO_POST=false` unless you intentionally want full automation.
+The committed weekly workflow does not auto-post to LinkedIn. LinkedIn posting is available only through the manual `Post Approved LinkedIn Draft` workflow after a draft is reviewed and marked `approved`.
 
 Official reference:
 

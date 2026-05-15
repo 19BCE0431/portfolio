@@ -6,6 +6,7 @@ export const profile = {
   portrait: "/images/profile.jpg",
   portraitAlt:
     "Professional portrait of Mohit Sai Krishna Peddakotla, MBA candidate at IIM Sirmaur",
+  resume: "/resume.pdf",
   instagram:
     "https://www.instagram.com/ms_krishna9?igsh=MW16emtlZ254cjd2cg%3D%3D&utm_source=qr",
   linkedIn: "https://www.linkedin.com/in/mohit-sai-krishna-peddakotla/",
@@ -51,12 +52,12 @@ export const backgroundCards = [
   {
     label: "Professional work",
     value: "Data Science Engineer",
-    detail: "Bangalore · Mar 2024-Mar 2025",
+    detail: "Bangalore · Mar 2024 - Mar 2025",
   },
   {
     label: "Internship chapter",
     value: "Data Science Intern",
-    detail: "Sep 2023-Mar 2024",
+    detail: "Sep 2023 - Mar 2024",
   },
   {
     label: "Current direction",
@@ -72,8 +73,8 @@ export const backgroundCards = [
 ];
 
 export const credibilityMarkers = [
-  "Data Science Engineer · Mar 2024-Mar 2025",
-  "Data Science Intern · Sep 2023-Mar 2024",
+  "Data Science Engineer · Mar 2024 - Mar 2025",
+  "Data Science Intern · Sep 2023 - Mar 2024",
   "500+ LeetCode problems solved",
   "JEE Mains 97.9 percentile",
   "TS EAMCET rank 1143 out of 2.42 lakh candidates",
