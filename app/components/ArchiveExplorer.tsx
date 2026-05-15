@@ -2,46 +2,38 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useMemo, useState } from "react";
-import type { ArchiveFilter, ArchiveProject } from "../data/archive";
-import { archiveFilters } from "../data/archive";
+import { archiveFilters, type ArchiveFilter, type ArchiveProject } from "../data/archive";
 import { ProjectCard } from "./ProjectCard";
 
-export function ArchiveExplorer({
-  projects,
-}: {
-  projects: ArchiveProject[];
-}) {
+export function ArchiveExplorer({ projects }: { projects: ArchiveProject[] }) {
   const [activeFilter, setActiveFilter] = useState<ArchiveFilter>("All");
   const shouldReduceMotion = useReducedMotion();
 
   const visibleProjects = useMemo(() => {
-    if (activeFilter === "All") {
-      return projects;
-    }
-
+    if (activeFilter === "All") return projects;
     return projects.filter((project) => project.filter === activeFilter);
   }, [activeFilter, projects]);
 
   return (
     <div>
-      <div className="sticky top-[72px] z-20 -mx-1 mb-7 px-1 py-2 md:top-[88px] md:mb-12">
-        <div className="premium-card-shadow grid w-full grid-cols-2 gap-1.5 rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.9)] p-1.5 backdrop-blur-2xl min-[430px]:grid-cols-3 sm:flex sm:w-max sm:flex-nowrap sm:gap-2 sm:p-1">
+      <div className="sticky top-[72px] z-20 -mx-4 mb-8 overflow-x-auto px-4 py-2 md:top-[88px] md:mb-14">
+        <div className="premium-panel flex w-max min-w-full items-center gap-1.5 p-1.5 sm:min-w-0 sm:flex-wrap sm:gap-2 sm:p-1">
           {archiveFilters.map((filter) => (
             <button
               key={filter}
               type="button"
               onClick={() => setActiveFilter(filter)}
               aria-pressed={activeFilter === filter}
-              className={`relative min-h-11 w-full overflow-hidden rounded-[7px] px-2.5 py-2 text-center text-[11px] font-medium leading-[1.18] transition-all duration-300 sm:min-h-0 sm:w-auto sm:whitespace-nowrap sm:px-3.5 sm:text-[12px] ${
+              className={`relative min-h-11 shrink-0 overflow-hidden rounded-[7px] px-3 py-2 text-center text-[11px] font-medium leading-[1.18] transition-all duration-300 sm:min-h-0 sm:whitespace-nowrap sm:px-3.5 sm:text-[12px] ${
                 activeFilter === filter
                   ? "text-[var(--foreground)]"
-                  : "text-[var(--muted)] hover:bg-black/[0.04] hover:text-[var(--foreground)] hover:shadow-[inset_0_0_0_1px_rgba(17,19,19,0.04)]"
+                  : "text-[var(--muted)] hover:bg-black/[0.04] hover:text-[var(--foreground)]"
               }`}
             >
               {activeFilter === filter && !shouldReduceMotion && (
                 <motion.span
                   layoutId="archive-filter-active"
-                  className="absolute inset-0 rounded-[6px] bg-black/[0.07]"
+                  className="absolute inset-0 rounded-[6px] bg-black/[0.07] shadow-[inset_0_1px_0_rgba(255,255,255,0.62)]"
                   transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
                 />
               )}
@@ -54,7 +46,14 @@ export function ArchiveExplorer({
         </div>
       </div>
 
-      <motion.div layout className="grid gap-3 sm:gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <div className="mb-5 flex flex-col gap-2 border-y border-black/10 py-4 text-[0.9rem] text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between">
+        <span>
+          Showing {visibleProjects.length} of {projects.length} archive items
+        </span>
+        <span>Framed by problem, decision support, impact, and learning.</span>
+      </div>
+
+      <motion.div layout className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         <AnimatePresence mode="popLayout">
           {visibleProjects.map((project) => (
             <ProjectCard key={project.slug} project={project} />

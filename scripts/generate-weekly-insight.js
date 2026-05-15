@@ -15,44 +15,43 @@ const OUTPUT_DIRS = {
 };
 
 const WEEKLY_CATEGORIES = [
-  "AI product launches and what they mean for business",
-  "Product strategy lessons from major tech companies",
-  "Indian consumer behavior and digital products",
-  "Marketing and brand strategy breakdowns",
-  "AI tools changing workflows",
-  "Retail, ecommerce, and customer behavior signals",
-  "Startup and product failures and lessons",
-  "Business model shifts",
-  "Automation and decision-making systems",
+  "AI & Business",
+  "Product Strategy",
+  "Indian Consumer Behavior",
+  "Market Signals",
+  "Brand & Marketing Lessons",
+  "Business History with Modern Relevance",
+  "MBA Learning Notes",
+  "Data Science Applied to Decisions",
 ];
 
 const RSS_FEEDS = [
   {
     name: "OpenAI News",
     url: "https://openai.com/news/rss.xml",
-    category: "AI product launches and what they mean for business",
+    category: "AI & Business",
   },
   {
     name: "Google AI Blog",
     url: "https://blog.google/technology/ai/rss/",
-    category: "AI tools changing workflows",
+    category: "AI & Business",
   },
   {
     name: "Microsoft AI Blog",
     url: "https://blogs.microsoft.com/ai/feed/",
-    category: "Automation and decision-making systems",
+    category: "Data Science Applied to Decisions",
   },
   {
     name: "TechCrunch AI",
     url: "https://techcrunch.com/category/artificial-intelligence/feed/",
-    category: "Business model shifts",
+    category: "Market Signals",
   },
 ];
 
 const FALLBACK_TOPICS = [
   {
     title: "AI tools are moving from novelty to everyday workflow decisions",
-    category: "AI tools changing workflows",
+    category: "AI & Business",
     summary:
       "A conservative fallback topic for weeks when no live source feed is available. Use it to analyze how teams decide where AI belongs in real work.",
     sourceLinks: [
@@ -68,7 +67,7 @@ const FALLBACK_TOPICS = [
   },
   {
     title: "What product teams can learn from AI feature packaging",
-    category: "Product strategy lessons from major tech companies",
+    category: "Product Strategy",
     summary:
       "A fallback topic for studying how companies turn technical capability into product packaging, pricing, and adoption.",
     sourceLinks: [
@@ -96,9 +95,16 @@ async function main() {
 
   const args = parseArgs(process.argv.slice(2));
   const date = args.date || localDate(new Date());
-  const status = normalizeStatus(args.status || process.env.WEEKLY_INSIGHT_STATUS || "review");
+  const autoPublish = Boolean(
+    args.publish || process.env.WEEKLY_INSIGHT_AUTO_PUBLISH === "true",
+  );
+  const status = resolveStatus(
+    args.status || process.env.WEEKLY_INSIGHT_STATUS || "review",
+    autoPublish,
+  );
   const useAi = Boolean(args["use-ai"] || process.env.WEEKLY_INSIGHT_USE_OPENAI === "true");
   const dryRun = Boolean(args["dry-run"]);
+  const manifestPath = args.manifest ? path.resolve(ROOT, String(args.manifest)) : "";
   const forcedTopic = args.topic ? String(args.topic) : "";
 
   await ensureOutputDirs();
@@ -110,19 +116,24 @@ async function main() {
   const draft = await createDraft(candidate, {
     date,
     status,
+    autoPublish,
     useAi,
     portfolioBaseUrl: process.env.WEEKLY_INSIGHT_PORTFOLIO_BASE_URL || "",
   });
 
   const files = await buildOutputFiles(draft, candidate, { date, status });
+  const manifest = buildManifest(draft, candidate, files, { date, status });
 
   if (dryRun) {
-    printDryRun(candidate, files);
+    printDryRun(candidate, files, manifest);
     return;
   }
 
   await writeFiles(files);
-  printSuccess(candidate, files);
+  if (manifestPath) {
+    await fs.writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
+  }
+  printSuccess(candidate, files, manifestPath);
 }
 
 function parseArgs(argv) {
@@ -181,7 +192,11 @@ async function ensureOutputDirs() {
   await Promise.all(Object.values(OUTPUT_DIRS).map((dir) => fs.mkdir(dir, { recursive: true })));
 }
 
-function normalizeStatus(status) {
+function resolveStatus(status, autoPublish) {
+  if (autoPublish) {
+    return "published";
+  }
+
   if (status === "draft" || status === "review") {
     return status;
   }
@@ -488,7 +503,9 @@ async function createDraft(candidate, options) {
 async function createDraftWithOpenAI(candidate, options) {
   const prompt = {
     instruction:
-      "Create a grounded weekly portfolio blog draft and LinkedIn draft for Mohit. Use only the provided sources. Mark unsupported claims as TODO. Avoid generic AI-newsletter language, clickbait, fake expertise, and overconfident predictions.",
+      options.autoPublish
+        ? "Create a publication-ready weekly portfolio blog and LinkedIn draft for Mohit. Use only the provided sources. Mark unsupported claims as TODO so validation can block publishing. Avoid generic AI-newsletter language, clickbait, fake expertise, and overconfident predictions."
+        : "Create a grounded weekly portfolio blog draft and LinkedIn draft for Mohit. Use only the provided sources. Mark unsupported claims as TODO. Avoid generic AI-newsletter language, clickbait, fake expertise, and overconfident predictions.",
     candidate,
     style: {
       voice: "intelligent, story-driven, premium, sharp, personal but not overly personal, practical, readable",
@@ -500,7 +517,7 @@ async function createDraftWithOpenAI(candidate, options) {
         "Hidden business, product, or consumer behavior lesson",
         "My interpretation",
         "Key takeaways",
-        "Review TODOs",
+        ...(options.autoPublish ? [] : ["Review TODOs"]),
       ],
     },
     outputSchema: {
@@ -511,7 +528,15 @@ async function createDraftWithOpenAI(candidate, options) {
       summary: "string",
       keyInsight: "string",
       heroImagePrompt: "string",
-      visualPrompts: ["string"],
+      heroAltText: "string",
+      suggestedVisualStyle: "string",
+      visualPrompts: [
+        {
+          prompt: "string",
+          altText: "string",
+          suggestedUse: "string",
+        },
+      ],
       articleMarkdown: "string",
       linkedinMarkdown: "string",
     },
@@ -524,7 +549,7 @@ async function createDraftWithOpenAI(candidate, options) {
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      model: process.env.OPENAI_MODEL || "gpt-4.1-mini",
+      model: process.env.OPENAI_MODEL || "gpt-4.1",
       input: [
         {
           role: "system",
@@ -662,10 +687,26 @@ What would you look for first: technical capability, customer behavior, or busin
       keyInsight:
         "The strongest story is not the technical announcement. It is the decision, behavior, or business tradeoff the announcement changes.",
       heroImagePrompt:
-        "Create a premium editorial image showing a calm desk-level product strategy workspace with abstract AI signal lines, a decision map, and subtle business notes. Use warm neutral light, refined contrast, and no logos, faces, or copyrighted product UI.",
+        "Create a premium editorial abstract image for a business/product insight article. Show a calm strategy workspace with subtle AI signal lines, a decision map, and restrained data patterns. Use warm neutral light, refined contrast, no logos, no product screenshots, no faces, no copyrighted UI, no neon, no crypto styling, and no fake corporate stock-photo look.",
+      heroAltText:
+        "Abstract editorial visual of AI signals, product decisions, and business strategy notes.",
+      suggestedVisualStyle:
+        "Premium editorial, abstract, warm neutral palette, thin linework, restrained depth, portfolio-ready, LinkedIn-safe.",
       visualPrompts: [
-        "A minimal diagram-style visual showing technical capability moving into product packaging, customer adoption, and business outcome.",
-        "A refined abstract grid with thin decision paths, small data points, and warm editorial lighting.",
+        {
+          prompt:
+            "A minimal diagram-style visual showing technical capability moving into product packaging, customer adoption, and business outcome. Use thin lines, calm contrast, no brand marks, and no real UI.",
+          altText:
+            "Abstract diagram showing technical capability flowing into product adoption and business outcomes.",
+          suggestedUse: "Inline explainer visual",
+        },
+        {
+          prompt:
+            "A refined abstract grid with thin decision paths, small data points, warm editorial lighting, and no logos or screenshots.",
+          altText:
+            "Abstract grid of decision paths and data points representing product strategy signals.",
+          suggestedUse: "Supporting visual or LinkedIn preview variant",
+        },
       ],
       articleMarkdown,
       linkedinMarkdown,
@@ -688,10 +729,40 @@ function normalizeDraft(rawDraft, candidate, options) {
     summary: cleanText(rawDraft.summary || candidate.summary || "Weekly insight draft for review."),
     keyInsight: cleanText(rawDraft.keyInsight || "The business lesson should be sharpened during review."),
     heroImagePrompt: cleanText(rawDraft.heroImagePrompt || ""),
-    visualPrompts: Array.isArray(rawDraft.visualPrompts) ? rawDraft.visualPrompts.map(cleanText).filter(Boolean).slice(0, 3) : [],
-    articleMarkdown: ensureApprovalTodo(rawDraft.articleMarkdown || ""),
+    heroAltText: cleanText(rawDraft.heroAltText || `Editorial visual for ${title}`),
+    suggestedVisualStyle: cleanText(
+      rawDraft.suggestedVisualStyle ||
+        "Premium editorial, abstract, business/product/AI inspired, modern, restrained, not cartoonish, not neon, not cyberpunk.",
+    ),
+    visualPrompts: normalizeVisualPrompts(rawDraft.visualPrompts).slice(0, 3),
+    linkedinStatus: options.autoPublish ? "approved" : "draft",
+    articleMarkdown: prepareArticleMarkdown(rawDraft.articleMarkdown || "", options.autoPublish),
     linkedinMarkdown: ensureLinkedInDraft(rawDraft.linkedinMarkdown || "", buildArticleUrl(options.portfolioBaseUrl, slug)),
   };
+}
+
+function normalizeVisualPrompts(value) {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((item) => {
+      if (typeof item === "string") {
+        return {
+          prompt: cleanText(item),
+          altText: "Abstract editorial visual supporting the article's business insight.",
+          suggestedUse: "Supporting visual",
+        };
+      }
+
+      return {
+        prompt: cleanText(item?.prompt || ""),
+        altText: cleanText(item?.altText || "Abstract editorial visual supporting the article."),
+        suggestedUse: cleanText(item?.suggestedUse || "Supporting visual"),
+      };
+    })
+    .filter((item) => item.prompt);
 }
 
 async function buildOutputFiles(draft, candidate, options) {
@@ -785,16 +856,25 @@ tags:
 ${toYamlList(draft.tags)}
 summary: ${yamlString(draft.summary)}
 heroImage: ""
-heroImageAlt: ${yamlString("Editorial visual for " + draft.title)}
+heroImagePrompt: ${yamlString(draft.heroImagePrompt)}
+supportingVisualPrompts:
+${toYamlVisualPrompts(draft.visualPrompts)}
+suggestedVisualStyle: ${yamlString(draft.suggestedVisualStyle)}
+imageCredit: ""
+imageSource: ""
+imageLicense: ""
+altText: ${yamlString(draft.heroAltText)}
+ogImage: ""
+heroImageAlt: ${yamlString(draft.heroAltText)}
 sourceLinks:
 ${toYamlSources(candidate.sourceLinks)}
 keyInsight: ${yamlString(draft.keyInsight)}
 readingTime: "${estimateReadingTime(draft.articleMarkdown)} min"
 canonicalUrl: ${yamlString(articleUrl)}
-approvalStatus: "not_requested"
+approvalStatus: ${yamlString(status === "published" ? "approved" : "not_requested")}
 linkedinShortPost:
   draftPath: ${yamlString(relativePath(linkedinPath))}
-  status: "draft"
+  status: ${yamlString(draft.linkedinStatus)}
 ---
 
 ${draft.articleMarkdown}
@@ -805,9 +885,9 @@ function buildLinkedInDraft(draft, date, articleUrl) {
   return `---
 relatedBlogSlug: ${yamlString(draft.slug)}
 relatedBlogUrl: ${yamlString(articleUrl)}
-status: "draft"
+status: ${yamlString(draft.linkedinStatus)}
 createdDate: "${date}"
-approvedDate: ""
+approvedDate: ${yamlString(draft.linkedinStatus === "approved" ? date : "")}
 postedDate: ""
 hashtags:
   - "#AI"
@@ -836,9 +916,13 @@ licenseRequirement: "AI-generated, self-created, public domain, or clearly licen
 
 ${draft.heroImagePrompt || "TODO: Add a copyright-safe hero image prompt before publishing."}
 
+Alt text: ${draft.heroAltText || "TODO: Add alt text before publishing."}
+
+Suggested visual style: ${draft.suggestedVisualStyle}
+
 ## Optional Visual Prompts
 
-${draft.visualPrompts.length ? draft.visualPrompts.map((prompt) => `- ${prompt}`).join("\n") : "- TODO: Add 1 to 3 supporting visual prompts if useful."}
+${draft.visualPrompts.length ? draft.visualPrompts.map((visual) => `- Prompt: ${visual.prompt}\n  Alt text: ${visual.altText}\n  Suggested use: ${visual.suggestedUse}`).join("\n") : "- TODO: Add 1 to 3 supporting visual prompts if useful."}
 
 ## Visual Safety Notes
 
@@ -847,6 +931,25 @@ ${draft.visualPrompts.length ? draft.visualPrompts.map((prompt) => `- ${prompt}`
 - Store source and license information if any external image is used later.
 - Add alt text before publishing.
 `;
+}
+
+function buildManifest(draft, candidate, files, options) {
+  const fileByLabel = new Map(files.map((file) => [file.label, relativePath(file.path)]));
+
+  return {
+    date: options.date,
+    status: options.status,
+    title: draft.title,
+    slug: draft.slug,
+    summary: draft.summary,
+    category: draft.category,
+    selectedTopic: candidate.title,
+    articlePath: fileByLabel.get("portfolio blog draft") || "",
+    linkedinDraftPath: fileByLabel.get("LinkedIn draft") || "",
+    researchNotePath: fileByLabel.get("research note") || "",
+    visualPromptPath: fileByLabel.get("hero image prompt") || "",
+    sourceCount: Array.isArray(candidate.sourceLinks) ? candidate.sourceLinks.length : 0,
+  };
 }
 
 function ensureApprovalTodo(markdown) {
@@ -858,6 +961,16 @@ function ensureApprovalTodo(markdown) {
   }
 
   return text.includes("TODO: Human approval") ? text : `${todo}\n\n${text}`;
+}
+
+function prepareArticleMarkdown(markdown, autoPublish) {
+  const text = String(markdown || "").trim();
+
+  if (autoPublish) {
+    return text;
+  }
+
+  return ensureApprovalTodo(text);
 }
 
 function ensureLinkedInDraft(markdown, articleUrl) {
@@ -889,20 +1002,24 @@ async function writeFiles(files) {
   await Promise.all(files.map((file) => fs.writeFile(file.path, file.content, "utf8")));
 }
 
-function printDryRun(candidate, files) {
+function printDryRun(candidate, files, manifest) {
   console.log("Weekly insight dry run complete.");
   console.log(`Selected topic: ${candidate.title}`);
+  console.log(`Generated blog title: ${manifest.title}`);
   console.log("Files that would be created:");
   for (const file of files) {
     console.log(`- ${file.label}: ${relativePath(file.path)}`);
   }
 }
 
-function printSuccess(candidate, files) {
+function printSuccess(candidate, files, manifestPath) {
   console.log("Weekly insight drafts created for human review.");
   console.log(`Selected topic: ${candidate.title}`);
   for (const file of files) {
     console.log(`- ${file.label}: ${relativePath(file.path)}`);
+  }
+  if (manifestPath) {
+    console.log(`- manifest: ${relativePath(manifestPath)}`);
   }
 }
 
@@ -910,27 +1027,27 @@ function inferCategory(text) {
   const lower = String(text || "").toLowerCase();
 
   if (lower.includes("india") || lower.includes("consumer") || lower.includes("ecommerce") || lower.includes("retail")) {
-    return "Indian consumer behavior and digital products";
+    return "Indian Consumer Behavior";
   }
 
   if (lower.includes("marketing") || lower.includes("brand")) {
-    return "Marketing and brand strategy breakdowns";
+    return "Brand & Marketing Lessons";
   }
 
-  if (lower.includes("startup") || lower.includes("failure")) {
-    return "Startup and product failures and lessons";
+  if (lower.includes("history") || lower.includes("legacy")) {
+    return "Business History with Modern Relevance";
   }
 
-  if (lower.includes("pricing") || lower.includes("business model") || lower.includes("revenue")) {
-    return "Business model shifts";
+  if (lower.includes("pricing") || lower.includes("business model") || lower.includes("revenue") || lower.includes("market")) {
+    return "Market Signals";
   }
 
-  if (lower.includes("workflow") || lower.includes("automation") || lower.includes("agent")) {
-    return "AI tools changing workflows";
+  if (lower.includes("workflow") || lower.includes("automation") || lower.includes("agent") || lower.includes("data")) {
+    return "Data Science Applied to Decisions";
   }
 
   if (lower.includes("product") || lower.includes("launch")) {
-    return "AI product launches and what they mean for business";
+    return "Product Strategy";
   }
 
   return WEEKLY_CATEGORIES[1];
@@ -1009,6 +1126,20 @@ function toYamlSources(sources = []) {
     datePublished: ${yamlString(source.datePublished || "")}
     accessed: ${yamlString(source.accessed || "")}
     claimSupported: ${yamlString(source.claimSupported || "")}`,
+    )
+    .join("\n");
+}
+
+function toYamlVisualPrompts(visualPrompts = []) {
+  if (!visualPrompts.length) {
+    return '  - prompt: ""\n    altText: ""\n    suggestedUse: ""';
+  }
+
+  return visualPrompts
+    .map(
+      (visual) => `  - prompt: ${yamlString(visual.prompt)}
+    altText: ${yamlString(visual.altText)}
+    suggestedUse: ${yamlString(visual.suggestedUse)}`,
     )
     .join("\n");
 }

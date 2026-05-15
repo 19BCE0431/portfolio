@@ -10,7 +10,7 @@ import { archiveProjects } from "../data/archive";
 export const metadata: Metadata = {
   title: "Archive",
   description:
-    "A structured archive of Applied AI, Data Science, automation, business intelligence, B.Tech projects, retail learning, and MBA case notes.",
+    "A serious project library covering product thinking, Applied AI, Data Science, automation, market intelligence, business-school work, and decision support.",
 };
 
 export default function ArchivePage() {
@@ -32,9 +32,10 @@ export default function ArchivePage() {
               <SectionLabel>Full archive</SectionLabel>
               <HeadingReveal
                 as="h1"
-                lines={["Applied work,", "organized by decision."]}
+                lines={["Project evidence,", "organized by decision."]}
                 mobileLines={[
-                  "Applied work,",
+                  "Project",
+                  "evidence,",
                   "organized by",
                   "decision.",
                 ]}
@@ -43,10 +44,11 @@ export default function ArchivePage() {
             </Reveal>
             <Reveal delay={0.08}>
               <p className="max-w-[700px] text-[clamp(0.98rem,4vw,1.24rem)] leading-[1.62] text-[var(--muted-strong)]">
-                This archive is structured to grow over time. It includes
-                Applied AI, Data Science, automation work, market
-                intelligence, engineering projects, retail learning, and MBA
-                case notes, with each item framed by the decision it supports.
+                A project library built to grow with my MBA journey. It brings
+                together AI-assisted product building, Applied AI, Data Science,
+                automation, market intelligence, engineering projects, retail
+                observations, and MBA notes. Each item is framed by the problem,
+                the decision it supported, and the learning it produced.
               </p>
             </Reveal>
           </div>

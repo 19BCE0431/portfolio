@@ -42,6 +42,158 @@ Environment variables can be added through `.env` or `.env.local`. Use `.env.exa
 
 Without `OPENAI_API_KEY`, the script creates a conservative review scaffold from collected sources. With `OPENAI_API_KEY` and `--use-ai`, it can generate fuller prose while still keeping approval status locked to draft or review.
 
+Use `OPENAI_MODEL=gpt-4.1` for higher-quality weekly writing. Use `gpt-4.1-mini` only for cheaper drafts, dry runs, or testing the workflow.
+
+## Environment And Secret Safety
+
+Use `.env.example` only as a placeholder template. It must never contain real tokens, API keys, OAuth credentials, phone-number IDs, or access tokens.
+
+For local development:
+
+- Add real keys only in `.env.local`.
+- Never commit `.env.local`.
+- Never paste real keys into chat, documentation, source files, generated drafts, workflow logs, or PR descriptions.
+- Treat any key accidentally shared in chat as exposed and revoked.
+
+For GitHub Actions automation:
+
+- Add real keys only as GitHub repository secrets.
+- Use GitHub Actions `secrets.*` references inside workflows.
+- Do not echo secrets, write them to generated content, or print full API responses that may contain sensitive data.
+
+Required or optional secrets:
+
+- `OPENAI_API_KEY` for AI-assisted writing.
+- `NEWS_API_KEY` or `SERP_API_KEY` for broader topic discovery.
+- `LINKEDIN_ACCESS_TOKEN` and `LINKEDIN_AUTHOR_URN` for future official LinkedIn posting.
+- `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`, and `WHATSAPP_TO_NUMBER` for future WhatsApp Cloud API notifications.
+
+LinkedIn and WhatsApp credentials must be obtained manually through their official API, OAuth, or developer dashboard setup. Codex must not fetch, scrape, infer, reuse, or recover credentials from browsers, password managers, screenshots, shell history, chat history, or local private files.
+
+## Weekly GitHub Actions Workflow
+
+The weekly automation lives in `.github/workflows/weekly-insight.yml`.
+
+Schedule:
+
+- Runs every Sunday at 09:00 India time.
+- Cron equivalent: `30 3 * * 0` UTC.
+- Also supports manual runs through GitHub's `workflow_dispatch`.
+
+Default review-first behavior:
+
+1. Checks out the repository.
+2. Verifies `OPENAI_API_KEY` is configured.
+3. Installs dependencies with `npm ci`.
+4. Runs `npm run generate:weekly-insight` with status locked to `review` or `draft`.
+5. Runs lint and build checks.
+6. Commits generated content to `weekly-insight/YYYY-MM-DD`.
+7. Opens or updates a pull request titled `Weekly insight draft: YYYY-MM-DD`.
+
+In default mode, it does not:
+
+- It does not merge the pull request.
+- It does not mark posts as `published`.
+- It does not post to LinkedIn.
+- It does not send WhatsApp messages unless `WHATSAPP_NOTIFY=true` and WhatsApp credentials are configured.
+- It does not deploy directly to production except through the normal merge/deploy flow.
+
+### Adding GitHub Actions Secrets
+
+In GitHub, open:
+
+`Repository Settings -> Secrets and variables -> Actions -> New repository secret`
+
+Add these values as needed:
+
+- `OPENAI_API_KEY` is required for the weekly workflow.
+- `OPENAI_MODEL` should usually be `gpt-4.1` for higher-quality writing.
+- `NEWS_API_KEY` is optional for news discovery.
+- `SERP_API_KEY` is optional for search discovery.
+- `WEEKLY_INSIGHT_PORTFOLIO_BASE_URL` should be `https://mohitsaikrishna.in`.
+- `WEEKLY_INSIGHT_STATUS` should be `review`.
+- `WEEKLY_INSIGHT_AUTO_PUBLISH` should stay `false` unless intentionally enabling full automation.
+- `LINKEDIN_AUTO_POST` should stay `false` unless intentionally enabling LinkedIn auto-posting.
+- `WHATSAPP_NOTIFY` should stay `false` unless intentionally enabling WhatsApp notifications.
+
+If `OPENAI_API_KEY` is missing, the workflow fails early with a clear message instead of generating weak content or silently falling back.
+
+### Running The Workflow Manually
+
+In GitHub:
+
+1. Open the `Actions` tab.
+2. Select `Weekly Insight Draft`.
+3. Click `Run workflow`.
+4. Run it from the main branch unless testing a workflow change.
+
+The workflow will create or update a branch named `weekly-insight/YYYY-MM-DD` and open a PR for review.
+
+### Reviewing The PR
+
+Before merging:
+
+- Read the generated portfolio article from `content/journal/`.
+- Check the research note in `content/research-notes/`.
+- Review the LinkedIn draft in `content/linkedin-drafts/`.
+- Review visual prompts in `content/generated-assets/`.
+- Verify every claim that depends on a source.
+- Rewrite anything generic, robotic, exaggerated, or unsupported.
+- Confirm the article status remains `review` until it is intentionally ready to publish.
+
+Merge the PR only after human review. Merging is the manual approval step that lets the portfolio content update through the normal deployment flow.
+
+## Optional Full Auto-Publish Mode
+
+Recommendation: keep review-first mode enabled unless Mohit intentionally chooses full automation for a specific period.
+
+Full automation is disabled by default. These flags must be explicitly configured as GitHub Actions secrets:
+
+```text
+WEEKLY_INSIGHT_AUTO_PUBLISH=true
+LINKEDIN_AUTO_POST=true
+WHATSAPP_NOTIFY=true
+```
+
+Each flag controls a separate layer:
+
+- `WEEKLY_INSIGHT_AUTO_PUBLISH=true` allows the weekly workflow to generate content with `status: "published"`, validate it, commit directly to `main`, and let Vercel deploy from `main`.
+- `LINKEDIN_AUTO_POST=true` allows LinkedIn posting only after auto-publish succeeds, the blog is published, the LinkedIn draft exists, and `LINKEDIN_ACCESS_TOKEN` plus `LINKEDIN_AUTHOR_URN` are configured.
+- `WHATSAPP_NOTIFY=true` allows optional WhatsApp messages after PR creation, portfolio publishing, LinkedIn posting, or workflow failure, only when WhatsApp Cloud API credentials are configured.
+
+The auto-publish safety validator runs `scripts/validate-weekly-publish.js` before the workflow can push published content. It blocks publishing when:
+
+- Blog title or article body is missing.
+- Blog status is not `published`.
+- Portfolio base URL is missing or not HTTPS.
+- Canonical URL is missing.
+- Source links are empty.
+- LinkedIn draft is missing or not approved.
+- The article or LinkedIn draft contains `TODO`, placeholder language, review markers, or source-discovery-only text.
+
+Risks:
+
+- Fully automated publishing can still produce writing that is technically valid but not tasteful enough.
+- Source-backed writing may need human judgment even when sources exist.
+- LinkedIn and WhatsApp APIs can fail because of token expiry, permission changes, or platform policy.
+
+Required secrets for full automation:
+
+- `OPENAI_API_KEY`
+- `OPENAI_MODEL`
+- `NEWS_API_KEY` or `SERP_API_KEY`
+- `WEEKLY_INSIGHT_PORTFOLIO_BASE_URL`
+- `WEEKLY_INSIGHT_AUTO_PUBLISH`
+- `LINKEDIN_AUTO_POST`
+- `LINKEDIN_ACCESS_TOKEN`
+- `LINKEDIN_AUTHOR_URN`
+- `WHATSAPP_NOTIFY`
+- `WHATSAPP_ACCESS_TOKEN`
+- `WHATSAPP_PHONE_NUMBER_ID`
+- `WHATSAPP_TO_NUMBER`
+
+No secret should be hardcoded, written to generated content, printed in logs, or committed.
+
 ## Weekly Workflow
 
 1. Research the week across AI, product, technology, business, marketing, consumer behavior, startups, and global product strategy.
@@ -113,6 +265,66 @@ LinkedIn drafts should adapt the portfolio article, not duplicate it.
 - Use very limited hashtags, usually 2 to 4.
 - Avoid engagement-bait, motivational filler, and exaggerated personal branding.
 
+## Manual LinkedIn Posting
+
+LinkedIn posting is manual and approval-first. The weekly generation workflow does not post to LinkedIn.
+
+Workflow:
+
+1. Weekly draft is generated into `content/linkedin-drafts/`.
+2. Mohit reviews and edits the LinkedIn draft.
+3. Mohit changes the draft frontmatter to `status: "approved"`.
+4. Mohit runs the manual GitHub Action `Post Approved LinkedIn Draft`.
+5. The action runs `scripts/post-to-linkedin.js` with the selected draft slug.
+6. The script posts through the official LinkedIn Posts API only.
+7. The script marks the local draft as `posted` only after LinkedIn returns success.
+
+Required GitHub Actions secrets:
+
+- `LINKEDIN_ACCESS_TOKEN`
+- `LINKEDIN_AUTHOR_URN`
+- `WEEKLY_INSIGHT_PORTFOLIO_BASE_URL`
+
+Safety rules:
+
+- Drafts with `status: "draft"` or `status: "review"` must not post.
+- Drafts already marked `posted` must not post again.
+- Browser automation, scraping, cookies, saved sessions, and password extraction are not allowed.
+- LinkedIn credentials must come from official LinkedIn OAuth/API setup and be stored only in GitHub Actions secrets or local `.env.local`.
+
+Full setup details are in `LINKEDIN_POSTING_SETUP.md`.
+
+## Optional WhatsApp Notifications
+
+WhatsApp notifications use `scripts/send-whatsapp-notification.js` and the official WhatsApp Business Cloud API. They are optional and non-blocking.
+
+Required secrets:
+
+- `WHATSAPP_ACCESS_TOKEN`
+- `WHATSAPP_PHONE_NUMBER_ID`
+- `WHATSAPP_TO_NUMBER`
+
+Mohit's recipient number should be stored as:
+
+```text
+WHATSAPP_TO_NUMBER=917680030135
+```
+
+Notification points:
+
+- After the weekly draft PR is created, the workflow can send: `Weekly insight draft is ready for review: {PR_LINK}`.
+- After an approved LinkedIn draft is posted, the workflow can send: `Weekly insight published. Blog: {BLOG_URL}. LinkedIn: {LINKEDIN_URL}`.
+- A failure notification type is available for future use: `Weekly insight workflow needs attention. Check GitHub Actions: {RUN_URL}`.
+
+Safety rules:
+
+- If WhatsApp credentials are missing, the script logs `WhatsApp notification skipped: missing configuration` and exits successfully.
+- WhatsApp send failures are logged but do not fail the main workflow.
+- The project must not use WhatsApp Web, browser automation, session cookies, QR-code scraping, or personal-session hacks.
+- For production usage outside an active service window, Meta may require approved WhatsApp message templates.
+
+Full setup details are in `WHATSAPP_NOTIFICATION_SETUP.md`.
+
 ## Image And Visual Rules
 
 - Images must be AI-generated, self-created, original, public domain, or clearly licensed for use.
@@ -120,6 +332,12 @@ LinkedIn drafts should adapt the portfolio article, not duplicate it.
 - Avoid fake screenshots, misleading product visuals, or images that imply access to private information.
 - Visuals should support the article's idea, not decorate it randomly.
 - Use calm editorial visuals, diagrams, simple charts, or abstract business/product graphics where useful.
+- Weekly drafts should include `heroImagePrompt`, `supportingVisualPrompts`, `suggestedVisualStyle`, `altText`, `imageCredit`, `imageSource`, `imageLicense`, and `ogImage` fields.
+- Use `content/generated-assets/` for visual prompts and metadata. Use `public/blog-images/` only for final optimized image files that should render on the site.
+- Do not scrape images from news sites, copy product screenshots, or use brand logos unless usage is clearly allowed.
+- If no visual has been approved, leave `heroImage` blank; the article layout is designed to remain premium without an image.
+
+Full visual rules are in `VISUAL_GUIDELINES.md`.
 
 ## Citation And Source Rules
 

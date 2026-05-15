@@ -49,11 +49,11 @@ function DetailSection({
 }) {
   return (
     <Reveal>
-      <section className="grid gap-3 border-t border-black/10 py-5 md:grid-cols-[220px_1fr] md:gap-12 md:py-8">
-        <h2 className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
+      <section className="grid gap-4 border-t border-black/10 py-6 md:grid-cols-[240px_1fr] md:gap-14 md:py-10">
+        <h2 className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)] md:pt-1">
           {title}
         </h2>
-        <div className="max-w-[780px] text-[clamp(0.97rem,4vw,1.08rem)] leading-[1.66] text-[var(--muted-strong)] md:text-[clamp(1.02rem,1.4vw,1.16rem)]">
+        <div className="max-w-[820px] text-[clamp(1rem,4vw,1.12rem)] leading-[1.72] text-[var(--muted-strong)] md:text-[clamp(1.04rem,1.4vw,1.2rem)]">
           {children}
         </div>
       </section>
@@ -104,6 +104,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   const titleLines = getTitleLines(project.title);
   const mobileTitleLines = getMobileTitleLines(project.title);
+  const detailSections = project.sections;
 
   return (
     <>
@@ -121,7 +122,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <Reveal>
             <Link
               href="/archive"
-              className="mb-8 inline-flex min-h-11 items-center gap-2 rounded-[8px] border border-black/10 bg-white/45 px-3.5 py-2 text-[13px] font-medium text-[var(--foreground)] shadow-[0_10px_32px_rgba(17,19,19,0.05)] backdrop-blur transition hover:bg-white md:mb-10 md:min-h-0"
+              className="mb-8 inline-flex min-h-11 items-center gap-2 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.72)] px-3.5 py-2 text-[13px] font-medium text-[var(--foreground)] shadow-[0_10px_32px_rgba(16,18,18,0.05)] backdrop-blur transition hover:bg-white md:mb-10 md:min-h-0"
             >
               <ArrowLeft className="h-4 w-4 text-[var(--muted)]" />
               Back to archive
@@ -154,37 +155,95 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </Reveal>
           </div>
 
+          <Reveal>
+            <div className="mt-10 grid gap-3 border-y border-black/10 py-4 md:mt-16 md:grid-cols-3 md:py-6">
+              <div>
+                <p className="editorial-kicker">Impact</p>
+                <p className="mt-3 text-[0.98rem] leading-[1.58] text-[var(--muted-strong)]">
+                  {project.impact}
+                </p>
+              </div>
+              <div>
+                <p className="editorial-kicker">Learning</p>
+                <p className="mt-3 text-[0.98rem] leading-[1.58] text-[var(--muted-strong)]">
+                  {project.learning}
+                </p>
+              </div>
+              <div>
+                <p className="editorial-kicker">Tools / frame</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {project.tools.slice(0, 5).map((tool) => (
+                    <span
+                      key={tool}
+                      className="rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.6)] px-2.5 py-1 text-[12px] text-[var(--muted-strong)]"
+                    >
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
           <div className="mt-10 md:mt-24">
-            <DetailSection title="Context">
-              <p>{project.context}</p>
-            </DetailSection>
-            <DetailSection title="Problem">
-              <p>{project.problem}</p>
-            </DetailSection>
-            <DetailSection title="Contribution">
-              <p>{project.contribution}</p>
-            </DetailSection>
-            <DetailSection title="Tools used">
-              <div className="flex flex-wrap gap-2">
-                {project.tools.map((tool) => (
-                  <span
-                    key={tool}
-                    className="min-h-8 rounded-[8px] border border-black/10 bg-white/45 px-2.5 py-1.5 text-[12px] text-[var(--muted-strong)]"
-                  >
-                    {tool}
-                  </span>
+            {detailSections ? (
+              <>
+                {detailSections.map((section) => (
+                  <DetailSection key={section.title} title={section.title}>
+                    <div className="grid gap-4">
+                      {section.body.map((paragraph) => (
+                        <p key={paragraph}>{paragraph}</p>
+                      ))}
+                    </div>
+                  </DetailSection>
                 ))}
-              </div>
-            </DetailSection>
-            <DetailSection title="Impact / learning">
-              <div className="grid gap-4">
-                <p>{project.impact}</p>
-                <p>{project.learning}</p>
-              </div>
-            </DetailSection>
-            <DetailSection title="Future direction">
-              <p>{project.futureDirection}</p>
-            </DetailSection>
+                <DetailSection title="Working stack">
+                  <div className="flex flex-wrap gap-2">
+                    {project.tools.map((tool) => (
+                      <span
+                        key={tool}
+                        className="min-h-8 rounded-[8px] border border-black/10 bg-white/45 px-2.5 py-1.5 text-[12px] text-[var(--muted-strong)]"
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </DetailSection>
+              </>
+            ) : (
+              <>
+                <DetailSection title="Context">
+                  <p>{project.context}</p>
+                </DetailSection>
+                <DetailSection title="Problem">
+                  <p>{project.problem}</p>
+                </DetailSection>
+                <DetailSection title="Contribution">
+                  <p>{project.contribution}</p>
+                </DetailSection>
+                <DetailSection title="Tools used">
+                  <div className="flex flex-wrap gap-2">
+                    {project.tools.map((tool) => (
+                      <span
+                        key={tool}
+                        className="min-h-8 rounded-[8px] border border-black/10 bg-white/45 px-2.5 py-1.5 text-[12px] text-[var(--muted-strong)]"
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </DetailSection>
+                <DetailSection title="Impact / learning">
+                  <div className="grid gap-4">
+                    <p>{project.impact}</p>
+                    <p>{project.learning}</p>
+                  </div>
+                </DetailSection>
+                <DetailSection title="Future direction">
+                  <p>{project.futureDirection}</p>
+                </DetailSection>
+              </>
+            )}
           </div>
 
           <div className="mt-12 border-t border-black/10 pt-8">
