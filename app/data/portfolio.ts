@@ -8,7 +8,7 @@ export const profile = {
     "Professional portrait of Mohit Sai Krishna Peddakotla, MBA candidate at IIM Sirmaur",
   instagram:
     "https://www.instagram.com/ms_krishna9?igsh=MW16emtlZ254cjd2cg%3D%3D&utm_source=qr",
-  linkedIn: "",
+  linkedIn: "https://www.linkedin.com/in/mohit-sai-krishna-peddakotla/",
   linkedInLabel: "LinkedIn",
   whatsApp:
     "https://wa.me/917680030135?text=Hi%20Mohit%2C%20I%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect.",
