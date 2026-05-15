@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build --webpack",
+    "generate:weekly-insight": "node scripts/generate-weekly-insight.js",
     "start": "next start",
     "lint": "eslint ."
   },
