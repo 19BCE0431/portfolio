@@ -10,6 +10,18 @@ status: "draft" # draft | approved | posted
 createdDate: "YYYY-MM-DD"
 approvedDate: ""
 postedDate: ""
+engagementQuestion: ""
+linkedinImagePrompt: ""
+linkedinImageAltText: ""
+carouselPrompt: ""
+carouselOutline:
+  - ""
+visualStyle: ""
+imageGeneratedByAI: true
+imageDisclosure:
+  recommendedUse: ""
+  copyrightStatus: ""
+  disclosureNote: ""
 hashtags: []
 ---
 ```
@@ -40,7 +52,15 @@ Add the portfolio blog link here.
 
 ## Ending Reflection
 
-End with a thoughtful question or reflection, not engagement-bait.
+End with one thoughtful question that invites useful comments, not rage bait or engagement-bait.
+
+## Visual Prompt
+
+If the post needs a visual, use a copyright-safe AI-generated or self-created image prompt. Avoid logos, screenshots, copied brand assets, and misleading product visuals.
+
+## Future Comment Replies
+
+Do not auto-reply to LinkedIn comments. A future workflow may collect comments through official APIs where available, draft suggested replies, and wait for human approval before posting.
 
 ## Hashtags
 

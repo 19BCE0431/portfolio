@@ -6,9 +6,9 @@
 }
 
 :root {
-  --background: #f5f3ee;
+  --background: #f6f3ec;
   --surface: #fffdf8;
-  --surface-cool: #edf0ee;
+  --surface-cool: #ecf0ed;
   --foreground: #101212;
   --muted: #6f716b;
   --muted-strong: #3f433f;
@@ -20,6 +20,7 @@
   --sage: #68796d;
   --clay: #9a7f63;
   --steel: #687789;
+  --copper: #a56f53;
   --ivory: #fbf8f0;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -29,6 +30,7 @@
 }
 
 html {
+  position: relative;
   scroll-behavior: smooth;
   background: var(--background);
 }
@@ -39,9 +41,10 @@ body {
   margin: 0;
   overflow-x: hidden;
   background:
-    linear-gradient(180deg, rgba(245, 243, 238, 0.98), rgba(237, 240, 238, 0.76) 46%, rgba(245, 243, 238, 0.98)),
-    radial-gradient(circle at 16% 10%, rgba(104, 119, 137, 0.1), transparent 31%),
-    radial-gradient(circle at 84% 8%, rgba(104, 121, 109, 0.12), transparent 30%);
+    linear-gradient(180deg, rgba(246, 243, 236, 0.98), rgba(236, 240, 237, 0.78) 43%, rgba(250, 248, 242, 0.98)),
+    radial-gradient(circle at 14% 8%, rgba(104, 119, 137, 0.13), transparent 30%),
+    radial-gradient(circle at 84% 4%, rgba(104, 121, 109, 0.15), transparent 27%),
+    radial-gradient(circle at 50% 72%, rgba(165, 111, 83, 0.08), transparent 32%);
   color: var(--foreground);
   font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   text-rendering: optimizeLegibility;
@@ -57,7 +60,8 @@ body::after {
   opacity: 0.35;
   background-image:
     radial-gradient(circle at 50% 0%, rgba(255, 253, 248, 0.84), transparent 34%),
-    linear-gradient(115deg, transparent 0 42%, rgba(104, 121, 109, 0.052) 42% 43%, transparent 43% 100%);
+    linear-gradient(115deg, transparent 0 42%, rgba(104, 121, 109, 0.052) 42% 43%, transparent 43% 100%),
+    linear-gradient(35deg, transparent 0 58%, rgba(165, 111, 83, 0.035) 58% 59%, transparent 59% 100%);
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.72), transparent 68%);
 }
 
@@ -93,6 +97,12 @@ a {
   margin-inline: auto;
 }
 
+.hero-shell {
+  width: min(100%, 1440px);
+  margin-inline: auto;
+  padding-inline: clamp(18px, 4.8vw, 76px);
+}
+
 .display-tight {
   letter-spacing: 0;
 }
@@ -114,6 +124,10 @@ a {
   background: linear-gradient(90deg, transparent, var(--line-strong), transparent);
 }
 
+.vertical-hairline {
+  background: linear-gradient(180deg, transparent, var(--line-strong), transparent);
+}
+
 .portrait-frame {
   border-radius: 8px;
 }
@@ -123,6 +137,14 @@ a {
     linear-gradient(rgba(16, 18, 18, 0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(16, 18, 18, 0.045) 1px, transparent 1px);
   background-size: 42px 42px;
+}
+
+.signal-grid {
+  background-image:
+    linear-gradient(rgba(16, 18, 18, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 18, 18, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at 20% 20%, rgba(104, 121, 109, 0.18), transparent 26%);
+  background-size: 54px 54px, 54px 54px, auto;
 }
 
 .orbital-line {
@@ -137,6 +159,58 @@ a {
   height: 1px;
   transform-origin: left;
   background: linear-gradient(90deg, transparent, rgba(17, 19, 19, 0.28), transparent);
+}
+
+.signal-node {
+  position: relative;
+}
+
+.signal-node::before {
+  position: absolute;
+  top: 0.62em;
+  left: -22px;
+  width: 8px;
+  height: 8px;
+  content: "";
+  border: 1px solid rgba(104, 121, 109, 0.5);
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: 0 0 0 7px rgba(104, 121, 109, 0.07);
+}
+
+.interactive-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  transition: background-size 420ms var(--ease), color 280ms var(--ease);
+}
+
+.interactive-underline:hover,
+.interactive-underline:focus-visible {
+  background-size: 100% 1px;
+}
+
+.hover-light {
+  position: relative;
+  isolation: isolate;
+}
+
+.hover-light::before {
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  content: "";
+  opacity: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at var(--x, 50%) var(--y, 20%), rgba(255, 255, 255, 0.62), transparent 32%),
+    linear-gradient(135deg, rgba(104, 121, 109, 0.12), rgba(165, 111, 83, 0.08));
+  transition: opacity 420ms var(--ease);
+}
+
+.hover-light:hover::before {
+  opacity: 1;
 }
 
 .noise-layer {
@@ -154,7 +228,7 @@ a {
 
 .dark-transition {
   background:
-    linear-gradient(180deg, rgba(246, 246, 243, 0) 0%, var(--deep) 18%, var(--deep) 84%, rgba(246, 246, 243, 0) 100%);
+    linear-gradient(180deg, rgba(246, 243, 236, 0) 0%, var(--deep) 16%, #0a0c0d 58%, var(--deep) 84%, rgba(246, 243, 236, 0) 100%);
 }
 
 .soft-shadow {
@@ -179,6 +253,18 @@ a {
   backdrop-filter: blur(18px);
 }
 
+.editorial-panel {
+  border: 1px solid rgba(16, 18, 18, 0.08);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.78), rgba(255, 253, 248, 0.54)),
+    radial-gradient(circle at 0% 0%, rgba(104, 121, 109, 0.08), transparent 34%);
+  box-shadow:
+    0 30px 92px rgba(16, 18, 18, 0.075),
+    inset 0 1px 0 rgba(255, 255, 255, 0.68);
+  backdrop-filter: blur(20px);
+}
+
 .dark-panel {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
@@ -187,6 +273,22 @@ a {
     0 34px 120px rgba(0, 0, 0, 0.24),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(18px);
+}
+
+.footer-marquee {
+  display: flex;
+  width: max-content;
+  animation: footer-marquee 26s linear infinite;
+}
+
+@keyframes footer-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @media (min-width: 768px) {
@@ -208,11 +310,19 @@ a {
     background:
       linear-gradient(180deg, rgba(246, 246, 243, 0) 0%, var(--deep) 10%, var(--deep) 92%, rgba(246, 246, 243, 0) 100%);
   }
+
+  .signal-node::before {
+    left: -16px;
+  }
 }
 
 @media (min-width: 1180px) {
   .section-shell {
     width: min(calc(100% - 112px), 1240px);
+  }
+
+  .hero-shell {
+    width: min(100%, 1440px);
   }
 }
 
@@ -228,5 +338,9 @@ a {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.001ms !important;
+  }
+
+  .footer-marquee {
+    animation: none !important;
   }
 }

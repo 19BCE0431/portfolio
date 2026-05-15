@@ -25,7 +25,8 @@ export function JournalExplorer({
 
   if (!posts.length) {
     return (
-      <div className="premium-card-shadow rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.72)] p-6 text-center backdrop-blur md:p-10">
+      <div className="editorial-panel relative overflow-hidden p-6 text-center md:p-10">
+        <div className="signal-grid pointer-events-none absolute inset-0 opacity-[0.12]" />
         <p className="text-[1.25rem] font-semibold">
           Long-form notes will appear here once they are reviewed and published.
         </p>
@@ -83,7 +84,7 @@ export function JournalExplorer({
             >
               <Link
                 href={`/journal/${post.slug}`}
-                className="group premium-card-shadow relative flex h-full min-h-[250px] flex-col justify-between overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.76)] p-4 backdrop-blur transition duration-500 hover:border-black/20 hover:bg-[rgba(251,251,248,0.96)] hover:shadow-[0_34px_94px_rgba(17,19,19,0.09)] focus:outline-none focus:ring-2 focus:ring-black/15 sm:min-h-[310px] sm:p-6"
+                className="group editorial-panel hover-light relative flex h-full min-h-[250px] flex-col justify-between overflow-hidden p-4 transition duration-500 hover:border-black/20 hover:bg-[rgba(251,251,248,0.96)] hover:shadow-[0_34px_94px_rgba(17,19,19,0.09)] focus:outline-none focus:ring-2 focus:ring-black/15 sm:min-h-[310px] sm:p-6"
               >
                 <span className="pointer-events-none absolute inset-x-6 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-transparent via-black/25 to-transparent transition-transform duration-500 group-hover:scale-x-100" />
                 <div>
