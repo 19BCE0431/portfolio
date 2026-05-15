@@ -12,6 +12,16 @@ export function SiteNav() {
   const shouldReduceMotion = useReducedMotion();
   const [activeSection, setActiveSection] = useState("thesis");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    const updateScrollState = () => setHasScrolled(window.scrollY > 18);
+
+    updateScrollState();
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+
+    return () => window.removeEventListener("scroll", updateScrollState);
+  }, []);
 
   useEffect(() => {
     if (pathname !== "/") {
@@ -52,7 +62,11 @@ export function SiteNav() {
       <div className="mx-auto w-full max-w-[1180px]">
         <nav
           aria-label="Primary navigation"
-          className="flex w-full items-center justify-between gap-3 rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.82)] px-3 py-2 text-[13px] shadow-[0_12px_45px_rgba(17,19,19,0.06)] backdrop-blur-2xl transition-shadow duration-500 hover:shadow-[0_18px_58px_rgba(17,19,19,0.08)] sm:px-4"
+          className={`flex w-full items-center justify-between gap-3 rounded-[8px] border px-3 py-2 text-[13px] backdrop-blur-2xl transition-all duration-500 sm:px-4 ${
+            hasScrolled
+              ? "border-black/10 bg-[rgba(251,251,248,0.9)] shadow-[0_18px_70px_rgba(17,19,19,0.1)]"
+              : "border-black/8 bg-[rgba(251,251,248,0.72)] shadow-[0_12px_45px_rgba(17,19,19,0.055)]"
+          }`}
         >
           <Link
             href="/"
@@ -60,7 +74,9 @@ export function SiteNav() {
             onClick={() => setMobileOpen(false)}
             className="group flex min-w-fit items-center gap-2 font-medium text-[var(--foreground)]"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--sage)] transition-transform duration-300 group-hover:scale-125" />
+            <span className="relative h-1.5 w-1.5 rounded-full bg-[var(--sage)] transition-transform duration-300 group-hover:scale-125">
+              <span className="absolute inset-[-5px] rounded-full border border-[rgba(105,121,107,0.24)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            </span>
             <span className="sm:hidden">Mohit</span>
             <span className="hidden sm:inline lg:hidden">
               {profile.shortName}
@@ -72,9 +88,11 @@ export function SiteNav() {
             {navItems.map((item) => {
               const isArchive =
                 item.href === "/archive" && pathname.startsWith("/archive");
+              const isJournal =
+                item.href === "/journal" && pathname.startsWith("/journal");
               const isHomeSection =
                 pathname === "/" && item.sectionId === activeSection;
-              const isActive = isArchive || isHomeSection;
+              const isActive = isArchive || isJournal || isHomeSection;
 
               return (
                 <Link
@@ -89,7 +107,7 @@ export function SiteNav() {
                   {isActive && !shouldReduceMotion && (
                     <motion.span
                       layoutId="site-nav-active"
-                      className="absolute inset-0 rounded-[7px] bg-black/[0.055]"
+                      className="absolute inset-0 rounded-[7px] bg-black/[0.06] shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]"
                       transition={{
                         duration: 0.38,
                         ease: [0.16, 1, 0.3, 1],
@@ -138,9 +156,11 @@ export function SiteNav() {
               {navItems.map((item) => {
                 const isArchive =
                   item.href === "/archive" && pathname.startsWith("/archive");
+                const isJournal =
+                  item.href === "/journal" && pathname.startsWith("/journal");
                 const isHomeSection =
                   pathname === "/" && item.sectionId === activeSection;
-                const isActive = isArchive || isHomeSection;
+                const isActive = isArchive || isJournal || isHomeSection;
 
                 return (
                   <Link

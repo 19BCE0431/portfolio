@@ -48,7 +48,7 @@ export default function OpenGraphImage() {
               maxWidth: 980,
             }}
           >
-            MBA (IIM Sirmaur) · Applied AI & Data Systems
+            Data Science · MBA · Product Direction
           </div>
           <div
             style={{
@@ -59,8 +59,8 @@ export default function OpenGraphImage() {
               maxWidth: 980,
             }}
           >
-            Product strategy, marketing, retail learning, and business
-            decision-making.
+            Technology foundation, Applied AI experience, and a growing focus
+            on product, marketing, strategy, and business decisions.
           </div>
         </div>
 

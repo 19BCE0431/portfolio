@@ -46,6 +46,19 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+body::after {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  opacity: 0.35;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(251, 251, 248, 0.74), transparent 34%),
+    linear-gradient(115deg, transparent 0 42%, rgba(105, 121, 107, 0.055) 42% 43%, transparent 43% 100%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.72), transparent 68%);
+}
+
 body::before {
   position: fixed;
   inset: 0;
@@ -74,7 +87,7 @@ a {
 }
 
 .section-shell {
-  width: min(calc(100% - 32px), 1240px);
+  width: min(calc(100% - 28px), 1240px);
   margin-inline: auto;
 }
 
@@ -86,8 +99,29 @@ a {
   background: linear-gradient(90deg, transparent, var(--line-strong), transparent);
 }
 
-.portrait-mask {
-  clip-path: polygon(7% 0, 100% 0, 100% 92%, 92% 100%, 0 100%, 0 8%);
+.portrait-frame {
+  border-radius: 8px;
+}
+
+.premium-grid {
+  background-image:
+    linear-gradient(rgba(17, 19, 19, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 19, 19, 0.045) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.orbital-line {
+  position: absolute;
+  border: 1px solid rgba(105, 119, 137, 0.16);
+  border-radius: 999px;
+  transform: rotate(-18deg);
+}
+
+.motion-line {
+  position: absolute;
+  height: 1px;
+  transform-origin: left;
+  background: linear-gradient(90deg, transparent, rgba(17, 19, 19, 0.28), transparent);
 }
 
 .noise-layer {
@@ -114,9 +148,30 @@ a {
     0 2px 1px rgba(17, 19, 19, 0.04);
 }
 
+.premium-card-shadow {
+  box-shadow:
+    0 26px 80px rgba(17, 19, 19, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.58);
+}
+
 @media (min-width: 768px) {
   .section-shell {
     width: min(calc(100% - 72px), 1240px);
+  }
+}
+
+@media (max-width: 640px) {
+  .noise-layer {
+    opacity: 0.18;
+  }
+
+  .premium-grid {
+    background-size: 34px 34px;
+  }
+
+  .dark-transition {
+    background:
+      linear-gradient(180deg, rgba(246, 246, 243, 0) 0%, var(--deep) 10%, var(--deep) 92%, rgba(246, 246, 243, 0) 100%);
   }
 }
 

@@ -36,7 +36,7 @@ export default function TwitterImage() {
               letterSpacing: -1.8,
             }}
           >
-            Archive of applied systems
+            Data Science to business decisions
           </div>
           <div
             style={{

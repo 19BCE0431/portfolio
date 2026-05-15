@@ -1,6 +1,6 @@
 export type ArchiveFilter =
   | "All"
-  | "AI Systems"
+  | "Applied AI"
   | "Automation"
   | "Business Intelligence"
   | "B.Tech"
@@ -8,7 +8,7 @@ export type ArchiveFilter =
   | "MBA";
 
 export type ArchiveCategory =
-  | "Applied AI & Data Systems"
+  | "Applied AI & Data Science"
   | "Automation & Operations"
   | "Market / Business Intelligence"
   | "B.Tech Projects"
@@ -33,7 +33,7 @@ export type ArchiveProject = {
 
 export const archiveFilters: ArchiveFilter[] = [
   "All",
-  "AI Systems",
+  "Applied AI",
   "Automation",
   "Business Intelligence",
   "B.Tech",
@@ -44,33 +44,33 @@ export const archiveFilters: ArchiveFilter[] = [
 export const archiveProjects: ArchiveProject[] = [
   {
     slug: "applied-image-search",
-    title: "Applied Image Search",
-    category: "Applied AI & Data Systems",
-    filter: "AI Systems",
+    title: "Visual Product Discovery",
+    category: "Applied AI & Data Science",
+    filter: "Applied AI",
     status: "Shipped",
     shortDescription:
-      "Image-led discovery flow where users could upload visuals and receive relevant product or content descriptions.",
+      "Image-led search flow that reduced discovery friction when users did not know the exact product name.",
     context:
-      "Built in an agri-commerce environment where search friction can directly affect discovery and purchase intent.",
+      "Built in a commerce setting where search quality can directly affect discovery, confidence, and purchase intent.",
     problem:
-      "Users may not always know the right product name or description. A visual search path can reduce the gap between what they see and what they need to find.",
+      "Users may recognize what they need visually before they can describe it clearly. That creates a gap between intent and searchable language.",
     contribution:
-      "Built an image-led discovery workflow using OpenAI, FastAPI, and image processing to connect uploaded images with relevant product or content descriptions.",
+      "Built an image-led discovery workflow using OpenAI, FastAPI, and image processing to connect uploaded visuals with relevant product or content descriptions.",
     tools: ["OpenAI", "FastAPI", "Image processing"],
     impact: "Increased orders by 28%.",
     learning:
-      "AI systems become valuable when they reduce user effort at a specific point in the purchase journey.",
+      "Applied AI becomes valuable when it removes effort at a specific point in the purchase journey.",
     futureDirection:
       "Expand the case into a deeper product study around search behavior, visual intent, and assisted discovery.",
   },
   {
     slug: "order-drop-detection",
-    title: "Order Drop Detection",
+    title: "Order Drop Early Warning",
     category: "Automation & Operations",
     filter: "Automation",
     status: "Operational",
     shortDescription:
-      "Hourly anomaly detection for identifying order drops and supporting faster operational response.",
+      "Hourly anomaly detection that surfaced order drops early enough for faster operational follow-up.",
     context:
       "Order movement can change quickly. Teams need early signals when something unusual happens.",
     problem:
@@ -81,18 +81,18 @@ export const archiveProjects: ArchiveProject[] = [
     impact:
       "Created a faster signal layer for operational response and diagnosis.",
     learning:
-      "Data work matters most when it connects signals to urgency and clear follow-up decisions.",
+      "Data Science work matters most when it connects signals to urgency and clear follow-up decisions.",
     futureDirection:
       "Extend the case with alert examples, diagnosis workflows, and how teams can prioritize causes.",
   },
   {
     slug: "document-intelligence-system",
-    title: "Document Intelligence System",
-    category: "Applied AI & Data Systems",
-    filter: "AI Systems",
+    title: "Document Intelligence for Faster Lookup",
+    category: "Applied AI & Data Science",
+    filter: "Applied AI",
     status: "Built",
     shortDescription:
-      "LLM-based RAG system for automated PDF and document queries.",
+      "RAG workflow for searching PDFs and internal documents without repeated manual lookup.",
     context:
       "Product and operational information often sits inside PDFs and internal documents that are slow to search manually.",
     problem:
@@ -103,18 +103,18 @@ export const archiveProjects: ArchiveProject[] = [
     impact:
       "Reduced manual search effort and improved speed of internal information access.",
     learning:
-      "Retrieval systems are useful when they make internal knowledge easier to reach at the moment of need.",
+      "Retrieval work is useful when it makes internal knowledge easier to reach at the moment of need.",
     futureDirection:
       "Develop this into a clearer internal-knowledge case study with retrieval quality, UX, and trust considerations.",
   },
   {
     slug: "invoice-pdf-automation",
-    title: "Invoice & PDF Automation",
+    title: "Invoice Data Extraction Automation",
     category: "Automation & Operations",
     filter: "Automation",
     status: "Built",
     shortDescription:
-      "Invoice image and PDF data extraction automation for repeated operational workflows.",
+      "OCR and parsing workflow for extracting invoice and PDF data from repeated operational tasks.",
     context:
       "Invoices and PDFs often require repetitive extraction, validation, and entry work.",
     problem:
@@ -130,12 +130,12 @@ export const archiveProjects: ArchiveProject[] = [
   },
   {
     slug: "competitor-price-intelligence",
-    title: "Competitor Price Intelligence",
+    title: "Competitor Pricing Intelligence",
     category: "Market / Business Intelligence",
     filter: "Business Intelligence",
     status: "Built",
     shortDescription:
-      "Price crawling, fuzzy matching, and dashboards for tracking competitor price movement.",
+      "Price crawling, fuzzy matching, and dashboards for tracking competitor movement across 9 sites.",
     context:
       "Pricing signals can reveal market movement, competitor behavior, and tactical pressure.",
     problem:
@@ -151,12 +151,12 @@ export const archiveProjects: ArchiveProject[] = [
   },
   {
     slug: "logistics-status-automation",
-    title: "Logistics Status Automation",
+    title: "Logistics Visibility Automation",
     category: "Automation & Operations",
     filter: "Automation",
     status: "Built",
     shortDescription:
-      "Real-time order status scraping and automated customer notification workflows.",
+      "Real-time order-status scraping connected to more timely customer notification workflows.",
     context:
       "Customer communication depends on operational visibility across logistics partners.",
     problem:
@@ -173,12 +173,12 @@ export const archiveProjects: ArchiveProject[] = [
   },
   {
     slug: "content-automation-system",
-    title: "Content Automation System",
+    title: "Content Operations Automation",
     category: "Automation & Operations",
     filter: "Automation",
     status: "Shipped",
     shortDescription:
-      "Automated content collection workflow for farmer-facing updates.",
+      "Automated content collection workflow for improving publishing consistency and audience relevance.",
     context:
       "Regular content operations need both relevance and consistency.",
     problem:
@@ -188,27 +188,27 @@ export const archiveProjects: ArchiveProject[] = [
     tools: ["Web scraping", "Automation"],
     impact: "Increased engagement by 144%.",
     learning:
-      "Content systems need both relevance and operational consistency.",
+      "Content operations need both relevance and reliable cadence.",
     futureDirection:
       "Expand this into a content-operations note around cadence, selection, and audience usefulness.",
   },
   {
     slug: "crop-advisory-enhancement",
-    title: "Crop Advisory Enhancement",
-    category: "Applied AI & Data Systems",
-    filter: "AI Systems",
+    title: "Crop Advisory Model Improvement",
+    category: "Applied AI & Data Science",
+    filter: "Applied AI",
     status: "Improved",
     shortDescription:
-      "LLM and image-processing work to improve crop advisory accuracy.",
+      "LLM and image-processing work aimed at improving the reliability of a crop advisory workflow.",
     context:
       "Agricultural advisory tools need useful outputs in practical, high-context situations.",
     problem:
-      "Image and advisory systems need stronger reliability before they can support confident decisions.",
+      "Image-led advisory workflows need stronger reliability before they can support confident decisions.",
     contribution:
       "Worked on improving Crop Doctor model accuracy through LLM integration and better image processing.",
     tools: ["LLMs", "Image processing"],
     impact:
-      "Improved the practical usefulness of an advisory workflow; exact public metrics are not being presented here.",
+      "Improved the practical usefulness of an advisory workflow; exact public metrics are not shown here.",
     learning:
       "AI in agriculture needs reliability, context, and practical usefulness.",
     futureDirection:
@@ -216,12 +216,12 @@ export const archiveProjects: ArchiveProject[] = [
   },
   {
     slug: "cancellation-prediction",
-    title: "Cancellation Prediction",
-    category: "Applied AI & Data Systems",
-    filter: "AI Systems",
+    title: "Cancellation Risk Prediction",
+    category: "Applied AI & Data Science",
+    filter: "Applied AI",
     status: "Built",
     shortDescription:
-      "Prediction model for identifying likely order cancellations earlier in the workflow.",
+      "Prediction model for identifying likely order cancellations earlier in the confirmation workflow.",
     context:
       "Order confirmation workflows can be delayed when teams manually identify cancellation risk.",
     problem:
@@ -231,20 +231,20 @@ export const archiveProjects: ArchiveProject[] = [
     tools: ["Machine learning", "Python"],
     impact: "Reduced manual confirmation delay by 1-2 days.",
     learning:
-      "Predictive systems matter when they improve workflow timing and reduce uncertainty.",
+      "Predictive work matters when it improves workflow timing and reduces uncertainty.",
     futureDirection:
       "Add clearer model framing around signals, workflow usage, and decision thresholds.",
   },
   {
     slug: "runtime-optimization",
-    title: "Runtime Optimization",
+    title: "Production Workflow Optimization",
     category: "Automation & Operations",
     filter: "Automation",
     status: "Improved",
     shortDescription:
       "Production Python reliability and runtime improvements with alerts and database refinements.",
     context:
-      "Production data workflows need predictable performance and visible failure modes.",
+      "Production workflows need predictable performance and visible failure modes.",
     problem:
       "Slow scripts and fragile error handling can create operational delays and hidden failures.",
     contribution:
@@ -258,7 +258,7 @@ export const archiveProjects: ArchiveProject[] = [
   },
   {
     slug: "online-diagrammatic-tool",
-    title: "Online Diagrammatic Tool",
+    title: "Collaborative Diagramming Tool",
     category: "B.Tech Projects",
     filter: "B.Tech",
     status: "Academic build",
@@ -280,7 +280,7 @@ export const archiveProjects: ArchiveProject[] = [
   },
   {
     slug: "stocksense-price-predict",
-    title: "StockSense: Price Predict",
+    title: "StockSense Forecasting Interface",
     category: "B.Tech Projects",
     filter: "B.Tech",
     status: "Academic build",
@@ -333,40 +333,40 @@ export const archiveProjects: ArchiveProject[] = [
   },
   {
     slug: "cm-silks-retail-learning",
-    title: "CM Silks Retail Learning",
+    title: "Retail & Customer Behavior Notes",
     category: "Retail Learning",
     filter: "Retail",
     status: "Learning",
     shortDescription:
-      "Retail, customer behavior, content, and local positioning through a family saree business.",
+      "A small learning note on customer education, trust, category understanding, and local retail behavior.",
     context:
-      "Ongoing exposure to a family saree business and the everyday realities of local retail.",
+      "Ongoing observation of local saree retail and the everyday details behind customer choice.",
     problem:
       "Retail growth is not only about visibility; it depends on trust, education, category understanding, aspiration, and price perception.",
     contribution:
-      "Supported digital growth and storytelling thinking around content, customer education, and local brand positioning.",
+      "Collected observations around content, customer education, trust, local positioning, and how buyers compare value.",
     tools: ["Content planning", "Customer observation", "Retail positioning"],
     impact:
       "Built practical exposure to how customers understand sarees, compare value, and respond to trust-led communication.",
     learning:
       "Retail taught me how trust, aspiration, pricing, and education influence customer decisions.",
     futureDirection:
-      "Develop into a series of notes on saree retail, local brand storytelling, and customer behavior.",
+      "Develop into concise notes on saree retail, customer education, and purchase behavior.",
   },
   {
     slug: "mba-case-notes",
-    title: "MBA Case Notes",
+    title: "MBA Case & Market Notes",
     category: "MBA Case Notes",
     filter: "MBA",
     status: "Building",
     shortDescription:
-      "Future space for product, marketing, strategy, consumer behavior, and market analysis projects.",
+      "A future space for product, marketing, strategy, consumer behavior, and market analysis work.",
     context:
       "A developing archive for work from the IIM Sirmaur MBA journey.",
     problem:
       "The portfolio needs a place for business-school work that is not yet a polished public case study.",
     contribution:
-      "Creating a structure for future product teardowns, marketing notes, strategy cases, consumer behavior observations, and market analysis.",
+      "Creating a structure for future product teardowns, marketing notes, strategy cases, consumer-behavior observations, and market analysis.",
     tools: ["Product thinking", "Marketing", "Strategy", "Consumer behavior"],
     impact:
       "Future-ready structure for adding stronger MBA work as it develops.",

@@ -1,8 +1,14 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+} from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import type { MouseEvent } from "react";
 import type { ArchiveProject } from "../data/archive";
 
 export function ProjectCard({
@@ -13,6 +19,25 @@ export function ProjectCard({
   compact?: boolean;
 }) {
   const shouldReduceMotion = useReducedMotion();
+  const arrowX = useMotionValue(0);
+  const arrowY = useMotionValue(0);
+  const smoothArrowX = useSpring(arrowX, { stiffness: 220, damping: 24 });
+  const smoothArrowY = useSpring(arrowY, { stiffness: 220, damping: 24 });
+
+  const handlePointerMove = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (shouldReduceMotion) {
+      return;
+    }
+
+    const rect = event.currentTarget.getBoundingClientRect();
+    arrowX.set((event.clientX - rect.left - rect.width / 2) * 0.018);
+    arrowY.set((event.clientY - rect.top - rect.height / 2) * 0.018);
+  };
+
+  const resetPointer = () => {
+    arrowX.set(0);
+    arrowY.set(0);
+  };
 
   return (
     <motion.article
@@ -25,13 +50,19 @@ export function ProjectCard({
     >
       <Link
         href={`/archive/${project.slug}`}
-        className={`group relative flex h-full cursor-pointer flex-col justify-between overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.74)] p-5 shadow-[0_24px_80px_rgba(17,19,19,0.055)] backdrop-blur transition duration-500 hover:border-black/20 hover:bg-[rgba(251,251,248,0.96)] hover:shadow-[0_34px_94px_rgba(17,19,19,0.09)] focus:outline-none focus:ring-2 focus:ring-black/15 sm:p-6 ${
-          compact ? "min-h-[300px] sm:min-h-[340px] xl:min-h-[360px]" : "min-h-[340px] sm:min-h-[390px] xl:min-h-[430px]"
+        onMouseMove={handlePointerMove}
+        onMouseLeave={resetPointer}
+        className={`group relative flex h-full cursor-pointer flex-col justify-between overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.74)] p-4 premium-card-shadow backdrop-blur transition duration-500 hover:border-black/20 hover:bg-[rgba(251,251,248,0.96)] hover:shadow-[0_34px_94px_rgba(17,19,19,0.09)] focus:outline-none focus:ring-2 focus:ring-black/15 sm:p-6 ${
+          compact ? "min-h-[250px] sm:min-h-[340px] xl:min-h-[360px]" : "min-h-[286px] sm:min-h-[390px] xl:min-h-[430px]"
         }`}
       >
         <span className="pointer-events-none absolute inset-x-6 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-transparent via-black/25 to-transparent transition-transform duration-500 group-hover:scale-x-100" />
+        <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+          <span className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(105,121,107,0.44),transparent)]" />
+          <span className="absolute inset-y-8 right-0 w-px bg-[linear-gradient(180deg,transparent,rgba(105,119,137,0.32),transparent)]" />
+        </span>
         <div>
-          <div className="mb-7 flex items-start justify-between gap-3 sm:mb-8 sm:gap-4">
+          <div className="mb-5 flex items-start justify-between gap-3 sm:mb-8 sm:gap-4">
             <span className="max-w-[190px] text-[10.5px] font-semibold uppercase leading-[1.45] tracking-[0.16em] text-[var(--muted)] sm:text-[11px] sm:tracking-[0.18em]">
               {project.category}
             </span>
@@ -40,15 +71,15 @@ export function ProjectCard({
             </span>
           </div>
 
-          <h3 className="text-[clamp(1.34rem,6.2vw,1.75rem)] font-semibold leading-[1.08] tracking-[-0.01em] md:text-[clamp(1.45rem,2vw,2.05rem)] md:leading-[1.04]">
+          <h3 className="text-[clamp(1.22rem,5.7vw,1.75rem)] font-semibold leading-[1.1] tracking-[0] md:text-[clamp(1.45rem,2vw,2.05rem)] md:leading-[1.04]">
             {project.title}
           </h3>
-          <p className="mt-5 text-[0.95rem] leading-[1.62] text-[var(--muted)] sm:mt-6 sm:text-[0.98rem]">
+          <p className="mt-4 text-[0.92rem] leading-[1.58] text-[var(--muted)] sm:mt-6 sm:text-[0.98rem]">
             {project.shortDescription}
           </p>
 
           {!compact && (
-            <div className="mt-7 border-t border-black/10 pt-5">
+            <div className="mt-5 border-t border-black/10 pt-4 sm:mt-7 sm:pt-5">
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
                 Learning
               </p>
@@ -59,13 +90,18 @@ export function ProjectCard({
           )}
         </div>
 
-        <div className="mt-8 flex items-center justify-between gap-4 border-t border-black/10 pt-5 sm:mt-10">
+        <div className="mt-6 flex items-center justify-between gap-4 border-t border-black/10 pt-4 sm:mt-10 sm:pt-5">
           <span className="min-w-0 break-words text-[12px] leading-[1.45] text-[var(--muted)]">
             {project.tools.slice(0, 3).join(" · ")}
           </span>
-          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-black/10 bg-white/40 transition-colors duration-300 group-hover:bg-white">
+          <motion.span
+            className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-black/10 bg-white/40 transition-colors duration-300 group-hover:bg-white"
+            style={
+              shouldReduceMotion ? undefined : { x: smoothArrowX, y: smoothArrowY }
+            }
+          >
             <ArrowUpRight className="h-4 w-4 text-[var(--muted)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-          </span>
+          </motion.span>
         </div>
       </Link>
     </motion.article>

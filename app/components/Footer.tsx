@@ -1,68 +1,130 @@
 import { ArrowUpRight, FileText, Link2, Mail, MapPin } from "lucide-react";
 import { profile } from "../data/portfolio";
 import { Reveal } from "./Reveal";
-import { SectionLabel } from "./SectionLabel";
+
+const linkBase =
+  "group flex min-h-12 items-center justify-between gap-4 rounded-[8px] border border-white/10 bg-white/[0.035] px-4 py-3 text-[0.95rem] transition-colors duration-300 hover:border-white/18 hover:bg-white/[0.06] sm:text-[0.98rem]";
 
 export function Footer() {
-  return (
-    <footer id="contact" className="section-shell scroll-mt-28 py-20 md:py-36">
-      <Reveal className="grid gap-10 md:grid-cols-[1fr_0.72fr] md:items-end">
-        <div>
-          <SectionLabel>Contact</SectionLabel>
-          <h2 className="max-w-[900px] break-words text-[clamp(2.05rem,9.2vw,4rem)] font-semibold leading-[1] tracking-[-0.01em] md:text-[clamp(2.45rem,6.2vw,6.2rem)] md:leading-[0.95]">
-            {profile.name}
-          </h2>
-          <p className="mt-5 max-w-[720px] text-[clamp(1rem,4vw,1.12rem)] leading-[1.64] text-[var(--muted-strong)] md:mt-7 md:text-[clamp(1.04rem,1.65vw,1.22rem)]">
-            MBA candidate at IIM Sirmaur, based in India. Building a portfolio
-            across applied AI systems, product thinking, marketing, retail
-            learning, consumer behavior, and business strategy.
-          </p>
-        </div>
+  const year = new Date().getFullYear();
 
-        <div className="grid gap-3 rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.7)] p-4 shadow-[0_18px_58px_rgba(17,19,19,0.05)] backdrop-blur sm:p-5">
-          <a
-            className="group flex min-h-12 items-center justify-between gap-4 border-b border-black/10 pb-3 text-[0.95rem] font-medium text-[var(--foreground)] sm:text-[0.98rem]"
-            href={`mailto:${profile.email}`}
-          >
-            <span className="inline-flex min-w-0 items-center gap-2 break-all">
-              <Mail className="h-4 w-4 shrink-0 text-[var(--sage)]" />
-              {profile.email}
-            </span>
-            <ArrowUpRight className="h-4 w-4 shrink-0 text-[var(--muted)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-          </a>
-          <a
-            className="group flex min-h-12 items-center justify-between gap-4 border-b border-black/10 pb-3 text-[0.95rem] text-[var(--muted)] transition-colors duration-300 hover:text-[var(--foreground)]"
-            href={profile.instagram}
-          >
-            <span className="inline-flex items-center gap-2">
-              <Link2 className="h-4 w-4 text-[var(--steel)]" />
-              Instagram
-            </span>
-            <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-          </a>
-          <span className="flex min-h-12 items-center justify-between gap-4 border-b border-black/10 pb-3 text-[0.95rem] text-[var(--muted)]">
-            <span className="inline-flex items-center gap-2">
-              <Link2 className="h-4 w-4 text-[var(--clay)]" />
-              LinkedIn
-            </span>
-            <span className="text-[12px]">Link to add</span>
-          </span>
-          <span className="flex min-h-12 items-center justify-between gap-4 border-b border-black/10 pb-3 text-[0.95rem] text-[var(--muted)]">
-            <span className="inline-flex items-center gap-2">
-              <FileText className="h-4 w-4 text-[var(--sage)]" />
-              Resume
-            </span>
-            <span className="text-[12px]">Add `public/resume.pdf`</span>
-          </span>
-          <span className="flex min-h-12 items-center justify-between gap-4 text-[0.95rem] text-[var(--muted)]">
-            <span className="inline-flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-[var(--steel)]" />
-              Location
-            </span>
-            <span>{profile.location}</span>
-          </span>
+  return (
+    <footer
+      id="contact"
+      className="relative scroll-mt-28 overflow-hidden bg-[var(--deep)] py-16 text-[var(--surface)] md:py-28"
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(246,246,243,0.18),transparent)]"
+      />
+      <div
+        aria-hidden="true"
+        className="premium-grid pointer-events-none absolute right-[-160px] top-16 h-[520px] w-[680px] opacity-[0.08] [mask-image:radial-gradient(circle,black,transparent_70%)]"
+      />
+      <div className="section-shell">
+        <Reveal className="grid gap-10 md:grid-cols-[1fr_0.78fr] md:items-start lg:gap-20">
+          <div>
+            <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/38">
+              Contact
+            </p>
+            <h2 className="max-w-[880px] break-words text-[clamp(2.1rem,10vw,4.2rem)] font-semibold leading-[1] tracking-[0] text-white/92 md:text-[clamp(2.8rem,6vw,6rem)] md:leading-[0.95]">
+              Let’s keep the next conversation useful.
+            </h2>
+            <p className="mt-5 max-w-[680px] text-[clamp(1rem,4vw,1.14rem)] leading-[1.64] text-white/58 md:mt-7">
+              Open to thoughtful conversations around Data Science, Applied AI,
+              product, marketing, strategy, and business decision-making.
+            </p>
+
+            <div className="mt-10 flex flex-wrap gap-3 text-[12px] uppercase tracking-[0.18em] text-white/38">
+              <span>Built as a living portfolio</span>
+              <span>India</span>
+            </div>
+          </div>
+
+          <div className="rounded-[8px] border border-white/10 bg-white/[0.035] p-3 shadow-[0_28px_90px_rgba(0,0,0,0.22)] backdrop-blur-xl sm:p-4">
+            <div className="grid gap-3">
+              <a className={`${linkBase} font-medium text-white/90`} href={`mailto:${profile.email}`}>
+                <span className="inline-flex min-w-0 items-center gap-2 break-all">
+                  <Mail className="h-4 w-4 shrink-0 text-white/62" />
+                  {profile.email}
+                </span>
+                <ArrowUpRight className="h-4 w-4 shrink-0 text-white/45 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </a>
+
+              {profile.linkedIn ? (
+                <a
+                  className={`${linkBase} font-medium text-white/86`}
+                  href={profile.linkedIn}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <Link2 className="h-4 w-4 text-white/58" />
+                    {profile.linkedInLabel}
+                  </span>
+                  <ArrowUpRight className="h-4 w-4 text-white/45 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </a>
+              ) : (
+                <span className={`${linkBase} font-medium text-white/78`}>
+                  <span className="inline-flex items-center gap-2">
+                    <Link2 className="h-4 w-4 text-white/52" />
+                    {profile.linkedInLabel}
+                  </span>
+                  <span className="text-[12px] text-white/38">Link to add</span>
+                </span>
+              )}
+
+              <span className={`${linkBase} text-white/58`}>
+                <span className="inline-flex items-center gap-2">
+                  <FileText className="h-4 w-4 text-white/48" />
+                  Resume
+                </span>
+                <span className="text-[12px] text-white/36">Add `public/resume.pdf`</span>
+              </span>
+
+              <div className="mt-2 grid gap-3 border-t border-white/10 pt-3 sm:grid-cols-2">
+                <a
+                  className={`${linkBase} text-white/58`}
+                  href={profile.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <Link2 className="h-4 w-4 text-white/44" />
+                    Instagram
+                  </span>
+                  <ArrowUpRight className="h-4 w-4 text-white/38 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </a>
+                <a
+                  className={`${linkBase} text-white/58`}
+                  href={profile.whatsApp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <Link2 className="h-4 w-4 text-white/44" />
+                    WhatsApp
+                  </span>
+                  <ArrowUpRight className="h-4 w-4 text-white/38 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </a>
+              </div>
+
+              <span className="flex min-h-12 items-center justify-between gap-4 px-2 text-[0.9rem] text-white/44">
+                <span className="inline-flex items-center gap-2">
+                  <MapPin className="h-4 w-4 text-white/36" />
+                  Location
+                </span>
+                <span>{profile.location}</span>
+              </span>
+            </div>
+          </div>
+        </Reveal>
+
+        <div className="mt-12 flex flex-col gap-2 border-t border-white/10 pt-5 text-[12px] text-white/34 sm:flex-row sm:items-center sm:justify-between">
+          <span>© {year} {profile.shortName}. All rights reserved.</span>
+          <span>Built as a living portfolio.</span>
         </div>
-      </Reveal>
+      </div>
     </footer>
   );
 }

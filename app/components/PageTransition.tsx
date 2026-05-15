@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-} from "framer-motion";
+import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
@@ -39,17 +33,18 @@ export function PageTransition({ children }: { children: ReactNode }) {
   return (
     <>
       <ScrollProgress />
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={pathname}
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
-          animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-          exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: -8 }}
-          transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
-        >
-          {children}
-        </motion.div>
-      </AnimatePresence>
+      <motion.div
+        key={pathname}
+        initial={
+          shouldReduceMotion ? false : { opacity: 0, y: 12, filter: "blur(6px)" }
+        }
+        animate={
+          shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, filter: "blur(0px)" }
+        }
+        transition={{ duration: 0.46, ease: [0.16, 1, 0.3, 1] }}
+      >
+        {children}
+      </motion.div>
     </>
   );
 }

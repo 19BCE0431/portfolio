@@ -3,31 +3,37 @@ export const profile = {
   shortName: "Mohit Sai Krishna",
   email: "cm.mohhithh@gmail.com",
   location: "India",
+  portrait: "/images/profile.jpg",
+  portraitAlt:
+    "Professional portrait of Mohit Sai Krishna Peddakotla, MBA candidate at IIM Sirmaur",
   instagram:
     "https://www.instagram.com/ms_krishna9?igsh=MW16emtlZ254cjd2cg%3D%3D&utm_source=qr",
   linkedIn: "",
+  linkedInLabel: "LinkedIn",
+  whatsApp:
+    "https://wa.me/917680030135?text=Hi%20Mohit%2C%20I%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect.",
 };
 
 export const navItems = [
   { label: "Thesis", href: "/#thesis", sectionId: "thesis" },
   { label: "Background", href: "/#background", sectionId: "background" },
   { label: "Archive", href: "/archive", sectionId: "archive" },
-  { label: "Journal", href: "/#journal", sectionId: "journal" },
+  { label: "Journal", href: "/journal", sectionId: "journal" },
   { label: "Contact", href: "/#contact", sectionId: "contact" },
 ];
 
 export const thesisPoints = [
   {
-    label: "Systems",
-    text: "I started by building practical data and AI workflows: search, RAG, OCR, scraping, prediction, anomaly detection, and dashboards.",
+    label: "Data Science",
+    text: "I started by building practical work: search, RAG, OCR, scraping, prediction, anomaly detection, dashboards, and operational automation.",
   },
   {
-    label: "Markets",
-    text: "The MBA is helping me connect that execution to product choices, marketing questions, pricing signals, and customer behavior.",
+    label: "Business Judgment",
+    text: "The MBA is helping me move from execution to sharper questions around product choices, marketing problems, pricing signals, and strategy.",
   },
   {
-    label: "Retail",
-    text: "CM Silks keeps me close to local retail: trust, content, education, assortment, and how families actually buy.",
+    label: "Customer Context",
+    text: "I am especially interested in how analysis becomes useful when it reflects real customer behavior, adoption barriers, and decision trade-offs.",
   },
 ];
 
@@ -45,17 +51,28 @@ export const backgroundCards = [
   {
     label: "Professional work",
     value: "Data Science Engineer",
-    detail: "Bangalore · Mar 2024-present",
+    detail: "Bangalore · Mar 2024-Mar 2025",
   },
   {
-    label: "Retail exposure",
-    value: "CM Silks family business",
-    detail: "Digital growth, storytelling, and local positioning",
+    label: "Internship chapter",
+    value: "Data Science Intern",
+    detail: "Sep 2023-Mar 2024",
+  },
+  {
+    label: "Current direction",
+    value: "Product, marketing, strategy",
+    detail: "Data Science · Applied AI · Business Intelligence · Consumer behavior",
+  },
+  {
+    label: "Retail note",
+    value: "Customer behavior observations",
+    detail: "Retail and customer-behavior observations through CM Silks",
   },
 ];
 
 export const credibilityMarkers = [
-  "Data Science Intern · Sep 2023-Feb 2024",
+  "Data Science Engineer · Mar 2024-Mar 2025",
+  "Data Science Intern · Sep 2023-Mar 2024",
   "500+ LeetCode problems solved",
   "JEE Mains 97.9 percentile",
   "TS EAMCET rank 1143 out of 2.42 lakh candidates",
@@ -64,19 +81,19 @@ export const credibilityMarkers = [
 export const journalItems = [
   {
     label: "Drafting",
-    title: "Product notes from an engineer entering business school",
+    title: "Product notes from a data science background",
     description:
-      "Short reflections on how product decisions look different when viewed through systems, customers, and business outcomes together.",
+      "Short reflections on how technical work changes when the starting point becomes user need, adoption, and business value.",
   },
   {
     label: "Collecting",
-    title: "Retail observations from CM Silks",
+    title: "Retail and customer behavior notes",
     description:
-      "Notes on saree retail, customer education, trust, content, and how local brands build meaning over time.",
+      "Notes on customer education, trust, category understanding, and how purchase decisions form in local retail.",
   },
   {
     label: "Drafting",
-    title: "AI systems that actually help operations",
+    title: "Applied AI that improves operating decisions",
     description:
       "Practical notes from search, RAG, OCR, scraping, prediction, dashboards, and alerting work.",
   },

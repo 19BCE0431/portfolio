@@ -49,11 +49,11 @@ function DetailSection({
 }) {
   return (
     <Reveal>
-      <section className="grid gap-4 border-t border-black/10 py-6 md:grid-cols-[220px_1fr] md:gap-12 md:py-8">
+      <section className="grid gap-3 border-t border-black/10 py-5 md:grid-cols-[220px_1fr] md:gap-12 md:py-8">
         <h2 className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
           {title}
         </h2>
-        <div className="max-w-[780px] text-[clamp(1rem,4.2vw,1.08rem)] leading-[1.68] text-[var(--muted-strong)] md:text-[clamp(1.02rem,1.4vw,1.16rem)]">
+        <div className="max-w-[780px] text-[clamp(0.97rem,4vw,1.08rem)] leading-[1.66] text-[var(--muted-strong)] md:text-[clamp(1.02rem,1.4vw,1.16rem)]">
           {children}
         </div>
       </section>
@@ -108,8 +108,16 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   return (
     <>
       <SiteNav />
-      <main className="pt-28 md:pt-40">
-        <article className="section-shell pb-20 pt-6 md:pb-32 md:pt-8">
+      <main className="relative overflow-hidden pt-24 md:pt-40">
+        <div
+          aria-hidden="true"
+          className="premium-grid pointer-events-none absolute right-[-140px] top-24 h-[380px] w-[560px] opacity-[0.1] [mask-image:radial-gradient(circle,black,transparent_72%)]"
+        />
+        <div
+          aria-hidden="true"
+          className="motion-line pointer-events-none left-[8vw] top-[180px] w-[42vw] opacity-70"
+        />
+        <article className="section-shell pb-16 pt-5 md:pb-32 md:pt-8">
           <Reveal>
             <Link
               href="/archive"
@@ -127,7 +135,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 as="h1"
                 lines={titleLines}
                 mobileLines={mobileTitleLines}
-                className="max-w-[820px] text-[clamp(2.25rem,10.2vw,4.45rem)] font-semibold leading-[1] tracking-[-0.01em] md:text-[clamp(2.8rem,6.8vw,6.45rem)] md:leading-[0.94]"
+                className="max-w-[820px] text-[clamp(2rem,9.8vw,4.45rem)] font-semibold leading-[1.03] tracking-[0] md:text-[clamp(2.8rem,6.8vw,6.45rem)] md:leading-[0.94]"
               />
             </Reveal>
 
@@ -140,13 +148,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   {project.filter}
                 </span>
               </div>
-              <p className="text-[clamp(1.06rem,4.6vw,1.24rem)] leading-[1.56] text-[var(--muted-strong)] md:text-[clamp(1.12rem,2vw,1.55rem)] md:leading-[1.48]">
+              <p className="text-[clamp(1rem,4.1vw,1.24rem)] leading-[1.58] text-[var(--muted-strong)] md:text-[clamp(1.12rem,2vw,1.55rem)] md:leading-[1.48]">
                 {project.shortDescription}
               </p>
             </Reveal>
           </div>
 
-          <div className="mt-12 md:mt-24">
+          <div className="mt-10 md:mt-24">
             <DetailSection title="Context">
               <p>{project.context}</p>
             </DetailSection>
