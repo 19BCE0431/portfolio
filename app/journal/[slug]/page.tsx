@@ -141,7 +141,7 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
   return (
     <>
       <SiteNav />
-      <main className="relative overflow-hidden pt-22 md:pt-40">
+      <main className="relative overflow-hidden pt-24 md:pt-40">
         <div
           aria-hidden="true"
           className="premium-grid pointer-events-none absolute right-[-140px] top-24 h-[380px] w-[560px] opacity-[0.1] [mask-image:radial-gradient(circle,black,transparent_72%)]"

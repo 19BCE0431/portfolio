@@ -275,6 +275,87 @@ a {
   backdrop-filter: blur(18px);
 }
 
+.book-card {
+  position: relative;
+  isolation: isolate;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.13), transparent 42%),
+    linear-gradient(160deg, #151719, #2d302b);
+}
+
+.book-card::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  opacity: 0.2;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: radial-gradient(circle at 20% 10%, black, transparent 68%);
+}
+
+.book-card::after {
+  position: absolute;
+  inset: auto 16px 16px auto;
+  z-index: -1;
+  width: 84px;
+  height: 84px;
+  content: "";
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  opacity: 0.72;
+}
+
+.book-card-copper {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.13), transparent 42%),
+    linear-gradient(160deg, #211615, #8a5d43);
+}
+
+.book-card-steel {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.13), transparent 42%),
+    linear-gradient(160deg, #14191d, #52657a);
+}
+
+.book-card-sage {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.13), transparent 42%),
+    linear-gradient(160deg, #151a17, #5d705f);
+}
+
+.book-card-ink {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.13), transparent 42%),
+    linear-gradient(160deg, #111315, #34383b);
+}
+
+.book-card-gold {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.13), transparent 42%),
+    linear-gradient(160deg, #231b13, #97753f);
+}
+
+.book-card-rose {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.13), transparent 42%),
+    linear-gradient(160deg, #23161c, #8e5b67);
+}
+
+.book-card-indigo {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.13), transparent 42%),
+    linear-gradient(160deg, #151626, #4d557f);
+}
+
+.book-card-moss {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.13), transparent 42%),
+    linear-gradient(160deg, #141a16, #536446);
+}
+
 .footer-marquee {
   display: flex;
   width: max-content;

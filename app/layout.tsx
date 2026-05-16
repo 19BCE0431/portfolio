@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     template: `%s | ${profile.name}`,
   },
   description:
-    "Mohit Sai Krishna Peddakotla is an MBA candidate at IIM Sirmaur (2025-2027) building toward product management, marketing, strategy, consumer behavior, AI-enabled workflows, and business decision-making, with a Computer Science and Data Science foundation.",
+    "Mohit Sai Krishna Peddakotla is an MBA candidate at IIM Sirmaur exploring product, marketing, strategy, consumer behavior, and AI-enabled workflows with a Computer Science and Data Science foundation.",
   keywords: [
     "Mohit Sai Krishna Peddakotla",
     "IIM Sirmaur",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     type: "website",
     title: profile.name,
     description:
-      "MBA candidate at IIM Sirmaur building toward product management, marketing, strategy, consumer behavior, AI-enabled workflows, and business decision-making.",
+      "MBA candidate at IIM Sirmaur exploring product, marketing, strategy, consumer behavior, and AI-enabled workflows.",
     siteName: profile.name,
     locale: "en_IN",
   },
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: profile.name,
     description:
-      "MBA candidate at IIM Sirmaur building toward product, marketing, strategy, AI-enabled workflows, and business decisions.",
+      "MBA candidate at IIM Sirmaur exploring product, marketing, strategy, consumer behavior, and AI-enabled workflows.",
   },
   icons: {
     icon: [{ url: "/icon", type: "image/png" }],
