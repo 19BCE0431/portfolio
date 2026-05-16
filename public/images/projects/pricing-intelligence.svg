@@ -1,0 +1,25 @@
+<svg width="1200" height="820" viewBox="0 0 1200 820" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="820" rx="34" fill="#101212"/>
+  <path d="M0 0h1200v820H0z" fill="url(#bg)"/>
+  <rect x="114" y="126" width="972" height="542" rx="28" fill="#fffdf8" fill-opacity=".07" stroke="#fffdf8" stroke-opacity=".12"/>
+  <path d="M188 572h810M188 482h810M188 392h810M188 302h810M188 212h810" stroke="#fffdf8" stroke-opacity=".07"/>
+  <path d="M216 538c86-94 165-30 246-110 80-79 124-164 222-92 96 70 152 16 286-92" stroke="#E7D6B1" stroke-width="7" stroke-linecap="round"/>
+  <path d="M216 464c100 28 172-36 258-22 112 18 146 118 244 96 80-18 130-78 252-68" stroke="#9BAF9D" stroke-opacity=".74" stroke-width="5" stroke-linecap="round"/>
+  <rect x="196" y="174" width="176" height="76" rx="18" fill="#fffdf8" fill-opacity=".1"/>
+  <rect x="404" y="174" width="176" height="76" rx="18" fill="#fffdf8" fill-opacity=".1"/>
+  <rect x="612" y="174" width="176" height="76" rx="18" fill="#fffdf8" fill-opacity=".1"/>
+  <g font-family="Inter, Arial, sans-serif" fill="#fffdf8">
+    <text x="120" y="92" font-size="18" letter-spacing="4" opacity=".46">MARKET MOVEMENT · COMPARISON</text>
+    <text x="120" y="738" font-size="52" font-weight="700">Pricing signals with business context</text>
+    <text x="220" y="221" font-size="30" font-weight="700">9 sites</text>
+    <text x="428" y="221" font-size="30" font-weight="700">65%</text>
+    <text x="636" y="221" font-size="30" font-weight="700">Watchlist</text>
+  </g>
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(948 108) rotate(139) scale(824 914)">
+      <stop stop-color="#A56F53" stop-opacity=".36"/>
+      <stop offset=".48" stop-color="#16191B"/>
+      <stop offset="1" stop-color="#0D0F10"/>
+    </radialGradient>
+  </defs>
+</svg>

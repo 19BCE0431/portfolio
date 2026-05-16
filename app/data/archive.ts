@@ -92,7 +92,9 @@ export const archiveProjects: ArchiveProject[] = [
     futureDirection:
       "Evolve the system into weekly AI, product, business, and market insight posts with source-backed writing, LinkedIn adaptations, visual prompts, and human-reviewed publishing.",
     visual: {
+      image: "/images/projects/living-system-map.svg",
       alt: "Abstract system map for the living AI portfolio workflow",
+      caption: "AI drafts, human review, journal notes, LinkedIn drafts, and visual prompts in one loop.",
       label: "Living system map",
       motif: "system",
     },
@@ -173,7 +175,9 @@ export const archiveProjects: ArchiveProject[] = [
     futureDirection:
       "Expand the case into a deeper product study around search behavior, visual intent, and assisted discovery.",
     visual: {
+      image: "/images/projects/image-led-product-discovery.svg",
       alt: "Product discovery visual showing an image search workflow",
+      caption: "A visual search path for moments when the user knows the look before the name.",
       label: "Image-led search",
       motif: "search",
     },
@@ -200,7 +204,9 @@ export const archiveProjects: ArchiveProject[] = [
     futureDirection:
       "Extend the case with alert examples, diagnosis workflows, and how teams can prioritize causes.",
     visual: {
+      image: "/images/projects/operations-signal.svg",
       alt: "Operational alert timeline for order drop detection",
+      caption: "Hourly signals designed to make unusual order movement easier to notice early.",
       label: "Signal timeline",
       motif: "automation",
     },
@@ -227,7 +233,9 @@ export const archiveProjects: ArchiveProject[] = [
     futureDirection:
       "Develop this into a clearer internal-knowledge case study with retrieval quality, UX, and trust considerations.",
     visual: {
+      image: "/images/projects/rag-product-lookup.svg",
       alt: "Document intelligence interface placeholder",
+      caption: "A RAG flow for turning scattered PDFs and internal documents into faster lookup.",
       label: "Retrieval flow",
       motif: "document",
     },
@@ -253,7 +261,9 @@ export const archiveProjects: ArchiveProject[] = [
     futureDirection:
       "Add structured examples around extraction accuracy, exception handling, and validation flow.",
     visual: {
+      image: "/images/projects/document-extraction.svg",
       alt: "Invoice extraction workflow placeholder",
+      caption: "OCR, parsing, and validation stitched into a cleaner extraction flow.",
       label: "Extraction flow",
       motif: "document",
     },
@@ -279,7 +289,9 @@ export const archiveProjects: ArchiveProject[] = [
     futureDirection:
       "Turn this into a market-intelligence case with pricing patterns, signal quality, and business interpretation.",
     visual: {
+      image: "/images/projects/pricing-intelligence.svg",
       alt: "Competitor pricing dashboard placeholder",
+      caption: "Pricing movement framed as a market signal, not just a scraped number.",
       label: "Pricing signals",
       motif: "chart",
     },
@@ -306,7 +318,9 @@ export const archiveProjects: ArchiveProject[] = [
     futureDirection:
       "Document the workflow as a customer-experience operations case.",
     visual: {
+      image: "/images/projects/logistics-visibility.svg",
       alt: "Logistics status automation placeholder",
+      caption: "A status loop for turning partner updates into clearer customer communication.",
       label: "Status flow",
       motif: "automation",
     },
@@ -332,7 +346,9 @@ export const archiveProjects: ArchiveProject[] = [
     futureDirection:
       "Expand this into a content-operations note around cadence, selection, and audience usefulness.",
     visual: {
+      image: "/images/projects/content-automation.svg",
       alt: "Content operations automation placeholder",
+      caption: "A simple collect, select, and publish rhythm for more consistent content operations.",
       label: "Content cadence",
       motif: "automation",
     },
@@ -359,7 +375,9 @@ export const archiveProjects: ArchiveProject[] = [
     futureDirection:
       "Develop this into a case about AI reliability, domain context, and decision support.",
     visual: {
+      image: "/images/projects/crop-advisory.svg",
       alt: "Crop advisory model improvement placeholder",
+      caption: "Image context and model reliability as the useful part of an advisory workflow.",
       label: "Advisory loop",
       motif: "vision",
     },
@@ -385,7 +403,9 @@ export const archiveProjects: ArchiveProject[] = [
     futureDirection:
       "Add clearer model framing around signals, workflow usage, and decision thresholds.",
     visual: {
+      image: "/images/projects/operations-signal.svg",
       alt: "Cancellation risk prediction placeholder",
+      caption: "A prediction signal meant to shorten manual confirmation lag.",
       label: "Prediction signal",
       motif: "chart",
     },
@@ -411,7 +431,9 @@ export const archiveProjects: ArchiveProject[] = [
     futureDirection:
       "Document this as an operations-quality case around reliability, monitoring, and maintainability.",
     visual: {
+      image: "/images/projects/operations-signal.svg",
       alt: "Production workflow optimization placeholder",
+      caption: "Runtime, alerts, and reliability treated as operational quality work.",
       label: "Reliability loop",
       motif: "automation",
     },
@@ -438,7 +460,9 @@ export const archiveProjects: ArchiveProject[] = [
     futureDirection:
       "Reframe as a product utility case around collaboration flows and document access.",
     visual: {
+      image: "/images/projects/diagramming-tool.svg",
       alt: "Screenshot placeholder for the collaborative diagramming tool",
+      caption: "A collaboration canvas graphic until a real product screenshot is added.",
       label: "Screenshot slot",
       motif: "system",
     },
@@ -465,7 +489,9 @@ export const archiveProjects: ArchiveProject[] = [
     futureDirection:
       "Improve framing around uncertainty, model limits, and decision usefulness.",
     visual: {
+      image: "/images/projects/stocksense-forecasting.svg",
       alt: "Screenshot placeholder for the StockSense forecasting interface",
+      caption: "Forecasting, charting, and uncertainty presented as an interface story.",
       label: "Screenshot slot",
       motif: "chart",
     },
@@ -502,8 +528,16 @@ export const archiveProjects: ArchiveProject[] = [
       "Present this as a machine-learning deployment case with more attention to data and operating context.",
     visual: {
       alt: "Screenshot placeholder for the leather defect detection interface",
-      label: "Screenshot slot",
+      label: "Live app capture",
       motif: "vision",
+      images: [
+        {
+          src: "/images/projects/leather-defect-detection-01.jpg",
+          alt: "Screenshot of the Leather Defect Detection upload interface",
+          caption: "Captured from the deployed Leather Defect Detection demo.",
+          placement: "cover",
+        },
+      ],
     },
   },
   {
@@ -528,7 +562,9 @@ export const archiveProjects: ArchiveProject[] = [
     futureDirection:
       "Develop into concise notes on retail trust, customer education, and purchase behavior.",
     visual: {
+      image: "/images/projects/retail-signals.svg",
       alt: "Retail customer behavior notes placeholder",
+      caption: "Trust, price, aspiration, and store experience as everyday behavior signals.",
       label: "Observation notes",
       motif: "retail",
     },
@@ -555,7 +591,9 @@ export const archiveProjects: ArchiveProject[] = [
     futureDirection:
       "Add selected MBA projects with clearer problem framing, analysis, and recommendations.",
     visual: {
+      image: "/images/projects/mba-case-notes.svg",
       alt: "MBA case notes placeholder",
+      caption: "A future-ready space for product, marketing, strategy, and consumer-behavior notes.",
       label: "Case space",
       motif: "case",
     },

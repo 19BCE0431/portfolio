@@ -1,0 +1,27 @@
+<svg width="1200" height="820" viewBox="0 0 1200 820" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="820" rx="34" fill="#111315"/>
+  <path d="M0 0h1200v820H0z" fill="url(#bg)"/>
+  <rect x="100" y="110" width="316" height="548" rx="26" fill="#fffdf8" fill-opacity=".08" stroke="#fffdf8" stroke-opacity=".12"/>
+  <rect x="456" y="150" width="644" height="72" rx="24" fill="#fffdf8" fill-opacity=".1" stroke="#fffdf8" stroke-opacity=".12"/>
+  <rect x="456" y="276" width="276" height="258" rx="26" fill="#fffdf8" fill-opacity=".08" stroke="#fffdf8" stroke-opacity=".12"/>
+  <rect x="776" y="276" width="324" height="258" rx="26" fill="#fffdf8" fill-opacity=".08" stroke="#fffdf8" stroke-opacity=".12"/>
+  <path d="M190 220h132M190 282h154M190 344h110M190 406h166M190 468h122" stroke="#fffdf8" stroke-opacity=".38" stroke-width="18" stroke-linecap="round"/>
+  <path d="M416 385h40M732 405h44" stroke="#DCA27E" stroke-opacity=".8" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="594" cy="405" r="74" fill="#9BAF9D" fill-opacity=".18" stroke="#9BAF9D" stroke-opacity=".55" stroke-width="3"/>
+  <path d="M563 406h62M594 375v62" stroke="#fffdf8" stroke-opacity=".65" stroke-width="4" stroke-linecap="round"/>
+  <rect x="830" y="346" width="184" height="22" rx="11" fill="#fffdf8" fill-opacity=".42"/>
+  <rect x="830" y="398" width="222" height="18" rx="9" fill="#fffdf8" fill-opacity=".24"/>
+  <rect x="830" y="446" width="146" height="18" rx="9" fill="#fffdf8" fill-opacity=".2"/>
+  <g fill="#fffdf8" font-family="Inter, Arial, sans-serif">
+    <text x="100" y="80" font-size="18" letter-spacing="4" opacity=".48">RAG · PRODUCT LOOKUP</text>
+    <text x="100" y="724" font-size="48" font-weight="700">Faster answers from messy documents</text>
+    <text x="456" y="197" font-size="28" opacity=".76">Question → retrieve → answer with context</text>
+  </g>
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(944 154) rotate(140) scale(812 874)">
+      <stop stop-color="#687789" stop-opacity=".44"/>
+      <stop offset=".45" stop-color="#16191B"/>
+      <stop offset="1" stop-color="#0D0F10"/>
+    </radialGradient>
+  </defs>
+</svg>

@@ -1,0 +1,19 @@
+<svg width="1200" height="820" viewBox="0 0 1200 820" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="820" rx="34" fill="#FBF8F0"/>
+  <rect x="120" y="112" width="960" height="596" rx="34" fill="#fffdf8" stroke="#101212" stroke-opacity=".08"/>
+  <rect x="176" y="176" width="322" height="180" rx="28" fill="#101212"/>
+  <rect x="544" y="176" width="360" height="36" rx="18" fill="#101212" fill-opacity=".18"/>
+  <rect x="544" y="254" width="444" height="26" rx="13" fill="#101212" fill-opacity=".12"/>
+  <rect x="544" y="318" width="286" height="26" rx="13" fill="#101212" fill-opacity=".1"/>
+  <rect x="176" y="426" width="250" height="96" rx="24" fill="#68796D" fill-opacity=".16" stroke="#68796D" stroke-opacity=".3"/>
+  <rect x="470" y="426" width="250" height="96" rx="24" fill="#A56F53" fill-opacity=".14" stroke="#A56F53" stroke-opacity=".28"/>
+  <rect x="764" y="426" width="250" height="96" rx="24" fill="#687789" fill-opacity=".14" stroke="#687789" stroke-opacity=".28"/>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="214" y="274" font-size="40" font-weight="700" fill="#fffdf8">MBA lens</text>
+    <text x="214" y="312" font-size="22" fill="#fffdf8" opacity=".58">Product · marketing · strategy</text>
+    <text x="210" y="486" font-size="26" font-weight="700" fill="#101212">Cases</text>
+    <text x="504" y="486" font-size="26" font-weight="700" fill="#101212">Markets</text>
+    <text x="798" y="486" font-size="26" font-weight="700" fill="#101212">Behavior</text>
+    <text x="120" y="766" font-size="52" font-weight="700" fill="#101212">A place for sharper business notes</text>
+  </g>
+</svg>

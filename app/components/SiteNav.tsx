@@ -22,14 +22,27 @@ export function SiteNav() {
   const [activeSection, setActiveSection] = useState("intro");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
-    const updateScrollState = () => setHasScrolled(window.scrollY > 18);
+    const updateScrollState = () => {
+      const maxScroll = Math.max(
+        document.documentElement.scrollHeight - window.innerHeight,
+        1,
+      );
+
+      setHasScrolled(window.scrollY > 18);
+      setScrollProgress(Math.min(1, Math.max(0, window.scrollY / maxScroll)));
+    };
 
     updateScrollState();
     window.addEventListener("scroll", updateScrollState, { passive: true });
+    window.addEventListener("resize", updateScrollState);
 
-    return () => window.removeEventListener("scroll", updateScrollState);
+    return () => {
+      window.removeEventListener("scroll", updateScrollState);
+      window.removeEventListener("resize", updateScrollState);
+    };
   }, []);
 
   useEffect(() => {
@@ -77,12 +90,17 @@ export function SiteNav() {
         <div className="mx-auto w-full max-w-[1220px]">
           <nav
             aria-label="Primary navigation"
-            className={`grid w-full grid-cols-[1fr_auto] items-center gap-3 rounded-[8px] border px-3 py-2 text-[13px] backdrop-blur-2xl transition-all duration-500 lg:grid-cols-[1fr_auto_1fr] ${
+            className={`relative grid w-full grid-cols-[1fr_auto] items-center gap-3 overflow-hidden rounded-[8px] border px-3 py-2 text-[13px] backdrop-blur-2xl transition-all duration-500 lg:grid-cols-[1fr_auto_1fr] ${
               hasScrolled
                 ? "border-black/10 bg-[rgba(251,251,248,0.92)] shadow-[0_18px_70px_rgba(17,19,19,0.1)]"
                 : "border-black/8 bg-[rgba(251,251,248,0.74)] shadow-[0_12px_45px_rgba(17,19,19,0.055)]"
             }`}
           >
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-px origin-left bg-gradient-to-r from-transparent via-[var(--sage)] to-transparent"
+              style={{ transform: `scaleX(${scrollProgress})` }}
+            />
             <Link
               href="/#intro"
               aria-label={`${profile.name} home`}

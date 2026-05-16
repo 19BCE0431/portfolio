@@ -1011,6 +1011,129 @@ function FuturePhotoStrip() {
   );
 }
 
+function InterestMotif({
+  title,
+  featured = false,
+}: {
+  title: string;
+  featured?: boolean;
+}) {
+  const lineColor = featured ? "bg-white/18" : "bg-black/10";
+  const borderColor = featured ? "border-white/14" : "border-black/10";
+  const softFill = featured ? "bg-white/[0.07]" : "bg-black/[0.035]";
+  const accentFill = featured
+    ? "bg-[rgba(216,194,154,0.7)]"
+    : "bg-[rgba(104,121,109,0.55)]";
+
+  if (title === "Badminton") {
+    return (
+      <div
+        aria-hidden="true"
+        className={`relative mt-5 h-28 overflow-hidden rounded-[8px] border ${borderColor} ${softFill}`}
+      >
+        <span className={`absolute left-1/2 top-0 h-full w-px ${lineColor}`} />
+        <span className={`absolute left-0 right-0 top-1/2 h-px ${lineColor}`} />
+        <span className={`absolute left-[18%] top-[16%] h-[68%] w-[64%] rounded-full border ${borderColor}`} />
+        <span className={`absolute right-9 top-7 h-10 w-10 rounded-full border ${borderColor}`} />
+        <span className={`absolute bottom-7 right-12 h-9 w-px rotate-[-38deg] ${lineColor}`} />
+        <span className={`absolute bottom-5 left-8 h-2.5 w-2.5 rounded-full ${accentFill}`} />
+      </div>
+    );
+  }
+
+  if (title === "Chess") {
+    return (
+      <div
+        aria-hidden="true"
+        className={`relative mt-5 grid h-28 grid-cols-6 overflow-hidden rounded-[8px] border ${borderColor}`}
+      >
+        {Array.from({ length: 24 }).map((_, square) => (
+          <span
+            key={square}
+            className={square % 2 === 0 ? softFill : "bg-transparent"}
+          />
+        ))}
+        <span className={`absolute bottom-5 left-7 h-10 w-7 rounded-t-full ${accentFill}`} />
+        <span className={`absolute bottom-4 left-5 h-2 w-11 rounded-full ${accentFill}`} />
+        <span className={`absolute right-7 top-5 h-10 w-10 rounded-full border ${borderColor}`} />
+      </div>
+    );
+  }
+
+  if (title === "Early morning runs") {
+    return (
+      <div
+        aria-hidden="true"
+        className={`relative mt-5 h-28 overflow-hidden rounded-[8px] border ${borderColor} ${softFill}`}
+      >
+        <span className={`absolute left-8 top-7 h-9 w-9 rounded-full ${accentFill}`} />
+        <span className={`absolute bottom-8 left-7 h-px w-[78%] ${lineColor}`} />
+        <span className={`absolute bottom-8 left-7 h-14 w-[84%] rounded-[50%] border-t ${borderColor}`} />
+        <span className={`absolute bottom-12 right-10 h-2 w-20 rounded-full ${featured ? "bg-white/18" : "bg-[rgba(104,121,109,0.2)]"}`} />
+      </div>
+    );
+  }
+
+  if (title === "Photography") {
+    return (
+      <div
+        aria-hidden="true"
+        className={`relative mt-5 h-28 overflow-hidden rounded-[8px] border ${borderColor} ${softFill}`}
+      >
+        <span className={`absolute left-8 top-6 h-16 w-24 rounded-[8px] border ${borderColor}`} />
+        <span className={`absolute left-[68px] top-10 h-8 w-8 rounded-full border ${borderColor}`} />
+        <span className={`absolute right-8 top-8 h-12 w-20 rounded-[8px] ${featured ? "bg-white/10" : "bg-white/50"}`} />
+        <span className={`absolute bottom-5 left-8 h-px w-[74%] ${lineColor}`} />
+      </div>
+    );
+  }
+
+  if (title === "Technology + AI tools") {
+    return (
+      <div
+        aria-hidden="true"
+        className={`relative mt-5 h-28 overflow-hidden rounded-[8px] border ${borderColor} ${softFill}`}
+      >
+        <span className={`absolute left-[18%] top-[26%] h-3 w-3 rounded-full ${accentFill}`} />
+        <span className={`absolute left-[46%] top-[54%] h-3 w-3 rounded-full ${accentFill}`} />
+        <span className={`absolute right-[18%] top-[30%] h-3 w-3 rounded-full ${accentFill}`} />
+        <span className={`absolute left-[20%] top-[34%] h-px w-[29%] rotate-[25deg] ${lineColor}`} />
+        <span className={`absolute right-[20%] top-[38%] h-px w-[30%] rotate-[-18deg] ${lineColor}`} />
+        <span className={`absolute bottom-5 left-8 right-8 h-10 rounded-[8px] border ${borderColor}`} />
+      </div>
+    );
+  }
+
+  if (title === "Brands and markets") {
+    return (
+      <div
+        aria-hidden="true"
+        className={`relative mt-5 flex h-28 items-end gap-2 overflow-hidden rounded-[8px] border ${borderColor} ${softFill} px-7 pb-6`}
+      >
+        {[44, 62, 34, 76, 54].map((height, index) => (
+          <span
+            key={height}
+            className={`w-full rounded-t-[6px] ${index === 3 ? accentFill : lineColor}`}
+            style={{ height }}
+          />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div
+      aria-hidden="true"
+      className={`relative mt-5 h-28 overflow-hidden rounded-[8px] border ${borderColor} ${softFill}`}
+    >
+      <span className={`absolute left-7 top-7 h-px w-[70%] ${lineColor}`} />
+      <span className={`absolute left-7 top-14 h-px w-[55%] ${lineColor}`} />
+      <span className={`absolute left-7 top-[84px] h-px w-[78%] ${lineColor}`} />
+      <span className={`absolute right-8 top-8 h-12 w-12 rounded-full border ${borderColor}`} />
+    </div>
+  );
+}
+
 function PersonalInterests() {
   const shouldReduceMotion = useReducedMotion();
 
@@ -1054,7 +1177,7 @@ function PersonalInterests() {
                 className={interest.featured ? "sm:col-span-2" : ""}
               >
                 <motion.article
-                  className={`hover-light group h-full overflow-hidden rounded-[8px] border p-5 transition duration-500 md:p-6 ${
+                  className={`hover-light group relative h-full overflow-hidden rounded-[8px] border p-5 transition duration-500 md:p-6 ${
                     interest.featured
                       ? "border-black/12 bg-[rgba(16,18,18,0.92)] text-white shadow-[0_34px_110px_rgba(16,18,18,0.16)]"
                       : "editorial-panel"
@@ -1078,6 +1201,10 @@ function PersonalInterests() {
                       0{index + 1}
                     </span>
                   </div>
+                  <InterestMotif
+                    title={interest.title}
+                    featured={interest.featured}
+                  />
                   <h3 className="mt-7 text-[1.18rem] font-semibold leading-[1.2]">
                     {interest.title}
                   </h3>

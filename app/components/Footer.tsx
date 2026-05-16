@@ -5,7 +5,6 @@ import {
   FileText,
   Mail,
   MapPin,
-  MessageCircle,
 } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { type ReactNode } from "react";
@@ -67,6 +66,32 @@ function InstagramIcon({ className }: { className?: string }) {
   );
 }
 
+function WhatsAppIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M5.4 18.9 6.6 16A7.4 7.4 0 1 1 9 18.1l-3.6.8Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.8"
+      />
+      <path
+        d="M9.2 8.6c.2-.5.4-.6.8-.6h.6c.2 0 .4.1.5.4l.7 1.6c.1.3.1.5-.1.7l-.4.5c.6 1.1 1.4 1.9 2.5 2.5l.6-.4c.2-.2.4-.2.7-.1l1.6.7c.3.1.4.3.4.6v.6c0 .4-.2.7-.6.8-.8.2-1.7.2-2.6-.1-2.4-.8-4.2-2.6-5-5-.3-.9-.3-1.8-.1-2.6Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.55"
+      />
+    </svg>
+  );
+}
+
 const primaryLinks = [
   {
     label: "Email",
@@ -99,7 +124,7 @@ const secondaryLinks = [
     label: "WhatsApp",
     detail: "Quick hello",
     href: profile.whatsApp,
-    icon: MessageCircle,
+    icon: WhatsAppIcon,
   },
 ];
 

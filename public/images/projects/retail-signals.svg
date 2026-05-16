@@ -1,0 +1,14 @@
+<svg width="1200" height="820" viewBox="0 0 1200 820" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="820" rx="34" fill="#F7F3EA"/>
+  <rect x="138" y="132" width="260" height="436" rx="28" fill="#101212"/>
+  <rect x="470" y="132" width="260" height="436" rx="28" fill="#68796D" fill-opacity=".18" stroke="#68796D" stroke-opacity=".32"/>
+  <rect x="802" y="132" width="260" height="436" rx="28" fill="#A56F53" fill-opacity=".15" stroke="#A56F53" stroke-opacity=".3"/>
+  <path d="M190 246h154M190 314h104M190 382h132M522 246h154M522 314h104M522 382h132M854 246h154M854 314h104M854 382h132" stroke-linecap="round" stroke-width="16" stroke="#fffdf8" stroke-opacity=".26"/>
+  <path d="M522 246h154M522 314h104M522 382h132M854 246h154M854 314h104M854 382h132" stroke="#101212" stroke-opacity=".16" stroke-width="16" stroke-linecap="round"/>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="178" y="502" font-size="28" font-weight="700" fill="#fffdf8">Trust</text>
+    <text x="510" y="502" font-size="28" font-weight="700" fill="#101212">Price</text>
+    <text x="842" y="502" font-size="28" font-weight="700" fill="#101212">Choice</text>
+    <text x="138" y="730" font-size="52" font-weight="700" fill="#101212">Retail behavior in small signals</text>
+  </g>
+</svg>
