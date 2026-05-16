@@ -31,6 +31,7 @@
 
 html {
   position: relative;
+  overflow-x: hidden;
   scroll-behavior: smooth;
   background: var(--background);
 }
@@ -103,6 +104,12 @@ a {
   padding-inline: clamp(18px, 4.8vw, 76px);
 }
 
+section[id],
+footer[id],
+div[id="gallery"] {
+  scroll-margin-top: 92px;
+}
+
 .display-tight {
   letter-spacing: 0;
 }
@@ -137,6 +144,16 @@ a {
     linear-gradient(rgba(16, 18, 18, 0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(16, 18, 18, 0.045) 1px, transparent 1px);
   background-size: 42px 42px;
+}
+
+.snap-strip {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.snap-strip::-webkit-scrollbar {
+  display: none;
 }
 
 .signal-grid {

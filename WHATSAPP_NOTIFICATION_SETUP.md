@@ -19,10 +19,10 @@ Add these as GitHub Actions secrets:
 - `WHATSAPP_TO_NUMBER`
 - `WHATSAPP_NOTIFY`
 
-Use this recipient format for Mohit's number:
+Use this recipient format:
 
 ```text
-WHATSAPP_TO_NUMBER=917680030135
+WHATSAPP_TO_NUMBER=91XXXXXXXXXX
 ```
 
 For local testing, put real values only in `.env.local`. Never commit `.env.local`.

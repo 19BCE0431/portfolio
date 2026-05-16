@@ -90,7 +90,7 @@ export function SiteNav() {
         <div className="mx-auto w-full max-w-[1220px]">
           <nav
             aria-label="Primary navigation"
-            className={`relative grid w-full grid-cols-[1fr_auto] items-center gap-3 overflow-hidden rounded-[8px] border px-3 py-2 text-[13px] backdrop-blur-2xl transition-all duration-500 lg:grid-cols-[1fr_auto_1fr] ${
+            className={`relative grid w-full grid-cols-[1fr_auto] items-center gap-3 overflow-hidden rounded-[8px] border px-3 py-2 text-[13px] backdrop-blur-2xl transition-all duration-500 xl:grid-cols-[1fr_auto_1fr] ${
               hasScrolled
                 ? "border-black/10 bg-[rgba(251,251,248,0.92)] shadow-[0_18px_70px_rgba(17,19,19,0.1)]"
                 : "border-black/8 bg-[rgba(251,251,248,0.74)] shadow-[0_12px_45px_rgba(17,19,19,0.055)]"
@@ -111,13 +111,13 @@ export function SiteNav() {
                 <span className="absolute inset-[-6px] rounded-full border border-[rgba(105,121,107,0.24)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               </span>
               <span className="truncate sm:hidden">Mohit</span>
-              <span className="hidden truncate sm:inline lg:hidden">
+              <span className="hidden truncate sm:inline xl:hidden">
                 {profile.shortName}
               </span>
-              <span className="hidden truncate lg:inline">{profile.name}</span>
+              <span className="hidden truncate xl:inline">{profile.name}</span>
             </Link>
 
-            <div className="hidden min-w-0 items-center gap-1 lg:flex">
+            <div className="hidden min-w-0 items-center gap-1 xl:flex">
               {navItems.map((item) => {
                 const isActive = item.sectionId === activeItem;
 
@@ -165,7 +165,7 @@ export function SiteNav() {
               aria-controls="mobile-navigation"
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((open) => !open)}
-              className="grid h-10 w-10 place-items-center justify-self-end rounded-[8px] border border-black/10 bg-white/52 text-[var(--foreground)] transition-colors duration-300 hover:bg-white focus:outline-none focus:ring-2 focus:ring-black/15 lg:hidden"
+              className="grid h-10 w-10 place-items-center justify-self-end rounded-[8px] border border-black/10 bg-white/52 text-[var(--foreground)] transition-colors duration-300 hover:bg-white focus:outline-none focus:ring-2 focus:ring-black/15 xl:hidden"
             >
               {mobileOpen ? (
                 <X className="h-4 w-4" aria-hidden="true" />
@@ -189,7 +189,7 @@ export function SiteNav() {
                   shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: -6 }
                 }
                 transition={{ duration: 0.28, ease }}
-                className="mt-2 grid gap-1 rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.95)] p-2 shadow-[0_18px_58px_rgba(17,19,19,0.08)] backdrop-blur-2xl lg:hidden"
+                className="mt-2 grid gap-1 rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.95)] p-2 shadow-[0_18px_58px_rgba(17,19,19,0.08)] backdrop-blur-2xl xl:hidden"
               >
                 {navItems.map((item) => {
                   const isActive = item.sectionId === activeItem;
@@ -224,38 +224,6 @@ export function SiteNav() {
         </div>
       </motion.header>
 
-      <aside
-        aria-label="Section dock"
-        className="fixed right-4 top-1/2 z-40 hidden -translate-y-1/2 lg:block"
-      >
-        <div className="grid gap-1 rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.72)] p-1.5 shadow-[0_18px_62px_rgba(17,19,19,0.09)] backdrop-blur-2xl">
-          {navItems.map((item) => {
-            const isActive = item.sectionId === activeItem;
-
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-label={`Jump to ${item.label}`}
-                className={`group relative grid h-8 w-8 place-items-center rounded-[7px] transition-colors duration-300 hover:bg-black/[0.055] ${
-                  isActive ? "bg-black/[0.07]" : ""
-                }`}
-              >
-                <span
-                  className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${
-                    isActive
-                      ? "scale-125 bg-[var(--foreground)]"
-                      : "bg-[var(--muted)] opacity-45 group-hover:opacity-80"
-                  }`}
-                />
-                <span className="pointer-events-none absolute right-10 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-[7px] border border-black/10 bg-[rgba(251,251,248,0.96)] px-2.5 py-1 text-[11px] font-medium text-[var(--foreground)] opacity-0 shadow-[0_12px_36px_rgba(17,19,19,0.09)] transition duration-200 group-hover:opacity-100">
-                  {item.label}
-                </span>
-              </Link>
-            );
-          })}
-        </div>
-      </aside>
     </>
   );
 }
