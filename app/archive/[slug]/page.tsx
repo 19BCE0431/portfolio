@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { Footer } from "../../components/Footer";
 import { HeadingReveal } from "../../components/HeadingReveal";
+import { ProjectVisual } from "../../components/ProjectVisual";
 import { Reveal } from "../../components/Reveal";
 import { SectionLabel } from "../../components/SectionLabel";
 import { SiteNav } from "../../components/SiteNav";
@@ -166,15 +167,21 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </div>
 
           <Reveal>
+            <div className="mx-auto mt-10 max-w-[980px] md:mt-16">
+              <ProjectVisual project={project} />
+            </div>
+          </Reveal>
+
+          <Reveal>
             <div className="mt-10 grid gap-3 border-y border-black/10 py-4 md:mt-16 md:grid-cols-3 md:py-6">
               <div>
-                <p className="editorial-kicker">Impact</p>
+                <p className="editorial-kicker">Changed</p>
                 <p className="mt-3 text-[0.98rem] leading-[1.58] text-[var(--muted-strong)]">
                   {project.impact}
                 </p>
               </div>
               <div>
-                <p className="editorial-kicker">Learning</p>
+                <p className="editorial-kicker">Took away</p>
                 <p className="mt-3 text-[0.98rem] leading-[1.58] text-[var(--muted-strong)]">
                   {project.learning}
                 </p>

@@ -10,7 +10,7 @@ import { archiveProjects } from "../data/archive";
 export const metadata: Metadata = {
   title: "Archive",
   description:
-    "A serious project library covering product thinking, Applied AI, Data Science, automation, market intelligence, business-school work, and decision support.",
+    "A project archive covering product thinking, Applied AI, automation, market intelligence, MBA work, and the lessons each project left behind.",
 };
 
 export default function ArchivePage() {
@@ -36,22 +36,20 @@ export default function ArchivePage() {
               <SectionLabel>Full archive</SectionLabel>
               <HeadingReveal
                 as="h1"
-                lines={["Project evidence,", "organized by decision."]}
+                lines={["Work that shaped", "how I think."]}
                 mobileLines={[
-                  "Project",
-                  "evidence,",
-                  "organized by",
-                  "decision.",
+                  "Work that",
+                  "shaped how",
+                  "I think.",
                 ]}
                 className="max-w-[820px] text-[clamp(2rem,9.8vw,4.4rem)] font-semibold leading-[1.02] tracking-[0] md:text-[clamp(2.75rem,6.7vw,6.25rem)] md:leading-[0.94]"
               />
             </Reveal>
             <Reveal delay={0.08}>
               <p className="max-w-[700px] text-[clamp(0.98rem,4vw,1.24rem)] leading-[1.62] text-[var(--muted-strong)]">
-                A working archive for applied projects, MBA notes, automation
-                experiments, and market-facing observations. Each item is
-                framed by the problem, the decision it supported, and the
-                learning it left behind.
+                A working library of applied projects, MBA notes, automation
+                experiments, and market observations. Each item is framed by
+                the problem, what changed, and the lesson I still carry from it.
               </p>
               <div className="mt-7 grid gap-2 sm:grid-cols-3">
                 {[
