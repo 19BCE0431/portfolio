@@ -56,10 +56,23 @@ export const navItems = [
   { label: "Direction", href: "/#direction", sectionId: "direction" },
   { label: "Work", href: "/#work", sectionId: "work" },
   { label: "Recognition", href: "/#recognition", sectionId: "recognition" },
+  { label: "MBA Life", href: "/#mba-life", sectionId: "mba-life" },
   { label: "Journal", href: "/#journal", sectionId: "journal" },
   { label: "Personal", href: "/#personal", sectionId: "personal" },
-  { label: "Gallery", href: "/life", sectionId: "gallery" },
+  { label: "Gallery", href: "/#gallery", sectionId: "gallery" },
   { label: "Contact", href: "/#contact", sectionId: "contact" },
+];
+
+export const sectionNavItems = [
+  { label: "Intro", shortLabel: "Intro", href: "#intro", sectionId: "intro" },
+  { label: "Direction", shortLabel: "Lens", href: "#direction", sectionId: "direction" },
+  { label: "Work", shortLabel: "Work", href: "#work", sectionId: "work" },
+  { label: "Recognition", shortLabel: "Signal", href: "#recognition", sectionId: "recognition" },
+  { label: "MBA Life", shortLabel: "MBA", href: "#mba-life", sectionId: "mba-life" },
+  { label: "Journal", shortLabel: "Notes", href: "#journal", sectionId: "journal" },
+  { label: "Personal", shortLabel: "Shelf", href: "#personal", sectionId: "personal" },
+  { label: "Gallery", shortLabel: "Life", href: "#gallery", sectionId: "gallery" },
+  { label: "Contact", shortLabel: "Hello", href: "#contact", sectionId: "contact" },
 ];
 
 export const heroMarkers = [

@@ -39,6 +39,7 @@ import { ProjectCard } from "./ProjectCard";
 import { ProjectVisual } from "./ProjectVisual";
 import { Reveal } from "./Reveal";
 import { SectionLabel } from "./SectionLabel";
+import { SectionNavigator } from "./SectionNavigator";
 import { SiteNav } from "./SiteNav";
 
 const premiumEase = [0.16, 1, 0.3, 1] as const;
@@ -314,7 +315,7 @@ function Hero() {
   return (
     <section
       id="intro"
-      className="hero-shell relative grid min-h-[100svh] scroll-mt-28 items-center gap-10 overflow-hidden pb-16 pt-24 md:pt-28 lg:grid-cols-[minmax(0,0.96fr)_minmax(330px,0.46fr)] lg:gap-14"
+      className="hero-shell relative grid min-h-[92svh] scroll-mt-28 items-center gap-8 overflow-hidden pb-10 pt-[5.75rem] md:min-h-[100svh] md:gap-10 md:pb-16 md:pt-28 lg:grid-cols-[minmax(0,0.96fr)_minmax(330px,0.46fr)] lg:gap-14"
     >
       <AmbientField progress={scrollYProgress} />
       <motion.div
@@ -324,16 +325,22 @@ function Hero() {
         <HeadingReveal
           as="h1"
           lines={["MBA in progress.", "Product instincts.", "Builder roots."]}
-          mobileLines={["MBA in", "progress.", "Product", "instincts.", "Builder", "roots."]}
-          className="display-tight max-w-[1040px] text-[clamp(3rem,14vw,6.35rem)] font-semibold leading-[0.94] text-[var(--foreground)] md:text-[clamp(4.15rem,6.35vw,7.15rem)] md:leading-[0.9]"
+          mobileLines={["MBA in progress.", "Product instincts.", "Builder roots."]}
+          className="display-tight max-w-[1040px] text-[clamp(2.75rem,12vw,4.15rem)] font-semibold leading-[0.94] text-[var(--foreground)] md:text-[clamp(4.15rem,6.35vw,7.15rem)] md:leading-[0.9]"
           delay={0.04}
         />
         <Reveal delay={0.1}>
           <p className="mt-6 max-w-[800px] text-pretty-balance text-[clamp(1.06rem,4.2vw,1.32rem)] leading-[1.62] text-[var(--muted-strong)] md:mt-8 md:text-[clamp(1.18rem,2vw,1.5rem)] md:leading-[1.5]">
-            I am an MBA candidate at IIM Sirmaur, moving toward product,
-            marketing, strategy, consumer behavior, and AI-enabled workflows.
-            The base is computer science and data science; the current chapter
-            is learning how people choose, trust, compare, and act.
+            <span className="md:hidden">
+              I am an MBA candidate at IIM Sirmaur, moving toward product,
+              marketing, strategy, consumer behavior, and AI-enabled workflows.
+            </span>
+            <span className="hidden md:inline">
+              I am an MBA candidate at IIM Sirmaur, moving toward product,
+              marketing, strategy, consumer behavior, and AI-enabled workflows.
+              The base is computer science and data science; the current chapter
+              is learning how people choose, trust, compare, and act.
+            </span>
           </p>
         </Reveal>
         <Reveal delay={0.16}>
@@ -379,10 +386,12 @@ function DirectionPoint({
   point,
   index,
   progress,
+  className = "",
 }: {
   point: (typeof thesisPoints)[number];
   index: number;
   progress: MotionValue<number>;
+  className?: string;
 }) {
   const shouldReduceMotion = useReducedMotion();
   const start = Math.max(0, index * 0.22);
@@ -391,7 +400,7 @@ function DirectionPoint({
 
   return (
     <motion.article
-      className="premium-panel p-5 md:p-7"
+      className={`premium-panel p-5 md:p-7 ${className}`}
       style={shouldReduceMotion ? undefined : { opacity, y }}
     >
       <div className="flex items-start justify-between gap-4">
@@ -417,7 +426,7 @@ function Direction() {
     <section
       ref={sectionRef}
       id="direction"
-      className="section-shell relative scroll-mt-0 py-20 md:py-32"
+      className="section-shell relative scroll-mt-0 py-16 md:py-32"
     >
       <div className="absolute left-0 top-0 hidden h-full w-px vertical-hairline opacity-60 lg:block" />
       <div className="grid gap-12 lg:grid-cols-[0.72fr_1fr] lg:gap-18">
@@ -445,21 +454,28 @@ function Direction() {
         </div>
 
         <div className="grid gap-4">
-          {thesisPoints.map((point, index) => (
-            <DirectionPoint
-              key={point.label}
-              point={point}
-              index={index}
-              progress={scrollYProgress}
-            />
-          ))}
-          <div className="mt-2 grid gap-3 sm:grid-cols-2">
+          <div className="snap-strip -mx-3 flex snap-x gap-3 overflow-x-auto px-3 pb-3 md:mx-0 md:grid md:overflow-visible md:px-0 md:pb-0">
+            {thesisPoints.map((point, index) => (
+              <DirectionPoint
+                key={point.label}
+                point={point}
+                index={index}
+                progress={scrollYProgress}
+                className="min-w-[82vw] snap-start sm:min-w-[420px] md:min-w-0"
+              />
+            ))}
+          </div>
+          <div className="snap-strip -mx-3 mt-2 flex snap-x gap-3 overflow-x-auto px-3 pb-3 md:mx-0 md:grid md:grid-cols-2 md:overflow-visible md:px-0 md:pb-0">
             {directionNotes.map((note, index) => {
               const Icon = note.icon;
 
               return (
-                <Reveal key={note.title} delay={index * 0.04}>
-                  <article className="editorial-panel hover-light group h-full min-h-[220px] p-5 transition duration-500 hover:-translate-y-1 hover:bg-white md:p-6">
+                <Reveal
+                  key={note.title}
+                  delay={index * 0.04}
+                  className="min-w-[76vw] snap-start md:min-w-0"
+                >
+                  <article className="editorial-panel hover-light group h-full min-h-[210px] p-5 transition duration-500 hover:-translate-y-1 hover:bg-white md:min-h-[220px] md:p-6">
                     <div className="flex items-start justify-between gap-4">
                       <Icon className="h-5 w-5 text-[var(--sage)]" />
                       <span className="grid h-8 w-8 place-items-center rounded-full border border-black/10 text-[12px] text-[var(--sage)] transition group-hover:translate-x-1">
@@ -485,7 +501,7 @@ function Background() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section className="dark-transition scroll-mt-28 py-24 text-[var(--surface)] md:py-40">
+    <section id="background" className="dark-transition scroll-mt-28 py-16 text-[var(--surface)] md:py-40">
       <div className="section-shell">
         <div className="grid gap-10 lg:grid-cols-[0.72fr_1fr] lg:items-end lg:gap-20">
           <Reveal>
@@ -506,7 +522,7 @@ function Background() {
           </Reveal>
         </div>
 
-        <div className="mt-12 grid gap-3 md:mt-20 md:grid-cols-6">
+        <div className="snap-strip -mx-3 mt-10 flex snap-x gap-3 overflow-x-auto px-3 pb-4 lg:mx-0 lg:mt-20 lg:grid lg:grid-cols-6 lg:overflow-visible lg:px-0 lg:pb-0">
           {backgroundCards.map((item, index) => {
             const Icon = item.icon;
             const wide = index === 0 || index === 1;
@@ -515,10 +531,10 @@ function Background() {
               <Reveal
                 key={item.label}
                 delay={index * 0.035}
-                className={wide ? "md:col-span-3" : "md:col-span-3 xl:col-span-2"}
+                className={`${wide ? "lg:col-span-3" : "lg:col-span-3 xl:col-span-2"} min-w-[82vw] snap-start sm:min-w-[380px] lg:min-w-0`}
               >
                 <motion.article
-                  className="dark-panel group flex min-h-[230px] flex-col justify-between overflow-hidden p-5 md:p-6"
+                  className="dark-panel group flex min-h-[210px] flex-col justify-between overflow-hidden p-5 md:min-h-[230px] md:p-6"
                   whileHover={shouldReduceMotion ? undefined : { y: -5 }}
                   transition={{ duration: 0.34, ease: premiumEase }}
                 >
@@ -542,7 +558,39 @@ function Background() {
           })}
         </div>
 
-        <div className="mt-10 grid gap-7 border-t border-white/10 pt-8 lg:grid-cols-[0.74fr_1fr]">
+        <div className="mt-8 grid gap-3 border-t border-white/10 pt-6 md:hidden">
+          <details className="dark-panel p-4">
+            <summary className="cursor-pointer text-[12px] font-semibold uppercase tracking-[0.16em] text-white/58">
+              Credibility markers
+            </summary>
+            <div className="mt-4 grid gap-3 text-[0.9rem] leading-[1.5] text-white/64">
+              {credibilityMarkers.map((marker) => (
+                <p key={marker}>{marker}</p>
+              ))}
+            </div>
+          </details>
+          <details className="dark-panel p-4">
+            <summary className="cursor-pointer text-[12px] font-semibold uppercase tracking-[0.16em] text-white/58">
+              Working modes
+            </summary>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {workingModes.map((mode, index) => (
+                <span
+                  key={mode}
+                  className={`rounded-[8px] border px-2.5 py-1 text-[12px] ${
+                    index < 8
+                      ? "border-white/13 bg-white/[0.045] text-white/70"
+                      : "border-white/8 text-white/42"
+                  }`}
+                >
+                  {mode}
+                </span>
+              ))}
+            </div>
+          </details>
+        </div>
+
+        <div className="mt-10 hidden gap-7 border-t border-white/10 pt-8 md:grid lg:grid-cols-[0.74fr_1fr]">
           <Reveal>
             <div>
               <p className="editorial-kicker text-white/42">Credibility markers</p>
@@ -586,7 +634,7 @@ function ArchivePreview() {
   return (
     <section
       id="work"
-      className="section-shell relative scroll-mt-0 overflow-hidden py-20 md:py-36"
+      className="section-shell relative scroll-mt-0 overflow-hidden py-16 md:py-36"
     >
       <div className="premium-grid pointer-events-none absolute right-0 top-24 h-[360px] w-[520px] opacity-[0.1] [mask-image:radial-gradient(circle,black,transparent_70%)]" />
       <div className="mb-10 grid gap-8 md:mb-14 lg:grid-cols-[0.72fr_1fr] lg:gap-16">
@@ -617,9 +665,11 @@ function ArchivePreview() {
         </Reveal>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="snap-strip -mx-3 flex snap-x gap-4 overflow-x-auto px-3 pb-4 xl:mx-0 xl:grid xl:grid-cols-4 xl:overflow-visible xl:px-0 xl:pb-0">
         {selectedProjects.map((project) => (
-          <ProjectCard key={project.slug} project={project} compact />
+          <div key={project.slug} className="min-w-[82vw] snap-start sm:min-w-[420px] xl:min-w-0">
+            <ProjectCard project={project} compact />
+          </div>
         ))}
       </div>
     </section>
@@ -632,11 +682,11 @@ function FeaturedSystem() {
   if (!project) return null;
 
   return (
-    <section id="system" className="section-shell relative scroll-mt-0 py-20 md:py-36">
+    <section id="system" className="section-shell relative scroll-mt-0 py-16 md:py-36">
       <div className="absolute left-0 top-10 hidden h-px w-1/2 bg-gradient-to-r from-black/20 to-transparent md:block" />
       <div className="grid gap-7 lg:grid-cols-[0.78fr_1fr] lg:items-stretch lg:gap-6">
         <Reveal>
-          <article className="editorial-panel hover-light relative flex h-full min-h-[520px] flex-col justify-between overflow-hidden p-5 md:p-8">
+          <article className="editorial-panel hover-light relative flex h-full min-h-[420px] flex-col justify-between overflow-hidden p-5 md:min-h-[520px] md:p-8">
             <div className="signal-grid pointer-events-none absolute inset-0 opacity-[0.12]" />
             <div className="relative z-10">
               <SectionLabel>Living AI Portfolio System</SectionLabel>
@@ -665,29 +715,31 @@ function FeaturedSystem() {
             <article className="editorial-panel overflow-hidden p-3 sm:col-span-2">
               <ProjectVisual project={project} />
             </article>
-            {systemNodes.map((node, index) => {
-              const Icon = node.icon;
+            <div className="snap-strip -mx-3 flex snap-x gap-3 overflow-x-auto px-3 pb-3 sm:col-span-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0">
+              {systemNodes.map((node, index) => {
+                const Icon = node.icon;
 
-              return (
-                <article
-                  key={node.title}
-                  className="editorial-panel hover-light group relative min-h-[190px] overflow-hidden p-5 md:p-6"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <Icon className="h-5 w-5 text-[var(--sage)]" />
-                    <span className="grid h-8 w-8 place-items-center rounded-full border border-black/10 text-[12px] text-[var(--sage)] transition group-hover:translate-x-1">
-                      0{index + 1}
-                    </span>
-                  </div>
-                  <h3 className="mt-7 text-[1.18rem] font-semibold leading-[1.2]">
-                    {node.title}
-                  </h3>
-                  <p className="mt-3 text-[0.92rem] leading-[1.6] text-[var(--muted)]">
-                    {node.text}
-                  </p>
-                </article>
-              );
-            })}
+                return (
+                  <article
+                    key={node.title}
+                    className="editorial-panel hover-light group relative min-h-[180px] min-w-[76vw] snap-start overflow-hidden p-5 sm:min-w-0 md:min-h-[190px] md:p-6"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <Icon className="h-5 w-5 text-[var(--sage)]" />
+                      <span className="grid h-8 w-8 place-items-center rounded-full border border-black/10 text-[12px] text-[var(--sage)] transition group-hover:translate-x-1">
+                        0{index + 1}
+                      </span>
+                    </div>
+                    <h3 className="mt-7 text-[1.18rem] font-semibold leading-[1.2]">
+                      {node.title}
+                    </h3>
+                    <p className="mt-3 text-[0.92rem] leading-[1.6] text-[var(--muted)]">
+                      {node.text}
+                    </p>
+                  </article>
+                );
+              })}
+            </div>
           </div>
         </Reveal>
       </div>
@@ -701,7 +753,7 @@ function RecognitionSection() {
   return (
     <section
       id="recognition"
-      className="section-shell relative scroll-mt-0 py-20 md:py-32"
+      className="section-shell relative scroll-mt-0 py-16 md:py-32"
     >
       <div className="grid gap-12 lg:grid-cols-[0.72fr_1fr] lg:gap-16">
         <Reveal>
@@ -722,7 +774,7 @@ function RecognitionSection() {
 
         <Reveal delay={0.08}>
           <article className="editorial-panel overflow-hidden p-3 md:p-4">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[6px] bg-[var(--surface-cool)] sm:aspect-[1.35]">
+            <div className="relative aspect-[1.08] overflow-hidden rounded-[6px] bg-[var(--surface-cool)] sm:aspect-[1.35]">
               <Image
                 src={recognition.src}
                 alt={recognition.alt}
@@ -748,7 +800,7 @@ function RecognitionSection() {
 
 function MbaChapterSection() {
   return (
-    <section className="section-shell relative py-10 md:py-24">
+    <section id="mba-life" className="section-shell relative scroll-mt-0 py-12 md:py-24">
       <div className="mb-10 grid gap-8 lg:grid-cols-[0.8fr_1fr] lg:items-end lg:gap-16">
         <Reveal>
           <SectionLabel>MBA chapter</SectionLabel>
@@ -767,12 +819,12 @@ function MbaChapterSection() {
         </Reveal>
       </div>
 
-      <div className="grid gap-3 md:grid-cols-4">
+      <div className="snap-strip -mx-3 flex snap-x gap-3 overflow-x-auto px-3 pb-4 md:mx-0 md:grid md:grid-cols-4 md:overflow-visible md:px-0 md:pb-0">
         {mbaLifeImages.map((image, index) => (
           <Reveal
             key={image.src}
             delay={index * 0.04}
-            className={index === 0 ? "md:col-span-2" : ""}
+            className={`${index === 0 ? "md:col-span-2" : ""} min-w-[78vw] snap-start md:min-w-0`}
           >
             <article className="group h-full overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.68)] p-2 shadow-[0_28px_80px_rgba(16,18,18,0.07)] backdrop-blur">
               <div
@@ -809,7 +861,7 @@ function JournalPreview({ posts }: { posts: JournalPost[] }) {
   return (
     <section
       id="journal"
-      className="section-shell scroll-mt-0 border-y border-black/10 py-20 md:py-32"
+      className="section-shell scroll-mt-0 border-y border-black/10 py-16 md:py-32"
     >
       <div className="mb-10 grid gap-8 md:mb-12 lg:grid-cols-[0.82fr_1fr] lg:items-end lg:gap-16">
         <Reveal>
@@ -894,7 +946,7 @@ function ReadingShelf() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section id="personal" className="section-shell relative scroll-mt-0 py-20 md:py-32">
+    <section id="personal" className="section-shell relative scroll-mt-0 py-16 md:py-32">
       <div className="mb-10 grid gap-8 md:mb-14 lg:grid-cols-[0.76fr_1fr] lg:items-end lg:gap-16">
         <Reveal>
           <SectionLabel>Reading shelf</SectionLabel>
@@ -913,16 +965,16 @@ function ReadingShelf() {
         </Reveal>
       </div>
 
-      <div className="flex snap-x gap-4 overflow-x-auto pb-4 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 md:grid-cols-3 lg:grid-cols-5">
+      <div className="snap-strip -mx-3 flex snap-x gap-4 overflow-x-auto px-3 pb-4 lg:mx-0 lg:grid lg:grid-cols-5 lg:overflow-visible lg:px-0 lg:pb-0">
         {readingShelf.map((book, index) => {
           return (
             <Reveal
               key={book.title}
               delay={index * 0.03}
-              className="min-w-[260px] snap-start sm:min-w-0"
+              className="min-w-[238px] snap-start sm:min-w-0"
             >
               <motion.article
-                className={`book-card book-card-${book.accent} group flex h-full min-h-[390px] flex-col justify-between overflow-hidden rounded-[8px] border border-white/12 p-4 shadow-[0_26px_80px_rgba(16,18,18,0.08)] md:min-h-[410px] lg:min-h-[430px]`}
+                className={`book-card book-card-${book.accent} group flex h-full min-h-[355px] flex-col justify-between overflow-hidden rounded-[8px] border border-white/12 p-4 shadow-[0_26px_80px_rgba(16,18,18,0.08)] md:min-h-[410px] lg:min-h-[430px]`}
                 whileHover={
                   shouldReduceMotion
                     ? undefined
@@ -945,7 +997,7 @@ function ReadingShelf() {
                   </div>
 
                   <div className="book-cover-art mt-5 rounded-[7px] border border-white/14 bg-white/[0.07] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
-                    <div className="book-cover-frame relative mx-auto aspect-[0.66] w-[72%] max-w-[150px] overflow-hidden rounded-[5px] border border-white/18 bg-black/20 shadow-[0_18px_44px_rgba(0,0,0,0.24)]">
+                    <div className="book-cover-frame relative mx-auto aspect-[0.66] w-[68%] max-w-[128px] overflow-hidden rounded-[5px] border border-white/18 bg-black/20 shadow-[0_18px_44px_rgba(0,0,0,0.24)] md:w-[72%] md:max-w-[150px]">
                       <Image
                         src={book.coverSrc}
                         alt={`${book.title} book cover`}
@@ -985,9 +1037,9 @@ function ReadingShelf() {
 
 function FuturePhotoStrip() {
   return (
-    <div className="grid gap-3 sm:grid-cols-2">
+    <div className="snap-strip -mx-3 flex snap-x gap-3 overflow-x-auto px-3 pb-3 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0">
       {profile.photoSlots.map((slot) => (
-        <div key={slot.id} className="editorial-panel overflow-hidden p-2">
+        <div key={slot.id} className="editorial-panel min-w-[64vw] snap-start overflow-hidden p-2 sm:min-w-0">
           <div className="relative aspect-[4/5] overflow-hidden rounded-[6px] bg-[linear-gradient(145deg,#eef1ed,#fffdf8)]">
             <Image
               src={slot.src}
@@ -1138,7 +1190,7 @@ function PersonalInterests() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section className="section-shell relative scroll-mt-0 py-20 md:py-32">
+    <section className="section-shell relative scroll-mt-0 py-16 md:py-32">
       <div className="grid gap-10 lg:grid-cols-[0.78fr_1fr] lg:gap-16">
         <Reveal>
           <SectionLabel>Off the screen</SectionLabel>
@@ -1153,7 +1205,7 @@ function PersonalInterests() {
             cooking, AI tools, and market-watching all feed the same habit:
             paying attention.
           </p>
-          <div className="mt-8">
+          <div id="gallery" className="mt-8 scroll-mt-28">
             <FuturePhotoStrip />
           </div>
           <Reveal delay={0.08}>
@@ -1166,7 +1218,7 @@ function PersonalInterests() {
             </Link>
           </Reveal>
         </Reveal>
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="snap-strip -mx-3 flex snap-x gap-3 overflow-x-auto px-3 pb-4 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0">
           {personalInterests.map((interest, index) => {
             const Icon = interest.icon;
 
@@ -1174,7 +1226,7 @@ function PersonalInterests() {
               <Reveal
                 key={interest.title}
                 delay={index * 0.035}
-                className={interest.featured ? "sm:col-span-2" : ""}
+                className={`${interest.featured ? "sm:col-span-2" : ""} min-w-[78vw] snap-start sm:min-w-0`}
               >
                 <motion.article
                   className={`hover-light group relative h-full overflow-hidden rounded-[8px] border p-5 transition duration-500 md:p-6 ${
@@ -1250,7 +1302,8 @@ export function HomePageClient({ journalPosts }: { journalPosts: JournalPost[] }
   return (
     <>
       <SiteNav />
-      <main>
+      <SectionNavigator />
+      <main className="pb-20 xl:pb-0">
         <Hero />
         <Direction />
         <Background />

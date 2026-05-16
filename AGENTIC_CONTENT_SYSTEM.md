@@ -51,7 +51,7 @@ The default status is `review`. The script does not set anything to `published`,
 
 Environment variables can be added through `.env` or `.env.local`. Use `.env.example` as the safe template. Real secrets must never be committed.
 
-Without `OPENAI_API_KEY`, the script creates a conservative review scaffold from collected sources. With `OPENAI_API_KEY` and `--use-ai`, it can generate fuller prose while still keeping approval status locked to draft or review.
+Without `OPENAI_API_KEY`, the script creates a conservative review scaffold from collected sources. With `OPENAI_API_KEY` and `--use-ai`, it can generate fuller prose while still keeping approval status locked to draft or review in the weekly draft workflow.
 
 Use `OPENAI_MODEL=gpt-4.1` for higher-quality weekly writing. Use `gpt-4.1-mini` only for cheaper drafts, dry runs, or testing the workflow.
 
@@ -94,7 +94,7 @@ Schedule:
 Default review-first behavior:
 
 1. Checks out the repository.
-2. Verifies `OPENAI_API_KEY` is configured.
+2. Reads `OPENAI_API_KEY` if configured; without it, the generator creates a conservative review scaffold.
 3. Installs dependencies with `npm ci`.
 4. Runs `npm run generate:weekly-insight` with status locked to `review` or `draft`.
 5. Runs lint and build checks.
@@ -106,7 +106,7 @@ In default mode, it does not:
 - It does not merge the pull request.
 - It does not mark posts as `published`.
 - It does not post to LinkedIn.
-- It does not send WhatsApp messages unless `WHATSAPP_NOTIFY=true` and WhatsApp credentials are configured.
+- It does not send WhatsApp messages unless `WHATSAPP_NOTIFY=true` is intentionally configured and WhatsApp credentials are present.
 - It does not deploy directly to production except through the normal merge/deploy flow.
 
 ### Adding GitHub Actions Secrets
@@ -117,7 +117,7 @@ In GitHub, open:
 
 Add these values as needed:
 
-- `OPENAI_API_KEY` is required for the weekly workflow.
+- `OPENAI_API_KEY` is required only for AI-assisted prose; without it, the workflow creates a review scaffold.
 - `OPENAI_MODEL` should usually be `gpt-4.1` for higher-quality writing.
 - `NEWS_API_KEY` is optional for news discovery.
 - `SERP_API_KEY` is optional for search discovery.
@@ -127,7 +127,7 @@ Add these values as needed:
 - `LINKEDIN_AUTO_POST` should stay `false`; LinkedIn posting uses the separate manual workflow.
 - `WHATSAPP_NOTIFY` should stay `false` unless intentionally enabling WhatsApp notifications.
 
-If `OPENAI_API_KEY` is missing, the workflow fails early with a clear message instead of generating weak content or silently falling back.
+If `OPENAI_API_KEY` is missing, the workflow stays review-first and creates a conservative scaffold. That is useful for testing the PR/review loop, but a real weekly draft should normally use `OPENAI_API_KEY` and be reviewed carefully before merge.
 
 ### Running The Workflow Manually
 
@@ -447,10 +447,10 @@ Required secrets:
 - `WHATSAPP_PHONE_NUMBER_ID`
 - `WHATSAPP_TO_NUMBER`
 
-Mohit's recipient number should be stored as:
+The recipient number should be stored only as a local `.env.local` value or GitHub Actions secret:
 
 ```text
-WHATSAPP_TO_NUMBER=917680030135
+WHATSAPP_TO_NUMBER=91XXXXXXXXXX
 ```
 
 Notification points:
