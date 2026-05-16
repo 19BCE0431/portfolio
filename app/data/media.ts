@@ -6,13 +6,46 @@ export type StoryImage = {
   orientation?: "portrait" | "landscape" | "square";
 };
 
+export type GalleryCluster = {
+  id: "mba" | "recognition" | "life" | "portraits";
+  label: string;
+  title: string;
+  description: string;
+  intent: string;
+  images: StoryImage[];
+};
+
+export const portraitImages: StoryImage[] = [
+  {
+    src: "/images/profile/profile-hero-01.jpg",
+    alt: "Professional campus portrait of Mohit Sai Krishna Peddakotla",
+    caption: "The main portrait: formal enough for recruiters, still warm enough to feel like me.",
+    source: "IMG_3157.heic",
+    orientation: "portrait",
+  },
+  {
+    src: "/images/profile/profile-campus-01.jpg",
+    alt: "Mohit Sai Krishna Peddakotla standing on the IIM Sirmaur campus",
+    caption: "A second campus portrait kept as an editorial reserve, not forced into the homepage.",
+    source: "IMG_3145.heic",
+    orientation: "portrait",
+  },
+];
+
 export const recognitionImages: StoryImage[] = [
   {
     src: "/images/achievements/iconic-quiz-01.jpg",
     alt: "Iconic Quiz recognition collage by iimjobs.com and Markezen of IIM Sirmaur",
-    caption: "Top 10 in college for the Iconic Quiz conducted by iimjobs.com and Markezen of IIM Sirmaur.",
+    caption: "An early campus signal: Top 10 in the Iconic Quiz conducted by iimjobs.com and Markezen at IIM Sirmaur.",
     source: "IMG_0388.jpg",
     orientation: "portrait",
+  },
+  {
+    src: "/images/achievements/placement-season-kit-01.jpg",
+    alt: "Placement season kit from the IIM Sirmaur MBA chapter",
+    caption: "A placement-season context frame. Useful, but kept quieter than the quiz proof point.",
+    source: "IMG_0368.HEIC",
+    orientation: "landscape",
   },
 ];
 
@@ -103,5 +136,44 @@ export const lifeGalleryImages: StoryImage[] = [
     caption: "A misty frame from outside the usual routine.",
     source: "IMG_5535.HEIC",
     orientation: "portrait",
+  },
+];
+
+export const galleryClusters: GalleryCluster[] = [
+  {
+    id: "life",
+    label: "Life",
+    title: "Travel, friends, and quiet reset frames.",
+    description:
+      "The warmest set stays away from the homepage. It is here for people who want a little more texture after the professional story.",
+    intent: "Optional personal layer",
+    images: lifeGalleryImages,
+  },
+  {
+    id: "mba",
+    label: "MBA",
+    title: "Classrooms, campus, and the current chapter.",
+    description:
+      "A small set of IIM Sirmaur frames that supports the MBA story without turning the homepage into an album.",
+    intent: "Professional context",
+    images: mbaLifeImages,
+  },
+  {
+    id: "recognition",
+    label: "Recognition",
+    title: "Small signals from the MBA chapter.",
+    description:
+      "Recognition visuals are kept compact and specific: proof points, not a victory lap.",
+    intent: "Quiet credibility",
+    images: recognitionImages,
+  },
+  {
+    id: "portraits",
+    label: "Portraits",
+    title: "Professional photo candidates.",
+    description:
+      "Only the strongest portrait options are kept in circulation, so the site does not feel like it is trying every image at once.",
+    intent: "Identity system",
+    images: portraitImages,
   },
 ];

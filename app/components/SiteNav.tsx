@@ -12,7 +12,7 @@ const ease = [0.16, 1, 0.3, 1] as const;
 function getActiveItem(pathname: string, activeSection: string) {
   if (pathname.startsWith("/archive")) return "work";
   if (pathname.startsWith("/journal")) return "journal";
-  if (pathname.startsWith("/life")) return "personal";
+  if (pathname.startsWith("/life")) return "gallery";
   return activeSection;
 }
 
