@@ -1,0 +1,23 @@
+<svg width="1200" height="820" viewBox="0 0 1200 820" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="820" rx="34" fill="#101212"/>
+  <path d="M0 0h1200v820H0z" fill="url(#bg)"/>
+  <rect x="116" y="116" width="968" height="590" rx="30" fill="#fffdf8" fill-opacity=".08" stroke="#fffdf8" stroke-opacity=".12"/>
+  <path d="M190 576h818M190 486h818M190 396h818M190 306h818M190 216h818" stroke="#fffdf8" stroke-opacity=".06"/>
+  <path d="M210 560c70-84 126-30 196-92 76-67 106-144 190-96 76 44 88 150 178 116 74-28 88-142 212-188" stroke="#9BAF9D" stroke-width="7" stroke-linecap="round"/>
+  <path d="M684 372c120 58 178 24 302-72" stroke="#E7D6B1" stroke-opacity=".78" stroke-width="5" stroke-linecap="round" stroke-dasharray="12 16"/>
+  <rect x="196" y="160" width="210" height="82" rx="20" fill="#fffdf8" fill-opacity=".1"/>
+  <rect x="438" y="160" width="210" height="82" rx="20" fill="#fffdf8" fill-opacity=".1"/>
+  <g fill="#fffdf8" font-family="Inter, Arial, sans-serif">
+    <text x="222" y="212" font-size="30" font-weight="700">Forecast</text>
+    <text x="464" y="212" font-size="30" font-weight="700">Uncertainty</text>
+    <text x="116" y="92" font-size="18" letter-spacing="4" opacity=".46">TIME SERIES · INTERFACE</text>
+    <text x="116" y="760" font-size="52" font-weight="700">Making model output easier to read</text>
+  </g>
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(946 124) rotate(139) scale(840 920)">
+      <stop stop-color="#687789" stop-opacity=".4"/>
+      <stop offset=".48" stop-color="#16191B"/>
+      <stop offset="1" stop-color="#0D0F10"/>
+    </radialGradient>
+  </defs>
+</svg>

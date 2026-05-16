@@ -1,0 +1,23 @@
+<svg width="1200" height="820" viewBox="0 0 1200 820" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="820" rx="34" fill="#F4F0E8"/>
+  <path d="M166 418h822" stroke="#101212" stroke-opacity=".14" stroke-width="5" stroke-linecap="round"/>
+  <path d="M206 418c66-126 166-168 302-82 98 62 178 62 276-4 78-53 150-60 224 22" stroke="#68796D" stroke-width="7" stroke-linecap="round"/>
+  <g fill="#101212">
+    <circle cx="206" cy="418" r="20"/>
+    <circle cx="506" cy="334" r="20"/>
+    <circle cx="784" cy="332" r="20"/>
+    <circle cx="1008" cy="354" r="20"/>
+  </g>
+  <rect x="130" y="132" width="292" height="150" rx="28" fill="#fffdf8" stroke="#101212" stroke-opacity=".08"/>
+  <rect x="454" y="512" width="292" height="150" rx="28" fill="#fffdf8" stroke="#101212" stroke-opacity=".08"/>
+  <rect x="778" y="132" width="292" height="150" rx="28" fill="#101212"/>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="162" y="188" font-size="22" fill="#101212" opacity=".54">Scrape status</text>
+    <text x="162" y="232" font-size="34" font-weight="700" fill="#101212">Partner updates</text>
+    <text x="486" y="568" font-size="22" fill="#101212" opacity=".54">Trigger</text>
+    <text x="486" y="612" font-size="34" font-weight="700" fill="#101212">Customer note</text>
+    <text x="810" y="188" font-size="22" fill="#fffdf8" opacity=".54">Outcome</text>
+    <text x="810" y="232" font-size="34" font-weight="700" fill="#fffdf8">Visibility</text>
+    <text x="128" y="742" font-size="52" font-weight="700" fill="#101212">Cleaner logistics visibility</text>
+  </g>
+</svg>

@@ -1,0 +1,14 @@
+<svg width="1200" height="820" viewBox="0 0 1200 820" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="820" rx="34" fill="#F7F3EA"/>
+  <rect x="112" y="104" width="976" height="602" rx="32" fill="#fffdf8" stroke="#101212" stroke-opacity=".08"/>
+  <path d="M202 574c112-134 216-186 330-154 116 32 158 146 310 92 70-25 126-74 188-122v184H202z" fill="#68796D" fill-opacity=".18"/>
+  <path d="M248 502c80-96 132-136 220-116 92 21 116 100 226 70 74-20 124-70 202-114" stroke="#68796D" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="856" cy="238" r="66" fill="#E2C48F"/>
+  <rect x="184" y="174" width="256" height="74" rx="22" fill="#101212"/>
+  <rect x="184" y="274" width="312" height="28" rx="14" fill="#101212" fill-opacity=".15"/>
+  <rect x="184" y="328" width="232" height="28" rx="14" fill="#101212" fill-opacity=".1"/>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="216" y="222" font-size="30" font-weight="700" fill="#fffdf8">Advisory loop</text>
+    <text x="112" y="764" font-size="52" font-weight="700" fill="#101212">Image context before advice</text>
+  </g>
+</svg>

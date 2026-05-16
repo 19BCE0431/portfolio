@@ -59,6 +59,7 @@ export function ProjectVisual({
   const imageSrc = primaryImage?.src ?? project.visual?.image;
   const imageAlt = primaryImage?.alt ?? project.visual?.alt ?? `${project.title} visual`;
   const imageCaption = primaryImage?.caption ?? project.visual?.caption;
+  const isSvg = imageSrc?.endsWith(".svg");
   const hash = useMemo(
     () =>
       project.slug.split("").reduce((total, character) => {
@@ -80,18 +81,39 @@ export function ProjectVisual({
       } ${compact ? "aspect-[1.55]" : "aspect-[1.45]"}`}
     >
       {!imageMissing && imageSrc ? (
-        <Image
-          src={imageSrc}
-          alt={imageAlt}
-          fill
-          sizes={
-            compact
-              ? "(max-width: 768px) 92vw, 25vw"
-              : "(max-width: 768px) 92vw, 42vw"
-          }
-          onError={() => setImageMissing(true)}
-          className="object-cover transition-transform duration-[900ms] ease-[var(--ease)] group-hover:scale-[1.035]"
-        />
+        <>
+          <Image
+            src={imageSrc}
+            alt={imageAlt}
+            fill
+            sizes={
+              compact
+                ? "(max-width: 768px) 92vw, 25vw"
+                : "(max-width: 768px) 92vw, 42vw"
+            }
+            unoptimized={isSvg}
+            onError={() => setImageMissing(true)}
+            className="object-cover transition-transform duration-[900ms] ease-[var(--ease)] group-hover:scale-[1.04]"
+          />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(16,18,18,0)_38%,rgba(16,18,18,0.58))] opacity-80"
+          />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-5 top-0 h-px origin-left scale-x-0 bg-white/55 transition-transform duration-700 group-hover:scale-x-100"
+          />
+          <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between gap-3">
+            <span className="rounded-[7px] border border-white/14 bg-black/20 px-2.5 py-1 text-[11px] font-medium text-white/76 shadow-[0_12px_28px_rgba(0,0,0,0.16)] backdrop-blur">
+              {project.visual?.label ?? "Project visual"}
+            </span>
+            {imageCaption && (
+              <span className="hidden max-w-[62%] text-right text-[11px] leading-[1.35] text-white/62 sm:block">
+                {imageCaption}
+              </span>
+            )}
+          </div>
+        </>
       ) : (
         <motion.div
           aria-label={project.visual?.alt ?? `${project.title} visual placeholder`}

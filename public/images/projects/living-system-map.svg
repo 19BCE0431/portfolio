@@ -1,0 +1,43 @@
+<svg width="1200" height="820" viewBox="0 0 1200 820" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="820" rx="34" fill="#101212"/>
+  <path d="M0 0h1200v820H0z" fill="url(#bg)"/>
+  <path d="M110 130h980M110 270h980M110 410h980M110 550h980M110 690h980M180 80v660M360 80v660M540 80v660M720 80v660M900 80v660" stroke="#fffdf8" stroke-opacity=".055"/>
+  <path d="M204 514C318 302 470 227 607 346c116 101 207 83 329-74" stroke="#E7D6B1" stroke-opacity=".56" stroke-width="3"/>
+  <path d="M211 516C333 385 471 374 602 469c115 84 223 68 346-40" stroke="#9BAF9D" stroke-opacity=".6" stroke-width="3"/>
+  <g filter="url(#glow)">
+    <circle cx="204" cy="514" r="18" fill="#E7D6B1"/>
+    <circle cx="418" cy="300" r="18" fill="#9BAF9D"/>
+    <circle cx="606" cy="346" r="18" fill="#E7D6B1"/>
+    <circle cx="786" cy="394" r="18" fill="#9BAF9D"/>
+    <circle cx="936" cy="272" r="18" fill="#E7D6B1"/>
+    <circle cx="602" cy="469" r="18" fill="#DCA27E"/>
+    <circle cx="948" cy="429" r="18" fill="#9BAF9D"/>
+  </g>
+  <g fill="#fffdf8">
+    <text x="90" y="92" font-family="Inter, Arial, sans-serif" font-size="18" letter-spacing="4" opacity=".52">AI-ASSISTED · HUMAN-DIRECTED</text>
+    <text x="88" y="162" font-family="Inter, Arial, sans-serif" font-size="62" font-weight="700" letter-spacing="-1">Living portfolio system</text>
+    <text x="90" y="220" font-family="Inter, Arial, sans-serif" font-size="28" opacity=".62">Weekly ideas, journal notes, LinkedIn drafts, visual prompts, review loop.</text>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" font-size="20" fill="#fffdf8">
+    <rect x="128" y="585" width="190" height="68" rx="18" fill="#fffdf8" fill-opacity=".08" stroke="#fffdf8" stroke-opacity=".12"/>
+    <text x="154" y="626" opacity=".78">Inputs</text>
+    <rect x="386" y="204" width="214" height="68" rx="18" fill="#fffdf8" fill-opacity=".08" stroke="#fffdf8" stroke-opacity=".12"/>
+    <text x="412" y="245" opacity=".78">Drafting</text>
+    <rect x="663" y="476" width="230" height="68" rx="18" fill="#fffdf8" fill-opacity=".08" stroke="#fffdf8" stroke-opacity=".12"/>
+    <text x="688" y="517" opacity=".78">Human review</text>
+    <rect x="872" y="178" width="210" height="68" rx="18" fill="#fffdf8" fill-opacity=".08" stroke="#fffdf8" stroke-opacity=".12"/>
+    <text x="898" y="219" opacity=".78">Publishing</text>
+  </g>
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(890 118) rotate(131) scale(820 945)">
+      <stop stop-color="#68796D" stop-opacity=".38"/>
+      <stop offset=".48" stop-color="#16191B"/>
+      <stop offset="1" stop-color="#0D0F10"/>
+    </radialGradient>
+    <filter id="glow" x="130" y="198" width="892" height="390" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.89 0 0 0 0 0.81 0 0 0 0 0.64 0 0 0 .5 0"/>
+      <feBlend in="SourceGraphic"/>
+    </filter>
+  </defs>
+</svg>

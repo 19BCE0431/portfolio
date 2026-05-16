@@ -1,0 +1,20 @@
+<svg width="1200" height="820" viewBox="0 0 1200 820" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="820" rx="34" fill="#F7F3EA"/>
+  <path d="M120 600h930" stroke="#101212" stroke-opacity=".12" stroke-width="3"/>
+  <path d="M150 494c92-4 120 44 196 40 106-6 110-150 226-156 126-6 154 138 260 88 70-33 96-106 180-100" stroke="#68796D" stroke-width="8" stroke-linecap="round"/>
+  <path d="M150 360c122 44 218 58 328 22 96-31 138-126 246-110 116 17 140 128 284 116" stroke="#A56F53" stroke-opacity=".52" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="572" cy="378" r="24" fill="#101212"/>
+  <circle cx="572" cy="378" r="58" stroke="#101212" stroke-opacity=".12" stroke-width="3"/>
+  <rect x="128" y="116" width="292" height="130" rx="28" fill="#fffdf8" stroke="#101212" stroke-opacity=".08"/>
+  <rect x="462" y="116" width="292" height="130" rx="28" fill="#fffdf8" stroke="#101212" stroke-opacity=".08"/>
+  <rect x="796" y="116" width="276" height="130" rx="28" fill="#101212" fill-opacity=".92"/>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="156" y="166" font-size="18" letter-spacing="3" fill="#101212" opacity=".48">SIGNAL</text>
+    <text x="156" y="212" font-size="34" font-weight="700" fill="#101212">Early warning</text>
+    <text x="490" y="166" font-size="18" letter-spacing="3" fill="#101212" opacity=".48">ACTION</text>
+    <text x="490" y="212" font-size="34" font-weight="700" fill="#101212">Faster follow-up</text>
+    <text x="824" y="166" font-size="18" letter-spacing="3" fill="#fffdf8" opacity=".5">LOOP</text>
+    <text x="824" y="212" font-size="34" font-weight="700" fill="#fffdf8">Operational clarity</text>
+    <text x="122" y="704" font-size="54" font-weight="700" fill="#101212">Signals before surprises</text>
+  </g>
+</svg>

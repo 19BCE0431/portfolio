@@ -1,0 +1,18 @@
+<svg width="1200" height="820" viewBox="0 0 1200 820" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="820" rx="34" fill="#FBF8F0"/>
+  <rect x="114" y="104" width="972" height="610" rx="30" fill="#fffdf8" stroke="#101212" stroke-opacity=".08"/>
+  <path d="M114 190h972" stroke="#101212" stroke-opacity=".08"/>
+  <circle cx="174" cy="148" r="12" fill="#A56F53" fill-opacity=".45"/>
+  <circle cx="216" cy="148" r="12" fill="#68796D" fill-opacity=".5"/>
+  <circle cx="258" cy="148" r="12" fill="#687789" fill-opacity=".45"/>
+  <rect x="210" y="286" width="196" height="112" rx="24" fill="#101212"/>
+  <rect x="754" y="286" width="196" height="112" rx="24" fill="#68796D" fill-opacity=".2" stroke="#68796D" stroke-opacity=".34"/>
+  <rect x="482" y="496" width="196" height="112" rx="24" fill="#A56F53" fill-opacity=".16" stroke="#A56F53" stroke-opacity=".32"/>
+  <path d="M406 342h348M580 398v98" stroke="#101212" stroke-opacity=".26" stroke-width="5" stroke-linecap="round"/>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="252" y="354" font-size="28" font-weight="700" fill="#fffdf8">Canvas</text>
+    <text x="792" y="354" font-size="28" font-weight="700" fill="#101212">Users</text>
+    <text x="520" y="566" font-size="28" font-weight="700" fill="#101212">Docs</text>
+    <text x="114" y="774" font-size="52" font-weight="700" fill="#101212">Real-time collaboration, drawn out</text>
+  </g>
+</svg>
