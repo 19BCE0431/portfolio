@@ -10,6 +10,7 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import type { MouseEvent } from "react";
 import type { ArchiveProject } from "../data/archive";
+import { ProjectVisual } from "./ProjectVisual";
 
 export function ProjectCard({
   project,
@@ -59,121 +60,129 @@ export function ProjectCard({
         href={`/archive/${project.slug}`}
         onMouseMove={handlePointerMove}
         onMouseLeave={resetPointer}
-        className={`group hover-light relative flex h-full cursor-pointer flex-col justify-between overflow-hidden rounded-[8px] border p-4 backdrop-blur transition duration-500 focus:outline-none focus:ring-2 focus:ring-black/15 sm:p-6 ${
+        className={`group hover-light relative flex h-full cursor-pointer flex-col overflow-hidden rounded-[8px] border p-3 backdrop-blur transition duration-500 focus:outline-none focus:ring-2 focus:ring-black/15 sm:p-4 ${
           featured
-            ? "border-black/15 bg-[rgba(16,18,18,0.92)] text-white shadow-[0_36px_110px_rgba(16,18,18,0.16)] hover:border-black/20"
-            : "premium-card-shadow border-black/10 bg-[rgba(255,253,248,0.74)] hover:border-black/20 hover:bg-[rgba(255,253,248,0.96)] hover:shadow-[0_34px_94px_rgba(16,18,18,0.09)]"
-        } ${compact ? "min-h-[285px] sm:min-h-[360px]" : "min-h-[340px] sm:min-h-[440px]"}`}
+            ? "border-black/15 bg-[rgba(16,18,18,0.93)] text-white shadow-[0_36px_110px_rgba(16,18,18,0.16)] hover:border-black/20"
+            : "premium-card-shadow border-black/10 bg-[rgba(255,253,248,0.76)] hover:border-black/20 hover:bg-[rgba(255,253,248,0.96)] hover:shadow-[0_34px_94px_rgba(16,18,18,0.09)]"
+        } ${compact ? "min-h-[410px]" : "min-h-[520px]"}`}
       >
         <span className="pointer-events-none absolute inset-x-6 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-transparent via-current to-transparent opacity-30 transition-transform duration-500 group-hover:scale-x-100" />
         <span
           aria-hidden="true"
           className={`pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${
             featured
-              ? "bg-[radial-gradient(circle_at_20%_0%,rgba(104,121,109,0.2),transparent_38%)]"
-              : "bg-[radial-gradient(circle_at_20%_0%,rgba(104,121,109,0.11),transparent_38%)]"
+              ? "bg-[radial-gradient(circle_at_var(--x,20%)_var(--y,0%),rgba(104,121,109,0.2),transparent_38%)]"
+              : "bg-[radial-gradient(circle_at_var(--x,20%)_var(--y,0%),rgba(104,121,109,0.11),transparent_38%)]"
           }`}
         />
 
-        <div className="relative z-10">
-          <div className="mb-6 flex items-start justify-between gap-4">
-            <span
-              className={`max-w-[210px] text-[10.5px] font-semibold uppercase leading-[1.45] tracking-[0.16em] sm:text-[11px] sm:tracking-[0.18em] ${
-                featured ? "text-white/46" : "text-[var(--muted)]"
-              }`}
-            >
-              {project.category}
-            </span>
-            <span
-              className={`shrink-0 rounded-[8px] border px-2.5 py-1 text-[11px] font-medium ${
-                featured
-                  ? "border-white/12 text-white/66"
-                  : "border-black/10 text-[var(--sage)]"
-              }`}
-            >
-              {project.status}
-            </span>
-          </div>
+        <ProjectVisual project={project} compact={compact} dark={featured} />
 
-          <h3
-            className={`text-[clamp(1.3rem,5.7vw,1.95rem)] font-semibold leading-[1.08] tracking-[0] md:text-[clamp(1.55rem,2.1vw,2.25rem)] ${
-              featured ? "text-white/92" : "text-[var(--foreground)]"
-            }`}
-          >
-            {project.title}
-          </h3>
-          <p
-            className={`mt-4 text-[0.94rem] leading-[1.6] sm:mt-5 ${
-              featured ? "text-white/58" : "text-[var(--muted)]"
-            }`}
-          >
-            {project.shortDescription}
-          </p>
-
-          <div
-            className={`mt-6 grid gap-3 border-t pt-4 ${
-              featured ? "border-white/10" : "border-black/10"
-            }`}
-          >
-            <div>
-              <p
-                className={`text-[10.5px] font-semibold uppercase tracking-[0.16em] ${
-                  featured ? "text-white/38" : "text-[var(--muted)]"
+        <div className="relative z-10 flex flex-1 flex-col justify-between p-2 pt-5 sm:p-3 sm:pt-6">
+          <div>
+            <div className="mb-5 flex items-start justify-between gap-4">
+              <span
+                className={`max-w-[230px] text-[10.5px] font-semibold uppercase leading-[1.45] tracking-[0.16em] sm:text-[11px] sm:tracking-[0.18em] ${
+                  featured ? "text-white/46" : "text-[var(--muted)]"
                 }`}
               >
-                Impact
-              </p>
-              <p
-                className={`mt-2 line-clamp-2 text-[0.88rem] leading-[1.5] ${
-                  featured ? "text-white/66" : "text-[var(--muted-strong)]"
+                {project.category}
+              </span>
+              <span
+                className={`shrink-0 rounded-[8px] border px-2.5 py-1 text-[11px] font-medium ${
+                  featured
+                    ? "border-white/12 text-white/66"
+                    : "border-black/10 text-[var(--sage)]"
                 }`}
               >
-                {project.impact}
-              </p>
+                {project.status}
+              </span>
             </div>
-            {!compact && (
+
+            <h3
+              className={`text-[clamp(1.34rem,5.7vw,2rem)] font-semibold leading-[1.08] tracking-[0] md:text-[clamp(1.35rem,2.1vw,2.1rem)] ${
+                featured ? "text-white/92" : "text-[var(--foreground)]"
+              }`}
+            >
+              {project.title}
+            </h3>
+            <p
+              className={`mt-4 text-[0.94rem] leading-[1.58] ${
+                featured ? "text-white/58" : "text-[var(--muted)]"
+              }`}
+            >
+              {project.shortDescription}
+            </p>
+
+            <div
+              className={`mt-5 grid gap-3 border-t pt-4 ${
+                featured ? "border-white/10" : "border-black/10"
+              }`}
+            >
               <div>
                 <p
                   className={`text-[10.5px] font-semibold uppercase tracking-[0.16em] ${
                     featured ? "text-white/38" : "text-[var(--muted)]"
                   }`}
                 >
-                  Learning
+                  Changed
                 </p>
                 <p
-                  className={`mt-2 text-[0.88rem] leading-[1.5] ${
+                  className={`mt-2 line-clamp-2 text-[0.88rem] leading-[1.5] ${
                     featured ? "text-white/66" : "text-[var(--muted-strong)]"
                   }`}
                 >
-                  {project.learning}
+                  {project.impact}
                 </p>
               </div>
-            )}
+              {!compact && (
+                <div>
+                  <p
+                    className={`text-[10.5px] font-semibold uppercase tracking-[0.16em] ${
+                      featured ? "text-white/38" : "text-[var(--muted)]"
+                    }`}
+                  >
+                    Took away
+                  </p>
+                  <p
+                    className={`mt-2 text-[0.88rem] leading-[1.5] ${
+                      featured ? "text-white/66" : "text-[var(--muted-strong)]"
+                    }`}
+                  >
+                    {project.learning}
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
 
-        <div
-          className={`relative z-10 mt-7 flex items-end justify-between gap-4 border-t pt-4 ${
-            featured ? "border-white/10" : "border-black/10"
-          }`}
-        >
-          <span
-            className={`min-w-0 break-words text-[12px] leading-[1.45] ${
-              featured ? "text-white/46" : "text-[var(--muted)]"
+          <div
+            className={`mt-6 flex items-end justify-between gap-4 border-t pt-4 ${
+              featured ? "border-white/10" : "border-black/10"
             }`}
           >
-            {project.tools.slice(0, 3).join(" · ")}
-          </span>
-          <motion.span
-            className={`grid h-9 w-9 shrink-0 place-items-center rounded-full border transition-colors duration-300 ${
-              featured
-                ? "border-white/12 bg-white/[0.06] text-white/62 group-hover:bg-white/[0.1]"
-                : "border-black/10 bg-white/45 text-[var(--muted)] group-hover:bg-white"
-            }`}
-            style={shouldReduceMotion ? undefined : { x: smoothArrowX, y: smoothArrowY }}
-          >
-            <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-          </motion.span>
+            <span
+              className={`min-w-0 break-words text-[12px] leading-[1.45] ${
+                featured ? "text-white/46" : "text-[var(--muted)]"
+              }`}
+            >
+              {project.tools.slice(0, 3).join(" · ")}
+            </span>
+            <motion.span
+              className={`grid h-9 w-9 shrink-0 place-items-center rounded-full border transition-colors duration-300 ${
+                featured
+                  ? "border-white/12 bg-white/[0.06] text-white/62 group-hover:bg-white/[0.1]"
+                  : "border-black/10 bg-white/45 text-[var(--muted)] group-hover:bg-white"
+              }`}
+              style={
+                shouldReduceMotion
+                  ? undefined
+                  : { x: smoothArrowX, y: smoothArrowY }
+              }
+            >
+              <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </motion.span>
+          </div>
         </div>
       </Link>
     </motion.article>

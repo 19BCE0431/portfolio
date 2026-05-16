@@ -50,7 +50,7 @@ export function ArchiveExplorer({ projects }: { projects: ArchiveProject[] }) {
         <span>
           Showing {visibleProjects.length} of {projects.length} archive items
         </span>
-        <span>Framed by problem, decision support, impact, and learning.</span>
+        <span>Framed by context, what changed, and what I learned.</span>
       </div>
 
       <motion.div layout className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
