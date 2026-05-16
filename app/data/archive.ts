@@ -17,6 +17,13 @@ export type ArchiveCategory =
   | "Retail Learning"
   | "MBA Case Notes";
 
+export type ProjectScreenshot = {
+  src: string;
+  alt: string;
+  caption?: string;
+  placement?: "cover" | "detail" | "gallery";
+};
+
 export type ArchiveProject = {
   slug: string;
   title: string;
@@ -31,6 +38,14 @@ export type ArchiveProject = {
   impact: string;
   learning: string;
   futureDirection: string;
+  visual?: {
+    image?: string;
+    alt: string;
+    caption?: string;
+    label?: string;
+    motif?: "system" | "search" | "chart" | "automation" | "document" | "vision" | "retail" | "case";
+    images?: ProjectScreenshot[];
+  };
   sections?: {
     title: string;
     body: string[];
@@ -56,7 +71,7 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "AI-Assisted",
     status: "Building",
     shortDescription:
-      "A self-directed experiment in building a living professional system - combining portfolio design, content strategy, AI-assisted development, project archiving, and a future weekly insight engine.",
+      "A living portfolio system that keeps my work, writing, weekly ideas, and publishing workflow in one reviewed loop.",
     context:
       "Designed as a living portfolio that can evolve with my MBA journey, applied work, writing, and professional direction.",
     problem:
@@ -73,55 +88,60 @@ export const archiveProjects: ArchiveProject[] = [
     impact:
       "Created a maintainable portfolio system with project archiving, journal publishing, weekly insight drafts, LinkedIn draft structure, and approval-first automation.",
     learning:
-      "AI is most useful when the human direction is clear. Taste, judgment, review, and positioning still decide whether the output feels credible.",
+      "AI is most useful when the human direction is clear. Taste, judgment, review, and positioning still decide whether anything feels credible.",
     futureDirection:
       "Evolve the system into weekly AI, product, business, and market insight posts with source-backed writing, LinkedIn adaptations, visual prompts, and human-reviewed publishing.",
+    visual: {
+      alt: "Abstract system map for the living AI portfolio workflow",
+      label: "Living system map",
+      motif: "system",
+    },
     sections: [
       {
-        title: "Opening summary",
+        title: "What it is",
         body: [
-          "This portfolio is not designed as a static resume site. It is a living professional system that can grow with my MBA journey, project work, writing, and interests across product, marketing, strategy, Data Science, Applied AI, and business decision-making.",
+          "This portfolio is not meant to sit still. It is a place where my MBA work, project evidence, notes, experiments, and public writing can keep becoming more useful over time.",
         ],
       },
       {
         title: "Why I built it",
         body: [
-          "I wanted a portfolio that could reflect more than a list of roles. It needed to show how I think, what I am building, what I am learning, and how my direction is evolving.",
-          "Most portfolios become outdated because they are treated as finished pages. I wanted mine to become a system: a place where project evidence, MBA reflections, market notes, and future insight writing can keep accumulating in a disciplined way.",
+          "A normal portfolio can turn into a neat page that slowly goes stale. I wanted something closer to a personal operating system: a home for work I have done, ideas I am testing, and the direction I am growing into.",
+          "The goal is not to publish everything. The goal is to keep a reviewed trail of what is worth showing.",
         ],
       },
       {
         title: "My role",
         body: [
-          "I led the product direction, content strategy, positioning, design taste, archive structure, iteration planning, automation roadmap, and review process.",
-          "AI tools helped accelerate implementation, exploration, drafting, and refinement. The direction, trade-offs, content choices, and final judgment were human-led.",
+          "I shaped the product direction, content structure, visual tone, archive model, automation roadmap, and review loop.",
+          "AI helped with speed: implementation, exploration, drafts, and iteration. The decisions, taste, and final publishing judgment stayed with me.",
         ],
       },
       {
         title: "What the system includes",
         body: [
-          "The system brings together a premium personal portfolio, an archive of applied work, a journal foundation, a weekly insight generation pipeline, LinkedIn draft structure, future WhatsApp notification flow, GitHub/Vercel deployment workflow, and human-review-first publishing.",
+          "It brings together the homepage, archive, journal, weekly insight scripts, LinkedIn draft flow, future visual prompts, analytics notes, and a review-first publishing rule.",
         ],
       },
       {
-        title: "Product thinking behind it",
+        title: "Product thinking",
         body: [
-          "The product logic is clarity over clutter, evidence over claims, scalable content structure, fast iteration, safe automation, and professional credibility.",
-          "The system is built so new MBA projects, product notes, market observations, and Applied AI work can be added without rethinking the whole site each time.",
+          "The product logic is simple: make the site easy to update, easy to scan, credible to a recruiter, and still personal enough that it does not feel like a generated resume.",
+          "New MBA projects, market notes, AI workflow experiments, and case reflections should fit without redesigning the whole thing each time.",
         ],
       },
       {
         title: "AI and automation angle",
         body: [
-          "This is an experiment in AI-assisted execution. AI can compress the time between an idea and a working implementation, but quality still depends on taste, review, positioning, and judgment.",
-          "The automation roadmap is intentionally approval-first. Drafts can be generated, but publishing decisions remain human.",
+          "This is an experiment in AI-assisted execution, not AI-authored identity. AI can reduce friction between idea and first version, but quality still comes from review.",
+          "The publishing workflow is intentionally approval-first. Drafts can be generated; publishing still needs a human yes.",
         ],
       },
       {
         title: "What I learned",
         body: [
-          "AI is powerful when the user has clear direction. Prompting alone is not enough; product judgment matters.",
-          "Content still needs human taste. Automation needs safety, review, and a clear reason to exist. A portfolio can become a system, not just a page.",
+          "Prompting is not the point. Direction is. AI becomes much better when the person using it knows what good should feel like.",
+          "I also learned that automation needs a reason to exist. A draft is helpful only if the review process makes it sharper.",
         ],
       },
       {
@@ -152,6 +172,11 @@ export const archiveProjects: ArchiveProject[] = [
       "Applied AI becomes valuable when it removes effort at a specific point in the purchase journey.",
     futureDirection:
       "Expand the case into a deeper product study around search behavior, visual intent, and assisted discovery.",
+    visual: {
+      alt: "Product discovery visual showing an image search workflow",
+      label: "Image-led search",
+      motif: "search",
+    },
   },
   {
     slug: "order-drop-detection",
@@ -174,6 +199,11 @@ export const archiveProjects: ArchiveProject[] = [
       "Decision support matters most when it connects signals to urgency and clear follow-up decisions.",
     futureDirection:
       "Extend the case with alert examples, diagnosis workflows, and how teams can prioritize causes.",
+    visual: {
+      alt: "Operational alert timeline for order drop detection",
+      label: "Signal timeline",
+      motif: "automation",
+    },
   },
   {
     slug: "document-intelligence-system",
@@ -196,6 +226,11 @@ export const archiveProjects: ArchiveProject[] = [
       "Retrieval work is useful when it makes internal knowledge easier to reach at the moment of need.",
     futureDirection:
       "Develop this into a clearer internal-knowledge case study with retrieval quality, UX, and trust considerations.",
+    visual: {
+      alt: "Document intelligence interface placeholder",
+      label: "Retrieval flow",
+      motif: "document",
+    },
   },
   {
     slug: "invoice-pdf-automation",
@@ -217,6 +252,11 @@ export const archiveProjects: ArchiveProject[] = [
       "Practical automation becomes valuable when it removes repeated operational friction.",
     futureDirection:
       "Add structured examples around extraction accuracy, exception handling, and validation flow.",
+    visual: {
+      alt: "Invoice extraction workflow placeholder",
+      label: "Extraction flow",
+      motif: "document",
+    },
   },
   {
     slug: "competitor-price-intelligence",
@@ -238,6 +278,11 @@ export const archiveProjects: ArchiveProject[] = [
       "Pricing is not only a technical tracking problem; it is a business signal.",
     futureDirection:
       "Turn this into a market-intelligence case with pricing patterns, signal quality, and business interpretation.",
+    visual: {
+      alt: "Competitor pricing dashboard placeholder",
+      label: "Pricing signals",
+      motif: "chart",
+    },
   },
   {
     slug: "logistics-status-automation",
@@ -260,6 +305,11 @@ export const archiveProjects: ArchiveProject[] = [
       "Customer communication improves when operational visibility improves.",
     futureDirection:
       "Document the workflow as a customer-experience operations case.",
+    visual: {
+      alt: "Logistics status automation placeholder",
+      label: "Status flow",
+      motif: "automation",
+    },
   },
   {
     slug: "content-automation-system",
@@ -281,6 +331,11 @@ export const archiveProjects: ArchiveProject[] = [
       "Content operations need both relevance and reliable cadence.",
     futureDirection:
       "Expand this into a content-operations note around cadence, selection, and audience usefulness.",
+    visual: {
+      alt: "Content operations automation placeholder",
+      label: "Content cadence",
+      motif: "automation",
+    },
   },
   {
     slug: "crop-advisory-enhancement",
@@ -303,6 +358,11 @@ export const archiveProjects: ArchiveProject[] = [
       "AI in agriculture needs reliability, context, and practical usefulness.",
     futureDirection:
       "Develop this into a case about AI reliability, domain context, and decision support.",
+    visual: {
+      alt: "Crop advisory model improvement placeholder",
+      label: "Advisory loop",
+      motif: "vision",
+    },
   },
   {
     slug: "cancellation-prediction",
@@ -324,6 +384,11 @@ export const archiveProjects: ArchiveProject[] = [
       "Predictive work matters when it improves workflow timing and reduces uncertainty.",
     futureDirection:
       "Add clearer model framing around signals, workflow usage, and decision thresholds.",
+    visual: {
+      alt: "Cancellation risk prediction placeholder",
+      label: "Prediction signal",
+      motif: "chart",
+    },
   },
   {
     slug: "runtime-optimization",
@@ -345,6 +410,11 @@ export const archiveProjects: ArchiveProject[] = [
       "Performance is not just engineering polish; it changes operational reliability.",
     futureDirection:
       "Document this as an operations-quality case around reliability, monitoring, and maintainability.",
+    visual: {
+      alt: "Production workflow optimization placeholder",
+      label: "Reliability loop",
+      motif: "automation",
+    },
   },
   {
     slug: "online-diagrammatic-tool",
@@ -367,6 +437,11 @@ export const archiveProjects: ArchiveProject[] = [
       "Early experience in real-time collaboration, authentication, and full-stack architecture.",
     futureDirection:
       "Reframe as a product utility case around collaboration flows and document access.",
+    visual: {
+      alt: "Screenshot placeholder for the collaborative diagramming tool",
+      label: "Screenshot slot",
+      motif: "system",
+    },
   },
   {
     slug: "stocksense-price-predict",
@@ -389,6 +464,11 @@ export const archiveProjects: ArchiveProject[] = [
       "Forecasting becomes useful only when the output is interpretable.",
     futureDirection:
       "Improve framing around uncertainty, model limits, and decision usefulness.",
+    visual: {
+      alt: "Screenshot placeholder for the StockSense forecasting interface",
+      label: "Screenshot slot",
+      motif: "chart",
+    },
   },
   {
     slug: "leather-defect-detection",
@@ -420,6 +500,11 @@ export const archiveProjects: ArchiveProject[] = [
       "Model accuracy depends heavily on environment, data quality, and deployment context.",
     futureDirection:
       "Present this as a machine-learning deployment case with more attention to data and operating context.",
+    visual: {
+      alt: "Screenshot placeholder for the leather defect detection interface",
+      label: "Screenshot slot",
+      motif: "vision",
+    },
   },
   {
     slug: "cm-silks-retail-learning",
@@ -442,6 +527,11 @@ export const archiveProjects: ArchiveProject[] = [
       "Retail taught me how trust, aspiration, pricing, and education influence customer decisions.",
     futureDirection:
       "Develop into concise notes on retail trust, customer education, and purchase behavior.",
+    visual: {
+      alt: "Retail customer behavior notes placeholder",
+      label: "Observation notes",
+      motif: "retail",
+    },
   },
   {
     slug: "mba-case-notes",
@@ -464,6 +554,11 @@ export const archiveProjects: ArchiveProject[] = [
       "This section should grow from real coursework, cases, observations, and projects rather than filler content.",
     futureDirection:
       "Add selected MBA projects with clearer problem framing, analysis, and recommendations.",
+    visual: {
+      alt: "MBA case notes placeholder",
+      label: "Case space",
+      motif: "case",
+    },
   },
 ];
 
