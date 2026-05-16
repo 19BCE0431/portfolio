@@ -3,7 +3,6 @@
 import {
   ArrowUpRight,
   BookOpenText,
-  Camera,
   ChevronRight,
   Mail,
   MoveRight,
@@ -714,10 +713,9 @@ function RecognitionSection() {
               className="max-w-[720px] text-[clamp(2.35rem,10vw,5rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.96]"
             />
             <p className="mt-6 max-w-[650px] text-[1.02rem] leading-[1.7] text-[var(--muted-strong)] md:text-[1.16rem]">
-              I placed in the Top 10 in my college for the Iconic Quiz,
-              conducted by iimjobs.com and Markezen of IIM Sirmaur. It was a
-              small campus moment, but a nice signal that the MBA chapter is
-              already giving me sharper rooms to compete and learn in.
+              An early campus signal: Top 10 in the Iconic Quiz conducted by
+              iimjobs.com and Markezen at IIM Sirmaur. Not a loud trophy wall,
+              just a useful reminder that sharper rooms make you sharper too.
             </p>
           </div>
         </Reveal>
@@ -908,68 +906,103 @@ function ReadingShelf() {
         </Reveal>
         <Reveal delay={0.08}>
           <p className="max-w-[680px] text-[clamp(1.02rem,1.65vw,1.2rem)] leading-[1.68] text-[var(--muted-strong)]">
-            A small shelf of business books, reflective fiction, and easy
-            resets. I like books that make ambition feel more grounded, and
-            strategy feel more human.
+            Ten books I keep around for different moods: business, marketing,
+            leadership, fiction, and a few softer resets. No perfect canon,
+            just a shelf that keeps nudging my thinking.
           </p>
         </Reveal>
       </div>
 
-      <div className="flex snap-x gap-4 overflow-x-auto pb-3 md:grid md:grid-cols-4 md:overflow-visible md:pb-0">
-        {readingShelf.map((book, index) => (
-          <Reveal key={book.title} delay={index * 0.035} className="min-w-[250px] snap-start md:min-w-0">
-            <motion.article
-              className={`book-card book-card-${book.accent} group flex h-full min-h-[390px] flex-col justify-between overflow-hidden rounded-[8px] border border-black/10 p-4 shadow-[0_26px_80px_rgba(16,18,18,0.07)]`}
-              whileHover={shouldReduceMotion ? undefined : { y: -6, rotate: index % 2 === 0 ? -0.35 : 0.35 }}
-              transition={{ duration: 0.34, ease: premiumEase }}
+      <div className="flex snap-x gap-4 overflow-x-auto pb-4 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 md:grid-cols-3 lg:grid-cols-5">
+        {readingShelf.map((book, index) => {
+          return (
+            <Reveal
+              key={book.title}
+              delay={index * 0.03}
+              className="min-w-[260px] snap-start sm:min-w-0"
             >
-              <div>
-                <div className="flex items-start justify-between gap-4">
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/56">
-                    {book.mode}
-                  </span>
-                  <BookOpenText className="h-4 w-4 text-white/54" />
+              <motion.article
+                className={`book-card book-card-${book.accent} group flex h-full min-h-[390px] flex-col justify-between overflow-hidden rounded-[8px] border border-white/12 p-4 shadow-[0_26px_80px_rgba(16,18,18,0.08)] md:min-h-[410px] lg:min-h-[430px]`}
+                whileHover={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        y: -7,
+                        rotateX: 1.4,
+                        rotateY: index % 2 === 0 ? -1.2 : 1.2,
+                      }
+                }
+                transition={{ duration: 0.34, ease: premiumEase }}
+              >
+                <span className="pointer-events-none absolute inset-y-4 left-3 w-px bg-white/16" />
+                <span className="pointer-events-none absolute left-5 right-5 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-transparent via-white/60 to-transparent transition-transform duration-500 group-hover:scale-x-100" />
+                <div>
+                  <div className="flex items-start justify-between gap-4">
+                    <span className="rounded-full border border-white/16 bg-white/[0.08] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/68 backdrop-blur transition duration-300 group-hover:border-white/28 group-hover:bg-white/[0.12] group-hover:text-white/82">
+                      {book.mode}
+                    </span>
+                    <BookOpenText className="h-4 w-4 text-white/54" />
+                  </div>
+
+                  <div className="book-cover-art mt-5 rounded-[7px] border border-white/14 bg-white/[0.07] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
+                    <div className="book-cover-frame relative mx-auto aspect-[0.66] w-[72%] max-w-[150px] overflow-hidden rounded-[5px] border border-white/18 bg-black/20 shadow-[0_18px_44px_rgba(0,0,0,0.24)]">
+                      <Image
+                        src={book.coverSrc}
+                        alt={`${book.title} book cover`}
+                        fill
+                        sizes="(max-width: 640px) 150px, (max-width: 1024px) 140px, 120px"
+                        className="object-cover"
+                      />
+                    </div>
+                    <p className="mt-3 line-clamp-2 text-center text-[0.78rem] font-medium leading-[1.28] text-white/72">
+                      {book.author}
+                    </p>
+                  </div>
                 </div>
-                <h3 className="mt-10 text-[clamp(1.55rem,5vw,2.15rem)] font-semibold leading-[1.02] text-white">
-                  {book.title}
-                </h3>
-                <p className="mt-3 text-[0.92rem] text-white/62">
-                  {book.author}
+                <p className="mt-5 border-t border-white/14 pt-4 text-[0.9rem] leading-[1.56] text-white/72">
+                  {book.note}
                 </p>
-              </div>
-              <p className="mt-8 border-t border-white/14 pt-4 text-[0.92rem] leading-[1.58] text-white/72">
-                {book.note}
-              </p>
-            </motion.article>
-          </Reveal>
-        ))}
+              </motion.article>
+            </Reveal>
+          );
+        })}
       </div>
+      <p className="mt-4 text-[11px] leading-[1.5] text-[var(--muted)]">
+        Cover thumbnails via{" "}
+        <a
+          href="https://openlibrary.org/dev/docs/api/covers"
+          target="_blank"
+          rel="noreferrer"
+          className="font-medium text-[var(--sage)] underline-offset-4 hover:underline"
+        >
+          Open Library
+        </a>
+        ; used here as small identifying visuals.
+      </p>
     </section>
   );
 }
 
 function FuturePhotoStrip() {
   return (
-    <div className="grid gap-3 sm:grid-cols-3">
-      <div className="editorial-panel overflow-hidden p-2">
-        <div className="aspect-[4/5] overflow-hidden rounded-[6px]">
-          <PortraitFrame />
-        </div>
-      </div>
-      {profile.photoSlots.slice(1).map((slot, index) => (
+    <div className="grid gap-3 sm:grid-cols-2">
+      {profile.photoSlots.map((slot) => (
         <div key={slot.id} className="editorial-panel overflow-hidden p-2">
           <div className="relative aspect-[4/5] overflow-hidden rounded-[6px] bg-[linear-gradient(145deg,#eef1ed,#fffdf8)]">
-            <div className="premium-grid absolute inset-0 opacity-[0.16]" />
-            <div className="absolute inset-0 grid place-items-center p-5 text-center">
-              <div>
-                <Camera className="mx-auto h-5 w-5 text-[var(--sage)]" />
-                <p className="mt-4 text-[1rem] font-semibold leading-[1.2]">
-                  {slot.label}
-                </p>
-                <p className="mt-2 text-[0.78rem] leading-[1.45] text-[var(--muted)]">
-                  {index === 0 ? "Campus, work, or reading frame" : "Badminton, sketching, or photo walk"}
-                </p>
-              </div>
+            <Image
+              src={slot.src}
+              alt={`${slot.label}: ${slot.note}`}
+              fill
+              sizes="(max-width: 640px) 92vw, 180px"
+              className="object-cover transition-transform duration-[900ms] ease-[var(--ease)] hover:scale-[1.035]"
+            />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent p-3 text-white">
+              <p className="text-[0.86rem] font-semibold leading-[1.2]">
+                {slot.label}
+              </p>
+              <p className="mt-1 text-[0.72rem] leading-[1.4] text-white/70">
+                {slot.note}
+              </p>
             </div>
           </div>
         </div>

@@ -8,13 +8,17 @@ import { LifeGallery } from "../components/LifeGallery";
 import { Reveal } from "../components/Reveal";
 import { SectionLabel } from "../components/SectionLabel";
 import { SiteNav } from "../components/SiteNav";
-import { lifeGalleryImages } from "../data/media";
+import { galleryClusters, lifeGalleryImages } from "../data/media";
 
 export const metadata: Metadata = {
   title: "Life, Lightly Documented",
   description:
     "A small optional gallery of personal frames from campus, trips, hills, friends, and quieter moments.",
 };
+
+const auditedImageCount = 48;
+const curatedImageCount = 16;
+const archivedImageCount = auditedImageCount - curatedImageCount;
 
 export default function LifePage() {
   return (
@@ -50,11 +54,29 @@ export default function LifePage() {
               <div className="grid gap-6">
                 <div>
                   <p className="max-w-[700px] text-[clamp(0.98rem,3.7vw,1.24rem)] leading-[1.62] text-[var(--muted-strong)]">
-                    A small optional gallery for the warmer parts: campus
-                    windows, hill views, trips, friends, and quiet reset
-                    moments. The main portfolio stays professional; this page
-                    keeps the human bits nearby.
+                    A small optional gallery, edited into clusters instead of a
+                    wall of images. The main portfolio stays professional; this
+                    page keeps the warmer bits nearby.
                   </p>
+                  <div className="mt-5 grid grid-cols-3 gap-2 text-center">
+                    {[
+                      ["Audited", auditedImageCount],
+                      ["Curated", curatedImageCount],
+                      ["Held back", archivedImageCount],
+                    ].map(([label, value]) => (
+                      <div
+                        key={label}
+                        className="rounded-[8px] border border-black/10 bg-white/45 px-2 py-3"
+                      >
+                        <p className="text-[1.15rem] font-semibold leading-none">
+                          {value}
+                        </p>
+                        <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--muted)]">
+                          {label}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                   <Link
                     href="/#contact"
                     className="mt-6 inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--foreground)]"
@@ -84,7 +106,10 @@ export default function LifePage() {
         </section>
 
         <section className="section-shell pb-16 md:pb-32">
-          <LifeGallery images={lifeGalleryImages} />
+          <LifeGallery
+            clusters={galleryClusters}
+            archivedCount={archivedImageCount}
+          />
         </section>
       </main>
       <Footer />
