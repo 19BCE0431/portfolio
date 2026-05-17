@@ -1,4 +1,9 @@
 import type { Metadata } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { AnalyticsEvents } from "./components/AnalyticsEvents";
+import { MicrosoftClarity } from "./components/MicrosoftClarity";
 import { PageTransition } from "./components/PageTransition";
 import "./globals.css";
 import { profile } from "./data/portfolio";
@@ -51,26 +56,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const gaMeasurementId =
+    process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-KYQ1XELWXN";
+  const clarityProjectId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
+
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body className="antialiased">
         <PageTransition>{children}</PageTransition>
-
-        {/* Google Analytics */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-KYQ1XELWXN"
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-KYQ1XELWXN');
-            `,
-          }}
-        />
+        <AnalyticsEvents />
+        <Analytics />
+        <SpeedInsights />
+        <MicrosoftClarity projectId={clarityProjectId} />
+        <GoogleAnalytics gaId={gaMeasurementId} />
       </body>
     </html>
   );
