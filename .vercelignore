@@ -1,0 +1,14 @@
+.git
+.next
+.vercel
+node_modules
+
+# Local source-photo reserves that are not served by the website.
+pictures3
+photos
+resume
+
+# Local verification artifacts.
+verification-*.png
+*.HEIC
+*.heic
