@@ -4,7 +4,6 @@ import { HeadingReveal } from "../components/HeadingReveal";
 import { JournalExplorer } from "../components/JournalExplorer";
 import { Reveal } from "../components/Reveal";
 import { SectionLabel } from "../components/SectionLabel";
-import { SiteNav } from "../components/SiteNav";
 import {
   getVisibleJournalPosts,
   journalCategories,
@@ -21,7 +20,6 @@ export default function JournalPage() {
 
   return (
     <>
-      <SiteNav />
       <main className="relative overflow-hidden pt-24 md:pt-40">
         <div
           aria-hidden="true"
@@ -48,7 +46,7 @@ export default function JournalPage() {
                 {journalCategories.slice(0, 5).map((category) => (
                   <span
                     key={category}
-                    className="rounded-[8px] border border-black/10 bg-white/45 px-2.5 py-1 text-[12px] text-[var(--muted-strong)] backdrop-blur"
+                    className="motion-surface rounded-[8px] border border-black/10 bg-white/45 px-2.5 py-1 text-[12px] text-[var(--muted-strong)] backdrop-blur"
                   >
                     {category}
                   </span>

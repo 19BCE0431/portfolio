@@ -7,7 +7,6 @@ import { HeadingReveal } from "../components/HeadingReveal";
 import { LifeGallery } from "../components/LifeGallery";
 import { Reveal } from "../components/Reveal";
 import { SectionLabel } from "../components/SectionLabel";
-import { SiteNav } from "../components/SiteNav";
 import { galleryClusters, lifeGalleryImages } from "../data/media";
 
 export const metadata: Metadata = {
@@ -23,7 +22,6 @@ const archivedImageCount = auditedImageCount - curatedImageCount;
 export default function LifePage() {
   return (
     <>
-      <SiteNav />
       <main className="relative overflow-hidden pt-24 md:pt-40">
         <div
           aria-hidden="true"
@@ -33,7 +31,7 @@ export default function LifePage() {
           <Reveal>
             <Link
               href="/#personal"
-              className="mb-8 inline-flex min-h-11 items-center gap-2 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.72)] px-3.5 py-2 text-[13px] font-medium text-[var(--foreground)] shadow-[0_10px_32px_rgba(16,18,18,0.05)] backdrop-blur transition hover:bg-white md:mb-10 md:min-h-0"
+              className="premium-link mb-8 inline-flex min-h-11 items-center gap-2 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.72)] px-3.5 py-2 text-[13px] font-medium text-[var(--foreground)] shadow-[0_10px_32px_rgba(16,18,18,0.05)] backdrop-blur transition hover:bg-white md:mb-10 md:min-h-0"
             >
               <ArrowLeft className="h-4 w-4 text-[var(--muted)]" />
               Back to portfolio
@@ -66,7 +64,7 @@ export default function LifePage() {
                     ].map(([label, value]) => (
                       <div
                         key={label}
-                        className="rounded-[8px] border border-black/10 bg-white/45 px-2 py-3"
+                        className="motion-surface rounded-[8px] border border-black/10 bg-white/45 px-2 py-3"
                       >
                         <p className="text-[1.15rem] font-semibold leading-none">
                           {value}
@@ -79,13 +77,13 @@ export default function LifePage() {
                   </div>
                   <Link
                     href="/#contact"
-                    className="mt-6 inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--foreground)]"
+                    className="interactive-underline mt-6 inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--foreground)]"
                   >
                     Connect from here
                     <ArrowUpRight className="h-4 w-4 text-[var(--muted)]" />
                   </Link>
                 </div>
-                <figure className="editorial-panel overflow-hidden p-2">
+                <figure className="editorial-panel motion-surface overflow-hidden p-2">
                   <div className="relative aspect-[1.55] overflow-hidden rounded-[6px] bg-[var(--surface-cool)]">
                     <Image
                       src={lifeGalleryImages[0].src}
@@ -93,7 +91,7 @@ export default function LifePage() {
                       fill
                       priority
                       sizes="(max-width: 768px) 92vw, 42vw"
-                      className="object-cover"
+                      className="media-lift object-cover"
                     />
                   </div>
                   <figcaption className="px-1 py-3 text-[0.86rem] leading-[1.5] text-[var(--muted)]">

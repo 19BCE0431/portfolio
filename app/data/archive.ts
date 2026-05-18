@@ -71,13 +71,13 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "AI-Assisted",
     status: "Building",
     shortDescription:
-      "A living portfolio system that keeps my work, writing, weekly ideas, and publishing workflow in one reviewed loop.",
+      "A reviewed, AI-assisted portfolio system for keeping projects, MBA notes, analytics, and public writing in one living loop.",
     context:
-      "Designed as a living portfolio that can evolve with my MBA journey, applied work, writing, and professional direction.",
+      "Designed as a portfolio that can evolve with my MBA journey, applied work, writing, analytics, and professional direction.",
     problem:
-      "Traditional portfolios often become static resume pages. I wanted something that could keep showing how I think, what I am learning, and how my direction is changing.",
+      "Most portfolios freeze into a polished page and then slowly lose truth. I wanted a system that could keep showing how my thinking, proof, and direction are changing.",
     contribution:
-      "Directed the product vision, content strategy, positioning, aesthetic direction, archive structure, journal foundation, and automation roadmap while using AI tools to accelerate implementation and iteration.",
+      "Directed the product vision, content strategy, positioning, archive model, journal foundation, visual tone, analytics layer, and automation roadmap while using AI tools to accelerate implementation and iteration.",
     tools: [
       "Product direction",
       "Content strategy",
@@ -86,15 +86,15 @@ export const archiveProjects: ArchiveProject[] = [
       "AI-assisted development",
     ],
     impact:
-      "Created a maintainable portfolio system with project archiving, journal publishing, weekly insight drafts, LinkedIn draft structure, and approval-first automation.",
+      "Created a maintainable portfolio system with project archiving, journal foundations, weekly insight drafts, LinkedIn adaptation, analytics notes, and approval-first automation.",
     learning:
-      "AI is most useful when the human direction is clear. Taste, judgment, review, and positioning still decide whether anything feels credible.",
+      "AI is useful when the human direction is clear. Taste, judgment, review, and positioning still decide whether anything feels credible.",
     futureDirection:
       "Evolve the system into weekly AI, product, business, and market insight posts with source-backed writing, LinkedIn adaptations, visual prompts, and human-reviewed publishing.",
     visual: {
       image: "/images/projects/living-system-map.svg",
       alt: "Abstract system map for the living AI portfolio workflow",
-      caption: "AI drafts, human review, journal notes, LinkedIn drafts, and visual prompts in one loop.",
+      caption: "AI drafts, human review, journal notes, analytics, LinkedIn drafts, and visual prompts in one loop.",
       label: "Living system map",
       motif: "system",
     },
@@ -102,14 +102,14 @@ export const archiveProjects: ArchiveProject[] = [
       {
         title: "What it is",
         body: [
-          "This portfolio is not meant to sit still. It is a place where my MBA work, project evidence, notes, experiments, and public writing can keep becoming more useful over time.",
+          "This portfolio is not meant to sit still. It is a place where MBA work, project proof, notes, experiments, analytics, and public writing can keep becoming more useful over time.",
         ],
       },
       {
         title: "Why I built it",
         body: [
           "A normal portfolio can turn into a neat page that slowly goes stale. I wanted something closer to a personal operating system: a home for work I have done, ideas I am testing, and the direction I am growing into.",
-          "The goal is not to publish everything. The goal is to keep a reviewed trail of what is worth showing.",
+          "The goal is not to publish everything. The goal is to keep a reviewed trail of what is worth showing and remove anything that only adds noise.",
         ],
       },
       {
@@ -128,7 +128,7 @@ export const archiveProjects: ArchiveProject[] = [
       {
         title: "Product thinking",
         body: [
-          "The product logic is simple: make the site easy to update, easy to scan, credible to a recruiter, and still personal enough that it does not feel like a generated resume.",
+          "The product logic is simple: make the site easy to update, easy to scan, credible to a recruiter, and still personal enough that it does not feel like a generated profile.",
           "New MBA projects, market notes, AI workflow experiments, and case reflections should fit without redesigning the whole thing each time.",
         ],
       },
@@ -161,17 +161,17 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "Applied AI",
     status: "Shipped",
     shortDescription:
-      "Image-led search flow that reduced discovery friction when users did not know the exact product name.",
+      "BigHaat product discovery flow for shoppers who knew the crop or product visually before they knew the exact words.",
     context:
-      "Built in a commerce setting where search quality can directly affect discovery, confidence, and purchase intent.",
+      "Built inside BigHaat's commerce setting, where search quality can directly affect discovery, confidence, and purchase intent.",
     problem:
       "Users may recognize what they need visually before they can describe it clearly. That creates a gap between intent and searchable language.",
     contribution:
-      "Built an image-led discovery workflow using OpenAI, FastAPI, and image processing to connect uploaded visuals with relevant product or content descriptions.",
+      "Built an image-led discovery workflow using OpenAI, FastAPI, and image processing to connect uploaded visuals with relevant product and content signals.",
     tools: ["OpenAI", "FastAPI", "Image processing"],
     impact: "Increased orders by 28%.",
     learning:
-      "Applied AI becomes valuable when it removes effort at a specific point in the purchase journey.",
+      "Applied AI becomes valuable when it removes effort at a specific moment in the purchase journey.",
     futureDirection:
       "Expand the case into a deeper product study around search behavior, visual intent, and assisted discovery.",
     visual: {
@@ -189,16 +189,16 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "Automation",
     status: "Operational",
     shortDescription:
-      "Hourly anomaly detection that surfaced order drops early enough for faster operational follow-up.",
+      "Hourly BigHaat anomaly layer that made unusual order drops visible before they became a day-end surprise.",
     context:
-      "Order movement can change quickly. Teams need early signals when something unusual happens.",
+      "Order movement can change quickly across channels and categories. Teams need early signals when something unusual starts happening.",
     problem:
       "Manual diagnosis can be slow when order drops happen across channels, categories, or operational workflows.",
     contribution:
-      "Built hourly anomaly detection with Python, dashboards, and alerting logic to support faster diagnosis of order drops.",
+      "Built hourly anomaly detection with Python, dashboards, and alerting logic so teams could spot drops and investigate sooner.",
     tools: ["Python", "Anomaly detection", "Dashboards", "Alerts"],
     impact:
-      "Created a faster signal layer for operational response and diagnosis.",
+      "Created a faster signal layer for operational response instead of waiting for end-of-day diagnosis.",
     learning:
       "Decision support matters most when it connects signals to urgency and clear follow-up decisions.",
     futureDirection:
@@ -218,18 +218,18 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "Applied AI",
     status: "Built",
     shortDescription:
-      "RAG workflow for searching PDFs and internal documents without repeated manual lookup.",
+      "RAG-style lookup for product and internal PDFs so repeated document questions did not keep becoming manual work.",
     context:
       "Product and operational information often sits inside PDFs and internal documents that are slow to search manually.",
     problem:
-      "Manual document lookup creates repeated effort and slows down information retrieval.",
+      "Manual document lookup creates repeated effort, slower answers, and avoidable dependency on people who already know where information lives.",
     contribution:
-      "Built an LLM-based RAG workflow to automate document queries and make product information easier to retrieve.",
+      "Built an LLM-based RAG workflow to query documents, retrieve relevant context, and make product information easier to reach.",
     tools: ["LLMs", "RAG", "Python"],
     impact:
       "Reduced manual search effort and improved speed of internal information access.",
     learning:
-      "Retrieval work is useful when it makes internal knowledge easier to reach at the moment of need.",
+      "Retrieval work is useful when it makes internal knowledge easier to reach at the moment of need and still keeps trust visible.",
     futureDirection:
       "Develop this into a clearer internal-knowledge case study with retrieval quality, UX, and trust considerations.",
     visual: {
@@ -247,17 +247,17 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "Automation",
     status: "Built",
     shortDescription:
-      "OCR and parsing workflow for extracting invoice and PDF data from repeated operational tasks.",
+      "OCR and parsing workflow that turned repeated invoice and PDF extraction into a structured review task.",
     context:
-      "Invoices and PDFs often require repetitive extraction, validation, and entry work.",
+      "Invoices and PDFs often require repetitive extraction, validation, and entry work before the actual operational decision can happen.",
     problem:
       "Manual extraction from images and PDFs creates operational friction and quality risk.",
     contribution:
-      "Automated invoice image and PDF data extraction using EasyOCR, pdfbuilder, and Python regex.",
+      "Automated invoice image and PDF data extraction using EasyOCR, pdfbuilder, and Python regex, with attention to exceptions and review flow.",
     tools: ["EasyOCR", "pdfbuilder", "Python regex"],
     impact: "Reduced repeated manual data-entry and validation effort.",
     learning:
-      "Practical automation becomes valuable when it removes repeated operational friction.",
+      "Practical automation becomes valuable when it removes repeated effort without hiding the places where human review still matters.",
     futureDirection:
       "Add structured examples around extraction accuracy, exception handling, and validation flow.",
     visual: {
@@ -275,7 +275,7 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "Business Intelligence",
     status: "Built",
     shortDescription:
-      "Price crawling, fuzzy matching, and dashboards for tracking competitor movement across 9 sites.",
+      "Crawled 9 competitor sites, matched products fuzzily, and surfaced price movement as a business signal.",
     context:
       "Pricing signals can reveal market movement, competitor behavior, and tactical pressure.",
     problem:
@@ -285,7 +285,7 @@ export const archiveProjects: ArchiveProject[] = [
     tools: ["Selenium", "Scrapy", "PostgreSQL", "Fuzzy search", "Dashboards"],
     impact: "Identified competitor price changes mirroring ours by 65%.",
     learning:
-      "Pricing is not only a technical tracking problem; it is a business signal.",
+      "Pricing is not only a technical tracking problem. It is a market signal with timing, imitation, and competitive pressure inside it.",
     futureDirection:
       "Turn this into a market-intelligence case with pricing patterns, signal quality, and business interpretation.",
     visual: {
@@ -303,7 +303,7 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "Automation",
     status: "Built",
     shortDescription:
-      "Real-time order-status scraping connected to more timely customer notification workflows.",
+      "Logistics scraping workflow that turned fragmented partner status updates into clearer customer communication triggers.",
     context:
       "Customer communication depends on operational visibility across logistics partners.",
     problem:
@@ -314,7 +314,7 @@ export const archiveProjects: ArchiveProject[] = [
     impact:
       "Improved status visibility and supported more timely customer communication.",
     learning:
-      "Customer communication improves when operational visibility improves.",
+      "Customer communication improves when operational visibility improves first.",
     futureDirection:
       "Document the workflow as a customer-experience operations case.",
     visual: {
@@ -332,7 +332,7 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "Automation",
     status: "Shipped",
     shortDescription:
-      "Automated content collection workflow for improving publishing consistency and audience relevance.",
+      "Automated content collection workflow that made publishing more consistent and useful for a farming audience.",
     context:
       "Regular content operations need both relevance and consistency.",
     problem:
@@ -342,7 +342,7 @@ export const archiveProjects: ArchiveProject[] = [
     tools: ["Web scraping", "Automation"],
     impact: "Increased engagement by 144%.",
     learning:
-      "Content operations need both relevance and reliable cadence.",
+      "Content operations need both relevance and cadence; one without the other fades quickly.",
     futureDirection:
       "Expand this into a content-operations note around cadence, selection, and audience usefulness.",
     visual: {
@@ -360,7 +360,7 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "Applied AI",
     status: "Improved",
     shortDescription:
-      "LLM and image-processing work aimed at improving the reliability of a crop advisory workflow.",
+      "LLM and image-processing work aimed at making a crop advisory workflow more useful in high-context farm decisions.",
     context:
       "Agricultural advisory tools need useful outputs in practical, high-context situations.",
     problem:
@@ -371,7 +371,7 @@ export const archiveProjects: ArchiveProject[] = [
     impact:
       "Improved the practical usefulness of an advisory workflow; exact public metrics are not shown here.",
     learning:
-      "AI in agriculture needs reliability, context, and practical usefulness.",
+      "AI in agriculture needs reliability, context, and practical usefulness before it deserves trust.",
     futureDirection:
       "Develop this into a case about AI reliability, domain context, and decision support.",
     visual: {
@@ -389,7 +389,7 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "Applied AI",
     status: "Built",
     shortDescription:
-      "Prediction model for identifying likely order cancellations earlier in the confirmation workflow.",
+      "Prediction model for identifying likely order cancellations earlier, before manual follow-up slowed the workflow.",
     context:
       "Order confirmation workflows can be delayed when teams manually identify cancellation risk.",
     problem:
@@ -399,7 +399,7 @@ export const archiveProjects: ArchiveProject[] = [
     tools: ["Machine learning", "Python"],
     impact: "Reduced manual confirmation delay by 1-2 days.",
     learning:
-      "Predictive work matters when it improves workflow timing and reduces uncertainty.",
+      "Predictive work matters when it improves timing, reduces uncertainty, and gives teams a clearer next action.",
     futureDirection:
       "Add clearer model framing around signals, workflow usage, and decision thresholds.",
     visual: {
@@ -417,7 +417,7 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "Automation",
     status: "Improved",
     shortDescription:
-      "Production Python reliability and runtime improvements with alerts and database refinements.",
+      "Production Python improvements that reduced runtime, made failure modes more visible, and strengthened operational reliability.",
     context:
       "Production workflows need predictable performance and visible failure modes.",
     problem:
@@ -427,7 +427,7 @@ export const archiveProjects: ArchiveProject[] = [
     tools: ["Python", "Database optimization", "Alerts", "Error handling"],
     impact: "Reduced production runtime by 60%.",
     learning:
-      "Performance is not just engineering polish; it changes operational reliability.",
+      "Performance is not just engineering polish; it changes whether a workflow feels dependable to the people using it.",
     futureDirection:
       "Document this as an operations-quality case around reliability, monitoring, and maintainability.",
     visual: {
@@ -542,29 +542,29 @@ export const archiveProjects: ArchiveProject[] = [
   },
   {
     slug: "cm-silks-retail-learning",
-    title: "Retail & Customer Behavior Notes",
+    title: "CM Silks Retail Learning",
     category: "Retail Learning",
     filter: "Retail",
     status: "Learning",
     shortDescription:
-      "A subtle learning note on customer education, trust, category understanding, and local retail behavior.",
+      "A family saree business lens on trust, aspiration, local positioning, pricing, and customer education.",
     context:
-      "Ongoing observation of everyday customer choice through a family retail context.",
+      "CM Silks is not a distant case study for me. It is a family retail context where I can observe how people choose sarees, compare value, ask for reassurance, and remember a brand.",
     problem:
-      "Retail growth is not only about visibility; it depends on trust, education, category understanding, aspiration, and price perception.",
+      "Saree retail is not only about visibility. It depends on trust, occasion, fabric understanding, aspiration, price perception, and the comfort of being guided well.",
     contribution:
-      "Collected observations around content, customer education, trust, local positioning, and how buyers compare value.",
+      "Collected observations around content, customer education, store trust, local positioning, and how buyers compare value across fabrics, occasions, and price points.",
     tools: ["Content planning", "Customer observation", "Retail positioning"],
     impact:
-      "Built practical exposure to how customers understand sarees, compare value, and respond to trust-led communication.",
+      "Built practical exposure to customer education, local brand memory, and trust-led retail communication.",
     learning:
-      "Retail taught me how trust, aspiration, pricing, and education influence customer decisions.",
+      "Retail keeps reminding me that many purchase decisions are emotional, social, and practical at the same time.",
     futureDirection:
-      "Develop into concise notes on retail trust, customer education, and purchase behavior.",
+      "Develop into concise notes on saree retail trust, customer education, local positioning, and purchase behavior.",
     visual: {
       image: "/images/projects/retail-signals.svg",
-      alt: "Retail customer behavior notes placeholder",
-      caption: "Trust, price, aspiration, and store experience as everyday behavior signals.",
+      alt: "CM Silks retail customer behavior notes placeholder",
+      caption: "Trust, price, occasion, aspiration, and store experience as everyday behavior signals.",
       label: "Observation notes",
       motif: "retail",
     },
@@ -576,24 +576,24 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "MBA",
     status: "Building",
     shortDescription:
-      "A future space for product, marketing, strategy, consumer behavior, and market analysis work.",
+      "A growing space for product, marketing, strategy, consumer behavior, and market analysis work from the MBA chapter.",
     context:
-      "A developing archive for work from the IIM Sirmaur MBA journey.",
+      "A developing archive for the IIM Sirmaur MBA journey as technical thinking expands into business cases, markets, customers, and strategy.",
     problem:
-      "The portfolio needs a place for business-school work that is not yet a polished public case study.",
+      "MBA work can easily become scattered across slides, cases, notes, and group discussions. It needs a place where useful thinking can mature before it becomes public.",
     contribution:
       "Creating a structure for future product notes, marketing work, strategy cases, consumer-behavior observations, and market analysis.",
     tools: ["Product thinking", "Marketing", "Strategy", "Consumer behavior"],
     impact:
-      "Future-ready structure for adding stronger MBA work as it develops.",
+      "Future-ready structure for adding stronger MBA work as coursework, projects, and market notes develop.",
     learning:
-      "This section should grow from real coursework, cases, observations, and projects rather than filler content.",
+      "This section should grow from real coursework, cases, observations, and projects rather than filler.",
     futureDirection:
       "Add selected MBA projects with clearer problem framing, analysis, and recommendations.",
     visual: {
       image: "/images/projects/mba-case-notes.svg",
       alt: "MBA case notes placeholder",
-      caption: "A future-ready space for product, marketing, strategy, and consumer-behavior notes.",
+      caption: "A growing space for product, marketing, strategy, and consumer-behavior notes.",
       label: "Case space",
       motif: "case",
     },
@@ -603,9 +603,9 @@ export const archiveProjects: ArchiveProject[] = [
 export const homepageProjectSlugs = [
   "living-ai-portfolio-system",
   "applied-image-search",
-  "document-intelligence-system",
+  "order-drop-detection",
+  "invoice-pdf-automation",
   "competitor-price-intelligence",
-  "mba-case-notes",
 ];
 
 export function getProjectBySlug(slug: string) {

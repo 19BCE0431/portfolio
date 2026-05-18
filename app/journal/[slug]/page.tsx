@@ -8,7 +8,6 @@ import { HeadingReveal } from "../../components/HeadingReveal";
 import { CopyArticleLink } from "../../components/CopyArticleLink";
 import { Reveal } from "../../components/Reveal";
 import { SectionLabel } from "../../components/SectionLabel";
-import { SiteNav } from "../../components/SiteNav";
 import {
   getRelatedJournalPosts,
   getVisibleJournalPost,
@@ -140,7 +139,6 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
 
   return (
     <>
-      <SiteNav />
       <main className="relative overflow-hidden pt-24 md:pt-40">
         <div
           aria-hidden="true"
@@ -150,7 +148,7 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
           <Reveal>
             <Link
               href="/journal"
-              className="mb-8 inline-flex min-h-11 items-center gap-2 rounded-[8px] border border-black/10 bg-white/45 px-3.5 py-2 text-[13px] font-medium text-[var(--foreground)] shadow-[0_10px_32px_rgba(17,19,19,0.05)] backdrop-blur transition hover:bg-white md:mb-10 md:min-h-0"
+              className="premium-link mb-8 inline-flex min-h-11 items-center gap-2 rounded-[8px] border border-black/10 bg-white/45 px-3.5 py-2 text-[13px] font-medium text-[var(--foreground)] shadow-[0_10px_32px_rgba(17,19,19,0.05)] backdrop-blur transition hover:bg-white md:mb-10 md:min-h-0"
             >
               <ArrowLeft className="h-4 w-4 text-[var(--muted)]" />
               Back to journal
@@ -184,7 +182,7 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
                 {post.sourceLinks.length > 0 && (
                   <a
                     href="#sources"
-                    className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[8px] border border-black/10 bg-white/45 px-3.5 py-2 text-[13px] font-medium text-[var(--foreground)] shadow-[0_10px_32px_rgba(17,19,19,0.05)] backdrop-blur transition hover:bg-white"
+                    className="premium-link inline-flex min-h-11 items-center justify-center gap-2 rounded-[8px] border border-black/10 bg-white/45 px-3.5 py-2 text-[13px] font-medium text-[var(--foreground)] shadow-[0_10px_32px_rgba(17,19,19,0.05)] backdrop-blur transition hover:bg-white"
                   >
                     View sources
                   </a>
@@ -195,7 +193,7 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
 
           {post.heroImage && (
             <Reveal>
-              <figure className="mt-10 overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.72)] p-2 premium-card-shadow backdrop-blur md:mt-16">
+              <figure className="motion-surface mt-10 overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.72)] p-2 premium-card-shadow backdrop-blur md:mt-16">
                 <div className="relative aspect-[16/9] overflow-hidden rounded-[6px] bg-[var(--surface-cool)]">
                   <Image
                     src={post.heroImage}
@@ -203,7 +201,7 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
                     fill
                     priority
                     sizes="(max-width: 768px) 100vw, 1180px"
-                    className="object-cover"
+                    className="media-lift object-cover"
                   />
                 </div>
                 {(post.imageCredit || post.imageLicense || post.imageDisclosure?.disclosureNote) && (
@@ -220,7 +218,7 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
           <div className="mt-10 grid gap-8 md:mt-20 md:grid-cols-[0.32fr_1fr] md:gap-16">
             <aside className="md:sticky md:top-32 md:h-max">
               <Reveal>
-                <div className="rounded-[8px] border border-black/10 bg-white/45 p-4 backdrop-blur">
+                <div className="motion-surface rounded-[8px] border border-black/10 bg-white/45 p-4 backdrop-blur">
                   <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
                     Reading map
                   </p>
@@ -233,7 +231,7 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
               </Reveal>
               {sectionHeadings.length > 2 && (
                 <Reveal>
-                  <nav className="mt-3 hidden rounded-[8px] border border-black/10 bg-white/35 p-4 backdrop-blur md:block">
+                  <nav className="motion-surface mt-3 hidden rounded-[8px] border border-black/10 bg-white/35 p-4 backdrop-blur md:block">
                     <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
                       Sections
                     </p>
@@ -242,7 +240,7 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
                         <a
                           key={heading.text}
                           href={`#${sectionId(heading.text)}`}
-                          className="transition hover:text-[var(--foreground)]"
+                          className="interactive-underline transition hover:text-[var(--foreground)]"
                         >
                           {heading.text}
                         </a>
@@ -256,7 +254,7 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
             <div className="max-w-[780px]">
               {post.keyInsight && (
                 <Reveal>
-                  <section className="premium-card-shadow mb-5 rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.74)] p-4 backdrop-blur md:mb-9 md:p-6">
+                  <section className="motion-surface premium-card-shadow mb-5 rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.74)] p-4 backdrop-blur md:mb-9 md:p-6">
                     <h2 className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
                       Key insight
                     </h2>
@@ -269,7 +267,7 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
 
               {takeaways.length > 0 && (
                 <Reveal>
-                  <section className="mb-7 rounded-[8px] border border-black/10 bg-white/45 p-4 backdrop-blur md:mb-9 md:p-6">
+                  <section className="motion-surface mb-7 rounded-[8px] border border-black/10 bg-white/45 p-4 backdrop-blur md:mb-9 md:p-6">
                     <h2 className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
                       Key takeaways
                     </h2>
@@ -297,7 +295,7 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
                 <Reveal>
                   <section
                     id="sources"
-                    className="mt-8 scroll-mt-28 rounded-[8px] border border-black/10 bg-white/45 p-4 backdrop-blur md:mt-10 md:p-6"
+                    className="motion-surface mt-8 scroll-mt-28 rounded-[8px] border border-black/10 bg-white/45 p-4 backdrop-blur md:mt-10 md:p-6"
                   >
                     <h2 className="text-[1.2rem] font-semibold">
                       Sources / Further Reading
@@ -309,7 +307,7 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
                           href={source.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group rounded-[8px] border border-black/10 bg-white/35 p-4 transition hover:bg-white/70"
+                          className="group motion-surface rounded-[8px] border border-black/10 bg-white/35 p-4 transition hover:bg-white/70"
                         >
                           <span className="block text-[0.98rem] font-medium text-[var(--foreground)]">
                             {source.title}
@@ -328,7 +326,7 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
 
               {hasLinkedInDraft && (
                 <Reveal>
-                <section className="mt-6 rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.72)] p-5 backdrop-blur md:p-6">
+                <section className="motion-surface mt-6 rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.72)] p-5 backdrop-blur md:p-6">
                   <h2 className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
                     Short version for LinkedIn
                   </h2>
@@ -341,7 +339,7 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
                     href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-5 inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--foreground)]"
+                    className="interactive-underline mt-5 inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--foreground)]"
                   >
                     Share article
                     <ArrowUpRight className="h-4 w-4 text-[var(--muted)]" />
@@ -361,7 +359,7 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
                         <Link
                           key={related.slug}
                           href={`/journal/${related.slug}`}
-                          className="rounded-[8px] border border-black/10 bg-white/45 p-4 transition hover:bg-white/75"
+                          className="motion-surface rounded-[8px] border border-black/10 bg-white/45 p-4 transition hover:bg-white/75"
                         >
                           <span className="text-[0.82rem] text-[var(--sage)]">
                             {related.category}

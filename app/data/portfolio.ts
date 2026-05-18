@@ -39,14 +39,14 @@ export const profile = {
     {
       id: "editorial",
       src: "/images/mba-life/iim-campus-rain-01.jpg",
-      label: "Editorial strip",
-      note: "A quieter IIM Sirmaur campus frame for the personal section.",
+      label: "Campus weather",
+      note: "Rain, hills, and the slower rhythm of the current chapter.",
     },
     {
       id: "personal",
       src: "/images/gallery/life-mountain-portrait-01.jpg",
-      label: "Personal moment",
-      note: "A warmer travel frame from the optional life gallery.",
+      label: "Off-script",
+      note: "A travel frame from the part of life that keeps work lighter.",
     },
   ],
 };
@@ -77,83 +77,83 @@ export const sectionNavItems = [
 
 export const heroMarkers = [
   { label: "Now", value: "MBA at IIM Sirmaur" },
-  { label: "Lens", value: "Product, marketing, strategy" },
-  { label: "Base", value: "CSE, Data Science, Applied AI" },
+  { label: "Lens", value: "Product, markets, behavior" },
+  { label: "Proof", value: "BigHaat automation and AI systems" },
 ];
 
 export const thesisPoints = [
   {
-    label: "Customer first",
-    text: "I am trying to begin with the person making the choice: what they notice, what they trust, what feels confusing, and what finally makes action feel worth it.",
+    label: "Human choice first",
+    text: "I like beginning with the person deciding: what they notice, what they trust, where they hesitate, and what finally makes action feel safe.",
   },
   {
-    label: "Builder second",
-    text: "My technical background helps me understand what can be built, automated, measured, or improved. The MBA is helping me ask whether it should be.",
+    label: "Builder memory",
+    text: "Computer Science and Data Science taught me how systems behave. BigHaat taught me how messy those systems become when they meet real teams, orders, prices, PDFs, and customers.",
   },
   {
-    label: "Market always",
-    text: "I like watching the quiet signals around products: pricing, habit, timing, messaging, friction, and the small reasons one option stays in someone's mind.",
+    label: "Market instinct",
+    text: "The MBA is widening the frame: product, marketing, strategy, and consumer behavior are now the questions around the code, not separate from it.",
   },
 ];
 
 export const directionNotes = [
   {
     title: "Product",
-    text: "I care about products that become easier to trust once someone actually uses them.",
+    text: "I care about products that feel clearer after the first use, not after a long explanation.",
     icon: Compass,
   },
   {
     title: "Marketing",
-    text: "I like the messy middle between attention and choice: memory, comparison, proof, aspiration, and timing.",
+    text: "I watch the space between attention and choice: proof, memory, comparison, aspiration, and timing.",
     icon: Eye,
   },
   {
     title: "Strategy",
-    text: "I am learning to separate a loud signal from a useful one, and to ask what a market is really telling us.",
+    text: "I am learning to separate loud data from useful signals, and to ask what a market is quietly teaching.",
     icon: LineChart,
   },
   {
     title: "AI workflows",
-    text: "I am interested in AI where it quietly removes effort, improves a workflow, or helps someone make a clearer decision.",
+    text: "I like AI when it removes invisible effort: lookup, extraction, alerts, matching, review, and follow-up.",
     icon: BrainCircuit,
   },
 ];
 
 export const backgroundCards = [
   {
-    label: "Current education",
+    label: "Current chapter",
     value: "MBA at IIM Sirmaur",
-    detail: "2025-2027. Product, marketing, strategy, consumer behavior, and the business side of building useful things.",
+    detail: "2025-2027. Product, marketing, strategy, consumer behavior, and the business questions that decide whether useful systems matter.",
     icon: GraduationCap,
   },
   {
-    label: "Lens",
-    value: "Product / Marketing / Strategy",
-    detail: "The direction I am actively growing into: customer choices, market signals, positioning, and decisions that travel beyond a prototype.",
+    label: "Business lens",
+    value: "Product, Markets, Behavior",
+    detail: "I am learning to read customers, categories, pricing, positioning, and the small frictions that shape a decision.",
     icon: Landmark,
   },
   {
-    label: "Technical foundation",
-    value: "CSE + Data Science + Applied AI",
-    detail: "B.Tech CSE at VIT Vellore, plus hands-on work across search, prediction, RAG, dashboards, automation, and decision-support systems.",
+    label: "Builder base",
+    value: "CSE, Data Science, Applied AI",
+    detail: "B.Tech CSE at VIT Vellore, then work across search, prediction, RAG, crawling, dashboards, alerts, and data pipelines.",
     icon: BrainCircuit,
   },
   {
-    label: "Professional chapter",
+    label: "BigHaat chapter",
     value: "Data Science Engineer",
-    detail: "Bangalore, Mar 2024-Mar 2025. Built and improved workflows around orders, content, logistics, pricing, and operational visibility.",
+    detail: "PDF extraction, competitor price intelligence, anomaly detection, logistics visibility, and production workflows that earned CEO recognition.",
     icon: BriefcaseBusiness,
   },
   {
-    label: "Internship chapter",
+    label: "First proof",
     value: "Data Science Intern",
-    detail: "Sep 2023-Mar 2024. Learned how data work changes when it has to fit real teams, messy inputs, and urgent business questions.",
+    detail: "Learned that data work changes when inputs are messy, teams are busy, and the output has to help someone act today.",
     icon: Wrench,
   },
   {
-    label: "Personal learning lens",
-    value: "Consumer behavior in the wild",
-    detail: "I keep noticing how people compare brands, price, trust, store experience, and small cues before they decide.",
+    label: "Family retail lens",
+    value: "CM Silks",
+    detail: "A family saree business that keeps teaching me trust, aspiration, local positioning, price perception, and customer education.",
     icon: Store,
   },
 ];
@@ -210,32 +210,32 @@ export const skills = [
 export const systemNodes = [
   {
     title: "Human direction",
-    text: "I set the taste, questions, structure, and final call.",
+    text: "I set the question, taste, structure, and final publishing call.",
     icon: BadgeCheck,
   },
   {
     title: "AI-assisted drafts",
-    text: "AI helps compress rough thinking into drafts, layouts, and first passes.",
+    text: "AI helps move from rough idea to first version without skipping review.",
     icon: Sparkles,
   },
   {
     title: "Archive + journal",
-    text: "Projects, notes, and learning get organized into a system instead of disappearing.",
+    text: "Projects, MBA notes, market observations, and learnings stay findable.",
     icon: BookOpenText,
   },
   {
     title: "LinkedIn adaptation",
-    text: "Longer notes can become shorter posts when they are actually worth sharing.",
+    text: "Longer notes become shorter posts only when the idea survives editing.",
     icon: FlameKindling,
   },
   {
     title: "Visual prompts",
-    text: "Future visuals can support the idea without turning the site into decoration.",
+    text: "Visuals support the argument instead of becoming decoration.",
     icon: Camera,
   },
   {
     title: "Analytics loop",
-    text: "Performance notes help me learn what resonates and what needs sharper thinking.",
+    text: "Analytics help me see what people explore and where the story needs sharper proof.",
     icon: LineChart,
   },
 ];
@@ -247,7 +247,7 @@ export const readingShelf = [
     mode: "Business",
     accent: "copper",
     coverSrc: "/images/books/shoe-dog.jpg",
-    note: "A reminder that brand-building is often more personal, messy, and stubborn than it looks from the outside.",
+    note: "Brand-building as endurance: messy, personal, and held together by belief before the market agrees.",
   },
   {
     title: "Zero to One",
@@ -255,7 +255,7 @@ export const readingShelf = [
     mode: "Business",
     accent: "steel",
     coverSrc: "/images/books/zero-to-one.jpg",
-    note: "Useful whenever I want to think about sharp choices, unfair advantages, and what makes an idea feel non-obvious.",
+    note: "A useful reset when I want to ask what is genuinely different, not just better phrased.",
   },
   {
     title: "CEO Excellence",
@@ -263,7 +263,7 @@ export const readingShelf = [
     mode: "Leadership",
     accent: "sage",
     coverSrc: "/images/books/ceo-excellence.jpg",
-    note: "Good for the operating side of leadership: rhythm, trade-offs, people, and the decisions no one can avoid forever.",
+    note: "The operating side of leadership: rhythm, trade-offs, people, and decisions that cannot be outsourced.",
   },
   {
     title: "Harvard Business Review Leader's Handbook",
@@ -271,7 +271,7 @@ export const readingShelf = [
     mode: "Leadership",
     accent: "ink",
     coverSrc: "/images/books/hbr-leaders-handbook.jpg",
-    note: "A practical shelf pick for days when leadership needs structure, not dramatic quotes.",
+    note: "For days when leadership needs structure, not dramatic quotes.",
   },
   {
     title: "The 22 Immutable Laws of Marketing",
@@ -279,7 +279,7 @@ export const readingShelf = [
     mode: "Marketing",
     accent: "moss",
     coverSrc: "/images/books/immutable-laws-marketing.jpg",
-    note: "Great for positioning instincts: simple, opinionated, and useful when a market feels too noisy.",
+    note: "Simple and opinionated. Useful when a market feels noisy and positioning needs discipline.",
   },
   {
     title: "The Subtle Art of Not Giving a F*ck",
@@ -295,7 +295,7 @@ export const readingShelf = [
     mode: "Reflection",
     accent: "gold",
     coverSrc: "/images/books/alchemist.jpg",
-    note: "Simple in a way I like. A reminder that direction can be quiet before it becomes obvious.",
+    note: "A reminder that direction can be quiet before it becomes obvious.",
   },
   {
     title: "Tomorrow, and Tomorrow, and Tomorrow",
@@ -303,7 +303,7 @@ export const readingShelf = [
     mode: "Fiction",
     accent: "indigo",
     coverSrc: "/images/books/tomorrow-tomorrow-tomorrow.jpg",
-    note: "A creative friendship story that makes building things feel emotional, strange, and very human.",
+    note: "A creative friendship story that makes building things feel emotional, strange, and human.",
   },
   {
     title: "The Midnight Library",
@@ -311,7 +311,7 @@ export const readingShelf = [
     mode: "Reflection",
     accent: "violet",
     coverSrc: "/images/books/midnight-library.jpg",
-    note: "A fiction pick that makes possibility feel slightly closer without pretending choices are easy.",
+    note: "A fiction pick about possibility, regret, and the weight of small choices.",
   },
   {
     title: "Half Girlfriend",
@@ -319,45 +319,45 @@ export const readingShelf = [
     mode: "Fiction",
     accent: "rose",
     coverSrc: "/images/books/half-girlfriend.jpg",
-    note: "A lighter, familiar reset between heavier books. Sometimes easy pace is exactly the point.",
+    note: "A lighter reset between heavier books. Sometimes an easy pace is exactly the point.",
   },
 ];
 
 export const personalInterests = [
   {
     title: "Badminton",
-    text: "My cleanest reset. When my head feels heavy, a game usually clears the noise before I can overthink it.",
+    text: "My cleanest reset. A few rallies usually clear the noise before I can over-explain it.",
     icon: Dumbbell,
     featured: true,
   },
   {
     title: "Chess",
-    text: "Patience practice disguised as a board game. It keeps reminding me that one impatient move can ruin a good position.",
+    text: "Patience practice in a small square world. One impatient move can undo a good position.",
     icon: Puzzle,
   },
   {
     title: "Early morning runs",
-    text: "A quiet way to start the day before everyone else's pace enters the room.",
+    text: "A quiet start before everyone else's pace enters the room.",
     icon: CircleDot,
   },
   {
     title: "Photography",
-    text: "Mostly noticing light, frames, and small scenes that would otherwise pass by.",
+    text: "Mostly a habit of noticing: light, edges, pauses, and small scenes that would pass by.",
     icon: Camera,
   },
   {
     title: "Sketching",
-    text: "A slower kind of attention. Useful when I need to stop rushing the first version.",
+    text: "A slower kind of attention. It helps when I need to stop rushing the first version.",
     icon: Pencil,
   },
   {
     title: "Cooking",
-    text: "Process, timing, taste, and feedback. Honestly, a tiny product loop with better smells.",
+    text: "Process, timing, taste, and feedback. A tiny product loop with better smells.",
     icon: ChefHat,
   },
   {
     title: "Technology + AI tools",
-    text: "I keep trying tools to see what they actually change, not just what the demo promises.",
+    text: "I try tools to see what they actually change, not what the demo promises.",
     icon: BrainCircuit,
   },
   {

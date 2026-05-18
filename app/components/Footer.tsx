@@ -12,7 +12,7 @@ import { profile } from "../data/portfolio";
 import { Reveal } from "./Reveal";
 
 const linkBase =
-  "group relative flex min-h-16 items-center justify-between gap-3 overflow-hidden rounded-[8px] border px-4 py-3.5 text-[0.96rem] transition duration-500 focus:outline-none focus:ring-2 focus:ring-white/20";
+  "premium-link group relative flex min-h-16 items-center justify-between gap-3 overflow-hidden rounded-[8px] border px-4 py-3.5 text-[0.96rem] transition duration-500 focus:outline-none focus:ring-2 focus:ring-white/20";
 
 function LinkedInIcon({ className }: { className?: string }) {
   return (
@@ -168,7 +168,7 @@ export function Footer() {
   return (
     <footer
       id="contact"
-      className="relative scroll-mt-28 overflow-hidden bg-[var(--deep)] py-16 text-[var(--surface)] md:py-28"
+      className="relative scroll-mt-28 overflow-hidden bg-[var(--deep)] py-12 text-[var(--surface)] md:py-24"
     >
       <div
         aria-hidden="true"
@@ -185,9 +185,9 @@ export function Footer() {
 
       <div className="section-shell relative z-10">
         <Reveal>
-          <div className="border-b border-white/10 pb-8 md:pb-12">
+          <div className="border-b border-white/10 pb-7 md:pb-12">
             <motion.h2
-              className="max-w-[1120px] break-words text-[clamp(3.6rem,16vw,12rem)] font-semibold leading-[0.86] tracking-[0] text-white/92"
+              className="max-w-[1120px] break-words text-[clamp(3rem,12vw,9.5rem)] font-semibold leading-[0.9] tracking-[0] text-white/92"
               initial={
                 shouldReduceMotion ? false : { opacity: 0, y: 34, scale: 0.92 }
               }
@@ -197,22 +197,22 @@ export function Footer() {
             >
               Let&apos;s connect.
             </motion.h2>
-            <p className="mt-7 max-w-[720px] text-[clamp(1.02rem,4vw,1.22rem)] leading-[1.68] text-white/62">
-              Email is the cleanest place to start. I am open to thoughtful
-              product, marketing, strategy, Applied AI, and business
-              conversations.
+            <p className="mt-5 max-w-[720px] text-[clamp(1rem,4vw,1.18rem)] leading-[1.62] text-white/62 md:mt-7">
+              Email is the cleanest place to start. I am open to product,
+              marketing, strategy, Applied AI, retail, and business
+              conversations with real context.
             </p>
           </div>
         </Reveal>
 
-        <div className="mt-8 grid gap-8 lg:grid-cols-[0.68fr_1fr] lg:gap-16">
+        <div className="mt-7 grid gap-7 lg:grid-cols-[0.68fr_1fr] lg:gap-16">
           <Reveal>
             <div>
               <p className="text-[1.25rem] leading-[1.42] text-white/82 md:text-[1.65rem]">
-                If something here made you curious, send a note. I read it
-                properly.
+                If a project, market question, or messy workflow here made you
+                curious, send a note. I read it properly.
               </p>
-              <div className="mt-8 grid gap-3 text-[11px] uppercase tracking-[0.16em] text-white/36 md:text-[12px] md:tracking-[0.18em]">
+              <div className="mt-6 grid gap-3 text-[11px] uppercase tracking-[0.16em] text-white/36 md:mt-8 md:text-[12px] md:tracking-[0.18em]">
                 <span>Living portfolio, reviewed before it ships</span>
                 <span className="inline-flex items-center gap-2">
                   <MapPin className="h-3.5 w-3.5" />
@@ -274,7 +274,7 @@ export function Footer() {
           </Reveal>
         </div>
 
-        <div className="mt-12 flex flex-col gap-2 border-t border-white/10 pt-5 text-[12px] text-white/34 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-5 text-[12px] text-white/34 sm:flex-row sm:items-center sm:justify-between">
           <span>
             © {year} {profile.shortName}. All rights reserved.
           </span>

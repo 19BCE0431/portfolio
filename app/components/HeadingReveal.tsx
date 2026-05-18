@@ -43,14 +43,16 @@ export function HeadingReveal({
         <span key={`${line}-${index}`} className="block overflow-hidden pb-[0.04em]">
           <motion.span
             className="block"
+            style={{ willChange: "transform, opacity, filter" }}
             variants={{
-              hidden: { y: "112%", opacity: 0 },
+              hidden: { y: "112%", opacity: 0, filter: "blur(5px)" },
               show: {
                 y: "0%",
                 opacity: 1,
+                filter: "blur(0px)",
                 transition: {
-                  duration: 0.72,
-                  delay: delay + index * 0.08,
+                  duration: 0.76,
+                  delay: delay + index * 0.07,
                   ease: [0.16, 1, 0.3, 1],
                 },
               },

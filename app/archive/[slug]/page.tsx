@@ -8,7 +8,6 @@ import { HeadingReveal } from "../../components/HeadingReveal";
 import { ProjectVisual } from "../../components/ProjectVisual";
 import { Reveal } from "../../components/Reveal";
 import { SectionLabel } from "../../components/SectionLabel";
-import { SiteNav } from "../../components/SiteNav";
 import { archiveProjects, getProjectBySlug } from "../../data/archive";
 
 type ProjectPageProps = {
@@ -119,7 +118,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <>
-      <SiteNav />
       <main className="relative overflow-hidden pt-24 md:pt-40">
         <div
           aria-hidden="true"
@@ -133,7 +131,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <Reveal>
             <Link
               href="/archive"
-              className="mb-8 inline-flex min-h-11 items-center gap-2 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.72)] px-3.5 py-2 text-[13px] font-medium text-[var(--foreground)] shadow-[0_10px_32px_rgba(16,18,18,0.05)] backdrop-blur transition hover:bg-white md:mb-10 md:min-h-0"
+              className="premium-link mb-8 inline-flex min-h-11 items-center gap-2 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.72)] px-3.5 py-2 text-[13px] font-medium text-[var(--foreground)] shadow-[0_10px_32px_rgba(16,18,18,0.05)] backdrop-blur transition hover:bg-white md:mb-10 md:min-h-0"
             >
               <ArrowLeft className="h-4 w-4 text-[var(--muted)]" />
               Back to archive
@@ -167,8 +165,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </div>
 
           <Reveal>
-            <div className="mx-auto mt-10 max-w-[980px] md:mt-16">
-              <ProjectVisual project={project} />
+            <div className="motion-surface mx-auto mt-10 max-w-[980px] rounded-[8px] md:mt-16">
+              <ProjectVisual project={project} priority />
             </div>
           </Reveal>
 
@@ -204,7 +202,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
           {isLivingSystem && (
             <Reveal>
-              <section className="editorial-panel relative mt-10 overflow-hidden p-5 md:mt-16 md:p-8">
+              <section className="editorial-panel motion-surface relative mt-10 overflow-hidden p-5 md:mt-16 md:p-8">
                 <div className="signal-grid pointer-events-none absolute inset-0 opacity-[0.13]" />
                 <div className="relative z-10 grid gap-8 lg:grid-cols-[0.62fr_1fr] lg:items-end">
                   <div>
@@ -223,7 +221,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     {livingSystemFlow.map((step, index) => (
                       <div
                         key={step}
-                        className="rounded-[8px] border border-black/10 bg-white/42 p-4 backdrop-blur"
+                        className="motion-surface rounded-[8px] border border-black/10 bg-white/42 p-4 backdrop-blur"
                       >
                         <span className="text-[11px] font-semibold text-[var(--sage)]">
                           0{index + 1}
@@ -303,7 +301,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <div className="mt-12 border-t border-black/10 pt-8">
             <Link
               href="/archive"
-              className="group inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--foreground)]"
+              className="interactive-underline group inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--foreground)]"
             >
               View all archive items
               <ArrowUpRight className="h-4 w-4 text-[var(--muted)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

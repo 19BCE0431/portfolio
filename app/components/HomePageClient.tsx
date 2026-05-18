@@ -39,8 +39,6 @@ import { ProjectCard } from "./ProjectCard";
 import { ProjectVisual } from "./ProjectVisual";
 import { Reveal } from "./Reveal";
 import { SectionLabel } from "./SectionLabel";
-import { SectionNavigator } from "./SectionNavigator";
-import { SiteNav } from "./SiteNav";
 
 const premiumEase = [0.16, 1, 0.3, 1] as const;
 
@@ -146,8 +144,8 @@ function ActionLink({
   const shouldReduceMotion = useReducedMotion();
   const className =
     variant === "dark"
-      ? "group inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-[8px] border border-white/12 bg-white/[0.08] px-4 py-2.5 text-[13px] font-medium text-white/88 shadow-[0_18px_48px_rgba(0,0,0,0.16)] transition hover:border-white/22 hover:bg-white/[0.12] focus:outline-none focus:ring-2 focus:ring-white/20 sm:w-auto"
-      : "group hover-light inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.78)] px-4 py-2.5 text-[13px] font-medium text-[var(--foreground)] shadow-[0_18px_54px_rgba(16,18,18,0.06)] backdrop-blur transition hover:border-black/18 hover:bg-white focus:outline-none focus:ring-2 focus:ring-black/15 sm:w-auto";
+      ? "premium-link group inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-[8px] border border-white/12 bg-white/[0.08] px-4 py-2.5 text-[13px] font-medium text-white/88 shadow-[0_18px_48px_rgba(0,0,0,0.16)] transition hover:border-white/22 hover:bg-white/[0.12] focus:outline-none focus:ring-2 focus:ring-white/20 sm:w-auto"
+      : "premium-link group hover-light inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.78)] px-4 py-2.5 text-[13px] font-medium text-[var(--foreground)] shadow-[0_18px_54px_rgba(16,18,18,0.06)] backdrop-blur transition hover:border-black/18 hover:bg-white focus:outline-none focus:ring-2 focus:ring-black/15 sm:w-auto";
 
   return (
     <motion.span
@@ -246,7 +244,7 @@ function HeroVisual({ progress }: { progress: MotionValue<number> }) {
       >
         <div className="absolute -inset-5 rounded-[8px] bg-[linear-gradient(135deg,rgba(104,121,109,0.14),rgba(104,119,137,0.06)_48%,rgba(154,127,99,0.12))] blur-2xl" />
         <motion.figure
-          className="premium-panel relative overflow-hidden p-2"
+          className="premium-panel motion-surface relative overflow-hidden p-2"
           whileHover={shouldReduceMotion ? undefined : { y: -5 }}
           transition={{ duration: 0.45, ease: premiumEase }}
         >
@@ -277,7 +275,7 @@ function MobilePortraitStrip() {
             {profile.shortName}
           </p>
           <p className="mt-1 text-[0.8rem] leading-[1.45] text-[var(--muted)]">
-            MBA at IIM Sirmaur · Product, marketing, strategy, AI workflows
+            IIM Sirmaur MBA · Product, markets, behavior, AI workflows
           </p>
         </div>
       </div>
@@ -324,22 +322,23 @@ function Hero() {
       >
         <HeadingReveal
           as="h1"
-          lines={["MBA in progress.", "Product instincts.", "Builder roots."]}
-          mobileLines={["MBA in progress.", "Product instincts.", "Builder roots."]}
+          lines={["Builder roots.", "Business lens.", "Human choices."]}
+          mobileLines={["Builder roots.", "Business lens.", "Human choices."]}
           className="display-tight max-w-[1040px] text-[clamp(2.75rem,12vw,4.15rem)] font-semibold leading-[0.94] text-[var(--foreground)] md:text-[clamp(4.15rem,6.35vw,7.15rem)] md:leading-[0.9]"
           delay={0.04}
         />
         <Reveal delay={0.1}>
           <p className="mt-6 max-w-[800px] text-pretty-balance text-[clamp(1.06rem,4.2vw,1.32rem)] leading-[1.62] text-[var(--muted-strong)] md:mt-8 md:text-[clamp(1.18rem,2vw,1.5rem)] md:leading-[1.5]">
             <span className="md:hidden">
-              I am an MBA candidate at IIM Sirmaur, moving toward product,
-              marketing, strategy, consumer behavior, and AI-enabled workflows.
+              I am an MBA candidate at IIM Sirmaur, shaped by data science,
+              BigHaat systems, and a growing interest in how people choose.
             </span>
             <span className="hidden md:inline">
-              I am an MBA candidate at IIM Sirmaur, moving toward product,
-              marketing, strategy, consumer behavior, and AI-enabled workflows.
-              The base is computer science and data science; the current chapter
-              is learning how people choose, trust, compare, and act.
+              I started with Computer Science and Data Science, then spent a
+              year turning messy BigHaat workflows into signals, automations,
+              and decision support. The MBA chapter is widening that work into
+              product, marketing, strategy, consumer behavior, and AI-enabled
+              systems that people can actually trust.
             </span>
           </p>
         </Reveal>
@@ -400,7 +399,7 @@ function DirectionPoint({
 
   return (
     <motion.article
-      className={`premium-panel p-5 md:p-7 ${className}`}
+      className={`premium-panel motion-surface p-5 md:p-7 ${className}`}
       style={shouldReduceMotion ? undefined : { opacity, y }}
     >
       <div className="flex items-start justify-between gap-4">
@@ -426,7 +425,7 @@ function Direction() {
     <section
       ref={sectionRef}
       id="direction"
-      className="section-shell relative scroll-mt-0 py-16 md:py-32"
+      className="section-shell relative scroll-mt-0 py-12 md:py-32"
     >
       <div className="absolute left-0 top-0 hidden h-full w-px vertical-hairline opacity-60 lg:block" />
       <div className="grid gap-12 lg:grid-cols-[0.72fr_1fr] lg:gap-18">
@@ -439,10 +438,10 @@ function Direction() {
               className="max-w-[720px] text-[clamp(2.35rem,10vw,5.2rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.94]"
             />
             <p className="mt-6 max-w-[650px] text-[1.02rem] leading-[1.7] text-[var(--muted-strong)] md:text-[1.14rem]">
-              I am not trying to present myself as only a data science person.
-              That chapter matters, but the direction now is broader: product,
-              marketing, strategy, consumer behavior, and practical AI that
-              helps people make better calls.
+              The old version would have been a list of tools. This version is
+              closer to the truth: I like systems, but I am more interested in
+              the decisions around them: who uses them, what changes, what earns
+              trust, and where a market quietly reveals itself.
             </p>
             <div className="mt-8 h-px overflow-hidden bg-black/10">
               <motion.div
@@ -453,19 +452,19 @@ function Direction() {
           </Reveal>
         </div>
 
-        <div className="grid gap-4">
-          <div className="snap-strip -mx-3 flex snap-x gap-3 overflow-x-auto px-3 pb-3 md:mx-0 md:grid md:overflow-visible md:px-0 md:pb-0">
+        <div className="grid gap-3 md:gap-4">
+          <div className="grid gap-3 md:gap-4">
             {thesisPoints.map((point, index) => (
               <DirectionPoint
                 key={point.label}
                 point={point}
                 index={index}
                 progress={scrollYProgress}
-                className="min-w-[82vw] snap-start sm:min-w-[420px] md:min-w-0"
+                className="h-full"
               />
             ))}
           </div>
-          <div className="snap-strip -mx-3 mt-2 flex snap-x gap-3 overflow-x-auto px-3 pb-3 md:mx-0 md:grid md:grid-cols-2 md:overflow-visible md:px-0 md:pb-0">
+          <div className="mt-1 grid gap-3 sm:grid-cols-2 md:gap-4">
             {directionNotes.map((note, index) => {
               const Icon = note.icon;
 
@@ -473,9 +472,9 @@ function Direction() {
                 <Reveal
                   key={note.title}
                   delay={index * 0.04}
-                  className="min-w-[76vw] snap-start md:min-w-0"
+                  className="h-full"
                 >
-                  <article className="editorial-panel hover-light group h-full min-h-[210px] p-5 transition duration-500 hover:-translate-y-1 hover:bg-white md:min-h-[220px] md:p-6">
+                  <article className="editorial-panel motion-surface hover-light group h-full min-h-[178px] p-5 transition duration-500 hover:-translate-y-1 hover:bg-white md:min-h-[220px] md:p-6">
                     <div className="flex items-start justify-between gap-4">
                       <Icon className="h-5 w-5 text-[var(--sage)]" />
                       <span className="grid h-8 w-8 place-items-center rounded-full border border-black/10 text-[12px] text-[var(--sage)] transition group-hover:translate-x-1">
@@ -501,28 +500,28 @@ function Background() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section id="background" className="dark-transition scroll-mt-28 py-16 text-[var(--surface)] md:py-40">
+    <section id="background" className="dark-transition scroll-mt-28 py-14 text-[var(--surface)] md:py-40">
       <div className="section-shell">
         <div className="grid gap-10 lg:grid-cols-[0.72fr_1fr] lg:items-end lg:gap-20">
           <Reveal>
             <SectionLabel>Background</SectionLabel>
             <HeadingReveal
-              lines={["Business school first.", "Builder base underneath."]}
-              mobileLines={["Business", "school first.", "Builder base", "underneath."]}
+              lines={["The MBA is", "a wider lens."]}
+              mobileLines={["The MBA is", "a wider lens."]}
               className="max-w-[820px] text-[clamp(2.35rem,10vw,5.4rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.96]"
             />
           </Reveal>
           <Reveal delay={0.08}>
             <p className="max-w-[720px] text-pretty-balance text-[clamp(1.04rem,2vw,1.28rem)] leading-[1.68] text-[var(--deep-muted)]">
-              The simplest version: I am studying business now, with a
-              technical foundation that helps me understand how ideas become
-              tools, workflows, dashboards, and systems. I want both sides in
-              the same room.
+              I did not leave the builder side behind. I am learning to place
+              it inside a bigger room: customers, categories, pricing,
+              positioning, operations, and the behavior that decides whether a
+              system matters.
             </p>
           </Reveal>
         </div>
 
-        <div className="snap-strip -mx-3 mt-10 flex snap-x gap-3 overflow-x-auto px-3 pb-4 lg:mx-0 lg:mt-20 lg:grid lg:grid-cols-6 lg:overflow-visible lg:px-0 lg:pb-0">
+        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:mt-20 lg:grid-cols-6">
           {backgroundCards.map((item, index) => {
             const Icon = item.icon;
             const wide = index === 0 || index === 1;
@@ -531,10 +530,10 @@ function Background() {
               <Reveal
                 key={item.label}
                 delay={index * 0.035}
-                className={`${wide ? "lg:col-span-3" : "lg:col-span-3 xl:col-span-2"} min-w-[82vw] snap-start sm:min-w-[380px] lg:min-w-0`}
+                className={`${wide ? "lg:col-span-3" : "lg:col-span-3 xl:col-span-2"} h-full`}
               >
                 <motion.article
-                  className="dark-panel group flex min-h-[210px] flex-col justify-between overflow-hidden p-5 md:min-h-[230px] md:p-6"
+                  className="dark-panel motion-surface group flex min-h-[178px] flex-col justify-between overflow-hidden p-5 md:min-h-[230px] md:p-6"
                   whileHover={shouldReduceMotion ? undefined : { y: -5 }}
                   transition={{ duration: 0.34, ease: premiumEase }}
                 >
@@ -634,29 +633,29 @@ function ArchivePreview() {
   return (
     <section
       id="work"
-      className="section-shell relative scroll-mt-0 overflow-hidden py-16 md:py-36"
+      className="section-shell relative scroll-mt-0 overflow-hidden py-12 md:py-36"
     >
       <div className="premium-grid pointer-events-none absolute right-0 top-24 h-[360px] w-[520px] opacity-[0.1] [mask-image:radial-gradient(circle,black,transparent_70%)]" />
       <div className="mb-10 grid gap-8 md:mb-14 lg:grid-cols-[0.72fr_1fr] lg:gap-16">
         <Reveal>
           <SectionLabel>Selected work</SectionLabel>
           <HeadingReveal
-            lines={["Work that changed", "how I think."]}
-            mobileLines={["Work that", "changed how", "I think."]}
+            lines={["Proof, not just", "project cards."]}
+            mobileLines={["Proof,", "not just", "project cards."]}
             className="max-w-[720px] text-[clamp(2.35rem,10vw,5.1rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.96]"
           />
         </Reveal>
         <Reveal delay={0.08}>
           <div className="max-w-[720px]">
             <p className="text-[clamp(1.02rem,1.7vw,1.22rem)] leading-[1.68] text-[var(--muted-strong)]">
-              These are not only technical projects. They are small records of
-              friction I noticed: search that needed a visual path, documents
-              that were too slow to query, prices that needed monitoring, and a
-              portfolio that needed to become a system.
+              The strongest work here comes from real friction: PDFs that
+              slowed teams down, competitor prices that needed watching, order
+              drops that needed early signals, and AI flows that had to earn
+              their place in a working business.
             </p>
             <Link
               href="/archive"
-              className="mt-6 inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--foreground)]"
+              className="interactive-underline mt-6 inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--foreground)]"
             >
               View full project library
               <ArrowUpRight className="h-4 w-4 text-[var(--muted)]" />
@@ -665,9 +664,9 @@ function ArchivePreview() {
         </Reveal>
       </div>
 
-      <div className="snap-strip -mx-3 flex snap-x gap-4 overflow-x-auto px-3 pb-4 xl:mx-0 xl:grid xl:grid-cols-4 xl:overflow-visible xl:px-0 xl:pb-0">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {selectedProjects.map((project) => (
-          <div key={project.slug} className="min-w-[82vw] snap-start sm:min-w-[420px] xl:min-w-0">
+          <div key={project.slug} className="min-w-0">
             <ProjectCard project={project} compact />
           </div>
         ))}
@@ -682,11 +681,11 @@ function FeaturedSystem() {
   if (!project) return null;
 
   return (
-    <section id="system" className="section-shell relative scroll-mt-0 py-16 md:py-36">
+    <section id="system" className="section-shell relative scroll-mt-0 py-12 md:py-36">
       <div className="absolute left-0 top-10 hidden h-px w-1/2 bg-gradient-to-r from-black/20 to-transparent md:block" />
       <div className="grid gap-7 lg:grid-cols-[0.78fr_1fr] lg:items-stretch lg:gap-6">
         <Reveal>
-          <article className="editorial-panel hover-light relative flex h-full min-h-[420px] flex-col justify-between overflow-hidden p-5 md:min-h-[520px] md:p-8">
+          <article className="editorial-panel motion-surface hover-light relative flex h-full min-h-[350px] flex-col justify-between overflow-hidden p-5 md:min-h-[520px] md:p-8">
             <div className="signal-grid pointer-events-none absolute inset-0 opacity-[0.12]" />
             <div className="relative z-10">
               <SectionLabel>Living AI Portfolio System</SectionLabel>
@@ -696,10 +695,9 @@ function FeaturedSystem() {
                 className="max-w-[680px] text-[clamp(2.35rem,10vw,5.3rem)] font-semibold leading-[0.98] tracking-[0]"
               />
               <p className="mt-6 max-w-[640px] text-[1rem] leading-[1.68] text-[var(--muted-strong)] md:text-[1.15rem]">
-                This is the serious experiment inside the site: AI-assisted,
-                human-directed, and review-first. The goal is to keep projects,
-                journal notes, weekly insights, LinkedIn drafts, future visual
-                prompts, and analytics in one thoughtful loop.
+                This site is also a product experiment: AI-assisted, reviewed
+                by me, and designed to keep proof, notes, drafts, analytics,
+                and future MBA work from becoming scattered.
               </p>
             </div>
             <div className="relative z-10 mt-8">
@@ -712,17 +710,17 @@ function FeaturedSystem() {
 
         <Reveal delay={0.08}>
           <div className="grid h-full gap-3 sm:grid-cols-2">
-            <article className="editorial-panel overflow-hidden p-3 sm:col-span-2">
+            <article className="editorial-panel motion-surface overflow-hidden p-3 sm:col-span-2">
               <ProjectVisual project={project} />
             </article>
-            <div className="snap-strip -mx-3 flex snap-x gap-3 overflow-x-auto px-3 pb-3 sm:col-span-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0">
+            <div className="grid gap-3 sm:col-span-2 sm:grid-cols-2">
               {systemNodes.map((node, index) => {
                 const Icon = node.icon;
 
                 return (
                   <article
                     key={node.title}
-                    className="editorial-panel hover-light group relative min-h-[180px] min-w-[76vw] snap-start overflow-hidden p-5 sm:min-w-0 md:min-h-[190px] md:p-6"
+                    className="editorial-panel motion-surface hover-light group relative min-h-[164px] overflow-hidden p-5 md:min-h-[190px] md:p-6"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <Icon className="h-5 w-5 text-[var(--sage)]" />
@@ -753,7 +751,7 @@ function RecognitionSection() {
   return (
     <section
       id="recognition"
-      className="section-shell relative scroll-mt-0 py-16 md:py-32"
+      className="section-shell relative scroll-mt-0 py-12 md:py-32"
     >
       <div className="grid gap-12 lg:grid-cols-[0.72fr_1fr] lg:gap-16">
         <Reveal>
@@ -766,21 +764,21 @@ function RecognitionSection() {
             />
             <p className="mt-6 max-w-[650px] text-[1.02rem] leading-[1.7] text-[var(--muted-strong)] md:text-[1.16rem]">
               An early campus signal: Top 10 in the Iconic Quiz conducted by
-              iimjobs.com and Markezen at IIM Sirmaur. Not a loud trophy wall,
-              just a useful reminder that sharper rooms make you sharper too.
+              iimjobs.com and Markezen at IIM Sirmaur. I keep it here as quiet
+              proof that sharper rooms make the thinking sharper too.
             </p>
           </div>
         </Reveal>
 
         <Reveal delay={0.08}>
-          <article className="editorial-panel overflow-hidden p-3 md:p-4">
+          <article className="editorial-panel motion-surface overflow-hidden p-3 md:p-4">
             <div className="relative aspect-[1.08] overflow-hidden rounded-[6px] bg-[var(--surface-cool)] sm:aspect-[1.35]">
               <Image
                 src={recognition.src}
                 alt={recognition.alt}
                 fill
                 sizes="(max-width: 768px) 92vw, 52vw"
-                className="object-cover transition-transform duration-[900ms] ease-[var(--ease)] hover:scale-[1.025]"
+                className="media-lift object-cover transition-transform duration-[900ms] ease-[var(--ease)] hover:scale-[1.025]"
               />
             </div>
             <div className="grid gap-4 px-1 pb-1 pt-4 md:grid-cols-[1fr_auto] md:items-end">
@@ -812,21 +810,21 @@ function MbaChapterSection() {
         </Reveal>
         <Reveal delay={0.08}>
           <p className="max-w-[700px] text-[clamp(1rem,1.65vw,1.18rem)] leading-[1.68] text-[var(--muted-strong)]">
-            A few frames from IIM Sirmaur: classrooms, group work, campus
-            light, and the quiet visual context around the business-school
-            part of the portfolio.
+            IIM Sirmaur is where the technical story is becoming a business
+            story: cases, group rooms, consumer behavior, strategy debates, and
+            the slower work of learning how decisions travel through people.
           </p>
         </Reveal>
       </div>
 
-      <div className="snap-strip -mx-3 flex snap-x gap-3 overflow-x-auto px-3 pb-4 md:mx-0 md:grid md:grid-cols-4 md:overflow-visible md:px-0 md:pb-0">
+      <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4">
         {mbaLifeImages.map((image, index) => (
           <Reveal
             key={image.src}
             delay={index * 0.04}
-            className={`${index === 0 ? "md:col-span-2" : ""} min-w-[78vw] snap-start md:min-w-0`}
+            className={`${index === 0 ? "sm:col-span-2 md:col-span-2" : ""} min-w-0`}
           >
-            <article className="group h-full overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.68)] p-2 shadow-[0_28px_80px_rgba(16,18,18,0.07)] backdrop-blur">
+            <article className="motion-surface group h-full overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.68)] p-2 shadow-[0_28px_80px_rgba(16,18,18,0.07)] backdrop-blur">
               <div
                 className={`relative overflow-hidden rounded-[6px] bg-[var(--surface-cool)] ${
                   index === 0 ? "aspect-[1.35]" : "aspect-[4/5] md:aspect-[0.86]"
@@ -841,7 +839,7 @@ function MbaChapterSection() {
                       ? "(max-width: 768px) 92vw, 44vw"
                       : "(max-width: 768px) 92vw, 22vw"
                   }
-                  className="object-cover transition-transform duration-[900ms] ease-[var(--ease)] group-hover:scale-[1.035]"
+                  className="media-lift object-cover transition-transform duration-[900ms] ease-[var(--ease)] group-hover:scale-[1.035]"
                 />
               </div>
               <p className="px-1 py-3 text-[0.86rem] leading-[1.5] text-[var(--muted)]">
@@ -861,7 +859,7 @@ function JournalPreview({ posts }: { posts: JournalPost[] }) {
   return (
     <section
       id="journal"
-      className="section-shell scroll-mt-0 border-y border-black/10 py-16 md:py-32"
+      className="section-shell scroll-mt-0 border-y border-black/10 py-12 md:py-32"
     >
       <div className="mb-10 grid gap-8 md:mb-12 lg:grid-cols-[0.82fr_1fr] lg:items-end lg:gap-16">
         <Reveal>
@@ -874,14 +872,13 @@ function JournalPreview({ posts }: { posts: JournalPost[] }) {
         </Reveal>
         <Reveal delay={0.08}>
           <p className="max-w-[680px] text-[clamp(1.02rem,1.65vw,1.2rem)] leading-[1.68] text-[var(--muted-strong)]">
-            A place for product observations, market notes, AI workflow
-            lessons, consumer behavior, and MBA thinking. I want the writing to
-            feel useful, not loud, so drafts stay private until they earn their
-            place.
+            A place for observations that are still becoming arguments:
+            products, market signals, AI workflows, consumer behavior, and MBA
+            thinking. Drafts stay private until they earn the reader&apos;s time.
           </p>
           <Link
             href="/journal"
-            className="mt-6 inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--foreground)]"
+            className="interactive-underline mt-6 inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--foreground)]"
           >
             {hasPosts ? "View insight library" : "View journal foundation"}
             <ArrowUpRight className="h-4 w-4 text-[var(--muted)]" />
@@ -946,7 +943,7 @@ function ReadingShelf() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section id="personal" className="section-shell relative scroll-mt-0 py-16 md:py-32">
+    <section id="personal" className="section-shell relative scroll-mt-0 py-12 md:py-32">
       <div className="mb-10 grid gap-8 md:mb-14 lg:grid-cols-[0.76fr_1fr] lg:items-end lg:gap-16">
         <Reveal>
           <SectionLabel>Reading shelf</SectionLabel>
@@ -958,23 +955,23 @@ function ReadingShelf() {
         </Reveal>
         <Reveal delay={0.08}>
           <p className="max-w-[680px] text-[clamp(1.02rem,1.65vw,1.2rem)] leading-[1.68] text-[var(--muted-strong)]">
-            Ten books I keep around for different moods: business, marketing,
-            leadership, fiction, and a few softer resets. No perfect canon,
-            just a shelf that keeps nudging my thinking.
+            Not a perfect canon. Just books I return to when I want to think
+            about brands, leadership, ambition, choices, and the softer side of
+            building a life around work.
           </p>
         </Reveal>
       </div>
 
-      <div className="snap-strip -mx-3 flex snap-x gap-4 overflow-x-auto px-3 pb-4 lg:mx-0 lg:grid lg:grid-cols-5 lg:overflow-visible lg:px-0 lg:pb-0">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:gap-4">
         {readingShelf.map((book, index) => {
           return (
             <Reveal
               key={book.title}
               delay={index * 0.03}
-              className="min-w-[238px] snap-start sm:min-w-0"
+              className="min-w-0"
             >
               <motion.article
-                className={`book-card book-card-${book.accent} group flex h-full min-h-[355px] flex-col justify-between overflow-hidden rounded-[8px] border border-white/12 p-4 shadow-[0_26px_80px_rgba(16,18,18,0.08)] md:min-h-[410px] lg:min-h-[430px]`}
+                className={`book-card book-card-${book.accent} motion-surface group flex h-full min-h-[300px] flex-col justify-between overflow-hidden rounded-[8px] border border-white/12 p-3 shadow-[0_26px_80px_rgba(16,18,18,0.08)] sm:p-4 md:min-h-[390px] lg:min-h-[410px]`}
                 whileHover={
                   shouldReduceMotion
                     ? undefined
@@ -1003,7 +1000,7 @@ function ReadingShelf() {
                         alt={`${book.title} book cover`}
                         fill
                         sizes="(max-width: 640px) 150px, (max-width: 1024px) 140px, 120px"
-                        className="object-cover"
+                        className="media-lift object-cover"
                       />
                     </div>
                     <p className="mt-3 line-clamp-2 text-center text-[0.78rem] font-medium leading-[1.28] text-white/72">
@@ -1011,7 +1008,7 @@ function ReadingShelf() {
                     </p>
                   </div>
                 </div>
-                <p className="mt-5 border-t border-white/14 pt-4 text-[0.9rem] leading-[1.56] text-white/72">
+                <p className="mt-4 line-clamp-4 border-t border-white/14 pt-3 text-[0.84rem] leading-[1.5] text-white/72 sm:text-[0.9rem]">
                   {book.note}
                 </p>
               </motion.article>
@@ -1037,16 +1034,16 @@ function ReadingShelf() {
 
 function FuturePhotoStrip() {
   return (
-    <div className="snap-strip -mx-3 flex snap-x gap-3 overflow-x-auto px-3 pb-3 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0">
+    <div className="grid grid-cols-2 gap-3">
       {profile.photoSlots.map((slot) => (
-        <div key={slot.id} className="editorial-panel min-w-[64vw] snap-start overflow-hidden p-2 sm:min-w-0">
+        <div key={slot.id} className="editorial-panel motion-surface min-w-0 overflow-hidden p-2">
           <div className="relative aspect-[4/5] overflow-hidden rounded-[6px] bg-[linear-gradient(145deg,#eef1ed,#fffdf8)]">
             <Image
               src={slot.src}
               alt={`${slot.label}: ${slot.note}`}
               fill
               sizes="(max-width: 640px) 92vw, 180px"
-              className="object-cover transition-transform duration-[900ms] ease-[var(--ease)] hover:scale-[1.035]"
+              className="media-lift object-cover transition-transform duration-[900ms] ease-[var(--ease)] hover:scale-[1.035]"
             />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent p-3 text-white">
               <p className="text-[0.86rem] font-semibold leading-[1.2]">
@@ -1190,7 +1187,7 @@ function PersonalInterests() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section className="section-shell relative scroll-mt-0 py-16 md:py-32">
+    <section className="section-shell relative scroll-mt-0 py-12 md:py-32">
       <div className="grid gap-10 lg:grid-cols-[0.78fr_1fr] lg:gap-16">
         <Reveal>
           <SectionLabel>Off the screen</SectionLabel>
@@ -1200,10 +1197,10 @@ function PersonalInterests() {
             className="max-w-[760px] text-[clamp(2.35rem,10vw,5rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.96]"
           />
           <p className="mt-6 max-w-[660px] text-[1.02rem] leading-[1.7] text-[var(--muted-strong)] md:text-[1.16rem]">
-            I like work, but I do not want a portfolio that pretends life is
-            only work. Badminton, books, chess, morning runs, photos, sketches,
-            cooking, AI tools, and market-watching all feed the same habit:
-            paying attention.
+            I do not want the site to pretend life is only output. Badminton,
+            chess, running, photos, sketches, cooking, tools, and market
+            watching all feed the same habit: paying attention before making a
+            move.
           </p>
           <div id="gallery" className="mt-8 scroll-mt-28">
             <FuturePhotoStrip />
@@ -1211,14 +1208,14 @@ function PersonalInterests() {
           <Reveal delay={0.08}>
             <Link
               href="/life"
-              className="group mt-4 flex items-center justify-between gap-4 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.68)] px-4 py-3 text-[0.95rem] font-medium text-[var(--foreground)] shadow-[0_18px_54px_rgba(16,18,18,0.055)] backdrop-blur transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-black/15"
+              className="premium-link group mt-4 flex items-center justify-between gap-4 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.68)] px-4 py-3 text-[0.95rem] font-medium text-[var(--foreground)] shadow-[0_18px_54px_rgba(16,18,18,0.055)] backdrop-blur transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-black/15"
             >
               <span>Life, lightly documented</span>
               <ArrowUpRight className="h-4 w-4 text-[var(--muted)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
           </Reveal>
         </Reveal>
-        <div className="snap-strip -mx-3 flex snap-x gap-3 overflow-x-auto px-3 pb-4 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0">
+        <div className="grid gap-3 sm:grid-cols-2">
           {personalInterests.map((interest, index) => {
             const Icon = interest.icon;
 
@@ -1226,10 +1223,10 @@ function PersonalInterests() {
               <Reveal
                 key={interest.title}
                 delay={index * 0.035}
-                className={`${interest.featured ? "sm:col-span-2" : ""} min-w-[78vw] snap-start sm:min-w-0`}
+                className={`${interest.featured ? "sm:col-span-2" : ""} min-w-0`}
               >
                 <motion.article
-                  className={`hover-light group relative h-full overflow-hidden rounded-[8px] border p-5 transition duration-500 md:p-6 ${
+                  className={`motion-surface hover-light group relative h-full overflow-hidden rounded-[8px] border p-5 transition duration-500 md:p-6 ${
                     interest.featured
                       ? "border-black/12 bg-[rgba(16,18,18,0.92)] text-white shadow-[0_34px_110px_rgba(16,18,18,0.16)]"
                       : "editorial-panel"
@@ -1283,10 +1280,11 @@ function ClosingBridge() {
       <Reveal>
         <Link
           href="#contact"
-          className="group flex flex-col gap-5 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.64)] p-5 shadow-[0_30px_90px_rgba(16,18,18,0.07)] backdrop-blur transition hover:bg-white md:flex-row md:items-center md:justify-between md:p-7"
+          className="premium-link motion-surface group flex flex-col gap-5 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.64)] p-5 shadow-[0_30px_90px_rgba(16,18,18,0.07)] backdrop-blur transition hover:bg-white md:flex-row md:items-center md:justify-between md:p-7"
         >
           <span className="max-w-[760px] text-[clamp(1.35rem,3.8vw,2.4rem)] font-semibold leading-[1.1]">
-            If the work, direction, or curiosity feels aligned, let’s connect.
+            If the direction feels useful, thoughtful, or simply worth a
+            conversation, let&apos;s talk.
           </span>
           <span className="inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--muted-strong)]">
             Contact
@@ -1300,22 +1298,18 @@ function ClosingBridge() {
 
 export function HomePageClient({ journalPosts }: { journalPosts: JournalPost[] }) {
   return (
-    <>
-      <SiteNav />
-      <SectionNavigator />
-      <main className="pb-20 xl:pb-0">
-        <Hero />
-        <Direction />
-        <Background />
-        <ArchivePreview />
-        <FeaturedSystem />
-        <RecognitionSection />
-        <MbaChapterSection />
-        <JournalPreview posts={journalPosts} />
-        <ReadingShelf />
-        <PersonalInterests />
-        <ClosingBridge />
-      </main>
-    </>
+    <main>
+      <Hero />
+      <Direction />
+      <Background />
+      <ArchivePreview />
+      <FeaturedSystem />
+      <RecognitionSection />
+      <MbaChapterSection />
+      <JournalPreview posts={journalPosts} />
+      <ReadingShelf />
+      <PersonalInterests />
+      <ClosingBridge />
+    </main>
   );
 }

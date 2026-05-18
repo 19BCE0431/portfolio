@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Archive, ArrowLeft, ArrowRight, Layers2 } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
-import type { KeyboardEvent, PointerEvent } from "react";
+import type { KeyboardEvent, PointerEvent, UIEvent } from "react";
 import type { GalleryCluster } from "../data/media";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -24,6 +24,7 @@ export function LifeGallery({
   });
   const shouldReduceMotion = useReducedMotion();
   const [activeClusterId, setActiveClusterId] = useState(clusters[0]?.id);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const activeCluster =
     clusters.find((cluster) => cluster.id === activeClusterId) ?? clusters[0];
 
@@ -44,7 +45,35 @@ export function LifeGallery({
 
   const selectCluster = (clusterId: GalleryCluster["id"]) => {
     setActiveClusterId(clusterId);
+    setActiveImageIndex(0);
     railRef.current?.scrollTo({ left: 0, behavior: "auto" });
+  };
+
+  const scrollToImage = (index: number) => {
+    const rail = railRef.current;
+    const target = rail?.children[index] as HTMLElement | undefined;
+    if (!rail || !target) return;
+
+    setActiveImageIndex(index);
+    rail.scrollTo({
+      left: target.offsetLeft - rail.offsetLeft,
+      behavior: shouldReduceMotion ? "auto" : "smooth",
+    });
+  };
+
+  const handleRailScroll = (event: UIEvent<HTMLDivElement>) => {
+    const rail = event.currentTarget;
+    const items = Array.from(rail.children) as HTMLElement[];
+    const nextIndex = items.reduce(
+      (closest, item, index) => {
+        const distance = Math.abs(item.offsetLeft - rail.scrollLeft);
+
+        return distance < closest.distance ? { index, distance } : closest;
+      },
+      { index: 0, distance: Number.POSITIVE_INFINITY },
+    ).index;
+
+    setActiveImageIndex(nextIndex);
   };
 
   const handleRailKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -108,7 +137,7 @@ export function LifeGallery({
         </p>
       </div>
 
-      <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
+      <div className="flex flex-wrap gap-2 pb-1">
         {clusters.map((cluster) => {
           const isActive = cluster.id === activeCluster.id;
 
@@ -118,7 +147,7 @@ export function LifeGallery({
               type="button"
               onClick={() => selectCluster(cluster.id)}
               aria-pressed={isActive}
-              className={`group relative min-h-11 shrink-0 overflow-hidden rounded-[8px] border px-3.5 py-2 text-left transition duration-300 focus:outline-none focus:ring-2 focus:ring-black/15 ${
+              className={`premium-link group relative min-h-11 shrink-0 overflow-hidden rounded-[8px] border px-3.5 py-2 text-left transition duration-300 focus:outline-none focus:ring-2 focus:ring-black/15 ${
                 isActive
                   ? "border-black/18 bg-[rgba(16,18,18,0.92)] text-white shadow-[0_18px_62px_rgba(16,18,18,0.14)]"
                   : "border-black/10 bg-[rgba(255,253,248,0.68)] text-[var(--foreground)] hover:bg-white"
@@ -146,7 +175,7 @@ export function LifeGallery({
           animate={{ opacity: 1, y: 0 }}
           exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: -10 }}
           transition={{ duration: 0.34, ease }}
-          className="overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.58)] p-3 shadow-[0_34px_120px_rgba(16,18,18,0.08)] backdrop-blur md:p-4"
+          className="motion-surface overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.58)] p-3 shadow-[0_34px_120px_rgba(16,18,18,0.08)] backdrop-blur md:p-4"
         >
           <div className="mb-5 grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
             <div>
@@ -180,63 +209,99 @@ export function LifeGallery({
             </div>
           </div>
 
-          <div
-            ref={railRef}
-            className="flex cursor-grab snap-x gap-4 overflow-x-auto pb-4 active:cursor-grabbing [scrollbar-width:thin]"
-            tabIndex={0}
-            aria-label={`${activeCluster.label} image carousel`}
-            onKeyDown={handleRailKeyDown}
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={endDrag}
-            onPointerCancel={endDrag}
-            onPointerLeave={(event) => {
-              if (dragState.current.active) endDrag(event);
-            }}
-          >
-            {activeCluster.images.map((image, index) => (
-              <motion.figure
-                key={image.src}
-                className={`group min-w-[78vw] snap-start overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.78)] p-2 shadow-[0_26px_82px_rgba(16,18,18,0.08)] backdrop-blur sm:min-w-[420px] ${
-                  image.orientation === "portrait"
-                    ? "md:min-w-[350px]"
-                    : "md:min-w-[560px]"
-                }`}
-                initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                whileHover={shouldReduceMotion ? undefined : { y: -5 }}
-                transition={{ duration: 0.45, delay: index * 0.035, ease }}
-              >
-                <div
-                  className={`relative overflow-hidden rounded-[6px] bg-[var(--surface-cool)] ${
+          <div className="relative">
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute bottom-4 right-0 top-0 z-10 w-12 bg-gradient-to-l from-[rgba(251,251,248,0.92)] to-transparent"
+            />
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute bottom-4 left-0 top-0 z-10 w-6 bg-gradient-to-r from-[rgba(251,251,248,0.9)] to-transparent"
+            />
+            <div
+              ref={railRef}
+              className="flex cursor-grab snap-x snap-mandatory gap-4 overflow-x-auto pb-4 pr-8 active:cursor-grabbing [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              tabIndex={0}
+              aria-label={`${activeCluster.label} image carousel`}
+              onScroll={handleRailScroll}
+              onKeyDown={handleRailKeyDown}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={endDrag}
+              onPointerCancel={endDrag}
+              onPointerLeave={(event) => {
+                if (dragState.current.active) endDrag(event);
+              }}
+            >
+              {activeCluster.images.map((image, index) => (
+                <motion.figure
+                  key={image.src}
+                  className={`motion-surface group min-w-[82%] snap-start overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.78)] p-2 shadow-[0_26px_82px_rgba(16,18,18,0.08)] backdrop-blur sm:min-w-[420px] ${
                     image.orientation === "portrait"
-                      ? "aspect-[4/5]"
-                      : "aspect-[1.45]"
+                      ? "md:min-w-[350px]"
+                      : "md:min-w-[560px]"
                   }`}
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  whileHover={shouldReduceMotion ? undefined : { y: -5 }}
+                  transition={{ duration: 0.45, delay: index * 0.035, ease }}
                 >
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    sizes={
+                  <div
+                    className={`relative overflow-hidden rounded-[6px] bg-[var(--surface-cool)] ${
                       image.orientation === "portrait"
-                        ? "(max-width: 768px) 78vw, 350px"
-                        : "(max-width: 768px) 78vw, 560px"
-                    }
-                    className="object-cover transition-transform duration-[900ms] ease-[var(--ease)] group-hover:scale-[1.035]"
+                        ? "aspect-[4/5]"
+                        : "aspect-[1.45]"
+                    }`}
+                  >
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      sizes={
+                        image.orientation === "portrait"
+                          ? "(max-width: 768px) 82vw, 350px"
+                          : "(max-width: 768px) 82vw, 560px"
+                      }
+                      className="media-lift object-cover transition-transform duration-[900ms] ease-[var(--ease)] group-hover:scale-[1.035]"
+                    />
+                  </div>
+                  <figcaption className="grid gap-2 px-1 py-3">
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--sage)]">
+                      {activeCluster.label} {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-[0.95rem] leading-[1.55] text-[var(--muted-strong)]">
+                      {image.caption}
+                    </span>
+                  </figcaption>
+                </motion.figure>
+              ))}
+            </div>
+            <div className="mt-3 flex items-center justify-between gap-4">
+              <div
+                className="flex items-center gap-1.5"
+                aria-label={`${activeCluster.label} carousel position`}
+              >
+                {activeCluster.images.map((image, index) => (
+                  <button
+                    key={image.src}
+                    type="button"
+                    aria-label={`Show image ${index + 1} of ${activeCluster.images.length}`}
+                    aria-current={activeImageIndex === index ? true : undefined}
+                    onClick={() => scrollToImage(index)}
+                    className={`h-1.5 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-black/15 ${
+                      activeImageIndex === index
+                        ? "w-6 bg-[var(--foreground)]"
+                        : "w-1.5 bg-black/20 hover:bg-black/36"
+                    }`}
                   />
-                </div>
-                <figcaption className="grid gap-2 px-1 py-3">
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--sage)]">
-                    {activeCluster.label} {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-[0.95rem] leading-[1.55] text-[var(--muted-strong)]">
-                    {image.caption}
-                  </span>
-                </figcaption>
-              </motion.figure>
-            ))}
+                ))}
+              </div>
+              <span className="text-[11px] font-medium text-[var(--muted)]">
+                {String(activeImageIndex + 1).padStart(2, "0")} /{" "}
+                {String(activeCluster.images.length).padStart(2, "0")}
+              </span>
+            </div>
           </div>
         </motion.div>
       </AnimatePresence>

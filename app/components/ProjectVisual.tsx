@@ -44,10 +44,12 @@ export function ProjectVisual({
   project,
   compact = false,
   dark = false,
+  priority = false,
 }: {
   project: ArchiveProject;
   compact?: boolean;
   dark?: boolean;
+  priority?: boolean;
 }) {
   const shouldReduceMotion = useReducedMotion();
   const [imageMissing, setImageMissing] = useState(false);
@@ -91,9 +93,10 @@ export function ProjectVisual({
                 ? "(max-width: 768px) 92vw, 25vw"
                 : "(max-width: 768px) 92vw, 42vw"
             }
+            priority={priority}
             unoptimized={isSvg}
             onError={() => setImageMissing(true)}
-            className="object-cover transition-transform duration-[900ms] ease-[var(--ease)] group-hover:scale-[1.04]"
+            className="media-lift object-cover transition-transform duration-[900ms] ease-[var(--ease)] group-hover:scale-[1.04]"
           />
           <span
             aria-hidden="true"
@@ -118,7 +121,7 @@ export function ProjectVisual({
         <motion.div
           aria-label={project.visual?.alt ?? `${project.title} visual placeholder`}
           role="img"
-          className={`relative h-full w-full overflow-hidden ${
+          className={`media-lift relative h-full w-full overflow-hidden ${
             dark
               ? "bg-[linear-gradient(135deg,rgba(255,255,255,0.08),rgba(104,121,109,0.12))]"
               : "bg-[linear-gradient(135deg,#fbf8f0,#eef1ed_54%,#f7f1ea)]"

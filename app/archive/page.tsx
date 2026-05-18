@@ -4,7 +4,6 @@ import { Footer } from "../components/Footer";
 import { HeadingReveal } from "../components/HeadingReveal";
 import { Reveal } from "../components/Reveal";
 import { SectionLabel } from "../components/SectionLabel";
-import { SiteNav } from "../components/SiteNav";
 import { archiveProjects } from "../data/archive";
 
 export const metadata: Metadata = {
@@ -20,7 +19,6 @@ export default function ArchivePage() {
 
   return (
     <>
-      <SiteNav />
       <main className="relative overflow-hidden pt-24 md:pt-40">
         <div
           aria-hidden="true"
@@ -59,7 +57,7 @@ export default function ArchivePage() {
                 ].map(([label, value]) => (
                   <div
                     key={label}
-                    className="rounded-[8px] border border-black/10 bg-white/45 px-3 py-3 backdrop-blur"
+                    className="motion-surface rounded-[8px] border border-black/10 bg-white/45 px-3 py-3 backdrop-blur"
                   >
                     <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
                       {label}

@@ -13,9 +13,10 @@ Add these locally in `.env.local` and in Vercel Project Settings before producti
 
 ```bash
 NEXT_PUBLIC_GA_MEASUREMENT_ID=G-KYQ1XELWXN
-NEXT_PUBLIC_CLARITY_PROJECT_ID=
-GA4_PROPERTY_ID=
+NEXT_PUBLIC_CLARITY_PROJECT_ID=wswfgi70h5
+GA4_PROPERTY_ID=538116983
 GA4_SERVICE_ACCOUNT_JSON=
+CLARITY_API_TOKEN=
 RESEND_API_KEY=
 ANALYTICS_EMAIL_FROM="Portfolio Analytics <analytics@your-domain.com>"
 ANALYTICS_EMAIL_TO=cm.mohhithh@gmail.com
@@ -37,11 +38,12 @@ WHATSAPP_TO_NUMBER=
 5. Set `CRON_SECRET` to a long random value.
 6. Set the Resend values so the digest can be emailed.
 
-The scheduled Vercel job runs at `02:30 UTC`, which is `08:00 IST`, and reports the GA4 property's `yesterday` data.
+The scheduled Vercel job runs at `01:00 UTC`, which is `06:30 IST`, and reports the GA4 property's `yesterday` data.
 
 ## Microsoft Clarity
 
 Create a Microsoft Clarity project, copy its project ID, and set `NEXT_PUBLIC_CLARITY_PROJECT_ID`.
+For automated Clarity rows in the daily email, generate a Data Export token in Clarity project settings and set `CLARITY_API_TOKEN`.
 
 Clarity is intentionally controlled by an environment variable so staging, local work, or future private pages can avoid behavior recording.
 
