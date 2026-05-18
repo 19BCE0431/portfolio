@@ -55,15 +55,20 @@ export function ProjectCard({
       initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 10 }}
-      whileHover={shouldReduceMotion ? undefined : { y: -6, scale: 1.006 }}
+      whileHover={
+        shouldReduceMotion
+          ? undefined
+          : { y: -8, scale: 1.01, rotateX: 1.1, rotateY: featured ? -0.4 : 0.55 }
+      }
       whileTap={shouldReduceMotion ? undefined : { scale: 0.996 }}
       transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+      style={{ transformPerspective: 1200 }}
     >
       <Link
         href={`/archive/${project.slug}`}
         onMouseMove={handlePointerMove}
         onMouseLeave={resetPointer}
-        className={`group motion-surface hover-light relative flex h-full cursor-pointer flex-col overflow-hidden rounded-[8px] border p-3 backdrop-blur transition duration-500 focus:outline-none focus:ring-2 focus:ring-black/15 sm:p-4 ${
+        className={`project-card-premium group motion-surface hover-light relative flex h-full cursor-pointer flex-col overflow-hidden rounded-[8px] border p-3 backdrop-blur transition duration-500 focus:outline-none focus:ring-2 focus:ring-black/15 sm:p-4 ${
           featured
             ? "border-black/15 bg-[rgba(16,18,18,0.93)] text-white shadow-[0_36px_110px_rgba(16,18,18,0.16)] hover:border-black/20"
             : "premium-card-shadow border-black/10 bg-[rgba(255,253,248,0.76)] hover:border-black/20 hover:bg-[rgba(255,253,248,0.96)] hover:shadow-[0_34px_94px_rgba(16,18,18,0.09)]"
