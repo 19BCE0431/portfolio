@@ -164,7 +164,7 @@ export function SiteNav() {
               })}
             </div>
 
-            <div className="hidden items-center justify-self-end md:flex">
+            <div className="hidden items-center justify-self-end xl:flex">
               <div className="hidden items-center gap-1 lg:flex">
                 {routeLinks.map((item) => {
                   const isActive = pathname.startsWith(item.match);

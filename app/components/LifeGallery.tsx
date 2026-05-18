@@ -137,7 +137,7 @@ export function LifeGallery({
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-2 pb-1">
+      <div className="mobile-flow-rail pb-1 sm:mx-0 sm:flex sm:flex-wrap sm:overflow-visible sm:px-0">
         {clusters.map((cluster) => {
           const isActive = cluster.id === activeCluster.id;
 
@@ -289,12 +289,16 @@ export function LifeGallery({
                     aria-label={`Show image ${index + 1} of ${activeCluster.images.length}`}
                     aria-current={activeImageIndex === index ? true : undefined}
                     onClick={() => scrollToImage(index)}
-                    className={`h-1.5 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-black/15 ${
-                      activeImageIndex === index
-                        ? "w-6 bg-[var(--foreground)]"
-                        : "w-1.5 bg-black/20 hover:bg-black/36"
-                    }`}
-                  />
+                    className="grid h-7 min-w-7 place-items-center rounded-full focus:outline-none focus:ring-2 focus:ring-black/15"
+                  >
+                    <span
+                      className={`block h-1.5 rounded-full transition-all ${
+                        activeImageIndex === index
+                          ? "w-6 bg-[var(--foreground)]"
+                          : "w-1.5 bg-black/20 hover:bg-black/36"
+                      }`}
+                    />
+                  </button>
                 ))}
               </div>
               <span className="text-[11px] font-medium text-[var(--muted)]">

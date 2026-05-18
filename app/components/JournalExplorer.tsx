@@ -41,7 +41,7 @@ export function JournalExplorer({
   return (
     <div>
       <div className="sticky top-[74px] z-20 mb-6 py-2 md:top-[88px] md:mb-12">
-        <div className="premium-card-shadow fine-border flex min-w-0 flex-wrap gap-1.5 rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.9)] p-1.5 backdrop-blur-2xl sm:gap-2 sm:p-1">
+        <div className="premium-card-shadow fine-border mobile-flow-rail min-w-0 rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.9)] p-1.5 backdrop-blur-2xl sm:mx-0 sm:flex sm:flex-wrap sm:overflow-visible sm:px-1 sm:gap-2 sm:p-1">
           {(["All", ...categories] as const).map((category) => (
             <button
               key={category}
