@@ -39,14 +39,14 @@ export const profile = {
     {
       id: "editorial",
       src: "/images/mba-life/iim-campus-rain-01.jpg",
-      label: "Campus weather",
-      note: "Rain, hills, and the slower rhythm of the current chapter.",
+      label: "Current chapter",
+      note: "Hills, rain, case rooms, and the slower rhythm of learning business properly.",
     },
     {
       id: "personal",
       src: "/images/gallery/life-mountain-portrait-01.jpg",
-      label: "Off-script",
-      note: "A travel frame from the part of life that keeps work lighter.",
+      label: "Outside the resume",
+      note: "A travel frame from the part of life that keeps the work human.",
     },
   ],
 };
@@ -76,45 +76,45 @@ export const sectionNavItems = [
 ];
 
 export const heroMarkers = [
-  { label: "Now", value: "MBA at IIM Sirmaur" },
-  { label: "Lens", value: "Product, markets, behavior" },
-  { label: "Proof", value: "BigHaat automation and AI systems" },
+  { label: "Now", value: "MBA at IIM Sirmaur · Batch 2025-27" },
+  { label: "Signal", value: "Academic Excellence · Top 10%" },
+  { label: "Proof", value: "BigHaat AI, automation, and market systems" },
 ];
 
 export const thesisPoints = [
   {
-    label: "Human choice first",
-    text: "I like beginning with the person deciding: what they notice, what they trust, where they hesitate, and what finally makes action feel safe.",
+    label: "Begin with the decision",
+    text: "I like starting where the user, customer, team, or retailer has to choose: what they notice, what they trust, where they hesitate, and what finally makes action feel safe.",
   },
   {
-    label: "Builder memory",
-    text: "Computer Science and Data Science taught me how systems behave. BigHaat taught me how messy those systems become when they meet real teams, orders, prices, PDFs, and customers.",
+    label: "Build close to the mess",
+    text: "Computer Science and Data Science gave me structure. BigHaat made it practical: PDFs, prices, anomalies, logistics updates, dashboards, and workflows that had to help busy teams move faster.",
   },
   {
-    label: "Market instinct",
-    text: "The MBA is widening the frame: product, marketing, strategy, and consumer behavior are now the questions around the code, not separate from it.",
+    label: "Translate into business judgment",
+    text: "The MBA is widening the frame. Product, marketing, strategy, consumer behavior, and AI-enabled workflows are no longer separate interests; they are the business questions around the system.",
   },
 ];
 
 export const directionNotes = [
   {
     title: "Product",
-    text: "I care about products that feel clearer after the first use, not after a long explanation.",
+    text: "I care about products that become clearer through use: fewer doubts, cleaner next steps, and less work hidden inside the interface.",
     icon: Compass,
   },
   {
     title: "Marketing",
-    text: "I watch the space between attention and choice: proof, memory, comparison, aspiration, and timing.",
+    text: "I watch the space between attention and choice: proof, memory, comparison, aspiration, category cues, and timing.",
     icon: Eye,
   },
   {
     title: "Strategy",
-    text: "I am learning to separate loud data from useful signals, and to ask what a market is quietly teaching.",
+    text: "I am learning to separate loud data from useful signals, then ask what a category, competitor, or customer behavior is quietly teaching.",
     icon: LineChart,
   },
   {
     title: "AI workflows",
-    text: "I like AI when it removes invisible effort: lookup, extraction, alerts, matching, review, and follow-up.",
+    text: "I like AI when it removes invisible effort: lookup, extraction, matching, alerts, review, follow-up, and the repeated steps nobody misses.",
     icon: BrainCircuit,
   },
 ];
@@ -123,25 +123,31 @@ export const backgroundCards = [
   {
     label: "Current chapter",
     value: "MBA at IIM Sirmaur",
-    detail: "2025-2027. Product, marketing, strategy, consumer behavior, and the business questions that decide whether useful systems matter.",
+    detail: "Batch 2025-27. Product, marketing, strategy, consumer behavior, and the business questions that decide whether useful systems matter.",
     icon: GraduationCap,
+  },
+  {
+    label: "Academic signal",
+    value: "Top 10% of Batch",
+    detail: "Academic Excellence in the 2025-26 batch year, while moving from technical execution into business judgment and case-led thinking.",
+    icon: BadgeCheck,
   },
   {
     label: "Business lens",
     value: "Product, Markets, Behavior",
-    detail: "I am learning to read customers, categories, pricing, positioning, and the small frictions that shape a decision.",
+    detail: "Customers, categories, pricing, positioning, trust, adoption, and the small frictions that shape a decision.",
     icon: Landmark,
   },
   {
     label: "Builder base",
     value: "CSE, Data Science, Applied AI",
-    detail: "B.Tech CSE at VIT Vellore, then work across search, prediction, RAG, crawling, dashboards, alerts, and data pipelines.",
+    detail: "B.Tech CSE at VIT Vellore, then applied work across search, prediction, RAG, crawling, dashboards, alerts, and data pipelines.",
     icon: BrainCircuit,
   },
   {
     label: "BigHaat chapter",
     value: "Data Science Engineer",
-    detail: "PDF extraction, competitor price intelligence, anomaly detection, logistics visibility, and production workflows that earned CEO recognition.",
+    detail: "PDF extraction, competitor price intelligence, anomaly detection, image-led discovery, logistics visibility, and workflows that earned CEO recognition.",
     icon: BriefcaseBusiness,
   },
   {
@@ -153,13 +159,14 @@ export const backgroundCards = [
   {
     label: "Family retail lens",
     value: "CM Silks",
-    detail: "A family saree business that keeps teaching me trust, aspiration, local positioning, price perception, and customer education.",
+    detail: "A saree retail context that keeps teaching me trust, aspiration, customer education, price perception, and local brand memory.",
     icon: Store,
   },
 ];
 
 export const credibilityMarkers = [
-  "MBA candidate at IIM Sirmaur",
+  "MBA candidate at IIM Sirmaur · Batch 2025-27",
+  "Academic Excellence · Top 10% of Batch 2025-26",
   "B.Tech CSE, VIT Vellore · CGPA 9.15/10",
   "Data Science Engineer · Mar 2024-Mar 2025",
   "Data Science Intern · Sep 2023-Mar 2024",
@@ -209,33 +216,33 @@ export const skills = [
 
 export const systemNodes = [
   {
-    title: "Human direction",
-    text: "I set the question, taste, structure, and final publishing call.",
+    title: "Human direction first",
+    text: "The question, taste, structure, and final publishing call stay with me.",
     icon: BadgeCheck,
   },
   {
-    title: "AI-assisted drafts",
-    text: "AI helps move from rough idea to first version without skipping review.",
+    title: "AI as a sharper first draft",
+    text: "AI helps move rough ideas into structure without skipping judgment or review.",
     icon: Sparkles,
   },
   {
-    title: "Archive + journal",
-    text: "Projects, MBA notes, market observations, and learnings stay findable.",
+    title: "Archive as evidence",
+    text: "Projects, MBA notes, market observations, and learning trails stay findable.",
     icon: BookOpenText,
   },
   {
-    title: "LinkedIn adaptation",
+    title: "LinkedIn as a signal layer",
     text: "Longer notes become shorter posts only when the idea survives editing.",
     icon: FlameKindling,
   },
   {
-    title: "Visual prompts",
-    text: "Visuals support the argument instead of becoming decoration.",
+    title: "Visuals with a job",
+    text: "Images, cards, and prompts support the argument instead of filling space.",
     icon: Camera,
   },
   {
-    title: "Analytics loop",
-    text: "Analytics help me see what people explore and where the story needs sharper proof.",
+    title: "Analytics for sharper storytelling",
+    text: "Visitor behavior helps me see what earns attention and where proof needs clarity.",
     icon: LineChart,
   },
 ];
@@ -342,7 +349,7 @@ export const personalInterests = [
   },
   {
     title: "Photography",
-    text: "Mostly a habit of noticing: light, edges, pauses, and small scenes that would pass by.",
+    text: "A habit of noticing: light, edges, pauses, and small scenes that would otherwise pass by.",
     icon: Camera,
   },
   {
@@ -362,34 +369,34 @@ export const personalInterests = [
   },
   {
     title: "Brands and markets",
-    text: "I notice packaging, pricing, store layouts, offers, and why people pause before choosing.",
+    text: "Packaging, pricing, store layouts, offers, and the quiet pause before someone chooses.",
     icon: Eye,
   },
 ];
 
 export const journalItems = [
   {
-    label: "Drafting",
+    label: "Thinking in public",
     title: "Product and market notes from an MBA lens",
     description:
-      "Short reflections on products, market signals, adoption, and the choices behind them.",
+      "Short reflections that begin with a specific market behavior and end with a clearer business question.",
   },
   {
-    label: "Collecting",
+    label: "Observing",
     title: "Consumer behavior observations",
     description:
-      "Notes on trust, category understanding, pricing cues, and how everyday purchase decisions form.",
+      "Notes on trust, category understanding, pricing cues, retail influence, and how everyday purchase decisions form.",
   },
   {
-    label: "Drafting",
+    label: "Building",
     title: "AI workflows that make work lighter",
     description:
-      "Practical notes from search, RAG, OCR, scraping, prediction, dashboards, and alerts.",
+      "Practical notes from search, RAG, OCR, scraping, prediction, dashboards, and alert systems that remove repeated effort.",
   },
   {
-    label: "Coming soon",
+    label: "Emerging",
     title: "MBA case notes",
     description:
-      "Product, marketing, strategy, and consumer behavior notes from the IIM Sirmaur chapter.",
+      "Product, marketing, strategy, and consumer behavior notes from the IIM Sirmaur chapter, published only when the insight is strong enough.",
   },
 ];

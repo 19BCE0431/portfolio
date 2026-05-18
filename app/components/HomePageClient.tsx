@@ -54,32 +54,36 @@ import { SectionLabel } from "./SectionLabel";
 
 const premiumEase = [0.16, 1, 0.3, 1] as const;
 
-const heroSignalCards = [
+const heroDossierRows = [
   {
-    label: "Work signal",
-    title: "Messy inputs into operating clarity",
-    detail: "PDFs, prices, anomalies, pipelines",
+    label: "MBA",
+    title: "IIM Sirmaur · Batch 2025-27",
+    detail: "Academic Excellence · Top 10% of Batch 2025-26",
   },
   {
-    label: "MBA signal",
-    title: "Markets, behavior, product judgment",
-    detail: "Cases, consumers, strategy rooms",
+    label: "Work",
+    title: "BigHaat systems in the real world",
+    detail: "PDF extraction, price intelligence, anomaly detection, AI workflows",
   },
   {
-    label: "Personal signal",
-    title: "Retail memory meets AI workflows",
-    detail: "CM Silks, BigHaat, journal notes",
+    label: "Lens",
+    title: "Product, marketing, strategy, behavior",
+    detail: "A technical foundation translated into business judgment",
   },
 ];
 
-const bridgeMoments = [
+const storySpines = [
   {
-    label: "The thread",
-    words: ["choice", "signals", "systems", "trust"],
+    label: "Story spine",
+    title: "The site is arranged around one question: how do people decide?",
+    text: "The work starts with systems, but the point is the human choice around them: the customer trusting a product, the team acting on an alert, the retailer shaping a purchase, the market revealing a pattern.",
+    cues: ["choice", "trust", "signals", "systems"],
   },
   {
-    label: "Keep going",
-    words: ["campus", "notes", "shelf", "life"],
+    label: "Personal layer",
+    title: "The last layer is intentionally human, not decorative.",
+    text: "Campus frames, books, badminton, chess, running, photos, sketches, cooking, and retail observation sit here because they explain the attention behind the work.",
+    cues: ["campus", "notes", "shelf", "life"],
   },
 ];
 
@@ -502,7 +506,6 @@ function HeroVisual({ progress }: { progress: MotionValue<number> }) {
         style={{ y: shouldReduceMotion ? 0 : portraitY }}
       >
         <div className="absolute -inset-5 rounded-[8px] bg-[linear-gradient(135deg,rgba(104,121,109,0.14),rgba(104,119,137,0.06)_48%,rgba(154,127,99,0.12))] blur-2xl" />
-        <HeroSignalStack progress={progress} />
         <motion.figure
           className="premium-panel motion-surface hero-portrait-card relative overflow-hidden p-2"
           whileHover={shouldReduceMotion ? undefined : { y: -5 }}
@@ -520,38 +523,39 @@ function HeroVisual({ progress }: { progress: MotionValue<number> }) {
             ))}
           </figcaption>
         </motion.figure>
+        <HeroDossierPanel />
       </motion.div>
     </Reveal>
   );
 }
 
-function HeroSignalStack({ progress }: { progress: MotionValue<number> }) {
+function HeroDossierPanel() {
   const shouldReduceMotion = useReducedMotion();
-  const yOne = useTransform(progress, [0, 0.45], [0, -32]);
-  const yTwo = useTransform(progress, [0, 0.45], [0, 24]);
-  const rotate = useTransform(progress, [0, 0.45], [-4, 1.5]);
 
   return (
-    <div className="hero-signal-stack" aria-hidden="true">
-      {heroSignalCards.map((card, index) => (
-        <motion.div
-          key={card.label}
-          className={`hero-signal-card hero-signal-card-${index + 1}`}
-          style={
-            shouldReduceMotion
-              ? undefined
-              : {
-                  y: index === 1 ? yTwo : yOne,
-                  rotate: index === 2 ? rotate : undefined,
-                }
-          }
-        >
-          <span>{card.label}</span>
-          <strong>{card.title}</strong>
-          <small>{card.detail}</small>
-        </motion.div>
-      ))}
-    </div>
+    <motion.aside
+      className="hero-dossier-panel motion-surface"
+      initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.28, duration: 0.62, ease: premiumEase }}
+      aria-label="Portfolio proof summary"
+    >
+      <div className="hero-dossier-head">
+        <span>Proof dossier</span>
+        <span>Edited signals</span>
+      </div>
+      <div className="hero-dossier-grid">
+        {heroDossierRows.map((row) => (
+          <div key={row.label} className="hero-dossier-row">
+            <span>{row.label}</span>
+            <div>
+              <strong>{row.title}</strong>
+              <small>{row.detail}</small>
+            </div>
+          </div>
+        ))}
+      </div>
+    </motion.aside>
   );
 }
 
@@ -565,7 +569,7 @@ function MobilePortraitStrip() {
             {profile.shortName}
           </p>
           <p className="mt-1 text-[0.8rem] leading-[1.45] text-[var(--muted)]">
-            IIM Sirmaur MBA · Product, markets, behavior, AI workflows
+            IIM Sirmaur MBA 2025-27 · Top 10% academic signal · AI workflows
           </p>
         </div>
       </div>
@@ -624,7 +628,7 @@ function Hero() {
       >
         <Reveal delay={0.02}>
           <div className="hero-badge-row mb-5 flex flex-wrap gap-2">
-            {["MBA / Product", "AI workflows", "Indian markets"].map((item) => (
+            {["IIM Sirmaur MBA", "Top 10% academic signal", "AI + markets"].map((item) => (
               <span key={item}>{item}</span>
             ))}
           </div>
@@ -639,15 +643,16 @@ function Hero() {
         <Reveal delay={0.1}>
           <p className="mt-6 max-w-[800px] text-pretty-balance text-[clamp(1.06rem,4.2vw,1.32rem)] leading-[1.62] text-[var(--muted-strong)] md:mt-8 md:text-[clamp(1.18rem,2vw,1.5rem)] md:leading-[1.5]">
             <span className="md:hidden">
-              I am an MBA candidate at IIM Sirmaur, shaped by data science,
-              BigHaat systems, and a growing interest in how people choose.
+              I am an IIM Sirmaur MBA candidate shaped by data science,
+              BigHaat systems, and a growing focus on how people choose.
             </span>
             <span className="hidden md:inline">
               I started with Computer Science and Data Science, then spent a
               year turning messy BigHaat workflows into signals, automations,
-              and decision support. The MBA chapter is widening that work into
-              product, marketing, strategy, consumer behavior, and AI-enabled
-              systems that people can actually trust.
+              and decision support. Now, as an IIM Sirmaur MBA candidate in the
+              2025-27 batch with a Top 10% academic signal, I am widening that
+              work into product, marketing, strategy, consumer behavior, and
+              AI-enabled systems people can actually trust.
             </span>
           </p>
         </Reveal>
@@ -692,30 +697,42 @@ function Hero() {
 
 function StoryBridge({
   label,
-  words,
+  title,
+  text,
+  cues,
 }: {
   label: string;
-  words: string[];
+  title: string;
+  text: string;
+  cues: string[];
 }) {
   const shouldReduceMotion = useReducedMotion();
 
   return (
     <section className="section-shell scene-bridge" aria-label={label}>
-      <div className="scene-bridge-inner">
-        <span className="editorial-kicker">{label}</span>
-        <div className="scene-word-row" aria-hidden="true">
-          {words.map((word, index) => (
-            <motion.span
-              key={word}
-              className="scene-word"
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 18, scale: 0.94 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.65 }}
-              transition={{ duration: 0.55, delay: index * 0.055, ease: premiumEase }}
-            >
-              {word}
-            </motion.span>
-          ))}
+      <div className="story-bridge-inner">
+        <div>
+          <span className="editorial-kicker">{label}</span>
+          <h2 className="mt-3 max-w-[860px] text-[clamp(1.55rem,5vw,3.25rem)] font-semibold leading-[1.05] tracking-[0]">
+            {title}
+          </h2>
+        </div>
+        <div className="story-bridge-copy">
+          <p>{text}</p>
+          <div className="story-cue-row" aria-label={`${label} cues`}>
+            {cues.map((cue, index) => (
+              <motion.span
+                key={cue}
+                className="story-cue"
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 12, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.65 }}
+                transition={{ duration: 0.45, delay: index * 0.055, ease: premiumEase }}
+              >
+                {cue}
+              </motion.span>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -804,10 +821,10 @@ function Direction() {
               className="max-w-[720px] text-[clamp(2.35rem,10vw,5.2rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.94]"
             />
             <p className="mt-6 max-w-[650px] text-[1.02rem] leading-[1.7] text-[var(--muted-strong)] md:text-[1.14rem]">
-              The old version would have been a list of tools. This version is
-              closer to the truth: I like systems, but I am more interested in
-              the decisions around them: who uses them, what changes, what earns
-              trust, and where a market quietly reveals itself.
+              The site is deliberately not a skills dump. It is a record of how
+              I read problems: start with the person choosing, build close to
+              messy operating reality, then translate the signal into product,
+              marketing, strategy, or workflow decisions.
             </p>
             <div className="mt-8 h-px overflow-hidden bg-black/10">
               <motion.div
@@ -928,8 +945,8 @@ function Background() {
             <p className="max-w-[720px] text-pretty-balance text-[clamp(1.04rem,2vw,1.28rem)] leading-[1.68] text-[var(--deep-muted)]">
               I did not leave the builder side behind. I am learning to place
               it inside a bigger room: customers, categories, pricing,
-              positioning, operations, and the behavior that decides whether a
-              system matters.
+              positioning, operations, academic discipline, and the behavior
+              that decides whether a system actually matters.
             </p>
           </Reveal>
         </div>
@@ -1046,7 +1063,7 @@ function ArchivePreview() {
               The strongest work here comes from real friction: PDFs that
               slowed teams down, competitor prices that needed watching, order
               drops that needed early signals, and AI flows that had to earn
-              their place in a working business.
+              their place in a working business rather than a demo.
             </p>
             <Link
               href="/archive"
@@ -1139,8 +1156,8 @@ function FeaturedSystem() {
               />
               <p className="mt-6 max-w-[640px] text-[1rem] leading-[1.68] text-[var(--muted-strong)] md:text-[1.15rem]">
                 This site is also a product experiment: AI-assisted, reviewed
-                by me, and designed to keep proof, notes, drafts, analytics,
-                and future MBA work from becoming scattered.
+                by me, and designed to keep proof, notes, analytics, MBA work,
+                and future writing from becoming scattered or generic.
               </p>
             </div>
             <div className="relative z-10 mt-8">
@@ -1198,7 +1215,8 @@ function RecognitionSection() {
             <p className="mt-6 max-w-[650px] text-[1.02rem] leading-[1.7] text-[var(--muted-strong)] md:text-[1.16rem]">
               An early campus signal: Top 10 in the Iconic Quiz conducted by
               iimjobs.com and Markezen at IIM Sirmaur. I keep it here as quiet
-              proof that sharper rooms make the thinking sharper too.
+              proof, not decoration: sharper rooms are already sharpening the
+              way I listen, compare, and respond.
             </p>
           </div>
         </Reveal>
@@ -1278,7 +1296,8 @@ function MbaChapterSection() {
           <p className="max-w-[700px] text-[clamp(1rem,1.65vw,1.18rem)] leading-[1.68] text-[var(--muted-strong)]">
             IIM Sirmaur is where the technical story is becoming a business
             story: cases, group rooms, consumer behavior, strategy debates, and
-            the slower work of learning how decisions travel through people.
+            the slower work of learning how decisions travel through people,
+            incentives, categories, and timing.
           </p>
         </Reveal>
       </div>
@@ -1330,7 +1349,8 @@ function JournalPreview({ posts }: { posts: JournalPost[] }) {
           <p className="max-w-[680px] text-[clamp(1.02rem,1.65vw,1.2rem)] leading-[1.68] text-[var(--muted-strong)]">
             A place for observations that are still becoming arguments:
             products, market signals, AI workflows, consumer behavior, and MBA
-            thinking. Drafts stay private until they earn the reader&apos;s time.
+            thinking. Drafts stay private until the thought is specific enough
+            to earn the reader&apos;s time.
           </p>
           <Link
             href="/journal"
@@ -1360,6 +1380,11 @@ function JournalPreview({ posts }: { posts: JournalPost[] }) {
                   <p className="mt-3 max-w-[820px] text-[0.98rem] leading-[1.64] text-[var(--muted)]">
                     {post.summary}
                   </p>
+                  {post.keyInsight && (
+                    <p className="journal-row-insight mt-4 max-w-[780px] text-[0.86rem] leading-[1.55] text-[var(--muted-strong)]">
+                      {post.keyInsight}
+                    </p>
+                  )}
                   <p className="mt-3 text-[12px] text-[var(--muted)]">
                     {post.readingTime}
                   </p>
@@ -1466,7 +1491,8 @@ function ReadingShelf() {
           <p className="max-w-[680px] text-[clamp(1.02rem,1.65vw,1.2rem)] leading-[1.68] text-[var(--muted-strong)]">
             Not a perfect canon. Just books I return to when I want to think
             about brands, leadership, ambition, choices, and the softer side of
-            building a life around work.
+            building a life around work without letting work become the whole
+            life.
           </p>
         </Reveal>
       </div>
@@ -1739,8 +1765,8 @@ function PersonalInterests() {
           <p className="mt-6 max-w-[660px] text-[1.02rem] leading-[1.7] text-[var(--muted-strong)] md:text-[1.16rem]">
             I do not want the site to pretend life is only output. Badminton,
             chess, running, photos, sketches, cooking, tools, and market
-            watching all feed the same habit: paying attention before making a
-            move.
+            watching all point to the same habit: paying attention before
+            making a move.
           </p>
           <div id="gallery" className="mt-8 scroll-mt-28">
             <FuturePhotoStrip />
@@ -1797,8 +1823,8 @@ function ClosingBridge() {
           className="premium-link motion-surface group flex flex-col gap-5 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.64)] p-5 shadow-[0_30px_90px_rgba(16,18,18,0.07)] backdrop-blur transition hover:bg-white md:flex-row md:items-center md:justify-between md:p-7"
         >
           <span className="max-w-[760px] text-[clamp(1.35rem,3.8vw,2.4rem)] font-semibold leading-[1.1]">
-            If the direction feels useful, thoughtful, or simply worth a
-            conversation, let&apos;s talk.
+            If you are building, hiring, discussing a market, or shaping a
+            product story, I would like the conversation to be useful.
           </span>
           <span className="inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--muted-strong)]">
             Contact
@@ -1815,7 +1841,7 @@ export function HomePageClient({ journalPosts }: { journalPosts: JournalPost[] }
     <main className="relative">
       <ExperienceBackdrop />
       <Hero />
-      <StoryBridge {...bridgeMoments[0]} />
+      <StoryBridge {...storySpines[0]} />
       <Direction />
       <Background />
       <ArchivePreview />
@@ -1824,7 +1850,7 @@ export function HomePageClient({ journalPosts }: { journalPosts: JournalPost[] }
       <MbaChapterSection />
       <JournalPreview posts={journalPosts} />
       <ReadingShelf />
-      <StoryBridge {...bridgeMoments[1]} />
+      <StoryBridge {...storySpines[1]} />
       <PersonalInterests />
       <ClosingBridge />
     </main>

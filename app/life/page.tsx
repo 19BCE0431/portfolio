@@ -22,7 +22,7 @@ const archivedImageCount = auditedImageCount - curatedImageCount;
 export default function LifePage() {
   return (
     <>
-      <main className="relative overflow-hidden pt-24 md:pt-40">
+      <main className="relative overflow-hidden pt-24 md:pt-32">
         <div
           aria-hidden="true"
           className="premium-grid pointer-events-none absolute right-[-120px] top-28 h-[420px] w-[620px] opacity-[0.1] [mask-image:radial-gradient(circle,black,transparent_72%)]"
@@ -52,9 +52,9 @@ export default function LifePage() {
               <div className="grid gap-6">
                 <div>
                   <p className="max-w-[700px] text-[clamp(0.98rem,3.7vw,1.24rem)] leading-[1.62] text-[var(--muted-strong)]">
-                    A small optional gallery, edited into clusters instead of a
-                    wall of images. The main portfolio stays professional; this
-                    page keeps the warmer bits nearby.
+                    A small edited gallery, not a photo dump. These frames add
+                    warmth, rhythm, and context to the professional story while
+                    keeping the private parts private.
                   </p>
                   <div className="mt-5 grid grid-cols-3 gap-2 text-center">
                     {[
@@ -79,7 +79,7 @@ export default function LifePage() {
                     href="/#contact"
                     className="interactive-underline mt-6 inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--foreground)]"
                   >
-                    Connect from here
+                    Start a conversation
                     <ArrowUpRight className="h-4 w-4 text-[var(--muted)]" />
                   </Link>
                 </div>

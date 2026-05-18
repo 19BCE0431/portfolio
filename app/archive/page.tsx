@@ -19,7 +19,7 @@ export default function ArchivePage() {
 
   return (
     <>
-      <main className="relative overflow-hidden pt-24 md:pt-40">
+      <main className="relative overflow-hidden pt-24 md:pt-32">
         <div
           aria-hidden="true"
           className="premium-grid pointer-events-none absolute right-[-120px] top-28 h-[420px] w-[620px] opacity-[0.11] [mask-image:radial-gradient(circle,black,transparent_70%)]"
@@ -45,9 +45,10 @@ export default function ArchivePage() {
             </Reveal>
             <Reveal delay={0.08}>
               <p className="max-w-[700px] text-[clamp(0.98rem,4vw,1.24rem)] leading-[1.62] text-[var(--muted-strong)]">
-                A working library of applied projects, MBA notes, automation
-                experiments, and market observations. Each item is framed by
-                the problem, what changed, and the lesson I still carry from it.
+                A working library of applied AI, automation, retail learning,
+                MBA notes, and market observations. Each item is framed by the
+                problem, the decision it supported, and the lesson I still carry
+                from it.
               </p>
               <div className="mt-7 grid gap-2 sm:grid-cols-3">
                 {[

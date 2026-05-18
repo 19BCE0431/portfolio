@@ -103,6 +103,11 @@ export function JournalExplorer({
                   <p className="mt-3 line-clamp-3 text-[0.92rem] leading-[1.56] text-[var(--muted)] sm:mt-4 sm:line-clamp-none sm:text-[0.95rem] sm:leading-[1.62]">
                     {post.summary}
                   </p>
+                  {post.keyInsight && (
+                    <p className="journal-row-insight mt-4 line-clamp-3 text-[0.84rem] leading-[1.52] text-[var(--muted-strong)]">
+                      {post.keyInsight}
+                    </p>
+                  )}
                 </div>
 
                 <div className="mt-5 border-t border-black/10 pt-4 sm:mt-7">
@@ -111,7 +116,7 @@ export function JournalExplorer({
                     {formatDate(post.date)}
                   </div>
                   <div className="flex items-center justify-between gap-4 text-[0.9rem] font-medium text-[var(--foreground)]">
-                    <span>Read full analysis</span>
+                    <span>Read the full note</span>
                     <ArrowUpRight className="h-4 w-4 text-[var(--muted)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </div>
                 </div>
