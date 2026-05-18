@@ -76,7 +76,7 @@ export function ProjectVisual({
 
   return (
     <div
-      className={`relative overflow-hidden rounded-[8px] border ${
+      className={`project-visual-frame relative overflow-hidden rounded-[8px] border ${
         dark
           ? "border-white/10 bg-white/[0.035]"
           : "border-black/10 bg-[rgba(255,253,248,0.62)]"

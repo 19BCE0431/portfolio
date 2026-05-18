@@ -16,6 +16,8 @@ import {
   type MotionValue,
   useMotionValue,
   useReducedMotion,
+  useScroll,
+  useSpring,
   useTransform,
 } from "framer-motion";
 import Image from "next/image";
@@ -25,6 +27,7 @@ import {
   useEffect,
   useRef,
   useState,
+  type CSSProperties,
   type ReactNode,
   type RefObject,
 } from "react";
@@ -50,6 +53,35 @@ import { Reveal } from "./Reveal";
 import { SectionLabel } from "./SectionLabel";
 
 const premiumEase = [0.16, 1, 0.3, 1] as const;
+
+const heroSignalCards = [
+  {
+    label: "Work signal",
+    title: "Messy inputs into operating clarity",
+    detail: "PDFs, prices, anomalies, pipelines",
+  },
+  {
+    label: "MBA signal",
+    title: "Markets, behavior, product judgment",
+    detail: "Cases, consumers, strategy rooms",
+  },
+  {
+    label: "Personal signal",
+    title: "Retail memory meets AI workflows",
+    detail: "CM Silks, BigHaat, journal notes",
+  },
+];
+
+const bridgeMoments = [
+  {
+    label: "The thread",
+    words: ["choice", "signals", "systems", "trust"],
+  },
+  {
+    label: "Keep going",
+    words: ["campus", "notes", "shelf", "life"],
+  },
+];
 
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
@@ -103,6 +135,31 @@ function useElementScrollProgress(ref: RefObject<HTMLElement | null>) {
   }, [progress, ref]);
 
   return progress;
+}
+
+function ExperienceBackdrop() {
+  const shouldReduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll();
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 86,
+    damping: 26,
+    mass: 0.42,
+  });
+  const washY = useTransform(smoothProgress, [0, 1], ["-8%", "24%"]);
+  const washOpacity = useTransform(smoothProgress, [0, 0.45, 1], [0.72, 0.42, 0.58]);
+
+  return (
+    <div className="experience-backdrop" aria-hidden="true">
+      <motion.div
+        className="experience-wash"
+        style={shouldReduceMotion ? undefined : { y: washY, opacity: washOpacity }}
+      />
+      <motion.div
+        className="experience-progress"
+        style={shouldReduceMotion ? undefined : { scaleX: smoothProgress }}
+      />
+    </div>
+  );
 }
 
 function SmartLink({
@@ -445,8 +502,9 @@ function HeroVisual({ progress }: { progress: MotionValue<number> }) {
         style={{ y: shouldReduceMotion ? 0 : portraitY }}
       >
         <div className="absolute -inset-5 rounded-[8px] bg-[linear-gradient(135deg,rgba(104,121,109,0.14),rgba(104,119,137,0.06)_48%,rgba(154,127,99,0.12))] blur-2xl" />
+        <HeroSignalStack progress={progress} />
         <motion.figure
-          className="premium-panel motion-surface relative overflow-hidden p-2"
+          className="premium-panel motion-surface hero-portrait-card relative overflow-hidden p-2"
           whileHover={shouldReduceMotion ? undefined : { y: -5 }}
           transition={{ duration: 0.45, ease: premiumEase }}
         >
@@ -464,6 +522,36 @@ function HeroVisual({ progress }: { progress: MotionValue<number> }) {
         </motion.figure>
       </motion.div>
     </Reveal>
+  );
+}
+
+function HeroSignalStack({ progress }: { progress: MotionValue<number> }) {
+  const shouldReduceMotion = useReducedMotion();
+  const yOne = useTransform(progress, [0, 0.45], [0, -32]);
+  const yTwo = useTransform(progress, [0, 0.45], [0, 24]);
+  const rotate = useTransform(progress, [0, 0.45], [-4, 1.5]);
+
+  return (
+    <div className="hero-signal-stack" aria-hidden="true">
+      {heroSignalCards.map((card, index) => (
+        <motion.div
+          key={card.label}
+          className={`hero-signal-card hero-signal-card-${index + 1}`}
+          style={
+            shouldReduceMotion
+              ? undefined
+              : {
+                  y: index === 1 ? yTwo : yOne,
+                  rotate: index === 2 ? rotate : undefined,
+                }
+          }
+        >
+          <span>{card.label}</span>
+          <strong>{card.title}</strong>
+          <small>{card.detail}</small>
+        </motion.div>
+      ))}
+    </div>
   );
 }
 
@@ -511,22 +599,41 @@ function Hero() {
   const shouldReduceMotion = useReducedMotion();
   const scrollYProgress = usePageScrollProgress();
   const copyY = useTransform(scrollYProgress, [0, 0.35], [0, 20]);
+  const kineticX = useTransform(scrollYProgress, [0, 1], ["0%", "-18%"]);
 
   return (
     <section
       id="intro"
-      className="hero-shell relative grid min-h-[92svh] scroll-mt-28 items-center gap-8 overflow-hidden pb-10 pt-[5.75rem] md:min-h-[100svh] md:gap-10 md:pb-16 md:pt-28 lg:grid-cols-[minmax(0,0.96fr)_minmax(330px,0.46fr)] lg:gap-14"
+      className="hero-shell hero-stage relative grid min-h-[92svh] scroll-mt-28 items-center gap-8 overflow-hidden pb-10 pt-[5.75rem] md:min-h-[100svh] md:gap-10 md:pb-16 md:pt-28 lg:grid-cols-[minmax(0,0.96fr)_minmax(330px,0.46fr)] lg:gap-14"
     >
       <AmbientField progress={scrollYProgress} />
       <motion.div
-        className="relative z-10 max-w-[980px]"
+        aria-hidden="true"
+        className="hero-kinetic-rail"
+        style={
+          shouldReduceMotion
+            ? undefined
+            : { x: kineticX }
+        }
+      >
+        Product strategy · Consumer behavior · AI workflows · Retail signals ·
+      </motion.div>
+      <motion.div
+        className="hero-copy-stack relative z-10 max-w-[980px]"
         style={{ y: shouldReduceMotion ? 0 : copyY }}
       >
+        <Reveal delay={0.02}>
+          <div className="hero-badge-row mb-5 flex flex-wrap gap-2">
+            {["MBA / Product", "AI workflows", "Indian markets"].map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
+        </Reveal>
         <HeadingReveal
           as="h1"
           lines={["Builder roots.", "Business lens.", "Human choices."]}
           mobileLines={["Builder roots.", "Business lens.", "Human choices."]}
-          className="display-tight max-w-[1040px] text-[clamp(2.75rem,12vw,4.15rem)] font-semibold leading-[0.94] text-[var(--foreground)] md:text-[clamp(4.15rem,6.35vw,7.15rem)] md:leading-[0.9]"
+          className="display-tight hero-display max-w-[1040px] text-[clamp(2.75rem,12vw,4.15rem)] font-semibold leading-[0.94] text-[var(--foreground)] md:text-[clamp(4.15rem,6.35vw,7.15rem)] md:leading-[0.9]"
           delay={0.04}
         />
         <Reveal delay={0.1}>
@@ -579,6 +686,38 @@ function Hero() {
       <div className="noise-layer" />
       <div className="absolute bottom-0 left-0 right-0 h-px hairline" />
       <QuietScrollCue />
+    </section>
+  );
+}
+
+function StoryBridge({
+  label,
+  words,
+}: {
+  label: string;
+  words: string[];
+}) {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <section className="section-shell scene-bridge" aria-label={label}>
+      <div className="scene-bridge-inner">
+        <span className="editorial-kicker">{label}</span>
+        <div className="scene-word-row" aria-hidden="true">
+          {words.map((word, index) => (
+            <motion.span
+              key={word}
+              className="scene-word"
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 18, scale: 0.94 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.65 }}
+              transition={{ duration: 0.55, delay: index * 0.055, ease: premiumEase }}
+            >
+              {word}
+            </motion.span>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
@@ -652,7 +791,7 @@ function Direction() {
     <section
       ref={sectionRef}
       id="direction"
-      className="section-shell relative py-12 md:py-32"
+      className="section-shell scene-section relative py-12 md:py-32"
     >
       <div className="absolute left-0 top-0 hidden h-full w-px vertical-hairline opacity-60 lg:block" />
       <div className="grid gap-12 lg:grid-cols-[0.72fr_1fr] lg:gap-18">
@@ -774,7 +913,7 @@ function BackgroundCard({
 
 function Background() {
   return (
-    <section id="background" className="dark-transition scroll-mt-28 py-14 text-[var(--surface)] md:py-40">
+    <section id="background" className="dark-transition scene-section scene-section-dark scroll-mt-28 py-14 text-[var(--surface)] md:py-40">
       <div className="section-shell">
         <div className="grid gap-10 lg:grid-cols-[0.72fr_1fr] lg:items-end lg:gap-20">
           <Reveal>
@@ -889,7 +1028,7 @@ function ArchivePreview() {
   return (
     <section
       id="work"
-      className="section-shell relative overflow-hidden py-12 md:py-36"
+      className="section-shell scene-section relative overflow-hidden py-12 md:py-36"
     >
       <div className="premium-grid pointer-events-none absolute right-0 top-24 h-[360px] w-[520px] opacity-[0.1] [mask-image:radial-gradient(circle,black,transparent_70%)]" />
       <div className="mb-10 grid gap-8 md:mb-14 lg:grid-cols-[0.72fr_1fr] lg:gap-16">
@@ -936,10 +1075,15 @@ function ArchivePreview() {
         </GlideDeck>
       </div>
 
-      <div className="hidden gap-4 lg:grid lg:grid-cols-2 xl:grid-cols-4">
-        {selectedProjects.map((project) => (
-          <div key={project.slug} className="min-w-0">
-            <ProjectCard project={project} compact />
+      <div className="hidden gap-4 lg:grid lg:grid-cols-6">
+        {selectedProjects.map((project, index) => (
+          <div
+            key={project.slug}
+            className={`min-w-0 ${
+              index < 2 ? "lg:col-span-3" : "lg:col-span-3 xl:col-span-2"
+            } ${index === 2 ? "xl:col-start-2" : ""}`}
+          >
+            <ProjectCard project={project} compact={index > 1} priority={index === 0} />
           </div>
         ))}
       </div>
@@ -980,7 +1124,7 @@ function FeaturedSystem() {
   if (!project) return null;
 
   return (
-    <section id="system" className="section-shell relative py-12 md:py-36">
+    <section id="system" className="section-shell scene-section relative py-12 md:py-36">
       <div className="absolute left-0 top-10 hidden h-px w-1/2 bg-gradient-to-r from-black/20 to-transparent md:block" />
       <div className="grid gap-7 lg:grid-cols-[0.78fr_1fr] lg:items-stretch lg:gap-6">
         <Reveal>
@@ -1040,7 +1184,7 @@ function RecognitionSection() {
   return (
     <section
       id="recognition"
-      className="section-shell relative py-12 md:py-32"
+      className="section-shell scene-section relative py-12 md:py-32"
     >
       <div className="grid gap-12 lg:grid-cols-[0.72fr_1fr] lg:gap-16">
         <Reveal>
@@ -1120,7 +1264,7 @@ function MbaImageCard({
 
 function MbaChapterSection() {
   return (
-    <section id="mba-life" className="section-shell relative py-12 md:py-24">
+    <section id="mba-life" className="section-shell scene-section relative py-12 md:py-24">
       <div className="mb-10 grid gap-8 lg:grid-cols-[0.8fr_1fr] lg:items-end lg:gap-16">
         <Reveal>
           <SectionLabel>MBA chapter</SectionLabel>
@@ -1171,7 +1315,7 @@ function JournalPreview({ posts }: { posts: JournalPost[] }) {
   return (
     <section
       id="journal"
-      className="section-shell border-y border-black/10 py-12 md:py-32"
+      className="section-shell scene-section border-y border-black/10 py-12 md:py-32"
     >
       <div className="mb-10 grid gap-8 md:mb-12 lg:grid-cols-[0.82fr_1fr] lg:items-end lg:gap-16">
         <Reveal>
@@ -1204,7 +1348,7 @@ function JournalPreview({ posts }: { posts: JournalPost[] }) {
             <Reveal key={post.slug} delay={index * 0.04}>
               <Link
                 href={`/journal/${post.slug}`}
-                className="group grid gap-4 py-6 md:grid-cols-[170px_1fr_40px] md:items-start md:gap-10 md:py-8"
+                className="journal-row group grid gap-4 py-6 md:grid-cols-[170px_1fr_40px] md:items-start md:gap-10 md:py-8"
               >
                 <span className="text-[12px] font-medium text-[var(--sage)]">
                   {post.category}
@@ -1308,7 +1452,7 @@ function BookShelfCard({
 
 function ReadingShelf() {
   return (
-    <section id="personal" className="section-shell relative py-12 md:py-32">
+    <section id="personal" className="section-shell scene-section relative py-12 md:py-32">
       <div className="mb-10 grid gap-8 md:mb-14 lg:grid-cols-[0.76fr_1fr] lg:items-end lg:gap-16">
         <Reveal>
           <SectionLabel>Reading shelf</SectionLabel>
@@ -1529,12 +1673,22 @@ function PersonalInterestCard({
 
   return (
     <motion.article
-      className={`motion-surface hover-light group relative h-full min-h-[366px] overflow-hidden rounded-[8px] border p-5 transition duration-500 lg:min-h-0 lg:p-6 ${
+      className={`interest-card motion-surface hover-light group relative h-full min-h-[366px] overflow-hidden rounded-[8px] border p-5 transition duration-500 lg:min-h-0 lg:p-6 ${
         interest.featured
           ? "border-black/12 bg-[rgba(16,18,18,0.92)] text-white shadow-[0_34px_110px_rgba(16,18,18,0.16)]"
           : "editorial-panel"
       }`}
-      whileHover={shouldReduceMotion ? undefined : { y: -4 }}
+      style={
+        {
+          "--interest-tilt": `${index % 2 === 0 ? -0.9 : 0.9}deg`,
+        } as CSSProperties
+      }
+      whileHover={
+        shouldReduceMotion
+          ? undefined
+          : { y: -7, rotate: index % 2 === 0 ? -0.6 : 0.6, scale: 1.008 }
+      }
+      whileTap={shouldReduceMotion ? undefined : { scale: 0.992 }}
       transition={{ duration: 0.32, ease: premiumEase }}
     >
       <div className="flex items-start justify-between gap-4">
@@ -1658,8 +1812,10 @@ function ClosingBridge() {
 
 export function HomePageClient({ journalPosts }: { journalPosts: JournalPost[] }) {
   return (
-    <main>
+    <main className="relative">
+      <ExperienceBackdrop />
       <Hero />
+      <StoryBridge {...bridgeMoments[0]} />
       <Direction />
       <Background />
       <ArchivePreview />
@@ -1668,6 +1824,7 @@ export function HomePageClient({ journalPosts }: { journalPosts: JournalPost[] }
       <MbaChapterSection />
       <JournalPreview posts={journalPosts} />
       <ReadingShelf />
+      <StoryBridge {...bridgeMoments[1]} />
       <PersonalInterests />
       <ClosingBridge />
     </main>

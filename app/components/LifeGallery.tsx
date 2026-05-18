@@ -175,7 +175,7 @@ export function LifeGallery({
           animate={{ opacity: 1, y: 0 }}
           exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: -10 }}
           transition={{ duration: 0.34, ease }}
-          className="motion-surface overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.58)] p-3 shadow-[0_34px_120px_rgba(16,18,18,0.08)] backdrop-blur md:p-4"
+          className="life-gallery-stage motion-surface overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.58)] p-3 shadow-[0_34px_120px_rgba(16,18,18,0.08)] backdrop-blur md:p-4"
         >
           <div className="mb-5 grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
             <div>
@@ -236,7 +236,7 @@ export function LifeGallery({
               {activeCluster.images.map((image, index) => (
                 <motion.figure
                   key={image.src}
-                  className={`motion-surface group min-w-[82%] snap-start overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.78)] p-2 shadow-[0_26px_82px_rgba(16,18,18,0.08)] backdrop-blur sm:min-w-[420px] ${
+                  className={`gallery-frame-card motion-surface group min-w-[82%] snap-start overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.78)] p-2 shadow-[0_26px_82px_rgba(16,18,18,0.08)] backdrop-blur sm:min-w-[420px] ${
                     image.orientation === "portrait"
                       ? "md:min-w-[350px]"
                       : "md:min-w-[560px]"
