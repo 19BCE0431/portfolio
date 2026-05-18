@@ -127,13 +127,13 @@ export function LifeGallery({
             Curated clusters
           </p>
           <h2 className="mt-4 max-w-[720px] text-[clamp(2rem,8vw,4.6rem)] font-semibold leading-[1] tracking-[0]">
-            Browse one mood at a time.
+            Explore one layer at a time.
           </h2>
         </div>
         <p className="max-w-[680px] text-[clamp(0.98rem,1.5vw,1.16rem)] leading-[1.68] text-[var(--muted-strong)]">
-          The full folder was audited, but this page only exposes edited
-          clusters. Pick a layer, swipe through a few frames, and leave the rest
-          quietly archived.
+          The full folder was edited down to a few useful layers: campus,
+          recognition, portraits, travel, and small reset moments. Pick a layer,
+          swipe through a few frames, and the rest stays quietly archived.
         </p>
       </div>
 
@@ -318,8 +318,8 @@ export function LifeGallery({
           <p className="text-[0.98rem] font-medium">What stayed off the site</p>
           <p className="mt-1 max-w-[760px] text-[0.9rem] leading-[1.55] text-white/56">
             Blurry frames, duplicates, ID-card photos, overly casual selfies,
-            and private-looking moments are documented in the audit but not
-            displayed here.
+            and private-looking moments stayed out. The point is personality,
+            not oversharing.
           </p>
         </div>
         <span className="rounded-[8px] border border-white/10 bg-white/[0.06] px-3 py-1.5 text-[12px] text-white/68">

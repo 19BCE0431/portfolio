@@ -20,12 +20,12 @@ export default function JournalPage() {
 
   return (
     <>
-      <main className="relative overflow-hidden pt-24 md:pt-40">
+      <main className="relative overflow-hidden pt-24 md:pt-32">
         <div
           aria-hidden="true"
           className="premium-grid pointer-events-none absolute right-[-140px] top-24 h-[420px] w-[620px] opacity-[0.1] [mask-image:radial-gradient(circle,black,transparent_72%)]"
         />
-        <section className="section-shell pb-9 pt-5 md:pb-24 md:pt-8">
+        <section className="section-shell pb-9 pt-5 md:pb-16 md:pt-8">
           <div className="grid gap-8 md:grid-cols-[0.78fr_1fr] md:items-end md:gap-16">
             <Reveal>
               <SectionLabel>Journal</SectionLabel>
@@ -38,9 +38,10 @@ export default function JournalPage() {
             </Reveal>
             <Reveal delay={0.08}>
               <p className="max-w-[700px] text-[clamp(0.96rem,3.7vw,1.24rem)] leading-[1.58] text-[var(--muted-strong)]">
-                Notes on products, markets, AI workflows, Indian consumer
-                behavior, marketing lessons, and MBA learning. Drafts stay
-                private until they feel clear enough to be useful.
+                A thinking library for products, markets, AI workflows, Indian
+                consumer behavior, marketing lessons, and MBA learning. Each
+                note has to earn its place by making one business question
+                clearer.
               </p>
               <div className="mt-6 flex flex-wrap gap-2">
                 {journalCategories.slice(0, 5).map((category) => (

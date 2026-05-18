@@ -19,14 +19,14 @@ export const portraitImages: StoryImage[] = [
   {
     src: "/images/profile/profile-hero-01.jpg",
     alt: "Professional campus portrait of Mohit Sai Krishna Peddakotla",
-    caption: "The main portrait: formal enough for recruiters, still warm enough to feel like a person.",
+    caption: "The main portrait: professional, direct, and intentionally free of extra decoration.",
     source: "IMG_3157.heic",
     orientation: "portrait",
   },
   {
     src: "/images/profile/profile-campus-01.jpg",
     alt: "Mohit Sai Krishna Peddakotla standing on the IIM Sirmaur campus",
-    caption: "A second campus frame kept in reserve, useful when the story needs more IIM Sirmaur context.",
+    caption: "A second campus frame for when the IIM Sirmaur chapter needs more visual context.",
     source: "IMG_3145.heic",
     orientation: "portrait",
   },
@@ -53,28 +53,28 @@ export const mbaLifeImages: StoryImage[] = [
   {
     src: "/images/mba-life/iim-classroom-01.jpg",
     alt: "Students seated in an IIM Sirmaur classroom",
-    caption: "Case rooms, name cards, and the slow work of learning how decisions sound in a group.",
+    caption: "Case rooms, name cards, and the slow work of learning how decisions sound when other people test them.",
     source: "IMG_9765.HEIC",
     orientation: "landscape",
   },
   {
     src: "/images/mba-life/iim-collaboration-01.jpg",
     alt: "Students collaborating around a table at IIM Sirmaur",
-    caption: "A small collaboration frame that feels more useful than staged: people around a problem.",
+    caption: "A useful collaboration frame: people around a problem, not a staged campus poster.",
     source: "IMG_5118.HEIC",
     orientation: "landscape",
   },
   {
     src: "/images/mba-life/iim-campus-01.jpg",
     alt: "IIM Sirmaur campus building in evening light",
-    caption: "The campus has a quiet, mountain-side seriousness that suits this chapter.",
+    caption: "The campus has a mountain-side seriousness that suits the current chapter.",
     source: "IMG_9150.HEIC",
     orientation: "landscape",
   },
   {
     src: "/images/mba-life/iim-campus-rain-01.jpg",
     alt: "Rainy view of IIM Sirmaur campus and surrounding hills",
-    caption: "A softer campus frame for days when the hills set the pace.",
+    caption: "A softer campus frame for days when the hills slow the pace down.",
     source: "c3b761f8-9759-4b42-aa87-8b3ff11bd57f.JPG",
     orientation: "landscape",
   },
@@ -84,7 +84,7 @@ export const lifeGalleryImages: StoryImage[] = [
   {
     src: "/images/gallery/life-window-01.jpg",
     alt: "Mohit standing by a window on campus",
-    caption: "A quiet window frame from the days when campus felt paused for a second.",
+    caption: "A quiet window frame from a day when campus felt paused for a second.",
     source: "IMG_0866.HEIC",
     orientation: "landscape",
   },
@@ -105,7 +105,7 @@ export const lifeGalleryImages: StoryImage[] = [
   {
     src: "/images/gallery/life-viewpoint-01.jpg",
     alt: "Mohit sitting near a mountain viewpoint",
-    caption: "A travel frame I keep for the calm in it.",
+    caption: "A travel frame kept for the calm in it.",
     source: "IMG_2911.PNG",
     orientation: "portrait",
   },
@@ -145,8 +145,8 @@ export const galleryClusters: GalleryCluster[] = [
     label: "Life",
     title: "Travel, friends, and quiet reset frames.",
     description:
-      "The warmest set stays lightly tucked away. It gives the professional story some texture without turning the homepage into an album.",
-    intent: "Optional personal layer",
+      "The warmest set stays edited and intentional. It gives the professional story texture without turning the site into an album.",
+    intent: "Human context",
     images: lifeGalleryImages,
   },
   {
@@ -154,7 +154,7 @@ export const galleryClusters: GalleryCluster[] = [
     label: "MBA",
     title: "Classrooms, campus, and the current chapter.",
     description:
-      "A small set of IIM Sirmaur frames that supports the MBA story: rooms, weather, collaboration, and the slower context around the work.",
+      "A small set of IIM Sirmaur frames that supports the MBA story: rooms, weather, collaboration, and the context around the work.",
     intent: "Professional context",
     images: mbaLifeImages,
   },

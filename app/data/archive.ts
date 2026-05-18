@@ -71,7 +71,7 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "AI-Assisted",
     status: "Building",
     shortDescription:
-      "A reviewed, AI-assisted portfolio system for keeping projects, MBA notes, analytics, and public writing in one living loop.",
+      "A reviewed, AI-assisted portfolio system that keeps proof, MBA notes, analytics, and public writing in one living loop.",
     context:
       "Designed as a portfolio that can evolve with my MBA journey, applied work, writing, analytics, and professional direction.",
     problem:
@@ -86,9 +86,9 @@ export const archiveProjects: ArchiveProject[] = [
       "AI-assisted development",
     ],
     impact:
-      "Created a maintainable portfolio system with project archiving, journal foundations, weekly insight drafts, LinkedIn adaptation, analytics notes, and approval-first automation.",
+      "Created a maintainable portfolio system with project archiving, journal foundations, analytics reporting, LinkedIn adaptation, and approval-first automation.",
     learning:
-      "AI is useful when the human direction is clear. Taste, judgment, review, and positioning still decide whether anything feels credible.",
+      "AI is useful when the human direction is clear. Taste, review, and positioning still decide whether anything feels credible.",
     futureDirection:
       "Evolve the system into weekly AI, product, business, and market insight posts with source-backed writing, LinkedIn adaptations, visual prompts, and human-reviewed publishing.",
     visual: {
@@ -547,7 +547,7 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "Retail",
     status: "Learning",
     shortDescription:
-      "A family saree business lens on trust, aspiration, local positioning, pricing, and customer education.",
+      "A family saree retail lens on trust, aspiration, local positioning, pricing, customer education, and modern brand memory.",
     context:
       "CM Silks is not a distant case study for me. It is a family retail context where I can observe how people choose sarees, compare value, ask for reassurance, and remember a brand.",
     problem:
@@ -560,7 +560,7 @@ export const archiveProjects: ArchiveProject[] = [
     learning:
       "Retail keeps reminding me that many purchase decisions are emotional, social, and practical at the same time.",
     futureDirection:
-      "Develop into concise notes on saree retail trust, customer education, local positioning, and purchase behavior.",
+      "Develop into concise notes on saree retail trust, customer education, local positioning, content-led brand building, and purchase behavior.",
     visual: {
       image: "/images/projects/retail-signals.svg",
       alt: "CM Silks retail customer behavior notes placeholder",
@@ -576,7 +576,7 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "MBA",
     status: "Building",
     shortDescription:
-      "A growing space for product, marketing, strategy, consumer behavior, and market analysis work from the MBA chapter.",
+      "A growing space for product, marketing, strategy, consumer behavior, and market analysis work from the IIM Sirmaur chapter.",
     context:
       "A developing archive for the IIM Sirmaur MBA journey as technical thinking expands into business cases, markets, customers, and strategy.",
     problem:
@@ -585,7 +585,7 @@ export const archiveProjects: ArchiveProject[] = [
       "Creating a structure for future product notes, marketing work, strategy cases, consumer-behavior observations, and market analysis.",
     tools: ["Product thinking", "Marketing", "Strategy", "Consumer behavior"],
     impact:
-      "Future-ready structure for adding stronger MBA work as coursework, projects, and market notes develop.",
+      "Future-ready structure for adding stronger MBA work as coursework, cases, live projects, and market notes develop.",
     learning:
       "This section should grow from real coursework, cases, observations, and projects rather than filler.",
     futureDirection:
