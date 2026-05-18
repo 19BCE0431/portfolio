@@ -67,7 +67,7 @@ export function ProjectCard({
           featured
             ? "border-black/15 bg-[rgba(16,18,18,0.93)] text-white shadow-[0_36px_110px_rgba(16,18,18,0.16)] hover:border-black/20"
             : "premium-card-shadow border-black/10 bg-[rgba(255,253,248,0.76)] hover:border-black/20 hover:bg-[rgba(255,253,248,0.96)] hover:shadow-[0_34px_94px_rgba(16,18,18,0.09)]"
-        } ${compact ? "min-h-[330px] sm:min-h-[380px]" : "min-h-[450px] sm:min-h-[500px]"}`}
+        } ${compact ? "min-h-[314px] sm:min-h-[380px]" : "min-h-[392px] sm:min-h-[500px]"}`}
       >
         <span className="pointer-events-none absolute inset-x-6 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-transparent via-current to-transparent opacity-30 transition-transform duration-500 group-hover:scale-x-100" />
         <span
@@ -144,7 +144,7 @@ export function ProjectCard({
                 </p>
               </div>
               {!compact && (
-                <div>
+                <div className="hidden sm:block">
                   <p
                     className={`text-[10.5px] font-semibold uppercase tracking-[0.16em] ${
                       featured ? "text-white/38" : "text-[var(--muted)]"

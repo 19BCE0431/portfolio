@@ -1,6 +1,8 @@
 "use client";
 
 import {
+  ArrowLeft,
+  ArrowRight,
   ArrowUpRight,
   BookOpenText,
   ChevronRight,
@@ -18,7 +20,14 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState, type ReactNode, type RefObject } from "react";
+import {
+  Children,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+  type RefObject,
+} from "react";
 import { getProjectBySlug, homepageProjects } from "../data/archive";
 import type { JournalPost } from "../data/journal";
 import { mbaLifeImages, recognitionImages } from "../data/media";
@@ -160,6 +169,199 @@ function ActionLink({
         <ArrowUpRight className="h-3.5 w-3.5 opacity-55 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
       </SmartLink>
     </motion.span>
+  );
+}
+
+function GlideDeck({
+  children,
+  ariaLabel,
+  tone = "light",
+  className = "",
+  slideClassName = "",
+}: {
+  children: ReactNode;
+  ariaLabel: string;
+  tone?: "light" | "dark";
+  className?: string;
+  slideClassName?: string;
+}) {
+  const items = Children.toArray(children).filter(Boolean);
+  const railRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<number | null>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const updateActiveIndex = () => {
+    if (frameRef.current !== null) return;
+
+    frameRef.current = window.requestAnimationFrame(() => {
+      frameRef.current = null;
+      const rail = railRef.current;
+      if (!rail) return;
+
+      const railCenter = rail.scrollLeft + rail.clientWidth / 2;
+      const nextIndex = Array.from(rail.children).reduce(
+        (closest, child, index) => {
+          const item = child as HTMLElement;
+          const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+          const distance = Math.abs(itemCenter - railCenter);
+
+          return distance < closest.distance ? { index, distance } : closest;
+        },
+        { index: 0, distance: Number.POSITIVE_INFINITY },
+      ).index;
+
+      setActiveIndex((current) => (current === nextIndex ? current : nextIndex));
+    });
+  };
+
+  useEffect(() => {
+    return () => {
+      if (frameRef.current !== null) {
+        window.cancelAnimationFrame(frameRef.current);
+      }
+    };
+  }, []);
+
+  const scrollToIndex = (index: number) => {
+    const rail = railRef.current;
+    const target = rail?.children[index] as HTMLElement | undefined;
+    if (!rail || !target) return;
+
+    rail.scrollTo({
+      left: target.offsetLeft - rail.offsetLeft,
+      behavior: shouldReduceMotion ? "auto" : "smooth",
+    });
+    setActiveIndex(index);
+  };
+
+  const move = (direction: "previous" | "next") => {
+    const nextIndex =
+      direction === "next"
+        ? Math.min(activeIndex + 1, items.length - 1)
+        : Math.max(activeIndex - 1, 0);
+
+    scrollToIndex(nextIndex);
+  };
+
+  if (items.length === 0) return null;
+
+  return (
+    <div
+      className={`glide-deck ${tone === "dark" ? "glide-deck-dark" : ""} ${className}`}
+    >
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <span
+            className={`h-1.5 w-1.5 rounded-full ${
+              tone === "dark" ? "bg-white/52" : "bg-[var(--sage)]"
+            }`}
+            aria-hidden="true"
+          />
+          <span
+            className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${
+              tone === "dark" ? "text-white/48" : "text-[var(--muted)]"
+            }`}
+          >
+            Swipe
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={() => move("previous")}
+            aria-label={`Show previous item in ${ariaLabel}`}
+            disabled={activeIndex === 0}
+            className={`grid h-9 w-9 place-items-center rounded-[8px] border transition focus:outline-none focus:ring-2 ${
+              tone === "dark"
+                ? "border-white/10 bg-white/[0.055] text-white/68 hover:bg-white/[0.09] focus:ring-white/20 disabled:text-white/22"
+                : "border-black/10 bg-white/55 text-[var(--foreground)] hover:bg-white focus:ring-black/15 disabled:text-black/22"
+            }`}
+          >
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={() => move("next")}
+            aria-label={`Show next item in ${ariaLabel}`}
+            disabled={activeIndex === items.length - 1}
+            className={`grid h-9 w-9 place-items-center rounded-[8px] border transition focus:outline-none focus:ring-2 ${
+              tone === "dark"
+                ? "border-white/10 bg-white/[0.055] text-white/68 hover:bg-white/[0.09] focus:ring-white/20 disabled:text-white/22"
+                : "border-black/10 bg-white/55 text-[var(--foreground)] hover:bg-white focus:ring-black/15 disabled:text-black/22"
+            }`}
+          >
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+
+      <div className="relative">
+        <span
+          aria-hidden="true"
+          className={`pointer-events-none absolute bottom-3 right-0 top-0 z-10 w-10 ${
+            tone === "dark"
+              ? "bg-gradient-to-l from-[rgba(13,15,16,0.92)] to-transparent"
+              : "bg-gradient-to-l from-[rgba(244,245,241,0.95)] to-transparent"
+          }`}
+        />
+        <div
+          ref={railRef}
+          className="glide-rail"
+          role="region"
+          aria-label={ariaLabel}
+          tabIndex={0}
+          onScroll={updateActiveIndex}
+        >
+          {items.map((item, index) => (
+            <div
+              key={index}
+              className={`glide-slide ${slideClassName}`}
+              aria-label={`${index + 1} of ${items.length}`}
+            >
+              {item}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-2 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-1.5" aria-label={`${ariaLabel} position`}>
+          {items.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              onClick={() => scrollToIndex(index)}
+              aria-label={`Show item ${index + 1} of ${items.length}`}
+              aria-current={activeIndex === index ? "true" : undefined}
+              className={`grid h-7 min-w-7 place-items-center rounded-full focus:outline-none focus:ring-2 ${
+                tone === "dark" ? "focus:ring-white/20" : "focus:ring-black/15"
+              }`}
+            >
+              <span
+                className={`block h-1.5 rounded-full transition-all ${
+                  activeIndex === index
+                    ? tone === "dark"
+                      ? "w-6 bg-white/78"
+                      : "w-6 bg-[var(--foreground)]"
+                    : tone === "dark"
+                      ? "w-1.5 bg-white/22 hover:bg-white/38"
+                      : "w-1.5 bg-black/20 hover:bg-black/36"
+                }`}
+              />
+            </button>
+          ))}
+        </div>
+        <span
+          className={`text-[11px] font-medium ${
+            tone === "dark" ? "text-white/44" : "text-[var(--muted)]"
+          }`}
+        >
+          {String(activeIndex + 1).padStart(2, "0")} /{" "}
+          {String(items.length).padStart(2, "0")}
+        </span>
+      </div>
+    </div>
   );
 }
 
@@ -415,6 +617,31 @@ function DirectionPoint({
   );
 }
 
+function DirectionNoteCard({
+  note,
+  index,
+}: {
+  note: (typeof directionNotes)[number];
+  index: number;
+}) {
+  const Icon = note.icon;
+
+  return (
+    <article className="editorial-panel motion-surface hover-light group h-full min-h-[212px] p-5 transition duration-500 hover:-translate-y-1 hover:bg-white md:min-h-[220px] md:p-6">
+      <div className="flex items-start justify-between gap-4">
+        <Icon className="h-5 w-5 text-[var(--sage)]" />
+        <span className="grid h-8 w-8 place-items-center rounded-full border border-black/10 text-[12px] text-[var(--sage)] transition group-hover:translate-x-1">
+          0{index + 1}
+        </span>
+      </div>
+      <p className="editorial-kicker mt-7">{note.title}</p>
+      <p className="mt-4 text-[1.04rem] leading-[1.58] text-[var(--muted-strong)] md:text-[1.16rem]">
+        {note.text}
+      </p>
+    </article>
+  );
+}
+
 function Direction() {
   const sectionRef = useRef<HTMLElement>(null);
   const shouldReduceMotion = useReducedMotion();
@@ -425,7 +652,7 @@ function Direction() {
     <section
       ref={sectionRef}
       id="direction"
-      className="section-shell relative scroll-mt-0 py-12 md:py-32"
+      className="section-shell relative py-12 md:py-32"
     >
       <div className="absolute left-0 top-0 hidden h-full w-px vertical-hairline opacity-60 lg:block" />
       <div className="grid gap-12 lg:grid-cols-[0.72fr_1fr] lg:gap-18">
@@ -452,8 +679,32 @@ function Direction() {
           </Reveal>
         </div>
 
-        <div className="grid gap-3 md:gap-4">
-          <div className="grid gap-3 md:gap-4">
+        <div className="min-w-0">
+          <div className="min-w-0 overflow-hidden lg:hidden">
+            <GlideDeck
+              ariaLabel="Direction and point of view cards"
+              slideClassName="glide-slide-wide"
+            >
+              {thesisPoints.map((point, index) => (
+                <DirectionPoint
+                  key={point.label}
+                  point={point}
+                  index={index}
+                  progress={scrollYProgress}
+                  className="min-h-[268px]"
+                />
+              ))}
+              {directionNotes.map((note, index) => (
+                <DirectionNoteCard
+                  key={note.title}
+                  note={note}
+                  index={index}
+                />
+              ))}
+            </GlideDeck>
+          </div>
+
+          <div className="hidden gap-3 lg:grid lg:gap-4">
             {thesisPoints.map((point, index) => (
               <DirectionPoint
                 key={point.label}
@@ -464,31 +715,16 @@ function Direction() {
               />
             ))}
           </div>
-          <div className="mt-1 grid gap-3 sm:grid-cols-2 md:gap-4">
-            {directionNotes.map((note, index) => {
-              const Icon = note.icon;
-
-              return (
-                <Reveal
-                  key={note.title}
-                  delay={index * 0.04}
-                  className="h-full"
-                >
-                  <article className="editorial-panel motion-surface hover-light group h-full min-h-[178px] p-5 transition duration-500 hover:-translate-y-1 hover:bg-white md:min-h-[220px] md:p-6">
-                    <div className="flex items-start justify-between gap-4">
-                      <Icon className="h-5 w-5 text-[var(--sage)]" />
-                      <span className="grid h-8 w-8 place-items-center rounded-full border border-black/10 text-[12px] text-[var(--sage)] transition group-hover:translate-x-1">
-                        0{index + 1}
-                      </span>
-                    </div>
-                    <p className="editorial-kicker mt-7">{note.title}</p>
-                    <p className="mt-4 text-[1.04rem] leading-[1.58] text-[var(--muted-strong)] md:text-[1.16rem]">
-                      {note.text}
-                    </p>
-                  </article>
-                </Reveal>
-              );
-            })}
+          <div className="mt-4 hidden gap-3 lg:grid lg:grid-cols-2 lg:gap-4">
+            {directionNotes.map((note, index) => (
+              <Reveal
+                key={note.title}
+                delay={index * 0.04}
+                className="h-full"
+              >
+                <DirectionNoteCard note={note} index={index} />
+              </Reveal>
+            ))}
           </div>
         </div>
       </div>
@@ -496,9 +732,47 @@ function Direction() {
   );
 }
 
-function Background() {
+function BackgroundCard({
+  item,
+  index,
+}: {
+  item: (typeof backgroundCards)[number];
+  index: number;
+}) {
   const shouldReduceMotion = useReducedMotion();
+  const Icon = item.icon;
+  const wide = index === 0 || index === 1;
 
+  return (
+    <Reveal
+      delay={index * 0.035}
+      className={`${wide ? "lg:col-span-3" : "lg:col-span-3 xl:col-span-2"} h-full`}
+    >
+      <motion.article
+        className="dark-panel motion-surface group flex min-h-[218px] flex-col justify-between overflow-hidden p-5 md:min-h-[230px] md:p-6"
+        whileHover={shouldReduceMotion ? undefined : { y: -5 }}
+        transition={{ duration: 0.34, ease: premiumEase }}
+      >
+        <div className="flex items-start justify-between gap-5">
+          <p className="editorial-kicker text-white/42">
+            {item.label}
+          </p>
+          <Icon className="h-5 w-5 shrink-0 text-white/42 transition group-hover:text-white/72" />
+        </div>
+        <div>
+          <p className="mt-8 text-[1.35rem] leading-[1.18] text-white/92 md:text-[1.65rem]">
+            {item.value}
+          </p>
+          <p className="mt-4 text-[0.92rem] leading-[1.55] text-white/54">
+            {item.detail}
+          </p>
+        </div>
+      </motion.article>
+    </Reveal>
+  );
+}
+
+function Background() {
   return (
     <section id="background" className="dark-transition scroll-mt-28 py-14 text-[var(--surface)] md:py-40">
       <div className="section-shell">
@@ -521,43 +795,25 @@ function Background() {
           </Reveal>
         </div>
 
-        <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:mt-20 lg:grid-cols-6">
-          {backgroundCards.map((item, index) => {
-            const Icon = item.icon;
-            const wide = index === 0 || index === 1;
-
-            return (
-              <Reveal
-                key={item.label}
-                delay={index * 0.035}
-                className={`${wide ? "lg:col-span-3" : "lg:col-span-3 xl:col-span-2"} h-full`}
-              >
-                <motion.article
-                  className="dark-panel motion-surface group flex min-h-[178px] flex-col justify-between overflow-hidden p-5 md:min-h-[230px] md:p-6"
-                  whileHover={shouldReduceMotion ? undefined : { y: -5 }}
-                  transition={{ duration: 0.34, ease: premiumEase }}
-                >
-                  <div className="flex items-start justify-between gap-5">
-                    <p className="editorial-kicker text-white/42">
-                      {item.label}
-                    </p>
-                    <Icon className="h-5 w-5 shrink-0 text-white/42 transition group-hover:text-white/72" />
-                  </div>
-                  <div>
-                    <p className="mt-8 text-[1.35rem] leading-[1.18] text-white/92 md:text-[1.65rem]">
-                      {item.value}
-                    </p>
-                    <p className="mt-4 text-[0.92rem] leading-[1.55] text-white/54">
-                      {item.detail}
-                    </p>
-                  </div>
-                </motion.article>
-              </Reveal>
-            );
-          })}
+        <div className="mt-8 min-w-0 overflow-hidden lg:hidden">
+          <GlideDeck
+            ariaLabel="MBA and background cards"
+            tone="dark"
+            slideClassName="glide-slide-wide"
+          >
+            {backgroundCards.map((item, index) => (
+              <BackgroundCard key={item.label} item={item} index={index} />
+            ))}
+          </GlideDeck>
         </div>
 
-        <div className="mt-8 grid gap-3 border-t border-white/10 pt-6 md:hidden">
+        <div className="mt-8 hidden gap-3 lg:mt-20 lg:grid lg:grid-cols-6">
+          {backgroundCards.map((item, index) => (
+            <BackgroundCard key={item.label} item={item} index={index} />
+          ))}
+        </div>
+
+        <div className="mt-8 grid gap-3 border-t border-white/10 pt-6 lg:hidden">
           <details className="dark-panel p-4">
             <summary className="cursor-pointer text-[12px] font-semibold uppercase tracking-[0.16em] text-white/58">
               Credibility markers
@@ -589,7 +845,7 @@ function Background() {
           </details>
         </div>
 
-        <div className="mt-10 hidden gap-7 border-t border-white/10 pt-8 md:grid lg:grid-cols-[0.74fr_1fr]">
+        <div className="mt-10 hidden gap-7 border-t border-white/10 pt-8 lg:grid lg:grid-cols-[0.74fr_1fr]">
           <Reveal>
             <div>
               <p className="editorial-kicker text-white/42">Credibility markers</p>
@@ -633,7 +889,7 @@ function ArchivePreview() {
   return (
     <section
       id="work"
-      className="section-shell relative scroll-mt-0 overflow-hidden py-12 md:py-36"
+      className="section-shell relative overflow-hidden py-12 md:py-36"
     >
       <div className="premium-grid pointer-events-none absolute right-0 top-24 h-[360px] w-[520px] opacity-[0.1] [mask-image:radial-gradient(circle,black,transparent_70%)]" />
       <div className="mb-10 grid gap-8 md:mb-14 lg:grid-cols-[0.72fr_1fr] lg:gap-16">
@@ -664,7 +920,23 @@ function ArchivePreview() {
         </Reveal>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="min-w-0 overflow-hidden lg:hidden">
+        <GlideDeck
+          ariaLabel="Selected work cards"
+          slideClassName="glide-slide-project"
+        >
+          {selectedProjects.map((project, index) => (
+            <ProjectCard
+              key={project.slug}
+              project={project}
+              compact
+              priority={index === 0}
+            />
+          ))}
+        </GlideDeck>
+      </div>
+
+      <div className="hidden gap-4 lg:grid lg:grid-cols-2 xl:grid-cols-4">
         {selectedProjects.map((project) => (
           <div key={project.slug} className="min-w-0">
             <ProjectCard project={project} compact />
@@ -675,13 +947,40 @@ function ArchivePreview() {
   );
 }
 
+function SystemNodeCard({
+  node,
+  index,
+}: {
+  node: (typeof systemNodes)[number];
+  index: number;
+}) {
+  const Icon = node.icon;
+
+  return (
+    <article className="editorial-panel motion-surface hover-light group relative h-full min-h-[192px] overflow-hidden p-5 md:min-h-[190px] md:p-6">
+      <div className="flex items-start justify-between gap-4">
+        <Icon className="h-5 w-5 text-[var(--sage)]" />
+        <span className="grid h-8 w-8 place-items-center rounded-full border border-black/10 text-[12px] text-[var(--sage)] transition group-hover:translate-x-1">
+          0{index + 1}
+        </span>
+      </div>
+      <h3 className="mt-7 text-[1.18rem] font-semibold leading-[1.2]">
+        {node.title}
+      </h3>
+      <p className="mt-3 text-[0.92rem] leading-[1.6] text-[var(--muted)]">
+        {node.text}
+      </p>
+    </article>
+  );
+}
+
 function FeaturedSystem() {
   const project = getProjectBySlug("living-ai-portfolio-system");
 
   if (!project) return null;
 
   return (
-    <section id="system" className="section-shell relative scroll-mt-0 py-12 md:py-36">
+    <section id="system" className="section-shell relative py-12 md:py-36">
       <div className="absolute left-0 top-10 hidden h-px w-1/2 bg-gradient-to-r from-black/20 to-transparent md:block" />
       <div className="grid gap-7 lg:grid-cols-[0.78fr_1fr] lg:items-stretch lg:gap-6">
         <Reveal>
@@ -708,35 +1007,25 @@ function FeaturedSystem() {
           </article>
         </Reveal>
 
-        <Reveal delay={0.08}>
-          <div className="grid h-full gap-3 sm:grid-cols-2">
+        <Reveal delay={0.08} className="min-w-0">
+          <div className="grid h-full min-w-0 gap-3">
             <article className="editorial-panel motion-surface overflow-hidden p-3 sm:col-span-2">
               <ProjectVisual project={project} />
             </article>
-            <div className="grid gap-3 sm:col-span-2 sm:grid-cols-2">
-              {systemNodes.map((node, index) => {
-                const Icon = node.icon;
-
-                return (
-                  <article
-                    key={node.title}
-                    className="editorial-panel motion-surface hover-light group relative min-h-[164px] overflow-hidden p-5 md:min-h-[190px] md:p-6"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <Icon className="h-5 w-5 text-[var(--sage)]" />
-                      <span className="grid h-8 w-8 place-items-center rounded-full border border-black/10 text-[12px] text-[var(--sage)] transition group-hover:translate-x-1">
-                        0{index + 1}
-                      </span>
-                    </div>
-                    <h3 className="mt-7 text-[1.18rem] font-semibold leading-[1.2]">
-                      {node.title}
-                    </h3>
-                    <p className="mt-3 text-[0.92rem] leading-[1.6] text-[var(--muted)]">
-                      {node.text}
-                    </p>
-                  </article>
-                );
-              })}
+            <div className="min-w-0 overflow-hidden lg:hidden">
+              <GlideDeck
+                ariaLabel="System node cards"
+                slideClassName="glide-slide-wide"
+              >
+                {systemNodes.map((node, index) => (
+                  <SystemNodeCard key={node.title} node={node} index={index} />
+                ))}
+              </GlideDeck>
+            </div>
+            <div className="hidden gap-3 lg:grid lg:grid-cols-2">
+              {systemNodes.map((node, index) => (
+                <SystemNodeCard key={node.title} node={node} index={index} />
+              ))}
             </div>
           </div>
         </Reveal>
@@ -751,7 +1040,7 @@ function RecognitionSection() {
   return (
     <section
       id="recognition"
-      className="section-shell relative scroll-mt-0 py-12 md:py-32"
+      className="section-shell relative py-12 md:py-32"
     >
       <div className="grid gap-12 lg:grid-cols-[0.72fr_1fr] lg:gap-16">
         <Reveal>
@@ -796,9 +1085,42 @@ function RecognitionSection() {
   );
 }
 
+function MbaImageCard({
+  image,
+  index,
+}: {
+  image: (typeof mbaLifeImages)[number];
+  index: number;
+}) {
+  return (
+    <article className="motion-surface group h-full overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.68)] p-2 shadow-[0_28px_80px_rgba(16,18,18,0.07)] backdrop-blur">
+      <div
+        className={`relative overflow-hidden rounded-[6px] bg-[var(--surface-cool)] ${
+          index === 0 ? "aspect-[1.35]" : "aspect-[4/5] md:aspect-[0.86]"
+        }`}
+      >
+        <Image
+          src={image.src}
+          alt={image.alt}
+          fill
+          sizes={
+            index === 0
+              ? "(max-width: 768px) 82vw, 44vw"
+              : "(max-width: 768px) 82vw, 22vw"
+          }
+          className="media-lift object-cover transition-transform duration-[900ms] ease-[var(--ease)] group-hover:scale-[1.035]"
+        />
+      </div>
+      <p className="px-1 py-3 text-[0.86rem] leading-[1.5] text-[var(--muted)]">
+        {image.caption}
+      </p>
+    </article>
+  );
+}
+
 function MbaChapterSection() {
   return (
-    <section id="mba-life" className="section-shell relative scroll-mt-0 py-12 md:py-24">
+    <section id="mba-life" className="section-shell relative py-12 md:py-24">
       <div className="mb-10 grid gap-8 lg:grid-cols-[0.8fr_1fr] lg:items-end lg:gap-16">
         <Reveal>
           <SectionLabel>MBA chapter</SectionLabel>
@@ -817,35 +1139,25 @@ function MbaChapterSection() {
         </Reveal>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4">
+      <div className="min-w-0 overflow-hidden lg:hidden">
+        <GlideDeck
+          ariaLabel="MBA chapter image cards"
+          slideClassName="glide-slide-photo"
+        >
+          {mbaLifeImages.map((image, index) => (
+            <MbaImageCard key={image.src} image={image} index={index} />
+          ))}
+        </GlideDeck>
+      </div>
+
+      <div className="hidden gap-3 lg:grid lg:grid-cols-4">
         {mbaLifeImages.map((image, index) => (
           <Reveal
             key={image.src}
             delay={index * 0.04}
             className={`${index === 0 ? "sm:col-span-2 md:col-span-2" : ""} min-w-0`}
           >
-            <article className="motion-surface group h-full overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.68)] p-2 shadow-[0_28px_80px_rgba(16,18,18,0.07)] backdrop-blur">
-              <div
-                className={`relative overflow-hidden rounded-[6px] bg-[var(--surface-cool)] ${
-                  index === 0 ? "aspect-[1.35]" : "aspect-[4/5] md:aspect-[0.86]"
-                }`}
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  sizes={
-                    index === 0
-                      ? "(max-width: 768px) 92vw, 44vw"
-                      : "(max-width: 768px) 92vw, 22vw"
-                  }
-                  className="media-lift object-cover transition-transform duration-[900ms] ease-[var(--ease)] group-hover:scale-[1.035]"
-                />
-              </div>
-              <p className="px-1 py-3 text-[0.86rem] leading-[1.5] text-[var(--muted)]">
-                {image.caption}
-              </p>
-            </article>
+            <MbaImageCard image={image} index={index} />
           </Reveal>
         ))}
       </div>
@@ -859,7 +1171,7 @@ function JournalPreview({ posts }: { posts: JournalPost[] }) {
   return (
     <section
       id="journal"
-      className="section-shell scroll-mt-0 border-y border-black/10 py-12 md:py-32"
+      className="section-shell border-y border-black/10 py-12 md:py-32"
     >
       <div className="mb-10 grid gap-8 md:mb-12 lg:grid-cols-[0.82fr_1fr] lg:items-end lg:gap-16">
         <Reveal>
@@ -939,11 +1251,64 @@ function JournalPreview({ posts }: { posts: JournalPost[] }) {
   );
 }
 
-function ReadingShelf() {
+function BookShelfCard({
+  book,
+  index,
+}: {
+  book: (typeof readingShelf)[number];
+  index: number;
+}) {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section id="personal" className="section-shell relative scroll-mt-0 py-12 md:py-32">
+    <motion.article
+      className={`book-card book-card-${book.accent} motion-surface group flex h-full min-h-[360px] flex-col justify-between overflow-hidden rounded-[8px] border border-white/12 p-3 shadow-[0_26px_80px_rgba(16,18,18,0.08)] sm:p-4 md:min-h-[390px] lg:min-h-[410px]`}
+      whileHover={
+        shouldReduceMotion
+          ? undefined
+          : {
+              y: -7,
+              rotateX: 1.4,
+              rotateY: index % 2 === 0 ? -1.2 : 1.2,
+            }
+      }
+      transition={{ duration: 0.34, ease: premiumEase }}
+    >
+      <span className="pointer-events-none absolute inset-y-4 left-3 w-px bg-white/16" />
+      <span className="pointer-events-none absolute left-5 right-5 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-transparent via-white/60 to-transparent transition-transform duration-500 group-hover:scale-x-100" />
+      <div>
+        <div className="flex items-start justify-between gap-4">
+          <span className="rounded-full border border-white/16 bg-white/[0.08] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/68 backdrop-blur transition duration-300 group-hover:border-white/28 group-hover:bg-white/[0.12] group-hover:text-white/82">
+            {book.mode}
+          </span>
+          <BookOpenText className="h-4 w-4 text-white/54" />
+        </div>
+
+        <div className="book-cover-art mt-5 rounded-[7px] border border-white/14 bg-white/[0.07] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
+          <div className="book-cover-frame relative mx-auto aspect-[0.66] w-[68%] max-w-[128px] overflow-hidden rounded-[5px] border border-white/18 bg-black/20 shadow-[0_18px_44px_rgba(0,0,0,0.24)] md:w-[72%] md:max-w-[150px]">
+            <Image
+              src={book.coverSrc}
+              alt={`${book.title} book cover`}
+              fill
+              sizes="(max-width: 640px) 160px, (max-width: 1024px) 140px, 120px"
+              className="media-lift object-cover"
+            />
+          </div>
+          <p className="mt-3 line-clamp-2 text-center text-[0.78rem] font-medium leading-[1.28] text-white/72">
+            {book.author}
+          </p>
+        </div>
+      </div>
+      <p className="mt-4 line-clamp-4 border-t border-white/14 pt-3 text-[0.84rem] leading-[1.5] text-white/72 sm:text-[0.9rem]">
+        {book.note}
+      </p>
+    </motion.article>
+  );
+}
+
+function ReadingShelf() {
+  return (
+    <section id="personal" className="section-shell relative py-12 md:py-32">
       <div className="mb-10 grid gap-8 md:mb-14 lg:grid-cols-[0.76fr_1fr] lg:items-end lg:gap-16">
         <Reveal>
           <SectionLabel>Reading shelf</SectionLabel>
@@ -962,59 +1327,28 @@ function ReadingShelf() {
         </Reveal>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:gap-4">
-        {readingShelf.map((book, index) => {
-          return (
-            <Reveal
-              key={book.title}
-              delay={index * 0.03}
-              className="min-w-0"
-            >
-              <motion.article
-                className={`book-card book-card-${book.accent} motion-surface group flex h-full min-h-[300px] flex-col justify-between overflow-hidden rounded-[8px] border border-white/12 p-3 shadow-[0_26px_80px_rgba(16,18,18,0.08)] sm:p-4 md:min-h-[390px] lg:min-h-[410px]`}
-                whileHover={
-                  shouldReduceMotion
-                    ? undefined
-                    : {
-                        y: -7,
-                        rotateX: 1.4,
-                        rotateY: index % 2 === 0 ? -1.2 : 1.2,
-                      }
-                }
-                transition={{ duration: 0.34, ease: premiumEase }}
-              >
-                <span className="pointer-events-none absolute inset-y-4 left-3 w-px bg-white/16" />
-                <span className="pointer-events-none absolute left-5 right-5 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-transparent via-white/60 to-transparent transition-transform duration-500 group-hover:scale-x-100" />
-                <div>
-                  <div className="flex items-start justify-between gap-4">
-                    <span className="rounded-full border border-white/16 bg-white/[0.08] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/68 backdrop-blur transition duration-300 group-hover:border-white/28 group-hover:bg-white/[0.12] group-hover:text-white/82">
-                      {book.mode}
-                    </span>
-                    <BookOpenText className="h-4 w-4 text-white/54" />
-                  </div>
+      <div className="min-w-0 overflow-hidden lg:hidden">
+        <GlideDeck
+          ariaLabel="Reading shelf cards"
+          tone="dark"
+          slideClassName="glide-slide-book"
+        >
+          {readingShelf.map((book, index) => (
+            <BookShelfCard key={book.title} book={book} index={index} />
+          ))}
+        </GlideDeck>
+      </div>
 
-                  <div className="book-cover-art mt-5 rounded-[7px] border border-white/14 bg-white/[0.07] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
-                    <div className="book-cover-frame relative mx-auto aspect-[0.66] w-[68%] max-w-[128px] overflow-hidden rounded-[5px] border border-white/18 bg-black/20 shadow-[0_18px_44px_rgba(0,0,0,0.24)] md:w-[72%] md:max-w-[150px]">
-                      <Image
-                        src={book.coverSrc}
-                        alt={`${book.title} book cover`}
-                        fill
-                        sizes="(max-width: 640px) 150px, (max-width: 1024px) 140px, 120px"
-                        className="media-lift object-cover"
-                      />
-                    </div>
-                    <p className="mt-3 line-clamp-2 text-center text-[0.78rem] font-medium leading-[1.28] text-white/72">
-                      {book.author}
-                    </p>
-                  </div>
-                </div>
-                <p className="mt-4 line-clamp-4 border-t border-white/14 pt-3 text-[0.84rem] leading-[1.5] text-white/72 sm:text-[0.9rem]">
-                  {book.note}
-                </p>
-              </motion.article>
-            </Reveal>
-          );
-        })}
+      <div className="hidden gap-3 lg:grid lg:grid-cols-5 lg:gap-4">
+        {readingShelf.map((book, index) => (
+          <Reveal
+            key={book.title}
+            delay={index * 0.03}
+            className="min-w-0"
+          >
+            <BookShelfCard book={book} index={index} />
+          </Reveal>
+        ))}
       </div>
       <p className="mt-4 text-[11px] leading-[1.5] text-[var(--muted)]">
         Cover thumbnails via{" "}
@@ -1183,11 +1517,63 @@ function InterestMotif({
   );
 }
 
-function PersonalInterests() {
+function PersonalInterestCard({
+  interest,
+  index,
+}: {
+  interest: (typeof personalInterests)[number];
+  index: number;
+}) {
   const shouldReduceMotion = useReducedMotion();
+  const Icon = interest.icon;
 
   return (
-    <section className="section-shell relative scroll-mt-0 py-12 md:py-32">
+    <motion.article
+      className={`motion-surface hover-light group relative h-full min-h-[366px] overflow-hidden rounded-[8px] border p-5 transition duration-500 lg:min-h-0 lg:p-6 ${
+        interest.featured
+          ? "border-black/12 bg-[rgba(16,18,18,0.92)] text-white shadow-[0_34px_110px_rgba(16,18,18,0.16)]"
+          : "editorial-panel"
+      }`}
+      whileHover={shouldReduceMotion ? undefined : { y: -4 }}
+      transition={{ duration: 0.32, ease: premiumEase }}
+    >
+      <div className="flex items-start justify-between gap-4">
+        <Icon
+          className={`h-5 w-5 ${
+            interest.featured ? "text-white/68" : "text-[var(--sage)]"
+          }`}
+        />
+        <span
+          className={`grid h-8 w-8 place-items-center rounded-full border text-[12px] transition group-hover:translate-x-1 ${
+            interest.featured
+              ? "border-white/12 text-white/50"
+              : "border-black/10 text-[var(--sage)]"
+          }`}
+        >
+          0{index + 1}
+        </span>
+      </div>
+      <InterestMotif
+        title={interest.title}
+        featured={interest.featured}
+      />
+      <h3 className="mt-7 text-[1.18rem] font-semibold leading-[1.2]">
+        {interest.title}
+      </h3>
+      <p
+        className={`mt-4 text-[0.95rem] leading-[1.65] ${
+          interest.featured ? "text-white/66" : "text-[var(--muted)]"
+        }`}
+      >
+        {interest.text}
+      </p>
+    </motion.article>
+  );
+}
+
+function PersonalInterests() {
+  return (
+    <section className="section-shell relative py-12 md:py-32">
       <div className="grid gap-10 lg:grid-cols-[0.78fr_1fr] lg:gap-16">
         <Reveal>
           <SectionLabel>Off the screen</SectionLabel>
@@ -1215,59 +1601,33 @@ function PersonalInterests() {
             </Link>
           </Reveal>
         </Reveal>
-        <div className="grid gap-3 sm:grid-cols-2">
-          {personalInterests.map((interest, index) => {
-            const Icon = interest.icon;
+        <div className="min-w-0">
+          <div className="min-w-0 overflow-hidden lg:hidden">
+            <GlideDeck
+              ariaLabel="Personal interests cards"
+              slideClassName="glide-slide-wide"
+            >
+              {personalInterests.map((interest, index) => (
+                <PersonalInterestCard
+                  key={interest.title}
+                  interest={interest}
+                  index={index}
+                />
+              ))}
+            </GlideDeck>
+          </div>
 
-            return (
+          <div className="hidden gap-3 lg:grid lg:grid-cols-2">
+            {personalInterests.map((interest, index) => (
               <Reveal
                 key={interest.title}
                 delay={index * 0.035}
                 className={`${interest.featured ? "sm:col-span-2" : ""} min-w-0`}
               >
-                <motion.article
-                  className={`motion-surface hover-light group relative h-full overflow-hidden rounded-[8px] border p-5 transition duration-500 md:p-6 ${
-                    interest.featured
-                      ? "border-black/12 bg-[rgba(16,18,18,0.92)] text-white shadow-[0_34px_110px_rgba(16,18,18,0.16)]"
-                      : "editorial-panel"
-                  }`}
-                  whileHover={shouldReduceMotion ? undefined : { y: -4 }}
-                  transition={{ duration: 0.32, ease: premiumEase }}
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <Icon
-                      className={`h-5 w-5 ${
-                        interest.featured ? "text-white/68" : "text-[var(--sage)]"
-                      }`}
-                    />
-                    <span
-                      className={`grid h-8 w-8 place-items-center rounded-full border text-[12px] transition group-hover:translate-x-1 ${
-                        interest.featured
-                          ? "border-white/12 text-white/50"
-                          : "border-black/10 text-[var(--sage)]"
-                      }`}
-                    >
-                      0{index + 1}
-                    </span>
-                  </div>
-                  <InterestMotif
-                    title={interest.title}
-                    featured={interest.featured}
-                  />
-                  <h3 className="mt-7 text-[1.18rem] font-semibold leading-[1.2]">
-                    {interest.title}
-                  </h3>
-                  <p
-                    className={`mt-4 text-[0.95rem] leading-[1.65] ${
-                      interest.featured ? "text-white/66" : "text-[var(--muted)]"
-                    }`}
-                  >
-                    {interest.text}
-                  </p>
-                </motion.article>
+                <PersonalInterestCard interest={interest} index={index} />
               </Reveal>
-            );
-          })}
+            ))}
+          </div>
         </div>
       </div>
     </section>

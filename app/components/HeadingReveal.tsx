@@ -26,6 +26,7 @@ export function HeadingReveal({
         {headingLines.map((line, index) => (
           <span key={`${line}-${index}`} className="block">
             {line}
+            {index < headingLines.length - 1 ? " " : ""}
           </span>
         ))}
       </Tag>
@@ -59,6 +60,7 @@ export function HeadingReveal({
             }}
           >
             {line}
+            {index < headingLines.length - 1 ? " " : ""}
           </motion.span>
         </span>
       ))}

@@ -83,10 +83,21 @@ type VercelDigest = {
   summary: string;
 };
 
+type ReportingWindow = {
+  dateLabel: string;
+  generatedAtLabel: string;
+  windowLabel: string;
+  comparisonLabel: string;
+  gaDate: string;
+  previousGaDate: string;
+};
+
 export type AnalyticsDigest = {
   configured: boolean;
   dateLabel: string;
   generatedAtLabel: string;
+  windowLabel: string;
+  comparisonLabel: string;
   propertyId?: string;
   subject: string;
   summary: MetricSummary;
@@ -119,15 +130,13 @@ let resendClient: Resend | null = null;
 
 export async function buildDailyAnalyticsDigest(): Promise<AnalyticsDigest> {
   const propertyId = process.env.GA4_PROPERTY_ID?.trim();
-  const dateLabel = formatYesterday();
-  const generatedAtLabel = formatGeneratedAt();
+  const reportingWindow = buildReportingWindow();
   const clarity = await fetchClarityDigest();
   const vercel = buildVercelDigest();
 
   if (!propertyId) {
     return createSetupDigest({
-      dateLabel,
-      generatedAtLabel,
+      reportingWindow,
       note: "GA4_PROPERTY_ID is missing.",
       clarity,
       vercel,
@@ -138,8 +147,7 @@ export async function buildDailyAnalyticsDigest(): Promise<AnalyticsDigest> {
 
   if (googleConfigNotes.length) {
     return createSetupDigest({
-      dateLabel,
-      generatedAtLabel,
+      reportingWindow,
       note: googleConfigNotes[0],
       propertyId,
       clarity,
@@ -151,20 +159,36 @@ export async function buildDailyAnalyticsDigest(): Promise<AnalyticsDigest> {
   try {
     const [current, previous, topPages, topSources, topLocations, topDevices, topEvents] =
       await Promise.all([
-        fetchSummary(propertyId, "yesterday"),
-        fetchSummary(propertyId, "2daysAgo"),
+        fetchSummary(propertyId, reportingWindow.gaDate),
+        fetchSummary(propertyId, reportingWindow.previousGaDate),
         fetchRows(propertyId, ["unifiedPagePathScreen", "pageTitle"], [
           "screenPageViews",
           "activeUsers",
           "averageSessionDuration",
-        ]),
+        ], reportingWindow.gaDate),
         fetchRows(propertyId, ["sessionDefaultChannelGroup", "sessionSourceMedium"], [
           "sessions",
           "activeUsers",
-        ]),
-        fetchRows(propertyId, ["country", "city"], ["activeUsers", "sessions"]),
-        fetchRows(propertyId, ["deviceCategory"], ["activeUsers", "screenPageViews"]),
-        fetchRows(propertyId, ["eventName"], ["eventCount", "activeUsers"], 8),
+        ], reportingWindow.gaDate),
+        fetchRows(
+          propertyId,
+          ["country", "city"],
+          ["activeUsers", "sessions"],
+          reportingWindow.gaDate,
+        ),
+        fetchRows(
+          propertyId,
+          ["deviceCategory"],
+          ["activeUsers", "screenPageViews"],
+          reportingWindow.gaDate,
+        ),
+        fetchRows(
+          propertyId,
+          ["eventName"],
+          ["eventCount", "activeUsers"],
+          reportingWindow.gaDate,
+          8,
+        ),
       ]);
 
     const comparison = buildComparison(current, previous);
@@ -178,12 +202,14 @@ export async function buildDailyAnalyticsDigest(): Promise<AnalyticsDigest> {
       topEvents,
       clarity,
     });
-    const subject = `Portfolio analytics: ${current.activeUsers} visitors, ${current.pageViews} views (${dateLabel})`;
+    const subject = `Portfolio analytics brief: ${current.newUsers} new users, ${current.pageViews} views (${reportingWindow.dateLabel})`;
 
     return {
       configured: true,
-      dateLabel,
-      generatedAtLabel,
+      dateLabel: reportingWindow.dateLabel,
+      generatedAtLabel: reportingWindow.generatedAtLabel,
+      windowLabel: reportingWindow.windowLabel,
+      comparisonLabel: reportingWindow.comparisonLabel,
       propertyId,
       subject,
       summary: current,
@@ -207,8 +233,7 @@ export async function buildDailyAnalyticsDigest(): Promise<AnalyticsDigest> {
     };
   } catch (error) {
     return createSetupDigest({
-      dateLabel,
-      generatedAtLabel,
+      reportingWindow,
       note: error instanceof Error ? error.message : "Google Analytics Data API failed.",
       propertyId,
       clarity,
@@ -362,11 +387,12 @@ async function fetchRows(
   propertyId: string,
   dimensions: string[],
   metrics: string[],
+  date: string,
   limit = 6,
 ): Promise<ReportRow[]> {
   const [response] = await getAnalyticsClient().runReport({
     property: `properties/${propertyId}`,
-    dateRanges: [{ startDate: "yesterday", endDate: "yesterday" }],
+    dateRanges: [{ startDate: date, endDate: date }],
     dimensions: dimensions.map((name) => ({ name })),
     metrics: metrics.map((name) => ({ name })),
     limit,
@@ -454,30 +480,48 @@ async function fetchClarityDigest(): Promise<ClarityDigest> {
       ...extractClarityHighlights(metrics, "Dead Click Count", [
         "deadClickCount",
         "DeadClickCount",
+        "subTotal",
+        "sessionsCount",
+        "count",
+        "value",
+      ], 3),
+      ...extractClarityHighlights(metrics, "Excessive Scroll", [
+        "excessiveScroll",
+        "ExcessiveScroll",
+        "subTotal",
+        "sessionsCount",
         "count",
         "value",
       ], 3),
       ...extractClarityHighlights(metrics, "Rage Click Count", [
         "rageClickCount",
         "RageClickCount",
+        "subTotal",
+        "sessionsCount",
         "count",
         "value",
       ], 3),
       ...extractClarityHighlights(metrics, "Quickback Click", [
         "quickbackClick",
         "QuickbackClick",
+        "subTotal",
+        "sessionsCount",
         "count",
         "value",
       ], 3),
       ...extractClarityHighlights(metrics, "Script Error Count", [
         "scriptErrorCount",
         "ScriptErrorCount",
+        "subTotal",
+        "sessionsCount",
         "count",
         "value",
       ], 3),
       ...extractClarityHighlights(metrics, "Error Click Count", [
         "errorClickCount",
         "ErrorClickCount",
+        "subTotal",
+        "sessionsCount",
         "count",
         "value",
       ], 3),
@@ -637,16 +681,14 @@ function percentChange(current: number, previous: number) {
 }
 
 function createSetupDigest({
-  dateLabel,
-  generatedAtLabel,
+  reportingWindow,
   note,
   propertyId,
   clarity,
   vercel,
   setupNotes = [],
 }: {
-  dateLabel: string;
-  generatedAtLabel: string;
+  reportingWindow: ReportingWindow;
   note: string;
   propertyId?: string;
   clarity: ClarityDigest;
@@ -662,10 +704,12 @@ function createSetupDigest({
 
   return {
     configured: false,
-    dateLabel,
-    generatedAtLabel,
+    dateLabel: reportingWindow.dateLabel,
+    generatedAtLabel: reportingWindow.generatedAtLabel,
+    windowLabel: reportingWindow.windowLabel,
+    comparisonLabel: reportingWindow.comparisonLabel,
     propertyId,
-    subject: `Portfolio analytics setup needs attention (${dateLabel})`,
+    subject: `Portfolio analytics setup: GA4 access needed (${reportingWindow.dateLabel})`,
     summary: {
       activeUsers: 0,
       newUsers: 0,
@@ -679,14 +723,16 @@ function createSetupDigest({
     comparison: {},
     insights: [
       {
-        title: "Report pipeline needs credentials",
-        body: allSetupNotes[0],
+        title: "GA4 server access is the blocker",
+        body: `The report is scheduled for the previous full day (${reportingWindow.windowLabel}), but GA4 cannot be read automatically until a service account is granted Viewer access.`,
         tone: "setup",
       },
       {
-        title: "Tracking is installed",
-        body: "GA4, Microsoft Clarity, Vercel Web Analytics, and Speed Insights are present in the app; the missing part is private server-side access for automated reporting.",
-        tone: "watch",
+        title: clarity.configured ? "Clarity behavior export is connected" : "Tracking is installed",
+        body: clarity.configured
+          ? "Microsoft Clarity can now feed behavior and friction signals into the daily brief; GA4 remains the source of truth for previous-day users, sessions, sources, locations, and pages."
+          : "GA4, Microsoft Clarity, Vercel Web Analytics, and Speed Insights are present in the app; the missing part is private server-side access for automated reporting.",
+        tone: clarity.configured ? "good" : "watch",
       },
     ],
     providers: buildProviderDigests({
@@ -883,13 +929,15 @@ function extractClarityHighlights(
   limit = 5,
 ): ClarityHighlight[] {
   const metric = findClarityMetric(metrics, metricName);
+  const displayMetricName = humanizeMetricName(metric?.metricName || metricName);
 
   return (metric?.information || [])
     .map((row) => {
       const value = readClarityNumber(row, valueKeys);
+      const label = buildClarityLabel(row);
 
       return {
-        label: buildClarityLabel(row),
+        label: `${displayMetricName}: ${label}`,
         value,
         displayValue: formatNumber(value),
         detail: buildClarityDetail(row),
@@ -946,6 +994,7 @@ function readClarityNumber(row: ClarityInformationRow, preferredKeys: string[]) 
 function buildClarityLabel(row: ClarityInformationRow) {
   const parts = [
     row.URL,
+    row.Url,
     row.PageUrl,
     row.url,
     row.Device,
@@ -972,9 +1021,13 @@ function buildClarityDetail(row: ClarityInformationRow) {
     coerceNumber(row.distinctUserCount) ||
     coerceNumber(row.distantUserCount) ||
     coerceNumber(row.userCount);
+  const views = coerceNumber(row.pagesViews) || coerceNumber(row.pageViews);
+  const affectedRate = coerceNumber(row.sessionsWithMetricPercentage);
   const details = [
     sessions ? `${formatNumber(sessions)} sessions` : "",
     users ? `${formatNumber(users)} users` : "",
+    views ? `${formatNumber(views)} views` : "",
+    affectedRate ? `${formatPercent(affectedRate / 100)} affected sessions` : "",
   ].filter(Boolean);
 
   return details.join(", ") || undefined;
@@ -982,6 +1035,14 @@ function buildClarityDetail(row: ClarityInformationRow) {
 
 function normalizeMetricName(value: string) {
   return value.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function humanizeMetricName(value: string) {
+  return value
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/count$/i, "count")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function coerceNumber(value: string | number | null | undefined) {
@@ -1000,13 +1061,50 @@ function coerceNumber(value: string | number | null | undefined) {
   return null;
 }
 
-function formatYesterday() {
-  const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000);
+function buildReportingWindow(): ReportingWindow {
+  const reportDate = getDatePartsInIndia(1);
+  const previousDate = getDatePartsInIndia(2);
+  const dateLabel = formatIndianDateLabel(reportDate);
+  const previousDateLabel = formatIndianDateLabel(previousDate);
+
+  return {
+    dateLabel,
+    generatedAtLabel: formatGeneratedAt(),
+    windowLabel: `${dateLabel}, 12:00 AM-11:59 PM IST`,
+    comparisonLabel: `Compared with ${previousDateLabel}`,
+    gaDate: formatGaDate(reportDate),
+    previousGaDate: formatGaDate(previousDate),
+  };
+}
+
+function getDatePartsInIndia(daysAgo: number) {
+  const date = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000);
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(date);
+  const read = (type: string) => parts.find((part) => part.type === type)?.value || "";
+
+  return {
+    year: read("year"),
+    month: read("month"),
+    day: read("day"),
+  };
+}
+
+function formatGaDate(date: { year: string; month: string; day: string }) {
+  return `${date.year}-${date.month}-${date.day}`;
+}
+
+function formatIndianDateLabel(date: { year: string; month: string; day: string }) {
+  const parsed = new Date(`${date.year}-${date.month}-${date.day}T12:00:00+05:30`);
 
   return new Intl.DateTimeFormat("en-IN", {
     dateStyle: "medium",
     timeZone: "Asia/Kolkata",
-  }).format(yesterday);
+  }).format(parsed);
 }
 
 function formatGeneratedAt() {
@@ -1021,8 +1119,10 @@ function renderDigestText(digest: AnalyticsDigest) {
   const lines = [
     digest.subject,
     "",
-    `Date: ${digest.dateLabel}`,
+    `Reporting window: ${digest.windowLabel}`,
+    digest.comparisonLabel,
     `Generated: ${digest.generatedAtLabel}`,
+    "Scheduled send: 6:30 AM IST",
     "",
     "Executive read",
     ...digest.insights.map((insight) => `- ${insight.title}: ${insight.body}`),
@@ -1033,37 +1133,44 @@ function renderDigestText(digest: AnalyticsDigest) {
         `- ${provider.name}: ${provider.status} - ${provider.headline}. ${provider.detail}`,
     ),
     "",
-    "Summary",
-    `- Active users: ${formatNumber(digest.summary.activeUsers)} ${formatDelta(digest.comparison.activeUsers)}`,
-    `- New users: ${formatNumber(digest.summary.newUsers)} ${formatDelta(digest.comparison.newUsers)}`,
-    `- Sessions: ${formatNumber(digest.summary.sessions)} ${formatDelta(digest.comparison.sessions)}`,
-    `- Page views: ${formatNumber(digest.summary.pageViews)} ${formatDelta(digest.comparison.pageViews)}`,
-    `- Engagement rate: ${formatPercent(digest.summary.engagementRate)}`,
-    `- Avg session: ${formatDuration(digest.summary.averageSessionDuration)}`,
-    `- Key events: ${formatNumber(digest.summary.keyEvents)} ${formatDelta(digest.comparison.keyEvents)}`,
-    "",
-    renderTextTable("Top pages", digest.topPages, (row) => {
-      const [path, title] = row.dimensions;
-      return `${path} - ${title || "Untitled"} (${formatNumber(row.metrics[0])} views, ${formatDuration(row.metrics[2])} avg)`;
-    }),
-    renderTextTable("Top sources", digest.topSources, (row) => {
-      const [channel, source] = row.dimensions;
-      return `${channel} / ${source} (${formatNumber(row.metrics[0])} sessions)`;
-    }),
-    renderTextTable("Top locations", digest.topLocations, (row) => {
-      const [country, city] = row.dimensions;
-      return `${city}, ${country} (${formatNumber(row.metrics[0])} users)`;
-    }),
-    renderTextTable("Devices", digest.topDevices, (row) => {
-      const [device] = row.dimensions;
-      return `${device} (${formatNumber(row.metrics[0])} users, ${formatNumber(row.metrics[1])} views)`;
-    }),
-    renderTextTable("Events", digest.topEvents, (row) => {
-      const [eventName] = row.dimensions;
-      return `${eventName} (${formatNumber(row.metrics[0])} events)`;
-    }),
+    digest.configured
+      ? [
+          "Previous-day scorecard",
+          `- Active users: ${formatNumber(digest.summary.activeUsers)} ${formatDelta(digest.comparison.activeUsers)}`,
+          `- New users: ${formatNumber(digest.summary.newUsers)} ${formatDelta(digest.comparison.newUsers)}`,
+          `- Sessions: ${formatNumber(digest.summary.sessions)} ${formatDelta(digest.comparison.sessions)}`,
+          `- Page views: ${formatNumber(digest.summary.pageViews)} ${formatDelta(digest.comparison.pageViews)}`,
+          `- Engagement rate: ${formatPercent(digest.summary.engagementRate)}`,
+          `- Avg session: ${formatDuration(digest.summary.averageSessionDuration)}`,
+          `- Key events: ${formatNumber(digest.summary.keyEvents)} ${formatDelta(digest.comparison.keyEvents)}`,
+          "",
+          renderTextTable("Top pages", digest.topPages, (row) => {
+            const [path, title] = row.dimensions;
+            return `${path} - ${title || "Untitled"} (${formatNumber(row.metrics[0])} views, ${formatDuration(row.metrics[2])} avg)`;
+          }),
+          renderTextTable("Top sources", digest.topSources, (row) => {
+            const [channel, source] = row.dimensions;
+            return `${channel} / ${source} (${formatNumber(row.metrics[0])} sessions)`;
+          }),
+          renderTextTable("Top locations", digest.topLocations, (row) => {
+            const [country, city] = row.dimensions;
+            return `${city}, ${country} (${formatNumber(row.metrics[0])} users)`;
+          }),
+          renderTextTable("Devices", digest.topDevices, (row) => {
+            const [device] = row.dimensions;
+            return `${device} (${formatNumber(row.metrics[0])} users, ${formatNumber(row.metrics[1])} views)`;
+          }),
+          renderTextTable("Events", digest.topEvents, (row) => {
+            const [eventName] = row.dimensions;
+            return `${eventName} (${formatNumber(row.metrics[0])} events)`;
+          }),
+        ].join("\n")
+      : [
+          "Previous-day GA4 scorecard",
+          "- Not shown yet. GA4 server credentials are still missing, so the report will not display zeroes that could be mistaken for real traffic.",
+        ].join("\n"),
     renderTextList(
-      "Clarity traffic / friction",
+      "Clarity traffic / friction (last 24 hours from Clarity API)",
       [...digest.clarity.topTraffic, ...digest.clarity.frictionSignals],
       (row) =>
         `${row.label}: ${row.displayValue}${row.detail ? ` (${row.detail})` : ""}`,
@@ -1079,8 +1186,9 @@ function renderDigestText(digest: AnalyticsDigest) {
     "",
     "Notes",
     "- Visitors are anonymous. Names are not available unless a visitor signs in or knowingly submits a form.",
-    "- Clarity heatmaps and recordings live in the Microsoft Clarity dashboard. Automated Clarity rows need CLARITY_API_TOKEN.",
-    "- Vercel Web Analytics and Speed Insights are installed; detailed Vercel analytics remain in the Vercel dashboard/export flow.",
+    "- GA4 is the automated source for previous calendar-day users, sessions, pages, sources, locations, and devices.",
+    "- Clarity's Data Export API returns the last 24 hours at run time; heatmaps and recordings remain in the Clarity dashboard.",
+    "- Vercel Web Analytics and Speed Insights support CSV/dashboard export; this email includes Vercel deployment context unless a data drain/export is added.",
   ];
 
   if (digest.setupNotes.length) {
@@ -1093,48 +1201,23 @@ function renderDigestText(digest: AnalyticsDigest) {
 function renderDigestHtml(digest: AnalyticsDigest) {
   return `
     <div style="font-family: Inter, Arial, sans-serif; color: #1f2723; line-height: 1.5; max-width: 720px;">
-      <p style="color: #647067; margin: 0 0 6px;">${escapeHtml(digest.dateLabel)}</p>
-      <h1 style="font-size: 24px; margin: 0 0 18px;">Portfolio analytics digest</h1>
-      <p style="color: #647067; font-size: 13px; margin: -8px 0 18px;">Generated ${escapeHtml(digest.generatedAtLabel)}</p>
+      <p style="color: #647067; margin: 0 0 6px; text-transform: uppercase; letter-spacing: .08em; font-size: 12px;">Previous-day portfolio intelligence</p>
+      <h1 style="font-size: 24px; margin: 0 0 10px;">Portfolio analytics brief</h1>
+      <div style="border: 1px solid #e7ebe7; border-radius: 10px; padding: 12px 14px; margin: 0 0 18px; background: #fbfcfb;">
+        <p style="margin: 0 0 4px;"><strong>Reporting window:</strong> ${escapeHtml(digest.windowLabel)}</p>
+        <p style="margin: 0 0 4px; color: #647067;">${escapeHtml(digest.comparisonLabel)}</p>
+        <p style="margin: 0; color: #647067;">Generated ${escapeHtml(digest.generatedAtLabel)}. Daily scheduled send: 6:30 AM IST.</p>
+      </div>
       ${digest.configured ? "" : renderNotice(digest.setupNotes)}
       ${renderInsightsHtml(digest.insights)}
       ${renderProvidersHtml(digest.providers)}
-      <table style="border-collapse: collapse; width: 100%; margin: 0 0 22px;">
-        <tbody>
-          ${renderMetricRow("Active users", formatNumber(digest.summary.activeUsers), formatDelta(digest.comparison.activeUsers))}
-          ${renderMetricRow("New users", formatNumber(digest.summary.newUsers), formatDelta(digest.comparison.newUsers))}
-          ${renderMetricRow("Sessions", formatNumber(digest.summary.sessions), formatDelta(digest.comparison.sessions))}
-          ${renderMetricRow("Page views", formatNumber(digest.summary.pageViews), formatDelta(digest.comparison.pageViews))}
-          ${renderMetricRow("Engagement rate", formatPercent(digest.summary.engagementRate), "")}
-          ${renderMetricRow("Avg session", formatDuration(digest.summary.averageSessionDuration), "")}
-          ${renderMetricRow("Key events", formatNumber(digest.summary.keyEvents), formatDelta(digest.comparison.keyEvents))}
-        </tbody>
-      </table>
-      ${renderHtmlTable("Top pages", digest.topPages, (row) => {
-        const [path, title] = row.dimensions;
-        return [path, title || "Untitled", `${formatNumber(row.metrics[0])} views`, `${formatDuration(row.metrics[2])} avg`];
-      })}
-      ${renderHtmlTable("Top sources", digest.topSources, (row) => {
-        const [channel, source] = row.dimensions;
-        return [channel, source, `${formatNumber(row.metrics[0])} sessions`, `${formatNumber(row.metrics[1])} users`];
-      })}
-      ${renderHtmlTable("Top locations", digest.topLocations, (row) => {
-        const [country, city] = row.dimensions;
-        return [city, country, `${formatNumber(row.metrics[0])} users`, `${formatNumber(row.metrics[1])} sessions`];
-      })}
-      ${renderHtmlTable("Devices", digest.topDevices, (row) => {
-        const [device] = row.dimensions;
-        return [device, `${formatNumber(row.metrics[0])} users`, `${formatNumber(row.metrics[1])} views`];
-      })}
-      ${renderHtmlTable("Events", digest.topEvents, (row) => {
-        const [eventName] = row.dimensions;
-        return [eventName, `${formatNumber(row.metrics[0])} events`, `${formatNumber(row.metrics[1])} users`];
-      })}
+      ${digest.configured ? renderGaMetricsHtml(digest) : renderGaPendingHtml()}
       ${renderClarityHtml(digest.clarity)}
       ${renderVercelHtml(digest.vercel)}
       <p style="color: #647067; font-size: 13px; margin-top: 22px;">
         Visitors are anonymous. Names are not available unless a visitor signs in or knowingly submits a form.
-        Microsoft Clarity provides heatmaps and session recordings separately. Vercel Web Analytics and Speed Insights remain available in the Vercel dashboard.
+        GA4 powers the previous calendar-day scorecard. Microsoft Clarity's API contributes last-24-hours behavior signals, while heatmaps and recordings remain in the Clarity dashboard.
+        Vercel Web Analytics and Speed Insights remain available in the Vercel dashboard/CSV export flow.
       </p>
     </div>
   `;
@@ -1217,10 +1300,61 @@ function renderProvidersHtml(providers: ProviderDigest[]) {
   `;
 }
 
+function renderGaMetricsHtml(digest: AnalyticsDigest) {
+  return `
+    <h2 style="font-size: 17px; margin: 24px 0 8px;">Previous-day scorecard</h2>
+    <table style="border-collapse: collapse; width: 100%; margin: 0 0 22px;">
+      <tbody>
+        ${renderMetricRow("Active users", formatNumber(digest.summary.activeUsers), formatDelta(digest.comparison.activeUsers))}
+        ${renderMetricRow("New users", formatNumber(digest.summary.newUsers), formatDelta(digest.comparison.newUsers))}
+        ${renderMetricRow("Sessions", formatNumber(digest.summary.sessions), formatDelta(digest.comparison.sessions))}
+        ${renderMetricRow("Page views", formatNumber(digest.summary.pageViews), formatDelta(digest.comparison.pageViews))}
+        ${renderMetricRow("Engagement rate", formatPercent(digest.summary.engagementRate), "")}
+        ${renderMetricRow("Avg session", formatDuration(digest.summary.averageSessionDuration), "")}
+        ${renderMetricRow("Key events", formatNumber(digest.summary.keyEvents), formatDelta(digest.comparison.keyEvents))}
+      </tbody>
+    </table>
+    ${renderHtmlTable("Top pages", digest.topPages, (row) => {
+      const [path, title] = row.dimensions;
+      return [path, title || "Untitled", `${formatNumber(row.metrics[0])} views`, `${formatDuration(row.metrics[2])} avg`];
+    })}
+    ${renderHtmlTable("Top sources", digest.topSources, (row) => {
+      const [channel, source] = row.dimensions;
+      return [channel, source, `${formatNumber(row.metrics[0])} sessions`, `${formatNumber(row.metrics[1])} users`];
+    })}
+    ${renderHtmlTable("Top locations", digest.topLocations, (row) => {
+      const [country, city] = row.dimensions;
+      return [city, country, `${formatNumber(row.metrics[0])} users`, `${formatNumber(row.metrics[1])} sessions`];
+    })}
+    ${renderHtmlTable("Devices", digest.topDevices, (row) => {
+      const [device] = row.dimensions;
+      return [device, `${formatNumber(row.metrics[0])} users`, `${formatNumber(row.metrics[1])} views`];
+    })}
+    ${renderHtmlTable("Events", digest.topEvents, (row) => {
+      const [eventName] = row.dimensions;
+      return [eventName, `${formatNumber(row.metrics[0])} events`, `${formatNumber(row.metrics[1])} users`];
+    })}
+  `;
+}
+
+function renderGaPendingHtml() {
+  return `
+    <h2 style="font-size: 17px; margin: 24px 0 8px;">Previous-day GA4 scorecard</h2>
+    <div style="border: 1px solid #e7ebe7; border-radius: 10px; padding: 14px; margin-bottom: 22px;">
+      <strong>Automated GA4 metrics unavailable</strong>
+      <p style="color: #647067; margin: 6px 0 0;">
+        I am not showing zero visitors, zero views, or empty tables here because GA4 service-account access is not connected yet.
+        Once that credential is added, this section will show previous-day users, new users, sessions, page views, sources, pages, locations, devices, events, and day-over-day movement.
+      </p>
+    </div>
+  `;
+}
+
 function renderClarityHtml(clarity: ClarityDigest) {
   return `
     <h2 style="font-size: 17px; margin: 24px 0 8px;">Microsoft Clarity</h2>
     <p style="color: #647067; margin: 0 0 10px;">${escapeHtml(clarity.summary)}</p>
+    <p style="color: #647067; font-size: 12px; margin: -4px 0 10px;">Window: last 24 hours at report run time. Clarity's Data Export API does not expose a midnight-to-midnight custom date range.</p>
     ${renderHighlightTable("Traffic and behavior", [
       ...clarity.topTraffic,
       ...clarity.frictionSignals,
@@ -1305,7 +1439,7 @@ function renderMetricRow(label: string, value: string, delta: string) {
 function renderNotice(notes: string[]) {
   return `
     <div style="background: #fff6de; border: 1px solid #f1d38a; border-radius: 8px; padding: 12px 14px; margin-bottom: 18px;">
-      <strong>Setup needed</strong>
+      <strong>Access needed before GA4 numbers can be analyzed</strong>
       <ul style="margin: 8px 0 0 18px; padding: 0;">
         ${notes.map((note) => `<li>${escapeHtml(note)}</li>`).join("")}
       </ul>

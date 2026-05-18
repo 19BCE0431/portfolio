@@ -31,14 +31,25 @@ WHATSAPP_TO_NUMBER=
 
 ## Google Analytics Daily Digest
 
-1. In Google Cloud, enable the Google Analytics Data API.
-2. Create a service account.
-3. In GA4, add the service account email as a Viewer on the property.
-4. Set `GA4_PROPERTY_ID` to the numeric GA4 property ID, not the `G-...` measurement ID.
-5. Set `CRON_SECRET` to a long random value.
-6. Set the Resend values so the digest can be emailed.
+The scheduled Vercel job runs at `01:00 UTC`, which is `06:30 IST`, and reports the previous full calendar day in India time.
 
-The scheduled Vercel job runs at `01:00 UTC`, which is `06:30 IST`, and reports the GA4 property's `yesterday` data.
+GA4 has two IDs:
+
+- Measurement ID: starts with `G-` and belongs in the website tag.
+- Property ID: numeric ID used by the server-side Data API. This site uses `538116983`.
+
+To make `GA4_SERVICE_ACCOUNT_JSON`:
+
+1. Open Google Cloud Console and create or choose a project for the portfolio analytics job.
+2. Enable **Google Analytics Data API** in that Google Cloud project.
+3. Create a **Service Account** named something like `portfolio-analytics-reporter`.
+4. Open the service account, create a JSON key, and download the JSON file.
+5. Copy the service account email from the JSON file. It looks like `name@project.iam.gserviceaccount.com`.
+6. Open GA4 Admin for property `538116983`.
+7. Go to Property access management and add that service account email as **Viewer**.
+8. Add the downloaded JSON contents to Vercel as `GA4_SERVICE_ACCOUNT_JSON`.
+
+The JSON is a secret. Do not commit it. In Vercel, store it only as an encrypted environment variable.
 
 ## Microsoft Clarity
 

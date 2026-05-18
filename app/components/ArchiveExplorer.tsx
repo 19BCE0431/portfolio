@@ -17,7 +17,7 @@ export function ArchiveExplorer({ projects }: { projects: ArchiveProject[] }) {
   return (
     <div>
       <div className="sticky top-[74px] z-20 mb-8 py-2 md:top-[88px] md:mb-14">
-        <div className="premium-panel fine-border flex min-w-0 flex-wrap items-center gap-1.5 p-1.5 sm:gap-2 sm:p-1">
+        <div className="premium-panel fine-border mobile-flow-rail min-w-0 items-center p-1.5 sm:mx-0 sm:flex sm:flex-wrap sm:overflow-visible sm:px-1 sm:gap-2 sm:p-1">
           {archiveFilters.map((filter) => (
             <button
               key={filter}
