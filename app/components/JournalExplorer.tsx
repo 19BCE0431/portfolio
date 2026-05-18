@@ -40,15 +40,15 @@ export function JournalExplorer({
 
   return (
     <div>
-      <div className="sticky top-[72px] z-20 -mx-4 mb-6 overflow-x-auto px-4 py-2 md:top-[88px] md:mb-12">
-        <div className="premium-card-shadow flex w-max min-w-full gap-1.5 rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.9)] p-1.5 backdrop-blur-2xl sm:min-w-0 sm:flex-wrap sm:gap-2 sm:p-1">
+      <div className="sticky top-[74px] z-20 mb-6 py-2 md:top-[88px] md:mb-12">
+        <div className="premium-card-shadow fine-border flex min-w-0 flex-wrap gap-1.5 rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.9)] p-1.5 backdrop-blur-2xl sm:gap-2 sm:p-1">
           {(["All", ...categories] as const).map((category) => (
             <button
               key={category}
               type="button"
               onClick={() => setActiveCategory(category)}
               aria-pressed={activeCategory === category}
-              className={`relative min-h-11 shrink-0 overflow-hidden rounded-[7px] px-3 py-2 text-center text-[11px] font-medium leading-[1.18] transition-all duration-300 sm:min-h-0 sm:whitespace-nowrap sm:px-3.5 sm:text-[12px] ${
+              className={`premium-link relative min-h-10 shrink-0 overflow-hidden rounded-[7px] px-3 py-2 text-center text-[11px] font-medium leading-[1.18] transition-all duration-300 sm:min-h-0 sm:whitespace-nowrap sm:px-3.5 sm:text-[12px] ${
                 activeCategory === category
                   ? "text-[var(--foreground)]"
                   : "text-[var(--muted)] hover:bg-black/[0.04] hover:text-[var(--foreground)]"
@@ -84,7 +84,7 @@ export function JournalExplorer({
             >
               <Link
                 href={`/journal/${post.slug}`}
-                className="group editorial-panel hover-light relative flex h-full min-h-[250px] flex-col justify-between overflow-hidden p-4 transition duration-500 hover:border-black/20 hover:bg-[rgba(251,251,248,0.96)] hover:shadow-[0_34px_94px_rgba(17,19,19,0.09)] focus:outline-none focus:ring-2 focus:ring-black/15 sm:min-h-[310px] sm:p-6"
+                className="group editorial-panel motion-surface hover-light relative flex h-full min-h-[250px] flex-col justify-between overflow-hidden p-4 transition duration-500 hover:border-black/20 hover:bg-[rgba(251,251,248,0.96)] hover:shadow-[0_34px_94px_rgba(17,19,19,0.09)] focus:outline-none focus:ring-2 focus:ring-black/15 sm:min-h-[310px] sm:p-6"
               >
                 <span className="pointer-events-none absolute inset-x-6 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-transparent via-black/25 to-transparent transition-transform duration-500 group-hover:scale-x-100" />
                 <div>

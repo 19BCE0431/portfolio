@@ -15,9 +15,11 @@ import { ProjectVisual } from "./ProjectVisual";
 export function ProjectCard({
   project,
   compact = false,
+  priority = false,
 }: {
   project: ArchiveProject;
   compact?: boolean;
+  priority?: boolean;
 }) {
   const shouldReduceMotion = useReducedMotion();
   const arrowX = useMotionValue(0);
@@ -53,18 +55,19 @@ export function ProjectCard({
       initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 10 }}
-      whileHover={shouldReduceMotion ? undefined : { y: -6 }}
+      whileHover={shouldReduceMotion ? undefined : { y: -6, scale: 1.006 }}
+      whileTap={shouldReduceMotion ? undefined : { scale: 0.996 }}
       transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
     >
       <Link
         href={`/archive/${project.slug}`}
         onMouseMove={handlePointerMove}
         onMouseLeave={resetPointer}
-        className={`group hover-light relative flex h-full cursor-pointer flex-col overflow-hidden rounded-[8px] border p-3 backdrop-blur transition duration-500 focus:outline-none focus:ring-2 focus:ring-black/15 sm:p-4 ${
+        className={`group motion-surface hover-light relative flex h-full cursor-pointer flex-col overflow-hidden rounded-[8px] border p-3 backdrop-blur transition duration-500 focus:outline-none focus:ring-2 focus:ring-black/15 sm:p-4 ${
           featured
             ? "border-black/15 bg-[rgba(16,18,18,0.93)] text-white shadow-[0_36px_110px_rgba(16,18,18,0.16)] hover:border-black/20"
             : "premium-card-shadow border-black/10 bg-[rgba(255,253,248,0.76)] hover:border-black/20 hover:bg-[rgba(255,253,248,0.96)] hover:shadow-[0_34px_94px_rgba(16,18,18,0.09)]"
-        } ${compact ? "min-h-[360px] sm:min-h-[410px]" : "min-h-[520px]"}`}
+        } ${compact ? "min-h-[330px] sm:min-h-[380px]" : "min-h-[450px] sm:min-h-[500px]"}`}
       >
         <span className="pointer-events-none absolute inset-x-6 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-transparent via-current to-transparent opacity-30 transition-transform duration-500 group-hover:scale-x-100" />
         <span
@@ -76,11 +79,16 @@ export function ProjectCard({
           }`}
         />
 
-        <ProjectVisual project={project} compact={compact} dark={featured} />
+        <ProjectVisual
+          project={project}
+          compact={compact}
+          dark={featured}
+          priority={priority}
+        />
 
         <div className="relative z-10 flex flex-1 flex-col justify-between p-2 pt-5 sm:p-3 sm:pt-6">
           <div>
-            <div className="mb-5 flex items-start justify-between gap-4">
+            <div className="mb-4 flex items-start justify-between gap-3 sm:mb-5 sm:gap-4">
               <span
                 className={`max-w-[230px] text-[10.5px] font-semibold uppercase leading-[1.45] tracking-[0.16em] sm:text-[11px] sm:tracking-[0.18em] ${
                   featured ? "text-white/46" : "text-[var(--muted)]"
@@ -107,7 +115,7 @@ export function ProjectCard({
               {project.title}
             </h3>
             <p
-              className={`mt-4 text-[0.94rem] leading-[1.58] ${
+              className={`mt-3 text-[0.92rem] leading-[1.55] sm:mt-4 sm:text-[0.94rem] sm:leading-[1.58] ${
                 featured ? "text-white/58" : "text-[var(--muted)]"
               }`}
             >
@@ -115,7 +123,7 @@ export function ProjectCard({
             </p>
 
             <div
-              className={`mt-5 grid gap-3 border-t pt-4 ${
+              className={`mt-4 grid gap-3 border-t pt-4 ${
                 featured ? "border-white/10" : "border-black/10"
               }`}
             >
@@ -157,7 +165,7 @@ export function ProjectCard({
           </div>
 
           <div
-            className={`mt-6 flex items-end justify-between gap-4 border-t pt-4 ${
+            className={`mt-5 flex items-end justify-between gap-4 border-t pt-4 ${
               featured ? "border-white/10" : "border-black/10"
             }`}
           >

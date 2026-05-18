@@ -25,6 +25,13 @@ export async function GET(request: Request) {
     ok: true,
     configured: digest.configured,
     date: digest.dateLabel,
+    subject: digest.subject,
+    providers: digest.providers.map((provider) => ({
+      name: provider.name,
+      status: provider.status,
+      headline: provider.headline,
+    })),
+    setupNotes: digest.setupNotes,
     email,
     whatsapp,
   });

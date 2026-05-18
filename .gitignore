@@ -25,3 +25,4 @@ verification-*.png
 weekly-insight-manifest.json
 linkedin-post-result.json
 .vercel
+.env*.local

@@ -17,7 +17,7 @@ export function CopyArticleLink({ path }: { path: string }) {
     <button
       type="button"
       onClick={copyLink}
-      className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[8px] border border-black/10 bg-white/45 px-3.5 py-2 text-[13px] font-medium text-[var(--foreground)] shadow-[0_10px_32px_rgba(17,19,19,0.05)] backdrop-blur transition hover:bg-white"
+      className="premium-link inline-flex min-h-11 items-center justify-center gap-2 rounded-[8px] border border-black/10 bg-white/45 px-3.5 py-2 text-[13px] font-medium text-[var(--foreground)] shadow-[0_10px_32px_rgba(17,19,19,0.05)] backdrop-blur transition hover:bg-white"
     >
       {copied ? (
         <Check className="h-4 w-4 text-[var(--sage)]" />

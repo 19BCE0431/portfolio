@@ -16,15 +16,15 @@ export function ArchiveExplorer({ projects }: { projects: ArchiveProject[] }) {
 
   return (
     <div>
-      <div className="sticky top-[72px] z-20 -mx-4 mb-8 overflow-x-auto px-4 py-2 md:top-[88px] md:mb-14">
-        <div className="premium-panel flex w-max min-w-full items-center gap-1.5 p-1.5 sm:min-w-0 sm:flex-wrap sm:gap-2 sm:p-1">
+      <div className="sticky top-[74px] z-20 mb-8 py-2 md:top-[88px] md:mb-14">
+        <div className="premium-panel fine-border flex min-w-0 flex-wrap items-center gap-1.5 p-1.5 sm:gap-2 sm:p-1">
           {archiveFilters.map((filter) => (
             <button
               key={filter}
               type="button"
               onClick={() => setActiveFilter(filter)}
               aria-pressed={activeFilter === filter}
-              className={`relative min-h-11 shrink-0 overflow-hidden rounded-[7px] px-3 py-2 text-center text-[11px] font-medium leading-[1.18] transition-all duration-300 sm:min-h-0 sm:whitespace-nowrap sm:px-3.5 sm:text-[12px] ${
+              className={`premium-link relative min-h-10 shrink-0 overflow-hidden rounded-[7px] px-3 py-2 text-center text-[11px] font-medium leading-[1.18] transition-all duration-300 sm:min-h-0 sm:whitespace-nowrap sm:px-3.5 sm:text-[12px] ${
                 activeFilter === filter
                   ? "text-[var(--foreground)]"
                   : "text-[var(--muted)] hover:bg-black/[0.04] hover:text-[var(--foreground)]"
@@ -55,8 +55,12 @@ export function ArchiveExplorer({ projects }: { projects: ArchiveProject[] }) {
 
       <motion.div layout className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         <AnimatePresence mode="popLayout">
-          {visibleProjects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
+          {visibleProjects.map((project, index) => (
+            <ProjectCard
+              key={project.slug}
+              project={project}
+              priority={index < 3}
+            />
           ))}
         </AnimatePresence>
       </motion.div>

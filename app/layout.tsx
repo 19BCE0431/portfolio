@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AnalyticsEvents } from "./components/AnalyticsEvents";
 import { MicrosoftClarity } from "./components/MicrosoftClarity";
 import { PageTransition } from "./components/PageTransition";
+import { SiteNav } from "./components/SiteNav";
 import "./globals.css";
 import { profile } from "./data/portfolio";
 
@@ -58,11 +59,13 @@ export default function RootLayout({
 }>) {
   const gaMeasurementId =
     process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-KYQ1XELWXN";
-  const clarityProjectId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
+  const clarityProjectId =
+    process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || "wswfgi70h5";
 
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body className="antialiased">
+        <SiteNav />
         <PageTransition>{children}</PageTransition>
         <AnalyticsEvents />
         <Analytics />
