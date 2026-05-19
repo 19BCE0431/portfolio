@@ -53,7 +53,9 @@ export async function generateMetadata({
       "product strategy",
       "AI workflows",
     ],
-    alternates: post.canonicalUrl ? { canonical: post.canonicalUrl } : undefined,
+    alternates: {
+      canonical: post.canonicalUrl || `/journal/${post.slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.summary,

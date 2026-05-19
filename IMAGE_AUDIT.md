@@ -13,7 +13,7 @@ Approach: originals were left untouched. Selected images were copied, converted 
 - Images held back as not-used/future-use: 32
 - Homepage image load is intentionally small: 1 hero portrait, 1 recognition visual, and 4 MBA/context frames.
 - `/life` uses clustered browsing instead of a raw grid: Life, MBA, Recognition, and Portraits. Only the active cluster is shown at a time.
-- No ID-card/document photos are displayed. Banner-style visuals are kept as future-use assets unless they become useful for metadata or personal branding.
+- No ID-card/document photos are displayed. Banner-style visuals with visible contact details are kept out of public assets unless they are intentionally re-reviewed for metadata or personal branding.
 
 ## Images Used Now
 
@@ -48,7 +48,7 @@ Approach: originals were left untouched. Selected images were copied, converted 
 | `IMG_0393.HEIC` | IIM Sirmaur / MBA life | No | Not used | Night campus tower is too dark for the premium homepage. | Underexposed. | Would need heavy editing. | Related to other campus tower photos |
 | `IMG_0394.HEIC` | personal life / trips / friends | No | Not used | Moon/trees scene is atmospheric but not specific enough for portfolio story. | Dark and low-context. | Would need crop/edit. | No |
 | `IMG_0579.HEIC` | personal life / trips / friends | No | Not used | Suit-group selfie is warm but too casual and selfie-like for homepage. | Slightly soft/night image. | Compress if future private gallery expands. | No |
-| `IMG_0651.jpg` | banners / LinkedIn visuals | No | Reserve in `public/images/banners/linkedin-banner-01.jpg` | LinkedIn banner has personal contact details and should not be displayed inside the portfolio. | Cropped screenshot/banner. | Already compressed; privacy review needed before use. | No |
+| `IMG_0651.jpg` | banners / LinkedIn visuals | No | Not used publicly | LinkedIn banner has personal contact details and should not be displayed inside the portfolio or public asset paths. | Cropped screenshot/banner. | Public copy removed during privacy review. | No |
 | `IMG_0866.HEIC` | personal life / trips / friends | Yes | `/life` gallery | Quiet window frame feels personal without being too informal. | Good composition. | Converted/compressed. | No |
 | `IMG_0940.HEIC` | personal life / trips / friends | Yes | `/life` gallery | Back-facing hill view is tasteful and reflective, better suited to optional gallery than homepage. | Good scenic frame. | Converted/compressed. | No |
 | `IMG_1282.HEIC` | personal life / trips / friends | No | Not used | Friend/car selfie is too informal for this portfolio. | Casual selfie quality. | Do not publish now. | No |

@@ -10,6 +10,22 @@ export const metadata: Metadata = {
   title: "Archive",
   description:
     "A project archive covering product thinking, Applied AI, automation, market intelligence, MBA work, and the lessons each project left behind.",
+  alternates: {
+    canonical: "/archive",
+  },
+  openGraph: {
+    title: "Archive",
+    description:
+      "Applied AI, automation, market intelligence, MBA work, and product thinking from Mohit Sai Krishna.",
+    url: "/archive",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Archive",
+    description:
+      "Applied AI, automation, market intelligence, MBA work, and product thinking from Mohit Sai Krishna.",
+  },
 };
 
 export default function ArchivePage() {

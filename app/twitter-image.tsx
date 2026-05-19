@@ -52,7 +52,7 @@ export default function TwitterImage() {
         </div>
 
         <div style={{ fontSize: 22, color: "rgba(17,19,19,0.55)" }}>
-          mohitakrishna.in
+          mohitsaikrishna.in
         </div>
       </div>
     ),
