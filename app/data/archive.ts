@@ -161,9 +161,9 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "Applied AI",
     status: "Shipped",
     shortDescription:
-      "BigHaat product discovery flow for shoppers who knew the crop or product visually before they knew the exact words.",
+      "Image-led product discovery flow for an agri-commerce context, helping shoppers move from visual intent to product language.",
     context:
-      "Built inside BigHaat's commerce setting, where search quality can directly affect discovery, confidence, and purchase intent.",
+      "Built in BigHaat's agri-commerce setting, where search quality can influence discovery, confidence, and purchase intent.",
     problem:
       "Users may recognize what they need visually before they can describe it clearly. That creates a gap between intent and searchable language.",
     contribution:
@@ -189,11 +189,11 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "Automation",
     status: "Operational",
     shortDescription:
-      "Hourly BigHaat anomaly layer that made unusual order drops visible before they became a day-end surprise.",
+      "Hourly anomaly layer for BigHaat order movement, designed to surface unusual shifts earlier in the day.",
     context:
       "Order movement can change quickly across channels and categories. Teams need early signals when something unusual starts happening.",
     problem:
-      "Manual diagnosis can be slow when order drops happen across channels, categories, or operational workflows.",
+      "When order movement shifts across channels or categories, teams need a clear signal that helps them investigate sooner.",
     contribution:
       "Built hourly anomaly detection with Python, dashboards, and alerting logic so teams could spot drops and investigate sooner.",
     tools: ["Python", "Anomaly detection", "Dashboards", "Alerts"],
@@ -251,7 +251,7 @@ export const archiveProjects: ArchiveProject[] = [
     context:
       "Invoices and PDFs often require repetitive extraction, validation, and entry work before the actual operational decision can happen.",
     problem:
-      "Manual extraction from images and PDFs creates operational friction and quality risk.",
+      "Images and PDFs often need careful extraction and validation before the data becomes useful for operations.",
     contribution:
       "Automated invoice image and PDF data extraction using EasyOCR, pdfbuilder, and Python regex, with attention to exceptions and review flow.",
     tools: ["EasyOCR", "pdfbuilder", "Python regex"],
@@ -389,11 +389,11 @@ export const archiveProjects: ArchiveProject[] = [
     filter: "Applied AI",
     status: "Built",
     shortDescription:
-      "Prediction model for identifying likely order cancellations earlier, before manual follow-up slowed the workflow.",
+      "Prediction model for identifying likely order cancellations earlier, so follow-up could happen with better timing.",
     context:
       "Order confirmation workflows can be delayed when teams manually identify cancellation risk.",
     problem:
-      "Manual confirmation delays create uncertainty and slow down operational follow-up.",
+      "Order confirmation workflows need early risk signals so teams can prioritize follow-up with more confidence.",
     contribution:
       "Built an order cancellation prediction model to reduce manual confirmation delay.",
     tools: ["Machine learning", "Python"],
@@ -421,7 +421,7 @@ export const archiveProjects: ArchiveProject[] = [
     context:
       "Production workflows need predictable performance and visible failure modes.",
     problem:
-      "Slow scripts and fragile error handling can create operational delays and hidden failures.",
+      "Production workflows need dependable runtime, visible alerts, and error handling that teams can trust.",
     contribution:
       "Improved production code reliability through better error handling, alerts, webhooks, and database connections.",
     tools: ["Python", "Database optimization", "Alerts", "Error handling"],

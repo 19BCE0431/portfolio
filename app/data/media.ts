@@ -43,7 +43,7 @@ export const recognitionImages: StoryImage[] = [
   {
     src: "/images/achievements/placement-season-kit-01.jpg",
     alt: "Placement season kit from the IIM Sirmaur MBA chapter",
-    caption: "A placement-season context frame, kept quieter than the sharper proof point.",
+    caption: "A placement-season context frame, kept calm so the story stays focused.",
     source: "IMG_0368.HEIC",
     orientation: "landscape",
   },
@@ -60,7 +60,7 @@ export const mbaLifeImages: StoryImage[] = [
   {
     src: "/images/mba-life/iim-collaboration-01.jpg",
     alt: "Students collaborating around a table at IIM Sirmaur",
-    caption: "A useful collaboration frame: people around a problem, not a staged campus poster.",
+    caption: "A useful collaboration frame: people gathered around a real problem.",
     source: "IMG_5118.HEIC",
     orientation: "landscape",
   },
@@ -126,7 +126,7 @@ export const lifeGalleryImages: StoryImage[] = [
   {
     src: "/images/gallery/life-friends-snow-01.jpg",
     alt: "Friends sitting together during a cold-weather trip",
-    caption: "Slightly messy, very real, and better for it.",
+    caption: "Unposed, very real, and better for it.",
     source: "IMG_1489.HEIC",
     orientation: "landscape",
   },
@@ -163,7 +163,7 @@ export const galleryClusters: GalleryCluster[] = [
     label: "Recognition",
     title: "Small signals from the MBA chapter.",
     description:
-      "Recognition visuals stay compact and specific: proof points, not a victory lap.",
+      "Recognition visuals stay compact and specific: enough proof to add context, never more than the story needs.",
     intent: "Quiet credibility",
     images: recognitionImages,
   },

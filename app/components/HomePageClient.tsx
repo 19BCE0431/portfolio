@@ -62,8 +62,8 @@ const heroDossierRows = [
   },
   {
     label: "Work",
-    title: "BigHaat systems in the real world",
-    detail: "PDF extraction, price intelligence, anomaly detection, AI workflows",
+    title: "Applied AI in agri-commerce",
+    detail: "Discovery, price intelligence, order signals, document automation",
   },
   {
     label: "Lens",
@@ -75,8 +75,8 @@ const heroDossierRows = [
 const storySpines = [
   {
     label: "Story spine",
-    title: "The thread is simple: better systems should make better choices feel easier.",
-    text: "The work starts with data, AI, and operations. The real story is still human: a customer trusting a product, a team noticing a signal early, a retailer shaping a purchase, a market quietly changing its mind.",
+    title: "The thread is simple: make useful choices easier to see.",
+    text: "The work starts with data, AI, and operations, but the real story is human: a customer finding the right product, a team noticing a signal early, a retailer shaping trust, a market quietly changing its mind.",
     cues: ["trust", "signals", "timing", "taste"],
   },
   {
@@ -429,14 +429,13 @@ function GlideDeck({
 function AmbientField({ progress }: { progress: MotionValue<number> }) {
   const shouldReduceMotion = useReducedMotion();
   const y = useTransform(progress, [0, 0.45], [0, 68]);
-  const scale = useTransform(progress, [0, 0.45], [1, 1.05]);
   const opacity = useTransform(progress, [0, 0.45], [1, 0.45]);
 
   return (
     <motion.div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-x-[-10vw] top-0 h-[96svh] overflow-hidden"
-      style={shouldReduceMotion ? undefined : { y, scale, opacity }}
+      className="pointer-events-none absolute inset-x-0 top-0 h-[96svh] overflow-hidden"
+      style={shouldReduceMotion ? undefined : { y, opacity }}
     >
       <div className="premium-grid absolute left-[6vw] top-24 h-[520px] w-[min(860px,88vw)] opacity-[0.12] [mask-image:radial-gradient(circle_at_34%_32%,black,transparent_68%)]" />
       <motion.div
@@ -538,11 +537,11 @@ function HeroDossierPanel() {
       initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.28, duration: 0.62, ease: premiumEase }}
-      aria-label="Portfolio proof summary"
+      aria-label="Portfolio focus summary"
     >
       <div className="hero-dossier-head">
-        <span>Proof dossier</span>
-        <span>Edited signals</span>
+        <span>Current focus</span>
+        <span>Live signals</span>
       </div>
       <div className="hero-dossier-grid">
         {heroDossierRows.map((row) => (
@@ -628,31 +627,32 @@ function Hero() {
       >
         <Reveal delay={0.02}>
           <div className="hero-badge-row mb-5 flex flex-wrap gap-2">
-            {["IIM Sirmaur MBA", "Top 10% academic signal", "AI + markets"].map((item) => (
+            {["IIM Sirmaur MBA", "Top 10% academic signal", "Product + markets"].map((item) => (
               <span key={item}>{item}</span>
             ))}
           </div>
         </Reveal>
         <HeadingReveal
           as="h1"
-          lines={["Data roots.", "Business lens.", "Human choices."]}
-          mobileLines={["Data roots.", "Business lens.", "Human choices."]}
+          lines={["From data science", "to business judgment."]}
+          mobileLines={["From data science", "to business judgment."]}
           className="display-tight hero-display max-w-[1040px] text-[clamp(2.75rem,12vw,4.15rem)] font-semibold leading-[0.94] text-[var(--foreground)] md:text-[clamp(4.15rem,6.35vw,7.15rem)] md:leading-[0.9]"
           delay={0.04}
         />
         <Reveal delay={0.1}>
           <p className="mt-6 max-w-[800px] text-pretty-balance text-[clamp(1.06rem,4.2vw,1.32rem)] leading-[1.62] text-[var(--muted-strong)] md:mt-8 md:text-[clamp(1.18rem,2vw,1.5rem)] md:leading-[1.5]">
             <span className="md:hidden">
-              I am an IIM Sirmaur MBA candidate shaped by data science,
-              BigHaat systems, and a growing focus on how people choose.
+              I am an IIM Sirmaur MBA candidate moving from data science and
+              agri-commerce systems into product, marketing, strategy, and how
+              people choose.
             </span>
             <span className="hidden md:inline">
-              I started with Computer Science and Data Science, then spent a
-              year turning messy BigHaat workflows into signals, automations,
-              and decision support. Now, as an IIM Sirmaur MBA candidate in the
-              2025-27 batch with a Top 10% academic signal, I am learning how
-              products, markets, stories, and AI-enabled systems earn trust in
-              the real world.
+              I started with Computer Science and Data Science, then worked in
+              agri-commerce on product discovery, price intelligence, document
+              automation, anomaly alerts, and decision-support workflows. Now,
+              as an IIM Sirmaur MBA candidate in the 2025-27 batch with a Top
+              10% academic signal, I am learning how products, markets,
+              stories, and AI-enabled systems earn trust in the real world.
             </span>
           </p>
         </Reveal>
@@ -1055,18 +1055,19 @@ function ArchivePreview() {
         <Reveal>
           <SectionLabel>Selected work</SectionLabel>
           <HeadingReveal
-            lines={["Work that had", "to help."]}
-            mobileLines={["Work that", "had to help."]}
+            lines={["Work built", "around real use."]}
+            mobileLines={["Work built", "around real use."]}
             className="max-w-[720px] text-[clamp(2.35rem,10vw,5.1rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.96]"
           />
         </Reveal>
         <Reveal delay={0.08}>
           <div className="max-w-[720px]">
             <p className="text-[clamp(1.02rem,1.7vw,1.22rem)] leading-[1.68] text-[var(--muted-strong)]">
-              These were not portfolio exercises. They came from daily
-              friction: PDFs slowing teams down, competitor prices moving
-              quietly, order drops needing early signals, and AI flows that had
-              to earn their place in a working business.
+              These projects came from practical agri-commerce and operations
+              contexts: visual product discovery, price intelligence, early
+              order signals, document extraction, logistics visibility, and
+              content workflows. The point was to make decisions easier for the
+              people using the system.
             </p>
             <Link
               href="/archive"
@@ -1160,7 +1161,7 @@ function FeaturedSystem() {
               <p className="mt-6 max-w-[640px] text-[1rem] leading-[1.68] text-[var(--muted-strong)] md:text-[1.15rem]">
                 This site is also a product experiment: AI-assisted, reviewed
                 by me, and designed to keep proof, notes, analytics, MBA work,
-                and future writing from becoming scattered or generic.
+                and future writing clear, connected, and easy to revisit.
               </p>
             </div>
             <div className="relative z-10 mt-8">

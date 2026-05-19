@@ -17,7 +17,7 @@
   <g fill="#101212">
     <text x="140" y="676" font-family="Inter, Arial, sans-serif" font-size="20" letter-spacing="4" opacity=".46">VISUAL INTENT → PRODUCT MATCH</text>
     <text x="624" y="148" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="700">Image-led discovery</text>
-    <text x="624" y="588" font-family="Inter, Arial, sans-serif" font-size="26" opacity=".62">Search when the user knows the look before the name.</text>
+    <text x="624" y="588" font-family="Inter, Arial, sans-serif" font-size="26" opacity=".62">Search when the look comes first.</text>
   </g>
   <defs>
     <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(955 106) rotate(141) scale(760 860)">

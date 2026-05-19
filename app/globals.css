@@ -67,7 +67,7 @@ body {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  overflow: hidden;
+  overflow: clip;
   background:
     linear-gradient(125deg, rgba(255, 253, 248, 0.48), transparent 36%),
     linear-gradient(238deg, rgba(82, 100, 166, 0.07), transparent 42%),
@@ -76,7 +76,7 @@ body {
 
 .experience-wash {
   position: absolute;
-  inset: -18vh -14vw;
+  inset: -18vh 0;
   opacity: 0.62;
   background:
     conic-gradient(from 140deg at 28% 28%, transparent 0deg, rgba(95, 127, 113, 0.16) 60deg, transparent 135deg, rgba(82, 100, 166, 0.12) 210deg, transparent 300deg),
