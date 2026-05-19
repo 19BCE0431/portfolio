@@ -1,0 +1,44 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">AI workflow ownership map</title>
+  <desc id="desc">Abstract workflow map showing AI agents, business rules, human review, and decision loops connected together.</desc>
+  <rect width="1200" height="675" fill="#F4F1EA"/>
+  <radialGradient id="a" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(764 244) rotate(132) scale(626 410)">
+    <stop stop-color="#D7E2D7"/>
+    <stop offset=".5" stop-color="#EFE7DA"/>
+    <stop offset="1" stop-color="#F8F6F0"/>
+  </radialGradient>
+  <rect width="1200" height="675" fill="url(#a)"/>
+  <path d="M137 466C256 335 398 318 563 405C730 492 875 429 1037 258" stroke="#A9B6AA" stroke-width="2" stroke-dasharray="6 12"/>
+  <path d="M161 263C308 364 478 327 639 228C793 134 935 164 1040 263" stroke="#C7AA96" stroke-width="3" opacity=".65"/>
+  <path d="M185 410C306 381 398 409 485 472C593 550 724 540 827 456C927 374 994 363 1061 392" stroke="#607268" stroke-width="5" stroke-linecap="round"/>
+  <g filter="url(#shadow)">
+    <rect x="135" y="164" width="220" height="132" rx="18" fill="#FFFDF7" stroke="#DCD8CE"/>
+    <text x="165" y="208" fill="#727970" font-family="Arial" font-size="13" letter-spacing="4">SIGNAL</text>
+    <text x="165" y="246" fill="#1B1D1B" font-family="Arial" font-size="28" font-weight="700">Context</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="431" y="96" width="244" height="144" rx="18" fill="#151817"/>
+    <text x="463" y="143" fill="#BFC8BE" font-family="Arial" font-size="13" letter-spacing="4">AGENT</text>
+    <text x="463" y="184" fill="#FFFDF7" font-family="Arial" font-size="32" font-weight="700">Next step</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="748" y="201" width="242" height="140" rx="18" fill="#FFFDF7" stroke="#DCD8CE"/>
+    <text x="780" y="247" fill="#727970" font-family="Arial" font-size="13" letter-spacing="4">RULES</text>
+    <text x="780" y="286" fill="#1B1D1B" font-family="Arial" font-size="30" font-weight="700">Boundary</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="520" y="397" width="252" height="146" rx="18" fill="#FFFDF7" stroke="#DCD8CE"/>
+    <text x="552" y="445" fill="#727970" font-family="Arial" font-size="13" letter-spacing="4">HUMAN REVIEW</text>
+    <text x="552" y="485" fill="#1B1D1B" font-family="Arial" font-size="31" font-weight="700">Judgment</text>
+  </g>
+  <circle cx="431" cy="357" r="10" fill="#151817"/>
+  <circle cx="686" cy="308" r="10" fill="#151817"/>
+  <circle cx="853" cy="433" r="10" fill="#151817"/>
+  <text x="137" y="587" fill="#1B1D1B" font-family="Arial" font-size="52" font-weight="700">Workflow ownership</text>
+  <text x="141" y="625" fill="#68746A" font-family="Arial" font-size="22">Context · tools · rules · handoffs · human review</text>
+  <defs>
+    <filter id="shadow" x="105" y="66" width="915" height="507" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="24" stdDeviation="24" flood-color="#252821" flood-opacity=".12"/>
+    </filter>
+  </defs>
+</svg>
