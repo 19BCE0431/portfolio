@@ -46,13 +46,13 @@ export function HeadingReveal({
             className="block"
             style={{ willChange: "transform, opacity, filter" }}
             variants={{
-              hidden: { y: "112%", opacity: 0, filter: "blur(5px)" },
+              hidden: { y: "112%", opacity: 0, filter: "blur(2px)" },
               show: {
                 y: "0%",
                 opacity: 1,
                 filter: "blur(0px)",
                 transition: {
-                  duration: 0.76,
+                  duration: 0.58,
                   delay: delay + index * 0.07,
                   ease: [0.16, 1, 0.3, 1],
                 },

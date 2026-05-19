@@ -56,7 +56,7 @@ export const navItems = [
   { label: "Direction", href: "/#direction", sectionId: "direction" },
   { label: "Work", href: "/#work", sectionId: "work" },
   { label: "Recognition", href: "/#recognition", sectionId: "recognition" },
-  { label: "MBA Life", href: "/#mba-life", sectionId: "mba-life" },
+  { label: "MBA", href: "/#mba-life", sectionId: "mba-life" },
   { label: "Journal", href: "/#journal", sectionId: "journal" },
   { label: "Personal", href: "/#personal", sectionId: "personal" },
   { label: "Gallery", href: "/#gallery", sectionId: "gallery" },
@@ -68,7 +68,7 @@ export const sectionNavItems = [
   { label: "Direction", shortLabel: "Lens", href: "#direction", sectionId: "direction" },
   { label: "Work", shortLabel: "Work", href: "#work", sectionId: "work" },
   { label: "Recognition", shortLabel: "Signal", href: "#recognition", sectionId: "recognition" },
-  { label: "MBA Life", shortLabel: "MBA", href: "#mba-life", sectionId: "mba-life" },
+  { label: "MBA", shortLabel: "MBA", href: "#mba-life", sectionId: "mba-life" },
   { label: "Journal", shortLabel: "Notes", href: "#journal", sectionId: "journal" },
   { label: "Personal", shortLabel: "Shelf", href: "#personal", sectionId: "personal" },
   { label: "Gallery", shortLabel: "Life", href: "#gallery", sectionId: "gallery" },
@@ -139,7 +139,7 @@ export const backgroundCards = [
     icon: Landmark,
   },
   {
-    label: "Builder base",
+    label: "Technical base",
     value: "CSE, Data Science, Applied AI",
     detail: "B.Tech CSE at VIT Vellore, then applied work across search, prediction, RAG, crawling, dashboards, alerts, and data pipelines.",
     icon: BrainCircuit,
@@ -333,18 +333,18 @@ export const readingShelf = [
 export const personalInterests = [
   {
     title: "Badminton",
-    text: "My cleanest reset. A few rallies usually clear the noise before I can over-explain it.",
+    text: "My cleanest reset. A few rallies usually clear the noise before I can overthink it.",
     icon: Dumbbell,
     featured: true,
   },
   {
     title: "Chess",
-    text: "Patience practice in a small square world. One impatient move can undo a good position.",
+    text: "A quiet patience lab. One impatient move can undo a good position.",
     icon: Puzzle,
   },
   {
     title: "Early morning runs",
-    text: "A quiet start before everyone else's pace enters the room.",
+    text: "A quiet start before everyone else's pace enters the day.",
     icon: CircleDot,
   },
   {
@@ -354,12 +354,12 @@ export const personalInterests = [
   },
   {
     title: "Sketching",
-    text: "A slower kind of attention. It helps when I need to stop rushing the first version.",
+    text: "A slower kind of attention. It reminds me not to rush the first version.",
     icon: Pencil,
   },
   {
     title: "Cooking",
-    text: "Process, timing, taste, and feedback. A tiny product loop with better smells.",
+    text: "Process, timing, taste, feedback. A tiny product loop with better smells.",
     icon: ChefHat,
   },
   {

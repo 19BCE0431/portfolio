@@ -75,15 +75,15 @@ const heroDossierRows = [
 const storySpines = [
   {
     label: "Story spine",
-    title: "The site is arranged around one question: how do people decide?",
-    text: "The work starts with systems, but the point is the human choice around them: the customer trusting a product, the team acting on an alert, the retailer shaping a purchase, the market revealing a pattern.",
-    cues: ["choice", "trust", "signals", "systems"],
+    title: "The thread is simple: better systems should make better choices feel easier.",
+    text: "The work starts with data, AI, and operations. The real story is still human: a customer trusting a product, a team noticing a signal early, a retailer shaping a purchase, a market quietly changing its mind.",
+    cues: ["trust", "signals", "timing", "taste"],
   },
   {
     label: "Personal layer",
-    title: "The last layer is intentionally human, not decorative.",
-    text: "Campus frames, books, badminton, chess, running, photos, sketches, cooking, and retail observation sit here because they explain the attention behind the work.",
-    cues: ["campus", "notes", "shelf", "life"],
+    title: "The softer parts are not extras. They explain the attention behind the work.",
+    text: "Campus frames, books, badminton, chess, running, photos, sketches, cooking, and retail observation sit here because they keep the portfolio from becoming only output.",
+    cues: ["play", "notes", "movement", "life"],
   },
 ];
 
@@ -635,8 +635,8 @@ function Hero() {
         </Reveal>
         <HeadingReveal
           as="h1"
-          lines={["Builder roots.", "Business lens.", "Human choices."]}
-          mobileLines={["Builder roots.", "Business lens.", "Human choices."]}
+          lines={["Data roots.", "Business lens.", "Human choices."]}
+          mobileLines={["Data roots.", "Business lens.", "Human choices."]}
           className="display-tight hero-display max-w-[1040px] text-[clamp(2.75rem,12vw,4.15rem)] font-semibold leading-[0.94] text-[var(--foreground)] md:text-[clamp(4.15rem,6.35vw,7.15rem)] md:leading-[0.9]"
           delay={0.04}
         />
@@ -650,9 +650,9 @@ function Hero() {
               I started with Computer Science and Data Science, then spent a
               year turning messy BigHaat workflows into signals, automations,
               and decision support. Now, as an IIM Sirmaur MBA candidate in the
-              2025-27 batch with a Top 10% academic signal, I am widening that
-              work into product, marketing, strategy, consumer behavior, and
-              AI-enabled systems people can actually trust.
+              2025-27 batch with a Top 10% academic signal, I am learning how
+              products, markets, stories, and AI-enabled systems earn trust in
+              the real world.
             </span>
           </p>
         </Reveal>
@@ -808,29 +808,32 @@ function Direction() {
     <section
       ref={sectionRef}
       id="direction"
-      className="section-shell scene-section relative py-12 md:py-32"
+      className="section-shell scene-section relative py-12 md:py-24"
     >
-      <div className="absolute left-0 top-0 hidden h-full w-px vertical-hairline opacity-60 lg:block" />
-      <div className="grid gap-12 lg:grid-cols-[0.72fr_1fr] lg:gap-18">
-        <div className="lg:sticky lg:top-32 lg:h-max">
+      <div className="grid gap-10">
+        <div>
           <Reveal>
             <SectionLabel>Direction</SectionLabel>
-            <HeadingReveal
-              lines={["Less resume.", "More point of view."]}
-              mobileLines={["Less resume.", "More point", "of view."]}
-              className="max-w-[720px] text-[clamp(2.35rem,10vw,5.2rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.94]"
-            />
-            <p className="mt-6 max-w-[650px] text-[1.02rem] leading-[1.7] text-[var(--muted-strong)] md:text-[1.14rem]">
-              The site is deliberately not a skills dump. It is a record of how
-              I read problems: start with the person choosing, build close to
-              messy operating reality, then translate the signal into product,
-              marketing, strategy, or workflow decisions.
-            </p>
-            <div className="mt-8 h-px overflow-hidden bg-black/10">
-              <motion.div
-                className="h-full origin-left bg-[var(--foreground)]"
-                style={shouldReduceMotion ? undefined : { scaleX: lineScale }}
+            <div className="grid gap-7 lg:grid-cols-[0.92fr_1fr] lg:items-end lg:gap-16">
+              <HeadingReveal
+                lines={["How I read", "decisions."]}
+                mobileLines={["How I read", "decisions."]}
+                className="max-w-[760px] text-[clamp(2.35rem,10vw,4.9rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.94]"
               />
+              <div>
+                <p className="max-w-[690px] text-[1.02rem] leading-[1.68] text-[var(--muted-strong)] md:text-[1.12rem]">
+                  Before tools, decks, or dashboards, I look for the moment
+                  somebody has to choose. What do they notice? What feels
+                  unclear? What would make the next step lighter, safer, or more
+                  worth taking?
+                </p>
+                <div className="mt-6 h-px overflow-hidden bg-black/10">
+                  <motion.div
+                    className="h-full origin-left bg-[var(--foreground)]"
+                    style={shouldReduceMotion ? undefined : { scaleX: lineScale }}
+                  />
+                </div>
+              </div>
             </div>
           </Reveal>
         </div>
@@ -860,18 +863,18 @@ function Direction() {
             </GlideDeck>
           </div>
 
-          <div className="hidden gap-3 lg:grid lg:gap-4">
+          <div className="hidden gap-3 lg:grid lg:grid-cols-3 lg:gap-4">
             {thesisPoints.map((point, index) => (
               <DirectionPoint
                 key={point.label}
                 point={point}
                 index={index}
                 progress={scrollYProgress}
-                className="h-full"
+                className="h-full min-h-[250px]"
               />
             ))}
           </div>
-          <div className="mt-4 hidden gap-3 lg:grid lg:grid-cols-2 lg:gap-4">
+          <div className="mt-4 hidden gap-3 lg:grid lg:grid-cols-4 lg:gap-4">
             {directionNotes.map((note, index) => (
               <Reveal
                 key={note.title}
@@ -930,20 +933,20 @@ function BackgroundCard({
 
 function Background() {
   return (
-    <section id="background" className="dark-transition scene-section scene-section-dark scroll-mt-28 py-14 text-[var(--surface)] md:py-40">
+    <section id="background" className="dark-transition scene-section scene-section-dark scroll-mt-28 py-14 text-[var(--surface)] md:py-28">
       <div className="section-shell">
         <div className="grid gap-10 lg:grid-cols-[0.72fr_1fr] lg:items-end lg:gap-20">
           <Reveal>
             <SectionLabel>Background</SectionLabel>
             <HeadingReveal
-              lines={["The MBA is", "a wider lens."]}
-              mobileLines={["The MBA is", "a wider lens."]}
+              lines={["The MBA is", "widening the lens."]}
+              mobileLines={["The MBA is", "widening", "the lens."]}
               className="max-w-[820px] text-[clamp(2.35rem,10vw,5.4rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.96]"
             />
           </Reveal>
           <Reveal delay={0.08}>
             <p className="max-w-[720px] text-pretty-balance text-[clamp(1.04rem,2vw,1.28rem)] leading-[1.68] text-[var(--deep-muted)]">
-              I did not leave the builder side behind. I am learning to place
+              I did not leave the technical side behind. I am learning to place
               it inside a bigger room: customers, categories, pricing,
               positioning, operations, academic discipline, and the behavior
               that decides whether a system actually matters.
@@ -1045,25 +1048,25 @@ function ArchivePreview() {
   return (
     <section
       id="work"
-      className="section-shell scene-section relative overflow-hidden py-12 md:py-36"
+      className="section-shell scene-section relative overflow-hidden py-12 md:py-24"
     >
       <div className="premium-grid pointer-events-none absolute right-0 top-24 h-[360px] w-[520px] opacity-[0.1] [mask-image:radial-gradient(circle,black,transparent_70%)]" />
       <div className="mb-10 grid gap-8 md:mb-14 lg:grid-cols-[0.72fr_1fr] lg:gap-16">
         <Reveal>
           <SectionLabel>Selected work</SectionLabel>
           <HeadingReveal
-            lines={["Proof, not just", "project cards."]}
-            mobileLines={["Proof,", "not just", "project cards."]}
+            lines={["Work that had", "to help."]}
+            mobileLines={["Work that", "had to help."]}
             className="max-w-[720px] text-[clamp(2.35rem,10vw,5.1rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.96]"
           />
         </Reveal>
         <Reveal delay={0.08}>
           <div className="max-w-[720px]">
             <p className="text-[clamp(1.02rem,1.7vw,1.22rem)] leading-[1.68] text-[var(--muted-strong)]">
-              The strongest work here comes from real friction: PDFs that
-              slowed teams down, competitor prices that needed watching, order
-              drops that needed early signals, and AI flows that had to earn
-              their place in a working business rather than a demo.
+              These were not portfolio exercises. They came from daily
+              friction: PDFs slowing teams down, competitor prices moving
+              quietly, order drops needing early signals, and AI flows that had
+              to earn their place in a working business.
             </p>
             <Link
               href="/archive"
@@ -1100,7 +1103,7 @@ function ArchivePreview() {
               index < 2 ? "lg:col-span-3" : "lg:col-span-3 xl:col-span-2"
             } ${index === 2 ? "xl:col-start-2" : ""}`}
           >
-            <ProjectCard project={project} compact={index > 1} priority={index === 0} />
+            <ProjectCard project={project} compact priority={index === 0} />
           </div>
         ))}
       </div>
@@ -1141,7 +1144,7 @@ function FeaturedSystem() {
   if (!project) return null;
 
   return (
-    <section id="system" className="section-shell scene-section relative py-12 md:py-36">
+    <section id="system" className="section-shell scene-section relative py-12 md:py-24">
       <div className="absolute left-0 top-10 hidden h-px w-1/2 bg-gradient-to-r from-black/20 to-transparent md:block" />
       <div className="grid gap-7 lg:grid-cols-[0.78fr_1fr] lg:items-stretch lg:gap-6">
         <Reveal>
@@ -1201,7 +1204,7 @@ function RecognitionSection() {
   return (
     <section
       id="recognition"
-      className="section-shell scene-section relative py-12 md:py-32"
+      className="section-shell scene-section relative py-12 md:py-24"
     >
       <div className="grid gap-12 lg:grid-cols-[0.72fr_1fr] lg:gap-16">
         <Reveal>
@@ -1258,7 +1261,7 @@ function MbaImageCard({
     <article className="motion-surface group h-full overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.68)] p-2 shadow-[0_28px_80px_rgba(16,18,18,0.07)] backdrop-blur">
       <div
         className={`relative overflow-hidden rounded-[6px] bg-[var(--surface-cool)] ${
-          index === 0 ? "aspect-[1.35]" : "aspect-[4/5] md:aspect-[0.86]"
+          index === 0 ? "aspect-[1.42]" : "aspect-[4/5] md:aspect-[0.78]"
         }`}
       >
         <Image
@@ -1282,13 +1285,13 @@ function MbaImageCard({
 
 function MbaChapterSection() {
   return (
-    <section id="mba-life" className="section-shell scene-section relative py-12 md:py-24">
+    <section id="mba-life" className="section-shell scene-section relative py-12 md:py-20">
       <div className="mb-10 grid gap-8 lg:grid-cols-[0.8fr_1fr] lg:items-end lg:gap-16">
         <Reveal>
           <SectionLabel>MBA chapter</SectionLabel>
           <HeadingReveal
-            lines={["Inside the", "current chapter."]}
-            mobileLines={["Inside the", "current chapter."]}
+            lines={["Learning business", "in real rooms."]}
+            mobileLines={["Learning", "business", "in real rooms."]}
             className="max-w-[760px] text-[clamp(2.2rem,9vw,4.7rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.96]"
           />
         </Reveal>
@@ -1296,7 +1299,7 @@ function MbaChapterSection() {
           <p className="max-w-[700px] text-[clamp(1rem,1.65vw,1.18rem)] leading-[1.68] text-[var(--muted-strong)]">
             IIM Sirmaur is where the technical story is becoming a business
             story: cases, group rooms, consumer behavior, strategy debates, and
-            the slower work of learning how decisions travel through people,
+            the everyday practice of seeing how decisions travel through people,
             incentives, categories, and timing.
           </p>
         </Reveal>
@@ -1313,12 +1316,12 @@ function MbaChapterSection() {
         </GlideDeck>
       </div>
 
-      <div className="hidden gap-3 lg:grid lg:grid-cols-4">
+      <div className="hidden gap-3 lg:grid lg:grid-cols-6">
         {mbaLifeImages.map((image, index) => (
           <Reveal
             key={image.src}
             delay={index * 0.04}
-            className={`${index === 0 ? "sm:col-span-2 md:col-span-2" : ""} min-w-0`}
+            className={`${index === 0 ? "lg:col-span-3" : "lg:col-span-1"} min-w-0`}
           >
             <MbaImageCard image={image} index={index} />
           </Reveal>
@@ -1334,7 +1337,7 @@ function JournalPreview({ posts }: { posts: JournalPost[] }) {
   return (
     <section
       id="journal"
-      className="section-shell scene-section border-y border-black/10 py-12 md:py-32"
+      className="section-shell scene-section border-y border-black/10 py-12 md:py-24"
     >
       <div className="mb-10 grid gap-8 md:mb-12 lg:grid-cols-[0.82fr_1fr] lg:items-end lg:gap-16">
         <Reveal>
@@ -1477,7 +1480,7 @@ function BookShelfCard({
 
 function ReadingShelf() {
   return (
-    <section id="personal" className="section-shell scene-section relative py-12 md:py-32">
+    <section id="personal" className="section-shell scene-section relative py-12 md:py-24">
       <div className="mb-10 grid gap-8 md:mb-14 lg:grid-cols-[0.76fr_1fr] lg:items-end lg:gap-16">
         <Reveal>
           <SectionLabel>Reading shelf</SectionLabel>
@@ -1753,28 +1756,32 @@ function PersonalInterestCard({
 
 function PersonalInterests() {
   return (
-    <section className="section-shell relative py-12 md:py-32">
-      <div className="grid gap-10 lg:grid-cols-[0.78fr_1fr] lg:gap-16">
+    <section className="section-shell relative py-12 md:py-24">
+      <div className="grid gap-10">
         <Reveal>
           <SectionLabel>Off the screen</SectionLabel>
-          <HeadingReveal
-            lines={["A few things", "that keep me human."]}
-            mobileLines={["A few things", "that keep me", "human."]}
-            className="max-w-[760px] text-[clamp(2.35rem,10vw,5rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.96]"
-          />
-          <p className="mt-6 max-w-[660px] text-[1.02rem] leading-[1.7] text-[var(--muted-strong)] md:text-[1.16rem]">
-            I do not want the site to pretend life is only output. Badminton,
-            chess, running, photos, sketches, cooking, tools, and market
-            watching all point to the same habit: paying attention before
-            making a move.
-          </p>
-          <div id="gallery" className="mt-8 scroll-mt-28">
-            <FuturePhotoStrip />
+          <div className="grid gap-8 lg:grid-cols-[0.95fr_0.78fr] lg:items-end lg:gap-16">
+            <div>
+              <HeadingReveal
+                lines={["The life around", "the work."]}
+                mobileLines={["The life", "around the", "work."]}
+                className="max-w-[760px] text-[clamp(2.35rem,10vw,5rem)] font-semibold leading-[1] tracking-[0] md:leading-[0.96]"
+              />
+              <p className="mt-6 max-w-[700px] text-[1.02rem] leading-[1.7] text-[var(--muted-strong)] md:text-[1.16rem]">
+                I do not want this portfolio to pretend life is only output.
+                Badminton, chess, running, photos, sketches, cooking, tools,
+                travel, and market watching all reveal the same habit: paying
+                attention before making a move.
+              </p>
+            </div>
+            <div id="gallery" className="scroll-mt-28">
+              <FuturePhotoStrip />
+            </div>
           </div>
           <Reveal delay={0.08}>
             <Link
               href="/life"
-              className="premium-link group mt-4 flex items-center justify-between gap-4 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.68)] px-4 py-3 text-[0.95rem] font-medium text-[var(--foreground)] shadow-[0_18px_54px_rgba(16,18,18,0.055)] backdrop-blur transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-black/15"
+              className="premium-link group mt-5 flex items-center justify-between gap-4 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.68)] px-4 py-3 text-[0.95rem] font-medium text-[var(--foreground)] shadow-[0_18px_54px_rgba(16,18,18,0.055)] backdrop-blur transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-black/15 lg:max-w-[460px]"
             >
               <span>Life, lightly documented</span>
               <ArrowUpRight className="h-4 w-4 text-[var(--muted)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -1797,12 +1804,12 @@ function PersonalInterests() {
             </GlideDeck>
           </div>
 
-          <div className="hidden gap-3 lg:grid lg:grid-cols-2">
+          <div className="hidden gap-3 lg:grid lg:grid-cols-4">
             {personalInterests.map((interest, index) => (
               <Reveal
                 key={interest.title}
                 delay={index * 0.035}
-                className={`${interest.featured ? "sm:col-span-2" : ""} min-w-0`}
+                className="min-w-0"
               >
                 <PersonalInterestCard interest={interest} index={index} />
               </Reveal>
