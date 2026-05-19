@@ -102,13 +102,17 @@ export function ProjectVisual({
           />
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(16,18,18,0)_56%,rgba(16,18,18,0.42))] opacity-80"
+            className={`pointer-events-none absolute inset-0 ${
+              isSvg
+                ? "bg-[linear-gradient(180deg,rgba(16,18,18,0.16),rgba(16,18,18,0)_34%,rgba(16,18,18,0.08))] opacity-45"
+                : "bg-[linear-gradient(180deg,rgba(16,18,18,0)_56%,rgba(16,18,18,0.42))] opacity-80"
+            }`}
           />
           <span
             aria-hidden="true"
             className="pointer-events-none absolute inset-x-5 top-0 h-px origin-left scale-x-0 bg-white/55 transition-transform duration-700 group-hover:scale-x-100"
           />
-          <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between gap-3">
+          <div className="absolute left-3 right-3 top-3 flex items-start justify-between gap-3">
             <span className="rounded-[7px] border border-white/14 bg-black/24 px-2.5 py-1 text-[11px] font-medium text-white/82 shadow-[0_12px_28px_rgba(0,0,0,0.16)] backdrop-blur">
               {project.visual?.label ?? "Project visual"}
             </span>

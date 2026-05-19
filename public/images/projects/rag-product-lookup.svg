@@ -14,7 +14,7 @@
   <rect x="830" y="446" width="146" height="18" rx="9" fill="#fffdf8" fill-opacity=".2"/>
   <g fill="#fffdf8" font-family="Inter, Arial, sans-serif">
     <text x="100" y="80" font-size="18" letter-spacing="4" opacity=".48">RAG · PRODUCT LOOKUP</text>
-    <text x="100" y="724" font-size="48" font-weight="700">Faster answers from messy documents</text>
+    <text x="100" y="724" font-size="48" font-weight="700">Faster answers from scattered documents</text>
     <text x="456" y="197" font-size="28" opacity=".76">Question → retrieve → answer with context</text>
   </g>
   <defs>

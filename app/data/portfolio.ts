@@ -78,7 +78,7 @@ export const sectionNavItems = [
 export const heroMarkers = [
   { label: "Now", value: "MBA at IIM Sirmaur · Batch 2025-27" },
   { label: "Signal", value: "Academic Excellence · Top 10%" },
-  { label: "Proof", value: "BigHaat AI, automation, and market systems" },
+  { label: "Experience", value: "Applied AI, automation, and agri-commerce systems" },
 ];
 
 export const thesisPoints = [
@@ -87,8 +87,8 @@ export const thesisPoints = [
     text: "I like starting where the user, customer, team, or retailer has to choose: what they notice, what they trust, where they hesitate, and what finally makes action feel safe.",
   },
   {
-    label: "Build close to the mess",
-    text: "Computer Science and Data Science gave me structure. BigHaat made it practical: PDFs, prices, anomalies, logistics updates, dashboards, and workflows that had to help busy teams move faster.",
+    label: "Stay close to context",
+    text: "Computer Science and Data Science gave me structure. BigHaat gave me live agri-commerce context: product discovery, prices, order signals, logistics updates, dashboards, and workflows built around real use.",
   },
   {
     label: "Translate into business judgment",
@@ -133,9 +133,9 @@ export const backgroundCards = [
     icon: BadgeCheck,
   },
   {
-    label: "Business lens",
+    label: "Decision lens",
     value: "Product, Markets, Behavior",
-    detail: "Customers, categories, pricing, positioning, trust, adoption, and the small frictions that shape a decision.",
+    detail: "Customers, categories, pricing, positioning, trust, adoption, and the small signals that shape a decision.",
     icon: Landmark,
   },
   {
@@ -147,13 +147,13 @@ export const backgroundCards = [
   {
     label: "BigHaat chapter",
     value: "Data Science Engineer",
-    detail: "PDF extraction, competitor price intelligence, anomaly detection, image-led discovery, logistics visibility, and workflows that earned CEO recognition.",
+    detail: "Document automation, competitor price intelligence, anomaly detection, image-led discovery, logistics visibility, and applied AI workflows.",
     icon: BriefcaseBusiness,
   },
   {
     label: "First proof",
     value: "Data Science Intern",
-    detail: "Learned that data work changes when inputs are messy, teams are busy, and the output has to help someone act today.",
+    detail: "Learned that data work changes when inputs are live, teams are moving fast, and the output has to help someone act today.",
     icon: Wrench,
   },
   {
@@ -254,7 +254,7 @@ export const readingShelf = [
     mode: "Business",
     accent: "copper",
     coverSrc: "/images/books/shoe-dog.jpg",
-    note: "Brand-building as endurance: messy, personal, and held together by belief before the market agrees.",
+    note: "Brand-building as endurance: personal, uncertain, and held together by belief before the market agrees.",
   },
   {
     title: "Zero to One",

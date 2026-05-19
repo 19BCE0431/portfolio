@@ -209,7 +209,7 @@ export function Footer() {
           <Reveal>
             <div>
               <p className="text-[1.25rem] leading-[1.42] text-white/82 md:text-[1.65rem]">
-                If a project, market question, or messy workflow here made you
+                If a project, market question, or operating problem here made you
                 curious, send a note. I read it properly.
               </p>
               <div className="mt-6 grid gap-3 text-[11px] uppercase tracking-[0.16em] text-white/36 md:mt-8 md:text-[12px] md:tracking-[0.18em]">
