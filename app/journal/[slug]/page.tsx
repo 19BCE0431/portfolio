@@ -8,6 +8,7 @@ import { HeadingReveal } from "../../components/HeadingReveal";
 import { CopyArticleLink } from "../../components/CopyArticleLink";
 import { Reveal } from "../../components/Reveal";
 import { SectionLabel } from "../../components/SectionLabel";
+import { profile } from "../../data/portfolio";
 import {
   getRelatedJournalPosts,
   getVisibleJournalPost,
@@ -42,12 +43,24 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.summary,
+    authors: [{ name: profile.name, url: "https://mohitsaikrishna.in" }],
+    keywords: [
+      ...post.tags,
+      post.category,
+      "Mohit Sai Krishna",
+      "IIM Sirmaur",
+      "MBA portfolio",
+      "product strategy",
+      "AI workflows",
+    ],
     alternates: post.canonicalUrl ? { canonical: post.canonicalUrl } : undefined,
     openGraph: {
       title: post.title,
       description: post.summary,
       type: "article",
       publishedTime: post.date,
+      url: post.canonicalUrl || `https://mohitsaikrishna.in/journal/${post.slug}`,
+      siteName: profile.name,
       images: post.ogImage || post.heroImage
         ? [
             {
@@ -56,6 +69,12 @@ export async function generateMetadata({
             },
           ]
         : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.summary,
+      images: post.ogImage || post.heroImage ? [post.ogImage || post.heroImage || ""] : undefined,
     },
   };
 }
@@ -136,10 +155,33 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
   const takeaways = takeawaysFromPost(post.blocks);
   const sectionHeadings = post.blocks.filter((block) => block.type === "heading").slice(0, 6);
   const hasLinkedInDraft = Boolean(post.linkedinShortPost?.draftPath);
+  const articleUrl = post.canonicalUrl || `https://mohitsaikrishna.in/journal/${post.slug}`;
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.summary,
+    datePublished: post.date,
+    dateModified: post.date,
+    author: {
+      "@type": "Person",
+      name: profile.name,
+      url: "https://mohitsaikrishna.in",
+    },
+    mainEntityOfPage: articleUrl,
+    keywords: post.tags.join(", "),
+    image: post.heroImage ? `https://mohitsaikrishna.in${post.heroImage}` : undefined,
+  };
 
   return (
     <>
       <main className="relative overflow-hidden pt-24 md:pt-40">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(articleJsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
         <div
           aria-hidden="true"
           className="premium-grid pointer-events-none absolute right-[-140px] top-24 h-[380px] w-[560px] opacity-[0.1] [mask-image:radial-gradient(circle,black,transparent_72%)]"
@@ -201,6 +243,7 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
                     fill
                     priority
                     sizes="(max-width: 768px) 100vw, 1180px"
+                    unoptimized={post.heroImage.endsWith(".svg")}
                     className="media-lift object-cover"
                   />
                 </div>

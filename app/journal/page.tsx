@@ -12,7 +12,7 @@ import {
 export const metadata: Metadata = {
   title: "Journal",
   description:
-    "Notes on products, markets, AI workflows, consumer behavior, marketing lessons, and MBA learning.",
+    "Mohit Sai Krishna's portfolio journal on AI business infrastructure, product strategy, market signals, consumer behavior, marketing lessons, and MBA learning.",
 };
 
 export default function JournalPage() {

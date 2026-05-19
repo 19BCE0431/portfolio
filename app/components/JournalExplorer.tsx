@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, CalendarDays, Clock } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { JournalCategory, JournalPost } from "../data/journal";
@@ -88,6 +89,18 @@ export function JournalExplorer({
               >
                 <span className="pointer-events-none absolute inset-x-6 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-transparent via-black/25 to-transparent transition-transform duration-500 group-hover:scale-x-100" />
                 <div>
+                  {post.heroImage && (
+                    <div className="relative mb-4 aspect-[1.7] overflow-hidden rounded-[8px] border border-black/10 bg-[var(--surface-cool)] shadow-[inset_0_1px_0_rgba(255,255,255,0.58)] sm:mb-5">
+                      <Image
+                        src={post.heroImage}
+                        alt={post.altText || post.heroImageAlt || post.title}
+                        fill
+                        sizes="(max-width: 768px) 92vw, (max-width: 1280px) 45vw, 32vw"
+                        unoptimized={post.heroImage.endsWith(".svg")}
+                        className="object-cover transition duration-700 ease-[var(--ease)] group-hover:scale-[1.025]"
+                      />
+                    </div>
+                  )}
                   <div className="mb-4 flex flex-wrap items-center gap-2 sm:mb-6">
                     <span className="rounded-[8px] border border-black/10 bg-white/45 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--sage)]">
                       {post.category}
