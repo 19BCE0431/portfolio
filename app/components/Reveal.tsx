@@ -11,7 +11,7 @@ const fadeUp: Variants = {
     y: 26,
     scale: 0.985,
     rotateX: 2.2,
-    filter: "blur(8px)",
+    filter: "blur(3px)",
   },
   show: (delay = 0) => ({
     opacity: 1,
@@ -20,7 +20,7 @@ const fadeUp: Variants = {
     rotateX: 0,
     filter: "blur(0px)",
     transition: {
-      duration: 0.82,
+      duration: 0.62,
       delay,
       ease: premiumEase,
     },
