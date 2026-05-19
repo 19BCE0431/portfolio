@@ -122,7 +122,7 @@ const secondaryLinks = [
   },
   {
     label: "WhatsApp",
-    detail: "Quick hello",
+    detail: "Secondary, if useful",
     href: profile.whatsApp,
     icon: WhatsAppIcon,
   },
@@ -270,6 +270,13 @@ export function Footer() {
                   );
                 })}
               </div>
+              <p className="mt-3 text-[12px] leading-[1.55] text-white/34">
+                For professional enquiries, email or LinkedIn is best. WhatsApp
+                stays as a secondary option. Analytics are reviewed only in
+                aggregate; Clarity may record anonymized interaction behavior,
+                but visitor names are not collected unless you contact me
+                directly.
+              </p>
             </div>
           </Reveal>
         </div>

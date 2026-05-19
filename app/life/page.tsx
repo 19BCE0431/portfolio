@@ -13,6 +13,22 @@ export const metadata: Metadata = {
   title: "Life, Lightly Documented",
   description:
     "A small optional gallery of personal frames from campus, trips, hills, friends, and quieter moments.",
+  alternates: {
+    canonical: "/life",
+  },
+  openGraph: {
+    title: "Life, Lightly Documented",
+    description:
+      "A small edited gallery of campus, travel, hills, friends, and quieter personal frames.",
+    url: "/life",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Life, Lightly Documented",
+    description:
+      "A small edited gallery of campus, travel, hills, friends, and quieter personal frames.",
+  },
 };
 
 const auditedImageCount = 48;

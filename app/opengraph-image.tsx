@@ -73,7 +73,7 @@ export default function OpenGraphImage() {
             color: "rgba(17,19,19,0.55)",
           }}
         >
-          <div>mohitakrishna.in</div>
+          <div>mohitsaikrishna.in</div>
           <div>India</div>
         </div>
       </div>

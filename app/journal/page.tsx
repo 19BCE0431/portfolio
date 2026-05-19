@@ -13,6 +13,22 @@ export const metadata: Metadata = {
   title: "Journal",
   description:
     "Mohit Sai Krishna's portfolio journal on AI business infrastructure, product strategy, market signals, consumer behavior, marketing lessons, and MBA learning.",
+  alternates: {
+    canonical: "/journal",
+  },
+  openGraph: {
+    title: "Journal",
+    description:
+      "Notes on AI business infrastructure, product strategy, market signals, consumer behavior, and MBA learning.",
+    url: "/journal",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Journal",
+    description:
+      "Notes on AI business infrastructure, product strategy, market signals, consumer behavior, and MBA learning.",
+  },
 };
 
 export default function JournalPage() {
