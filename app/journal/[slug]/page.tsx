@@ -328,11 +328,12 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
                 </Reveal>
               )}
 
-              <Reveal>
-                <div className="grid gap-4 border-y border-black/10 py-7 md:gap-5 md:py-8">
-                  {post.blocks.map(renderBlock)}
-                </div>
-              </Reveal>
+              <div
+                data-testid="journal-body"
+                className="grid gap-4 border-y border-black/10 py-7 md:gap-5 md:py-8"
+              >
+                {post.blocks.map(renderBlock)}
+              </div>
 
               {post.sourceLinks.length > 0 && (
                 <Reveal>
