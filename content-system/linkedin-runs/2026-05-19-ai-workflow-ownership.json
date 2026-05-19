@@ -1,0 +1,79 @@
+{
+  "id": "2026-05-19-ai-workflow-ownership",
+  "topic": "AI workflow ownership",
+  "selectedWhy": "The topic is timely because agentic AI is moving from tool demos into operational workflows, and it fits Mohit's product, data science, automation, analytics, and MBA strategy positioning without making hype-heavy claims.",
+  "riskLevel": "low",
+  "journalTitle": "The AI Advantage Is Moving Into Workflow Ownership",
+  "journalSlug": "ai-workflow-ownership",
+  "journalUrl": "https://mohitsaikrishna.in/journal/ai-workflow-ownership?utm_source=linkedin&utm_medium=post&utm_campaign=ai_workflow_ownership",
+  "journalPath": "content/journal/2026-05-19-ai-workflow-ownership.md",
+  "linkedinDraftPath": "content/linkedin-drafts/2026-05-19-ai-workflow-ownership.md",
+  "linkedinDraft": "AI is becoming more interesting when it stops behaving like a side tool and starts owning a careful part of the workflow.\n\nNot full autonomy.\nNot \"replace the team.\"\nNot another dashboard.\n\nI mean smaller, useful ownership:\n\n- reading the context before a person starts\n- checking rules and constraints\n- calling the right tools\n- preparing the next action\n- escalating when judgment is needed\n\nThat is where agentic AI becomes practical.\n\nA support workflow does not improve only because AI can write polite replies. It improves when the system understands the issue, checks policy, pulls context, and routes the case with fewer dead ends.\n\nA pricing workflow does not improve only because competitor data is available. It improves when the system separates noise from meaningful movement and helps someone decide whether to watch, match, ignore, or escalate.\n\nA marketing workflow does not improve because AI generates more copy. It improves when the team learns faster from what the audience actually responded to.\n\nComing from Computer Science and Data Science into an MBA, this is the AI question I find most useful:\n\nWhich parts of an operating model are structured enough, frequent enough, and important enough to become AI-supported?\n\nThe answer will not be the same for every business.\n\nBut I think the next advantage will belong to teams that map decisions before choosing tools.\n\nI expanded this into a longer portfolio journal note here:\nhttps://mohitsaikrishna.in/journal/ai-workflow-ownership?utm_source=linkedin&utm_medium=post&utm_campaign=ai_workflow_ownership\n\nWhere do you think AI workflow ownership will show up first: customer operations, pricing, marketing, or internal analytics?\n\n#AI #ProductStrategy #BusinessAnalytics #Automation #MBAJourney",
+  "predictedPostAt": "2026-05-20T03:40:00.000Z",
+  "createdAt": "2026-05-19T16:15:00.000Z",
+  "expiresAt": "2026-05-20T16:15:00.000Z",
+  "status": "pending_approval",
+  "candidateTopics": [
+    {
+      "topic": "AI workflow ownership is becoming the real business advantage",
+      "angle": "Agentic AI is less about full autonomy and more about who owns context, rules, handoffs, and review inside a workflow.",
+      "timeliness": 9,
+      "audienceRelevance": 9,
+      "nonObviousness": 9,
+      "engagementPotential": 9,
+      "journalDepthPotential": 10,
+      "personalBrandFit": 10,
+      "riskLevel": "low",
+      "totalScore": 9.3
+    },
+    {
+      "topic": "Pricing intelligence is moving from dashboards to decision loops",
+      "angle": "Competitive pricing data becomes useful only when it changes timing, escalation, and action.",
+      "timeliness": 8,
+      "audienceRelevance": 9,
+      "nonObviousness": 8,
+      "engagementPotential": 8,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 10,
+      "riskLevel": "low",
+      "totalScore": 8.7
+    },
+    {
+      "topic": "AI in marketing is shifting from content volume to learning speed",
+      "angle": "The advantage is not more assets; it is faster feedback from message, audience, channel, and behavior.",
+      "timeliness": 8,
+      "audienceRelevance": 9,
+      "nonObviousness": 8,
+      "engagementPotential": 9,
+      "journalDepthPotential": 8,
+      "personalBrandFit": 9,
+      "riskLevel": "low",
+      "totalScore": 8.5
+    }
+  ],
+  "sourceLinks": [
+    {
+      "title": "Agentic AI: The next frontier in enterprise operations",
+      "url": "https://www.ibm.com/thought-leadership/institute-business-value/en-us/report/agentic-ai-enterprise-operations",
+      "publisher": "IBM Institute for Business Value",
+      "claimSupported": "Context on agentic AI moving into enterprise operations and workflow-level execution."
+    },
+    {
+      "title": "The state of AI: How organizations are rewiring to capture value",
+      "url": "https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai",
+      "publisher": "McKinsey",
+      "claimSupported": "Context on organizations moving from experimentation toward operating model changes."
+    },
+    {
+      "title": "What is agentic AI?",
+      "url": "https://www.ibm.com/think/topics/agentic-ai",
+      "publisher": "IBM",
+      "claimSupported": "Definition-level context for agentic AI systems that can plan and act with tools under constraints."
+    }
+  ],
+  "scores": {
+    "linkedinFinal": 9.2,
+    "journalQuality": 9.3,
+    "risk": 9.6
+  }
+}
