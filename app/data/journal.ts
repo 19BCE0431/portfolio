@@ -322,6 +322,11 @@ function normalizeStatus(value: unknown): JournalStatus {
 }
 
 function normalizeCategory(value: unknown, tags: unknown): JournalCategory {
+  const explicitCategory = String(value || "").trim();
+  if (journalCategories.includes(explicitCategory as JournalCategory)) {
+    return explicitCategory as JournalCategory;
+  }
+
   const text = `${String(value || "")} ${Array.isArray(tags) ? tags.join(" ") : ""}`.toLowerCase();
 
   if (text.includes("history")) return "Business History with Modern Relevance";
