@@ -63,8 +63,5 @@
     "linkedinFinal": 9.4,
     "journalQuality": 9.3,
     "risk": 9.6
-  },
-  "approvalEmailSentAt": "2026-05-20T05:37:24.793Z",
-  "approvalTokenHash": "93777947fdee32dd7df7a22eef00d70bc2b3f0497e0552e103c48b967e106501",
-  "rejectTokenHash": "6d60448c4abc07f057d7415f71d6d23d9412ec144563532c099f60f2b4b3f5f3"
+  }
 }

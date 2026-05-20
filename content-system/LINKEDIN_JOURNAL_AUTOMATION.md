@@ -23,6 +23,7 @@ There is no public admin button. Approval links are email-only, signed, expiring
 
 - `GET /api/content/approve-linkedin-post?token=...`
   - Validates signed token, expiry, action, stored token hash, and current run status.
+  - Refuses cleanly without changing state if official LinkedIn API posting is not configured.
   - Marks the run approved when persistent storage is configured.
   - Posts immediately through the LinkedIn API only if `LINKEDIN_AUTO_POST=true` and LinkedIn credentials are valid.
 
@@ -40,6 +41,7 @@ There is no public admin button. Approval links are email-only, signed, expiring
 - Tokens expire in 24 hours or at the run expiration, whichever comes first.
 - Tokens are single-use only when GitHub content storage is configured, because the run stores token hashes and status transitions.
 - If persistent storage is missing, approval links do not publish to LinkedIn.
+- If LinkedIn API credentials are missing, the approval email does not show a working post button and the approve endpoint will not mark the run blocked.
 - The LinkedIn API is the only posting mechanism. Browser scraping is not used.
 - Error responses are sanitized and do not expose secret values.
 
