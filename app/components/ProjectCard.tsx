@@ -16,10 +16,12 @@ export function ProjectCard({
   project,
   compact = false,
   priority = false,
+  headingAs = "h3",
 }: {
   project: ArchiveProject;
   compact?: boolean;
   priority?: boolean;
+  headingAs?: "h2" | "h3" | "p";
 }) {
   const shouldReduceMotion = useReducedMotion();
   const arrowX = useMotionValue(0);
@@ -27,6 +29,7 @@ export function ProjectCard({
   const smoothArrowX = useSpring(arrowX, { stiffness: 220, damping: 24 });
   const smoothArrowY = useSpring(arrowY, { stiffness: 220, damping: 24 });
   const featured = project.slug === "living-ai-portfolio-system";
+  const HeadingTag = headingAs;
 
   const handlePointerMove = (event: MouseEvent<HTMLAnchorElement>) => {
     if (shouldReduceMotion) return;
@@ -112,13 +115,13 @@ export function ProjectCard({
               </span>
             </div>
 
-            <h3
+            <HeadingTag
               className={`text-[clamp(1.34rem,5.7vw,2rem)] font-semibold leading-[1.08] tracking-[0] md:text-[clamp(1.35rem,2.1vw,2.1rem)] ${
                 featured ? "text-white/92" : "text-[var(--foreground)]"
               }`}
             >
               {project.title}
-            </h3>
+            </HeadingTag>
             <p
               className={`mt-3 text-[0.92rem] leading-[1.55] sm:mt-4 sm:text-[0.94rem] sm:leading-[1.58] ${
                 featured ? "text-white/58" : "text-[var(--muted)]"
