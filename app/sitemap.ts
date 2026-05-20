@@ -44,7 +44,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${siteUrl}/journal/${post.slug}`,
     lastModified: new Date(post.date),
     changeFrequency: "monthly",
-    priority: post.slug === "ai-business-infrastructure" ? 0.8 : 0.7,
+    priority:
+      post.slug === "ai-strategy-supply-chain"
+        ? 0.82
+        : post.slug === "ai-business-infrastructure"
+          ? 0.8
+          : 0.7,
   }));
 
   return [...staticRoutes, ...journalRoutes, ...archiveRoutes];

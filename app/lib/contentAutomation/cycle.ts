@@ -60,10 +60,9 @@ export async function sendLatestPendingApprovalEmail() {
 }
 
 export async function sendApprovalForRun(run: LinkedInAutomationRun) {
-  const config = getAutomationConfigStatus();
   const secret = process.env.LINKEDIN_APPROVAL_SECRET;
   const exp = Math.floor(Math.min(Date.parse(run.expiresAt), Date.now() + 24 * 60 * 60 * 1000) / 1000);
-  const approveToken = secret && config.canPostToLinkedIn
+  const approveToken = secret
     ? signToken({ runId: run.id, action: "approve", exp }, secret)
     : "";
   const rejectToken = secret
@@ -118,16 +117,6 @@ export async function handleApprovalToken(token: string | null, expectedAction: 
     };
   }
 
-  if (expectedAction === "approve" && !config.canPostToLinkedIn) {
-    return {
-      ok: false,
-      title: "LinkedIn API is not connected yet",
-      message: `No LinkedIn post was created. Official LinkedIn API posting still needs: ${config.missing
-        .filter((item) => item.startsWith("LINKEDIN"))
-        .join(", ")}.`,
-    };
-  }
-
   const run = await getAutomationRun(verification.payload.runId);
 
   if (!run) {
@@ -162,6 +151,32 @@ export async function handleApprovalToken(token: string | null, expectedAction: 
       ok: false,
       title: "This draft was already handled",
       message: `Current status: ${run.status}. No duplicate action was taken.`,
+    };
+  }
+
+  if (expectedAction === "approve" && !config.canPostToLinkedIn) {
+    const fallbackRun = {
+      ...run,
+      status: "blocked" as const,
+      postingBlockedReason: "LinkedIn API is not connected; secure copy-page fallback was shown.",
+      approvalTokenHash: undefined,
+      rejectTokenHash: undefined,
+    };
+    const saveResult = await saveAutomationRun(
+      fallbackRun,
+      `Show LinkedIn fallback copy page: ${run.id}`,
+    );
+
+    return {
+      ok: saveResult.ok,
+      title: "LinkedIn draft ready to copy",
+      message:
+        "Official LinkedIn API posting is not connected yet, so nothing was posted automatically. Use the secure preview below to copy and post manually.",
+      fallbackRun,
+      fallbackReason: `Missing: ${config.missing
+        .filter((item) => item.startsWith("LINKEDIN"))
+        .join(", ") || "LinkedIn API credentials or posting permission"}.`,
+      saveResult,
     };
   }
 

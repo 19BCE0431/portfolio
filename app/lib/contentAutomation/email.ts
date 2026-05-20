@@ -24,9 +24,10 @@ export async function sendApprovalEmail({ run, approveUrl, rejectUrl }: Approval
 
   resendClient ??= new Resend(apiKey);
   const config = getAutomationConfigStatus();
+  const approvalMode = config.canPostToLinkedIn ? "auto-post" : "fallback-copy";
   const autoPostNote = config.canPostToLinkedIn
     ? "LinkedIn auto-posting is configured. Approval will post immediately using the official LinkedIn API."
-    : `Auto-posting is blocked until these are configured: ${config.missing
+    : `LinkedIn API posting is not connected yet. The approval button opens a secure copy-ready preview page instead. Auto-posting remains blocked until these are configured: ${config.missing
         .filter((item) => item.startsWith("LINKEDIN") || item.includes("GITHUB"))
         .join(", ") || "LinkedIn/GitHub settings"}.`;
 
@@ -34,8 +35,8 @@ export async function sendApprovalEmail({ run, approveUrl, rejectUrl }: Approval
     from,
     to,
     subject: `Approve LinkedIn post: ${run.topic}`,
-    html: renderApprovalHtml({ run, approveUrl, rejectUrl, autoPostNote }),
-    text: renderApprovalText({ run, approveUrl, rejectUrl, autoPostNote }),
+    html: renderApprovalHtml({ run, approveUrl, rejectUrl, autoPostNote, approvalMode }),
+    text: renderApprovalText({ run, approveUrl, rejectUrl, autoPostNote, approvalMode }),
   });
 
   if (error) {
@@ -91,9 +92,12 @@ function renderApprovalHtml({
   approveUrl,
   rejectUrl,
   autoPostNote,
-}: ApprovalEmailInput & { autoPostNote: string }) {
+  approvalMode,
+}: ApprovalEmailInput & { autoPostNote: string; approvalMode: "auto-post" | "fallback-copy" }) {
   const buttonStyle =
     "display:inline-block;border-radius:8px;padding:12px 16px;text-decoration:none;font-weight:700;margin-right:10px";
+  const approveLabel =
+    approvalMode === "auto-post" ? "Approve & post to LinkedIn" : "Open secure copy page";
 
   return `
   <div style="font-family:Inter,Arial,sans-serif;line-height:1.55;color:#202321;background:#f7f5ef;padding:24px">
@@ -114,7 +118,7 @@ function renderApprovalHtml({
       <div style="margin:24px 0">
         ${
           approveUrl
-            ? `<a href="${escapeAttribute(approveUrl)}" style="${buttonStyle};background:#1e2a24;color:white">Approve post</a>`
+            ? `<a href="${escapeAttribute(approveUrl)}" style="${buttonStyle};background:#1e2a24;color:white">${approveLabel}</a>`
             : ""
         }
         ${
@@ -133,7 +137,11 @@ function renderApprovalText({
   approveUrl,
   rejectUrl,
   autoPostNote,
-}: ApprovalEmailInput & { autoPostNote: string }) {
+  approvalMode,
+}: ApprovalEmailInput & { autoPostNote: string; approvalMode: "auto-post" | "fallback-copy" }) {
+  const approveLabel =
+    approvalMode === "auto-post" ? "Approve and post" : "Open secure copy page";
+
   return [
     `Approve LinkedIn post: ${run.topic}`,
     "",
@@ -149,7 +157,7 @@ function renderApprovalText({
     "LinkedIn draft:",
     run.linkedinDraft,
     "",
-    approveUrl ? `Approve: ${approveUrl}` : "",
+    approveUrl ? `${approveLabel}: ${approveUrl}` : "",
     rejectUrl ? `Reject: ${rejectUrl}` : "",
     "",
     "Ignoring this email means nothing will be posted.",
