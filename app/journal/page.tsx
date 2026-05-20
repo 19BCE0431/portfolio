@@ -22,12 +22,21 @@ export const metadata: Metadata = {
       "Notes on AI business infrastructure, product strategy, market signals, consumer behavior, and MBA learning.",
     url: "/journal",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Mohit Sai Krishna journal preview",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Journal",
     description:
       "Notes on AI business infrastructure, product strategy, market signals, consumer behavior, and MBA learning.",
+    images: ["/twitter-image"],
   },
 };
 

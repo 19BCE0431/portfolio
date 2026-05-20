@@ -22,12 +22,21 @@ export const metadata: Metadata = {
       "A small edited gallery of campus, travel, hills, friends, and quieter personal frames.",
     url: "/life",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Mohit Sai Krishna life gallery preview",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Life, Lightly Documented",
     description:
       "A small edited gallery of campus, travel, hills, friends, and quieter personal frames.",
+    images: ["/twitter-image"],
   },
 };
 

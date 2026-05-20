@@ -12,11 +12,11 @@ import { profile } from "./data/portfolio";
 export const metadata: Metadata = {
   metadataBase: new URL("https://mohitsaikrishna.in"),
   title: {
-    default: `${profile.name} | IIM Sirmaur MBA, Product Strategy & AI Workflows`,
+    default: `${profile.shortName} | Product, Strategy & AI`,
     template: `%s | ${profile.name}`,
   },
   description:
-    "Mohit Sai Krishna Peddakotla is an IIM Sirmaur MBA candidate exploring product, marketing, strategy, consumer behavior, and AI-enabled workflows with a Computer Science and Data Science foundation.",
+    "IIM Sirmaur MBA candidate exploring product strategy, business analytics, AI workflows, and decision-making across technology and markets.",
   keywords: [
     "Mohit Sai Krishna Peddakotla",
     "Mohit Sai Krishna",
@@ -56,9 +56,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "/",
-    title: profile.name,
+    title: `${profile.shortName} | Product, Strategy & AI`,
     description:
-      "IIM Sirmaur MBA candidate exploring product, marketing, strategy, consumer behavior, and AI-enabled workflows.",
+      "IIM Sirmaur MBA candidate exploring product strategy, business analytics, AI workflows, and decision-making across technology and markets.",
     siteName: profile.name,
     locale: "en_IN",
     images: [
@@ -72,9 +72,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: profile.name,
+    title: `${profile.shortName} | Product, Strategy & AI`,
     description:
-      "IIM Sirmaur MBA candidate exploring product, marketing, strategy, consumer behavior, and AI-enabled workflows.",
+      "IIM Sirmaur MBA candidate exploring product strategy, business analytics, AI workflows, and decision-making across technology and markets.",
     images: ["/twitter-image"],
   },
   icons: {

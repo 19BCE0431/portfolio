@@ -1091,6 +1091,7 @@ function ArchivePreview() {
               project={project}
               compact
               priority={index === 0}
+              headingAs="p"
             />
           ))}
         </GlideDeck>
@@ -1115,11 +1116,14 @@ function ArchivePreview() {
 function SystemNodeCard({
   node,
   index,
+  headingAs = "h3",
 }: {
   node: (typeof systemNodes)[number];
   index: number;
+  headingAs?: "h3" | "p";
 }) {
   const Icon = node.icon;
+  const HeadingTag = headingAs;
 
   return (
     <article className="editorial-panel motion-surface hover-light group relative h-full min-h-[192px] overflow-hidden p-5 md:min-h-[190px] md:p-6">
@@ -1129,9 +1133,9 @@ function SystemNodeCard({
           0{index + 1}
         </span>
       </div>
-      <h3 className="mt-7 text-[1.18rem] font-semibold leading-[1.2]">
+      <HeadingTag className="mt-7 text-[1.18rem] font-semibold leading-[1.2]">
         {node.title}
-      </h3>
+      </HeadingTag>
       <p className="mt-3 text-[0.92rem] leading-[1.6] text-[var(--muted)]">
         {node.text}
       </p>
@@ -1183,7 +1187,12 @@ function FeaturedSystem() {
                 slideClassName="glide-slide-wide"
               >
                 {systemNodes.map((node, index) => (
-                  <SystemNodeCard key={node.title} node={node} index={index} />
+                  <SystemNodeCard
+                    key={node.title}
+                    node={node}
+                    index={index}
+                    headingAs="p"
+                  />
                 ))}
               </GlideDeck>
             </div>
@@ -1694,12 +1703,15 @@ function InterestMotif({
 function PersonalInterestCard({
   interest,
   index,
+  headingAs = "h3",
 }: {
   interest: (typeof personalInterests)[number];
   index: number;
+  headingAs?: "h3" | "p";
 }) {
   const shouldReduceMotion = useReducedMotion();
   const Icon = interest.icon;
+  const HeadingTag = headingAs;
 
   return (
     <motion.article
@@ -1741,9 +1753,9 @@ function PersonalInterestCard({
         title={interest.title}
         featured={interest.featured}
       />
-      <h3 className="mt-7 text-[1.18rem] font-semibold leading-[1.2]">
+      <HeadingTag className="mt-7 text-[1.18rem] font-semibold leading-[1.2]">
         {interest.title}
-      </h3>
+      </HeadingTag>
       <p
         className={`mt-4 text-[0.95rem] leading-[1.65] ${
           interest.featured ? "text-white/66" : "text-[var(--muted)]"
@@ -1800,6 +1812,7 @@ function PersonalInterests() {
                   key={interest.title}
                   interest={interest}
                   index={index}
+                  headingAs="p"
                 />
               ))}
             </GlideDeck>
