@@ -10,7 +10,9 @@ type GeneratedContent = {
 
 const CONTENT_SYSTEM_PROMPT = `You create portfolio journal articles and LinkedIn drafts for Mohit Sai Krishna Peddakotla.
 Write as a thoughtful MBA + data/product person, not as an AI influencer.
-Avoid hype, stock advice, politics, fake claims, exaggerated certainty, and generic motivation.
+The audience includes expert operators, product people, marketers, strategists, analytics people, and MBA peers. They do not need basic explanations.
+Every idea must feel specific, non-obvious, and earned through a business lens.
+Avoid hype, stock advice, politics, fake claims, exaggerated certainty, generic motivation, and familiar AI talking points.
 Return valid JSON only.`;
 
 export async function generateAndPublishAutomationRun() {
@@ -88,6 +90,8 @@ async function generateContent(): Promise<GeneratedContent> {
     candidateTopics?: TopicCandidate[];
   };
 
+  assertHighSignalDraft(parsed.linkedinDraft);
+
   const slug = safeSlug(parsed.slug || parsed.title);
   const date = localDate(new Date());
   const journalPath = `content/journal/${date}-${slug}.md`;
@@ -146,41 +150,76 @@ function buildPrompt(candidates: TopicCandidate[]) {
 Audience: MBA students, tech professionals, product/marketing/strategy aspirants, AI/business analytics people, recruiters.
 Positioning: IIM Sirmaur MBA candidate, Top 10% academic signal, Computer Science + Data Science background, experience in automation, anomaly detection, price intelligence, dashboards, image search, AI workflows, data pipelines, and business operations.
 
+Quality bar:
+- The first two lines must raise an eyebrow. No textbook hook.
+- Assume readers already know "agentic AI", "AI tools", and "automation"; do not explain basics.
+- Make a sharper business claim that connects product, marketing, strategy, analytics, or operations.
+- Use concrete operating examples such as pricing, customer operations, category decisions, discovery/search, dashboards, or campaign learning.
+- The post must sound like a thoughtful person, not a brand page or AI influencer.
+- Create 5 internal LinkedIn versions, score them, then return only the best merged final.
+- If the best idea would score below 9.2/10 for originality, clarity, expert relevance, and personal-brand fit, return a skip reason instead of forcing content.
+- Avoid these weak patterns: "AI is no longer just...", "AI is becoming...", "In today's fast-paced world", "not just a tool", "game-changer", "revolutionize", "unlock potential".
+
 Candidate topic directions:
 ${JSON.stringify(candidates, null, 2)}
 
 Return JSON with: slug, title, summary, category, tags, selectedWhy, linkedinDraft, journalBody, sourceLinks, candidateTopics.
 Journal body must be markdown with ## headings, practical examples, business/product/marketing implications, personal lens, and key takeaways.
-LinkedIn draft must be 1.5-2 minute mobile-readable post, strong hook, 3-5 crisp points, soft CTA, max 5 hashtags.`;
+LinkedIn draft must be a 1.5-2 minute mobile-readable post, strong hook, crisp structure, personal business lens, soft CTA, max 5 hashtags.`;
 }
 
 function fallbackCandidates(): TopicCandidate[] {
   return [
     {
-      topic: "AI workflow ownership is becoming the real business advantage",
-      angle: "Agentic AI is less about full autonomy and more about who owns context, rules, handoffs, and review inside a workflow.",
+      topic: "The AI advantage is not autonomy. It is business memory.",
+      angle: "A sharper business lens: models are easier to access, but permissioned context, decision memory, and judgment boundaries decide whether AI becomes useful.",
       timeliness: 9,
-      audienceRelevance: 9,
-      nonObviousness: 9,
+      audienceRelevance: 10,
+      nonObviousness: 10,
       engagementPotential: 9,
       journalDepthPotential: 10,
       personalBrandFit: 10,
       riskLevel: "low",
-      totalScore: 9.3,
+      totalScore: 9.7,
     },
     {
-      topic: "Pricing intelligence is moving from dashboards to decision loops",
-      angle: "Competitive pricing data becomes useful only when it changes timing, escalation, and action.",
-      timeliness: 8,
+      topic: "AI projects fail when business judgment stays invisible",
+      angle: "Many AI efforts do not fail because the model is weak; they fail because the organization has not made its decision logic usable.",
+      timeliness: 9,
       audienceRelevance: 9,
-      nonObviousness: 8,
-      engagementPotential: 8,
+      nonObviousness: 9,
+      engagementPotential: 9,
       journalDepthPotential: 9,
       personalBrandFit: 10,
       riskLevel: "low",
-      totalScore: 8.7,
+      totalScore: 9.2,
     },
   ];
+}
+
+function assertHighSignalDraft(value: string) {
+  const draft = value || "";
+  const lower = draft.toLowerCase();
+  const banned = [
+    "in today's fast-paced world",
+    "game-changer",
+    "revolutionize",
+    "unlock potential",
+    "ai is no longer just",
+    "ai is becoming more interesting",
+  ];
+
+  if (draft.length < 1200) {
+    throw new Error("Generated LinkedIn draft is too thin.");
+  }
+
+  if (banned.some((phrase) => lower.includes(phrase))) {
+    throw new Error("Generated LinkedIn draft used a banned generic phrase.");
+  }
+
+  if (!draft.includes("?")) {
+    throw new Error("Generated LinkedIn draft needs a discussion question.");
+  }
 }
 
 function renderJournalMarkdown({
