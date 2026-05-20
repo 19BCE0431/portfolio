@@ -1,6 +1,7 @@
 import { SITE_URL } from "./config";
 import { publishGeneratedFiles, saveAutomationRun } from "./store";
 import type { LinkedInAutomationRun, TopicCandidate } from "./types";
+import { getPublishedJournalPosts } from "../../data/journal";
 
 type GeneratedContent = {
   run: LinkedInAutomationRun;
@@ -53,7 +54,7 @@ export async function generateAndPublishAutomationRun() {
 
 async function generateContent(): Promise<GeneratedContent> {
   const candidates = fallbackCandidates();
-  const prompt = buildPrompt(candidates);
+  const prompt = buildPrompt(candidates, recentPublishedTopics());
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: {
@@ -144,7 +145,7 @@ async function generateContent(): Promise<GeneratedContent> {
   return { run, journalMarkdown, linkedinDraftMarkdown };
 }
 
-function buildPrompt(candidates: TopicCandidate[]) {
+function buildPrompt(candidates: TopicCandidate[], previousTopics: Array<{ title: string; slug: string; category: string }>) {
   return `Create one portfolio journal article and one LinkedIn post.
 
 Audience: MBA students, tech professionals, product/marketing/strategy aspirants, AI/business analytics people, recruiters.
@@ -163,6 +164,14 @@ Quality bar:
 Candidate topic directions:
 ${JSON.stringify(candidates, null, 2)}
 
+Already-published portfolio topics to avoid repeating:
+${JSON.stringify(previousTopics, null, 2)}
+
+Topic diversity rule:
+- Do not create another generic AI infrastructure, agentic AI, or workflow ownership post unless the mechanism is meaningfully new.
+- Prefer fresh angles across pricing, consumer behavior, marketing strategy, retail/e-commerce, product discovery, analytics, market structure, or MBA learning applied to business.
+- A reader should feel they learned a new operating lens, not a renamed version of the last post.
+
 Return JSON with: slug, title, summary, category, tags, selectedWhy, linkedinDraft, journalBody, sourceLinks, candidateTopics.
 Journal body must be markdown with ## headings, practical examples, business/product/marketing implications, personal lens, and key takeaways.
 LinkedIn draft must be a 1.5-2 minute mobile-readable post, strong hook, crisp structure, personal business lens, soft CTA, max 5 hashtags.`;
@@ -171,8 +180,8 @@ LinkedIn draft must be a 1.5-2 minute mobile-readable post, strong hook, crisp s
 function fallbackCandidates(): TopicCandidate[] {
   return [
     {
-      topic: "The AI advantage is not autonomy. It is business memory.",
-      angle: "A sharper business lens: models are easier to access, but permissioned context, decision memory, and judgment boundaries decide whether AI becomes useful.",
+      topic: "AI strategy has a supply chain now",
+      angle: "A business strategy lens on why AI decisions now depend on compute capacity, context quality, latency, cost-per-decision, permissions, and feedback loops.",
       timeliness: 9,
       audienceRelevance: 10,
       nonObviousness: 10,
@@ -183,8 +192,8 @@ function fallbackCandidates(): TopicCandidate[] {
       totalScore: 9.7,
     },
     {
-      topic: "AI projects fail when business judgment stays invisible",
-      angle: "Many AI efforts do not fail because the model is weak; they fail because the organization has not made its decision logic usable.",
+      topic: "The next AI moat is capacity discipline",
+      angle: "Teams that know which decisions deserve expensive intelligence may beat teams that use large models everywhere.",
       timeliness: 9,
       audienceRelevance: 9,
       nonObviousness: 9,
@@ -195,6 +204,16 @@ function fallbackCandidates(): TopicCandidate[] {
       totalScore: 9.2,
     },
   ];
+}
+
+function recentPublishedTopics() {
+  return getPublishedJournalPosts()
+    .slice(0, 12)
+    .map((post) => ({
+      title: post.title,
+      slug: post.slug,
+      category: post.category,
+    }));
 }
 
 function assertHighSignalDraft(value: string) {

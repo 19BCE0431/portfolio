@@ -23,7 +23,8 @@ There is no public admin button. Approval links are email-only, signed, expiring
 
 - `GET /api/content/approve-linkedin-post?token=...`
   - Validates signed token, expiry, action, stored token hash, and current run status.
-  - Refuses cleanly without changing state if official LinkedIn API posting is not configured.
+  - If official LinkedIn API posting is configured, approval posts through the official API.
+  - If official LinkedIn API posting is not configured, approval opens a secure copy-ready preview page with the final LinkedIn post, a copy button, and LinkedIn composer links.
   - Marks the run approved when persistent storage is configured.
   - Posts immediately through the LinkedIn API only if `LINKEDIN_AUTO_POST=true` and LinkedIn credentials are valid.
 
@@ -41,7 +42,7 @@ There is no public admin button. Approval links are email-only, signed, expiring
 - Tokens expire in 24 hours or at the run expiration, whichever comes first.
 - Tokens are single-use only when GitHub content storage is configured, because the run stores token hashes and status transitions.
 - If persistent storage is missing, approval links do not publish to LinkedIn.
-- If LinkedIn API credentials are missing, the approval email does not show a working post button and the approve endpoint will not mark the run blocked.
+- If LinkedIn API credentials are missing, the approval email button opens the secure fallback preview page. It never marks the run as posted and never pretends auto-posting worked.
 - The LinkedIn API is the only posting mechanism. Browser scraping is not used.
 - Error responses are sanitized and do not expose secret values.
 
@@ -91,7 +92,7 @@ If any of those are missing, keep `LINKEDIN_AUTO_POST=false`. The system will st
 
 ## Posting Cadence
 
-The Vercel cron runs every three days at `03:00 UTC` / `08:30 IST`.
+The Vercel cron runs every Monday and Thursday at `03:00 UTC` / `08:30 IST`, giving a practical 3-4 day cadence.
 
 Each cycle publishes the portfolio journal first, emails the LinkedIn draft for approval, and posts to LinkedIn only after the signed approval link is clicked.
 

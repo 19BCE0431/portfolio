@@ -1,0 +1,109 @@
+{
+  "id": "2026-05-20-ai-strategy-supply-chain",
+  "topic": "AI strategy has a supply chain now",
+  "selectedWhy": "This angle is timely because AI compute, data centers, energy, and enterprise operating-model redesign are now visible business constraints. It is also less generic than another agentic-AI post: the useful claim is that AI strategy becomes an allocation problem, where teams decide which decisions deserve compute, context, latency, autonomy, and human review.",
+  "riskLevel": "low",
+  "journalTitle": "AI Strategy Has a Supply Chain Now",
+  "journalSlug": "ai-strategy-supply-chain",
+  "journalUrl": "https://mohitsaikrishna.in/journal/ai-strategy-supply-chain?utm_source=linkedin&utm_medium=post&utm_campaign=linkedin_journal_first_post",
+  "journalPath": "content/journal/2026-05-20-ai-strategy-supply-chain.md",
+  "linkedinDraftPath": "content/linkedin-drafts/2026-05-20-ai-strategy-supply-chain.md",
+  "linkedinDraft": "Most AI strategy decks still miss the most boring question in the room:\n\nWhat is the supply chain of intelligence?\n\nNot the model demo.\nNot the chatbot.\nNot another \"AI transformation\" slide.\n\nThe supply chain.\n\nEvery useful AI workflow now depends on things that behave like operating inputs:\n\n- compute capacity\n- clean context\n- latency budgets\n- data permissions\n- cost per decision\n- escalation rules\n- feedback loops\n\nThis changes the AI conversation.\n\nIf intelligence has a supply chain, then \"use AI everywhere\" is not strategy. It is a cost leak with better branding.\n\nA customer-support issue may deserve fast, high-context intelligence.\n\nA weekly market scan may not.\n\nA pricing alert may need competitor movement, margin, inventory, category role, and seasonality before it deserves action.\n\nA content workflow may need brand memory more than a larger model.\n\nA dashboard may need fewer charts and a clearer next step.\n\nThe question becomes:\n\nWhich decisions are valuable enough to spend intelligence on?\n\nBusinesses already ration attention, capital, shelf space, inventory, and leadership time.\n\nAI adds one more scarce resource to allocate: structured cognition.\n\nComing from Computer Science and Data Science into an MBA, this is the shift I find most interesting.\n\nThe technical question is:\n\"Can the system do it?\"\n\nThe business question is:\n\"Should this decision receive this much intelligence, speed, cost, and autonomy?\"\n\nI wrote the longer version here:\nhttps://mohitsaikrishna.in/journal/ai-strategy-supply-chain?utm_source=linkedin&utm_medium=post&utm_campaign=linkedin_journal_first_post\n\nMaybe the next AI advantage will not belong to the team that automates the most.\n\nIt may belong to the team that knows where intelligence is worth spending.\n\n#AI #BusinessStrategy #ProductStrategy #BusinessAnalytics #MBAJourney",
+  "predictedPostAt": "2026-05-21T03:40:00.000Z",
+  "createdAt": "2026-05-20T06:48:23.000Z",
+  "expiresAt": "2026-05-21T06:48:23.000Z",
+  "status": "pending_approval",
+  "candidateTopics": [
+    {
+      "topic": "AI strategy has a supply chain now",
+      "angle": "AI is moving from a tool-choice conversation to an allocation problem: compute, context, latency, cost, permissions, review, and feedback must fit the business decision.",
+      "timeliness": 10,
+      "audienceRelevance": 10,
+      "nonObviousness": 10,
+      "engagementPotential": 9,
+      "journalDepthPotential": 10,
+      "personalBrandFit": 10,
+      "riskLevel": "low",
+      "totalScore": 9.8
+    },
+    {
+      "topic": "The next AI moat is capacity discipline",
+      "angle": "Teams that know which decisions deserve expensive intelligence may outperform teams that use the largest model everywhere.",
+      "timeliness": 9,
+      "audienceRelevance": 10,
+      "nonObviousness": 9,
+      "engagementPotential": 9,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 10,
+      "riskLevel": "low",
+      "totalScore": 9.4
+    },
+    {
+      "topic": "Marketing AI has a memory problem, not a content problem",
+      "angle": "The harder marketing problem is preserving audience learning, brand judgment, and campaign response memory rather than generating more copy.",
+      "timeliness": 8,
+      "audienceRelevance": 9,
+      "nonObviousness": 9,
+      "engagementPotential": 9,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 9,
+      "riskLevel": "low",
+      "totalScore": 8.9
+    },
+    {
+      "topic": "Pricing intelligence is not competitor scraping",
+      "angle": "A stronger retail/e-commerce lens: useful pricing AI separates market noise from action-worthy movement using margin, inventory, timing, category role, and consumer sensitivity.",
+      "timeliness": 8,
+      "audienceRelevance": 9,
+      "nonObviousness": 10,
+      "engagementPotential": 8,
+      "journalDepthPotential": 10,
+      "personalBrandFit": 10,
+      "riskLevel": "low",
+      "totalScore": 9.2
+    },
+    {
+      "topic": "The AI interface is not the screen anymore",
+      "angle": "Product strategy angle: user experience is increasingly shaped by retrieval, latency, uncertainty, permissions, and fallback states behind the visible UI.",
+      "timeliness": 9,
+      "audienceRelevance": 9,
+      "nonObviousness": 9,
+      "engagementPotential": 8,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 9,
+      "riskLevel": "low",
+      "totalScore": 8.9
+    }
+  ],
+  "sourceLinks": [
+    {
+      "title": "Blackstone Announces Joint Venture with Google to Create New TPU Cloud",
+      "url": "https://www.blackstone.com/news/press/blackstone-announces-joint-venture-with-google-to-create-new-tpu-cloud/",
+      "publisher": "Blackstone",
+      "claimSupported": "Recent example of AI compute becoming a financing, capacity, operations, and infrastructure question."
+    },
+    {
+      "title": "Building the compute infrastructure for the Intelligence Age",
+      "url": "https://openai.com/index/building-the-compute-infrastructure-for-the-intelligence-age/",
+      "publisher": "OpenAI",
+      "claimSupported": "Compute infrastructure is becoming a system-level constraint involving data centers, chips, energy, construction, finance, and operations."
+    },
+    {
+      "title": "Energy and AI",
+      "url": "https://www.iea.org/reports/energy-and-ai/",
+      "publisher": "International Energy Agency",
+      "claimSupported": "AI demand is tied to energy and data center capacity, making compute a business constraint."
+    },
+    {
+      "title": "The State of AI: Global Survey 2025",
+      "url": "https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai",
+      "publisher": "McKinsey",
+      "claimSupported": "AI value is linked to workflow redesign, operating-model change, and adoption discipline."
+    }
+  ],
+  "scores": {
+    "linkedinFinal": 9.4,
+    "journalQuality": 9.5,
+    "risk": 9.6
+  }
+}
