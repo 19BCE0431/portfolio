@@ -9,13 +9,13 @@ import type { LinkedInAutomationRun } from "./types";
 export async function runContentCycle() {
   const config = getAutomationConfigStatus();
   const publishDue = await publishDueApprovedRuns();
-  const approvalEmail = await sendLatestPendingApprovalEmail();
   const generation = config.canPublishJournalAutomatically
     ? await generateAndPublishAutomationRun()
     : {
         status: "skipped" as const,
         reason: "Automatic journal generation needs OPENAI_API_KEY plus GitHub content storage.",
       };
+  const approvalEmail = await sendLatestPendingApprovalEmail();
 
   return {
     ok: true,
@@ -189,25 +189,7 @@ export async function handleApprovalToken(token: string | null, expectedAction: 
     };
   }
 
-  if (Date.parse(approvedRun.predictedPostAt) <= Date.now()) {
-    const publishResult = await publishRun(approvedRun);
-    return publishResult;
-  }
-
-  await sendAutomationStatusEmail(
-    `LinkedIn post approved: ${approvedRun.topic}`,
-    `Approved. It is scheduled for ${new Intl.DateTimeFormat("en-IN", {
-      dateStyle: "medium",
-      timeStyle: "short",
-      timeZone: "Asia/Kolkata",
-    }).format(new Date(approvedRun.predictedPostAt))}.\n\nJournal: ${approvedRun.journalUrl}`,
-  );
-
-  return {
-    ok: true,
-    title: "LinkedIn draft approved",
-    message: "The post is approved and will be posted at the predicted posting window if LinkedIn credentials are configured.",
-  };
+  return publishRun(approvedRun);
 }
 
 export async function publishDueApprovedRuns() {
