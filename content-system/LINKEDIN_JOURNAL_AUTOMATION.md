@@ -112,7 +112,16 @@ Each candidate topic should be scored for:
 - Personal-brand fit
 - Risk level
 
-Skip the cycle if the best topic is weak, high-risk, too generic, political, stock-advice-like, or unsupported.
+The final topic must clear a strict 9.2/10 bar across originality, expert relevance, clarity, personal-brand fit, and usefulness. Skip the cycle if the best topic is weak, familiar, high-risk, too generic, political, stock-advice-like, or unsupported.
+
+Weak angles to avoid:
+
+- Basic "agentic AI is coming" commentary
+- "AI is no longer just a tool" hooks
+- Content-volume arguments that everyone has already heard
+- Generic productivity posts
+- Motivation posts without a business mechanism
+- Big claims without a specific operating example
 
 ## Content Rules
 
@@ -129,12 +138,14 @@ Journal first:
 LinkedIn second:
 
 - 1.5-2 minute read
-- Strong first two lines
+- First two lines must raise an eyebrow
 - Short paragraphs
 - 3-5 crisp points
 - One soft question
 - 3-5 hashtags
 - UTM link to the journal
+- Must contain a real business mechanism, not a summary of obvious trends
+- Must sound like Mohit thinking through business, product, analytics, and MBA lenses
 
 Avoid:
 
@@ -145,6 +156,8 @@ Avoid:
 - Controversial politics
 - Stock advice
 - "In today's fast-paced world" hooks
+- "AI is becoming..." openings
+- Inflated scores for drafts that are only basic or familiar
 
 ## Token Rotation
 
