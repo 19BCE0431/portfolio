@@ -25,7 +25,7 @@ export async function sendApprovalEmail({ run, approveUrl, rejectUrl }: Approval
   resendClient ??= new Resend(apiKey);
   const config = getAutomationConfigStatus();
   const autoPostNote = config.canPostToLinkedIn
-    ? "LinkedIn auto-posting is configured. Approval will schedule/post using the official LinkedIn API."
+    ? "LinkedIn auto-posting is configured. Approval will post immediately using the official LinkedIn API."
     : `Auto-posting is blocked until these are configured: ${config.missing
         .filter((item) => item.startsWith("LINKEDIN") || item.includes("GITHUB"))
         .join(", ") || "LinkedIn/GitHub settings"}.`;
@@ -106,6 +106,7 @@ function renderApprovalHtml({
         <p style="margin:8px 0 0">${escapeHtml(autoPostNote)}</p>
       </div>
       <p><strong>Topic:</strong> ${escapeHtml(run.topic)}</p>
+      <p><strong>Engagement prediction:</strong> ${run.scores.linkedinFinal.toFixed(1)}/10 LinkedIn fit · ${run.scores.journalQuality.toFixed(1)}/10 journal depth</p>
       <p><strong>Risk:</strong> ${escapeHtml(run.riskLevel)} · <strong>Predicted posting time:</strong> ${escapeHtml(formatDate(run.predictedPostAt))}</p>
       <p><strong>Journal:</strong> <a href="${escapeAttribute(run.journalUrl)}">${escapeHtml(run.journalUrl)}</a></p>
       <h2 style="font-size:18px;margin-top:24px">LinkedIn draft</h2>
@@ -140,6 +141,7 @@ function renderApprovalText({
     "",
     `Journal: ${run.journalUrl}`,
     `Predicted posting time: ${formatDate(run.predictedPostAt)}`,
+    `Engagement prediction: ${run.scores.linkedinFinal.toFixed(1)}/10 LinkedIn fit, ${run.scores.journalQuality.toFixed(1)}/10 journal depth`,
     `Risk: ${run.riskLevel}`,
     "",
     autoPostNote,

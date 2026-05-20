@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowUpRight, Clock } from "lucide-react";
+import { ArrowLeft, Clock } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -156,7 +156,6 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
   const shareUrl = post.canonicalUrl || `/journal/${post.slug}`;
   const takeaways = takeawaysFromPost(post.blocks);
   const sectionHeadings = post.blocks.filter((block) => block.type === "heading").slice(0, 6);
-  const hasLinkedInDraft = Boolean(post.linkedinShortPost?.draftPath);
   const articleUrl = post.canonicalUrl || `https://mohitsaikrishna.in/journal/${post.slug}`;
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -367,30 +366,6 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
                       ))}
                     </div>
                   </section>
-                </Reveal>
-              )}
-
-              {hasLinkedInDraft && (
-                <Reveal>
-                <section className="motion-surface mt-6 rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.72)] p-5 backdrop-blur md:p-6">
-                  <h2 className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
-                    Short version for LinkedIn
-                  </h2>
-                  <p className="mt-3 text-[0.98rem] leading-[1.64] text-[var(--muted-strong)]">
-                    This article can be adapted into a shorter LinkedIn post
-                    with the main insight, 3-5 crisp points, and a link back to
-                    the full analysis.
-                  </p>
-                  <a
-                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="interactive-underline mt-5 inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--foreground)]"
-                  >
-                    Share article
-                    <ArrowUpRight className="h-4 w-4 text-[var(--muted)]" />
-                  </a>
-                </section>
                 </Reveal>
               )}
 

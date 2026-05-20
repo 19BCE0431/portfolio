@@ -15,7 +15,7 @@ There is no public admin button. Approval links are email-only, signed, expiring
 
 - `GET /api/cron/linkedin-content-cycle`
   - Protected by `CRON_SECRET`.
-  - Sends pending approval emails, posts approved due items, and can generate future cycles when OpenAI + GitHub content storage are configured.
+  - Posts previously approved due items, generates/publishes a new journal cycle when OpenAI + GitHub content storage are configured, then sends the approval email for the newest pending draft.
 
 - `POST /api/content/linkedin-cycle`
   - Protected by `CRON_SECRET`.
@@ -24,7 +24,7 @@ There is no public admin button. Approval links are email-only, signed, expiring
 - `GET /api/content/approve-linkedin-post?token=...`
   - Validates signed token, expiry, action, stored token hash, and current run status.
   - Marks the run approved when persistent storage is configured.
-  - Posts through the LinkedIn API only if `LINKEDIN_AUTO_POST=true` and LinkedIn credentials are valid.
+  - Posts immediately through the LinkedIn API only if `LINKEDIN_AUTO_POST=true` and LinkedIn credentials are valid.
 
 - `GET /api/content/reject-linkedin-post?token=...`
   - Validates signed token and marks the run rejected.
@@ -89,9 +89,9 @@ If any of those are missing, keep `LINKEDIN_AUTO_POST=false`. The system will st
 
 ## Posting Cadence
 
-The Vercel cron runs daily at `03:00 UTC` / `08:30 IST`.
+The Vercel cron runs every three days at `03:00 UTC` / `08:30 IST`.
 
-The content cycle enforces the three-day cadence in application logic when automatic generation is enabled. This avoids adding more cron jobs and keeps the project within practical Vercel cron limits.
+Each cycle publishes the portfolio journal first, emails the LinkedIn draft for approval, and posts to LinkedIn only after the signed approval link is clicked.
 
 Fallback best posting window:
 
