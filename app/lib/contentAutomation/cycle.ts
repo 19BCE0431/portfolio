@@ -60,9 +60,10 @@ export async function sendLatestPendingApprovalEmail() {
 }
 
 export async function sendApprovalForRun(run: LinkedInAutomationRun) {
+  const config = getAutomationConfigStatus();
   const secret = process.env.LINKEDIN_APPROVAL_SECRET;
   const exp = Math.floor(Math.min(Date.parse(run.expiresAt), Date.now() + 24 * 60 * 60 * 1000) / 1000);
-  const approveToken = secret
+  const approveToken = secret && config.canPostToLinkedIn
     ? signToken({ runId: run.id, action: "approve", exp }, secret)
     : "";
   const rejectToken = secret
@@ -99,6 +100,7 @@ export async function sendApprovalForRun(run: LinkedInAutomationRun) {
 
 export async function handleApprovalToken(token: string | null, expectedAction: "approve" | "reject") {
   const verification = verifyToken(token, process.env.LINKEDIN_APPROVAL_SECRET);
+  const config = getAutomationConfigStatus();
 
   if (!verification.ok) {
     return {
@@ -113,6 +115,16 @@ export async function handleApprovalToken(token: string | null, expectedAction: 
       ok: false,
       title: "Approval link action mismatch",
       message: "This link is signed for a different action.",
+    };
+  }
+
+  if (expectedAction === "approve" && !config.canPostToLinkedIn) {
+    return {
+      ok: false,
+      title: "LinkedIn API is not connected yet",
+      message: `No LinkedIn post was created. Official LinkedIn API posting still needs: ${config.missing
+        .filter((item) => item.startsWith("LINKEDIN"))
+        .join(", ")}.`,
     };
   }
 
