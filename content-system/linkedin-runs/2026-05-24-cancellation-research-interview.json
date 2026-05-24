@@ -1,0 +1,92 @@
+{
+  "id": "2026-05-24-cancellation-research-interview",
+  "topic": "Cancellation is your highest-signal research interview",
+  "selectedWhy": "Recent runs leaned into AI operating-model lenses and pricing/checkout mechanisms (returns-as-insurance, EMI-as-pricing-interface). This cycle deliberately shifts to customer operations + analytics: the cancellation flow is where churn truth is created or destroyed. The non-obvious mechanism is that retention friction doesn’t just hurt brand trust - it contaminates exit-reason data and pushes users into support/chargebacks, which then breaks churn diagnosis and roadmap prioritization.",
+  "riskLevel": "low",
+  "journalTitle": "Cancellation Is Your Highest-Signal Research Interview",
+  "journalSlug": "cancellation-research-interview",
+  "journalUrl": "https://mohitsaikrishna.in/journal/cancellation-research-interview?utm_source=linkedin&utm_medium=post&utm_campaign=cancellation_research_interview",
+  "journalPath": "content/journal/2026-05-24-cancellation-research-interview.md",
+  "linkedinDraftPath": "content/linkedin-drafts/2026-05-24-cancellation-research-interview.md",
+  "linkedinDraft": "Most churn dashboards are built on polite lies.\n\nThe truth shows up at the cancel button.\n\nCancellation is usually treated as a retention moment: “save the revenue.”\n\nBut it’s also one of the highest-signal user research moments your product gets, because the user is making a real decision with real stakes.\n\nWhen teams add friction to cancellation, they don’t just lose goodwill.\n\nThey corrupt churn diagnosis.\n\nPeople don’t give you better reasons when they’re trapped in a flow. They pick whatever gets them out fastest (“too expensive”), or they switch channels (support tickets, angry reviews, chargebacks). The result: the dashboard looks clean, but the learning loop gets noisy.\n\nA few practical implications:\n\n- Cancellation is a measurement instrument, not just UX.\n- Friction creates bad exit data + higher-cost channels (support/disputes).\n- Design for “exit integrity”: simple cancel mechanics + consent-based save offers.\n- Capture reasons with low effort (one tap first, optional text second).\n- Measure downstream: time-to-cancel, drop-off in cancel flow, post-cancel tickets, disputes, and “save regret.”\n\nFull version here:\nhttps://mohitsaikrishna.in/journal/cancellation-research-interview?utm_source=linkedin&utm_medium=post&utm_campaign=cancellation_research_interview\n\nWhere does your cancellation flow help you learn - and where does it silently destroy signal?\n\n#ProductStrategy #CustomerExperience #BusinessAnalytics #Growth",
+  "predictedPostAt": "2026-05-27T03:40:00.000Z",
+  "createdAt": "2026-05-24T08:15:22.000Z",
+  "expiresAt": "2026-05-25T08:15:25.000Z",
+  "status": "pending_approval",
+  "candidateTopics": [
+    {
+      "topic": "Cancellation is your highest-signal research interview",
+      "angle": "Retention friction doesn’t just hurt brand trust - it contaminates churn diagnosis by corrupting exit reasons and pushing users into expensive channels (support, disputes).",
+      "timeliness": 9,
+      "audienceRelevance": 10,
+      "nonObviousness": 10,
+      "engagementPotential": 9,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 10,
+      "riskLevel": "low",
+      "totalScore": 9.5
+    },
+    {
+      "topic": "Your discounting isn’t on the price tag - it’s hidden in the checkout defaults",
+      "angle": "A pricing/consumer-behavior lens: defaults (EMI tenure, auto-applied coupons, wallet cashbacks) quietly change reference price and margin discipline.",
+      "timeliness": 8,
+      "audienceRelevance": 9,
+      "nonObviousness": 9,
+      "engagementPotential": 8,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 9,
+      "riskLevel": "low",
+      "totalScore": 8.9
+    },
+    {
+      "topic": "Dashboards aren’t for monitoring. They’re for decision rights.",
+      "angle": "Business analytics lens: dashboards fail when metrics become political; build metric contracts tied to actions, owners, horizons, and guardrails.",
+      "timeliness": 8,
+      "audienceRelevance": 9,
+      "nonObviousness": 9,
+      "engagementPotential": 8,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 9,
+      "riskLevel": "low",
+      "totalScore": 8.8
+    },
+    {
+      "topic": "Search is packaging: ranking decides which products get a 'chance'",
+      "angle": "Retail/e-commerce lens: discovery is a packaging layer; measure discovery friction and catalog quality as growth levers, not only conversion.",
+      "timeliness": 8,
+      "audienceRelevance": 9,
+      "nonObviousness": 9,
+      "engagementPotential": 8,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 9,
+      "riskLevel": "low",
+      "totalScore": 8.8
+    }
+  ],
+  "sourceLinks": [
+    {
+      "title": "Bringing Dark Patterns to Light (Staff Report)",
+      "url": "https://www.ftc.gov/system/files/ftc_gov/pdf/P214800%20Dark%20Patterns%20Report%209.14.2022%20-%20FINAL.pdf",
+      "publisher": "Federal Trade Commission",
+      "claimSupported": "Background and examples of manipulative UI patterns (including cancellation friction) that can harm consumers and trigger enforcement attention."
+    },
+    {
+      "title": "Click to Cancel: The FTC’s amended Negative Option Rule and what it means for your business",
+      "url": "https://www.ftc.gov/business-guidance/blog/2024/10/click-cancel-ftcs-amended-negative-option-rule-what-it-means-your-business",
+      "publisher": "Federal Trade Commission",
+      "claimSupported": "Regulatory framing that emphasizes simple cancellation mechanisms for negative option offers."
+    },
+    {
+      "title": "The Cancel Button Report 2026",
+      "url": "https://www.justcancel.io/research/cancel-button-report",
+      "publisher": "Just Cancel",
+      "claimSupported": "Empirical scan of cancellation difficulty patterns across many subscription services."
+    }
+  ],
+  "scores": {
+    "linkedinFinal": 9.3,
+    "journalQuality": 9.4,
+    "risk": 9.6
+  }
+}
+
