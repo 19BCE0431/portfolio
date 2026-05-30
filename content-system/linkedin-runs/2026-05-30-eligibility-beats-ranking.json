@@ -1,0 +1,92 @@
+{
+  "id": "2026-05-30-eligibility-beats-ranking",
+  "topic": "Eligibility beats ranking: fix your catalog before you fix search",
+  "selectedWhy": "Recent cycles leaned into AI operating-model lenses (business memory, AI supply chain) and pricing/customer-ops mechanisms (returns-as-option, EMI-as-pricing-interface, cancellation-as-research-interview). This cycle shifts to retail/e-commerce discovery systems: the non-obvious mechanism is that catalog integrity is an eligibility constraint, not just a ranking tweak. Small attribute and taxonomy inconsistencies can remove products from candidate sets across filters, feeds, and emerging AI-driven shopping surfaces — making discovery a product + analytics + operations contract worth owning.",
+  "riskLevel": "low",
+  "journalTitle": "Eligibility Beats Ranking: Fix Your Catalog Before You Fix Search",
+  "journalSlug": "eligibility-beats-ranking",
+  "journalUrl": "https://mohitsaikrishna.in/journal/eligibility-beats-ranking?utm_source=linkedin&utm_medium=post&utm_campaign=eligibility_beats_ranking",
+  "journalPath": "content/journal/2026-05-30-eligibility-beats-ranking.md",
+  "linkedinDraftPath": "content/linkedin-drafts/2026-05-30-eligibility-beats-ranking.md",
+  "linkedinDraft": "If “128 GB” and “128GB” are two different values in your catalog,\\nyour discovery stack is already broken.\\n\\nWe talk about discovery like it’s a ranking problem (search tuning, better relevance, nicer category pages).\\n\\nBut in retail, discovery often fails upstream — in product identity, attributes, and taxonomy.\\n\\nDiscovery is an eligibility game.\\n\\nWhen product data is inconsistent, you don’t always rank a bit lower. You sometimes become invisible across filters, feeds, and the surfaces that increasingly decide what gets shown. That’s why “fix search” doesn’t work if the catalog is incoherent: you’re tuning the ordering of a set that’s missing the right items.\\n\\nA few practical implications:\\n\\n- Normalize attribute values (units, whitespace, casing) so filters don’t split.\\n- Fix variant relationships: size/color/pack are variants under a parent, not separate “products.”\\n- Make taxonomy intent-led: one primary category per family; avoid duplicate paths that scatter signals.\\n- Treat freshness as a contract: price/availability/delivery must be reliable; suppress dead-end facets.\\n- Measure discovery integrity: coverage, drift, filter dead-ends, search zero-results, variant fragmentation.\\n\\nFull version here:\\nhttps://mohitsaikrishna.in/journal/eligibility-beats-ranking?utm_source=linkedin&utm_medium=post&utm_campaign=eligibility_beats_ranking\\n\\nWhat’s the single most painful field in your catalog to keep consistent (and what breaks when it drifts)?\\n\\n#Ecommerce #ProductStrategy #BusinessAnalytics #Growth",
+  "predictedPostAt": "2026-06-02T03:40:00.000Z",
+  "createdAt": "2026-05-30T00:00:00.000Z",
+  "expiresAt": "2026-05-31T00:00:00.000Z",
+  "status": "pending_approval",
+  "candidateTopics": [
+    {
+      "topic": "Eligibility beats ranking: fix your catalog before you fix search",
+      "angle": "Discovery is an eligibility pipeline; messy identity/attributes/taxonomy removes products from candidate sets across filters, feeds, and AI shopping surfaces.",
+      "timeliness": 9,
+      "audienceRelevance": 10,
+      "nonObviousness": 10,
+      "engagementPotential": 9,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 10,
+      "riskLevel": "low",
+      "totalScore": 9.5
+    },
+    {
+      "topic": "Dashboards aren’t for monitoring. They’re for decision rights.",
+      "angle": "Dashboards fail when metrics don’t map to actions; build metric contracts with owners, horizons, and guardrails so charts turn into decisions.",
+      "timeliness": 8,
+      "audienceRelevance": 9,
+      "nonObviousness": 9,
+      "engagementPotential": 8,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 9,
+      "riskLevel": "low",
+      "totalScore": 8.8
+    },
+    {
+      "topic": "Support queues are demand signals, not just cost centers",
+      "angle": "Customer operations can be an acquisition and product learning engine when you instrument contact reasons, time-to-resolution, and win-back loops — not just SLA compliance.",
+      "timeliness": 8,
+      "audienceRelevance": 9,
+      "nonObviousness": 9,
+      "engagementPotential": 8,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 9,
+      "riskLevel": "low",
+      "totalScore": 8.8
+    },
+    {
+      "topic": "Your discounts aren’t in the coupon code. They’re in the default choices.",
+      "angle": "Defaults in checkout (financing tenure, auto-applied offers, shipping upgrades) quietly change reference price and margin discipline; measure ‘default leakage’ as a pricing control.",
+      "timeliness": 7,
+      "audienceRelevance": 8,
+      "nonObviousness": 8,
+      "engagementPotential": 7,
+      "journalDepthPotential": 8,
+      "personalBrandFit": 8,
+      "riskLevel": "low",
+      "totalScore": 8.0
+    }
+  ],
+  "sourceLinks": [
+    {
+      "title": "6 Practical Ways to Boost Product Discovery in 2026",
+      "url": "https://productlasso.com/en/blog/product-discovery-2026",
+      "publisher": "Lasso",
+      "claimSupported": "Examples of how inconsistent attribute formatting fragments filters, creates dead ends, and reduces discovery performance."
+    },
+    {
+      "title": "The Most Underrated Retail SEO Levers for 2026: What Experts Really Think",
+      "url": "https://www.searchpilot.com/resources/blog/the-most-underrated-retail-seo-levers-for-2026-what-experts-really-think",
+      "publisher": "SearchPilot",
+      "claimSupported": "Framing that feed and product data quality affects eligibility, not just rank position, across shopping modules and AI-driven discovery surfaces."
+    },
+    {
+      "title": "Challenges and Research Opportunities in eCommerce Search and Recommendations",
+      "url": "https://openreview.net/pdf?id=AK9svUUrQR4",
+      "publisher": "OpenReview",
+      "claimSupported": "Research overview noting data quality and frequent changes are first-order constraints in e-commerce search and recommendations."
+    }
+  ],
+  "scores": {
+    "linkedinFinal": 9.3,
+    "journalQuality": 9.4,
+    "risk": 9.6
+  }
+}
+
