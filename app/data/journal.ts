@@ -42,6 +42,7 @@ export type JournalLinkedInShortPost = {
 
 export type JournalBlock =
   | { type: "heading"; text: string }
+  | { type: "image"; src: string; alt: string; caption?: string }
   | { type: "paragraph"; text: string }
   | { type: "list"; items: string[] };
 
@@ -370,7 +371,8 @@ function markdownToBlocks(markdown: string): JournalBlock[] {
     }
   };
 
-  for (const rawLine of lines) {
+  for (let index = 0; index < lines.length; index += 1) {
+    const rawLine = lines[index];
     const line = rawLine.trim();
 
     if (!line || line.startsWith("<!--")) {
@@ -383,6 +385,26 @@ function markdownToBlocks(markdown: string): JournalBlock[] {
       flushParagraph();
       flushList();
       blocks.push({ type: "heading", text: line.replace(/^##\s+/, "") });
+      continue;
+    }
+
+    const image = line.match(/^!\[([^\]]*)\]\(([^)\s]+)(?:\s+"[^"]*")?\)$/);
+    if (image) {
+      flushParagraph();
+      flushList();
+
+      const nextLine = lines[index + 1]?.trim() || "";
+      const caption = italicCaptionText(nextLine);
+      if (caption) {
+        index += 1;
+      }
+
+      blocks.push({
+        type: "image",
+        src: image[2],
+        alt: image[1],
+        caption,
+      });
       continue;
     }
 
@@ -399,6 +421,11 @@ function markdownToBlocks(markdown: string): JournalBlock[] {
   flushParagraph();
   flushList();
   return blocks;
+}
+
+function italicCaptionText(line: string) {
+  const match = line.match(/^[_*]([^_*].*?)[_*]$/);
+  return match?.[1]?.trim();
 }
 
 function estimateReadingTime(markdown: string) {
