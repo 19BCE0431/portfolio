@@ -97,7 +97,11 @@ export function JournalExplorer({
                         fill
                         sizes="(max-width: 768px) 92vw, (max-width: 1280px) 45vw, 32vw"
                         unoptimized={post.heroImage.endsWith(".svg")}
-                        className="object-cover transition duration-700 ease-[var(--ease)] group-hover:scale-[1.025]"
+                        className={`transition duration-700 ease-[var(--ease)] group-hover:scale-[1.025] ${
+                          post.heroImage.includes("trusted-employee-system-note")
+                            ? "object-contain p-2"
+                            : "object-cover"
+                        }`}
                       />
                     </div>
                   )}

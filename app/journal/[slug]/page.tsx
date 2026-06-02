@@ -102,6 +102,30 @@ function renderBlock(block: JournalBlock) {
     );
   }
 
+  if (block.type === "image") {
+    return (
+      <figure
+        key={`${block.src}-${block.caption || block.alt}`}
+        className="my-5 overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.82)] p-2 shadow-[0_24px_70px_rgba(17,19,19,0.08)] md:my-8"
+      >
+        <div className="relative aspect-square overflow-hidden rounded-[6px] bg-[var(--surface-cool)]">
+          <Image
+            src={block.src}
+            alt={block.alt}
+            fill
+            sizes="(max-width: 768px) 100vw, 780px"
+            className="object-contain"
+          />
+        </div>
+        {block.caption && (
+          <figcaption className="px-2 py-3 text-[12px] leading-[1.5] text-[var(--muted)]">
+            {block.caption}
+          </figcaption>
+        )}
+      </figure>
+    );
+  }
+
   if (block.type === "list") {
     return (
       <ul key={block.items.join("|")} className="grid gap-3">
@@ -157,6 +181,9 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
   const takeaways = takeawaysFromPost(post.blocks);
   const sectionHeadings = post.blocks.filter((block) => block.type === "heading").slice(0, 6);
   const articleUrl = post.canonicalUrl || `https://mohitsaikrishna.in/journal/${post.slug}`;
+  const heroImageIsInline = post.blocks.some(
+    (block) => block.type === "image" && block.src === post.heroImage,
+  );
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -198,43 +225,45 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
             </Link>
           </Reveal>
 
-          <div className="grid gap-8 md:grid-cols-[0.78fr_1fr] md:items-end md:gap-16">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(320px,0.78fr)] lg:items-end lg:gap-14">
             <Reveal>
               <SectionLabel>{post.category}</SectionLabel>
               <HeadingReveal
                 as="h1"
                 lines={[post.title]}
-                className="max-w-[900px] text-[clamp(2rem,8.4vw,4.6rem)] font-semibold leading-[1.04] tracking-[0] md:text-[clamp(2.8rem,6.8vw,6.45rem)] md:leading-[0.94]"
+                className="max-w-[820px] text-[clamp(2rem,8.4vw,4.55rem)] font-semibold leading-[1.04] tracking-[0] md:text-[clamp(2.45rem,4.8vw,5.1rem)] md:leading-[0.98]"
               />
             </Reveal>
-            <Reveal className="max-w-[690px]" delay={0.08}>
-              <div className="mb-5 flex flex-wrap gap-2 md:mb-6">
-                <span className="rounded-[8px] border border-black/10 bg-white/45 px-2.5 py-1 text-[12px] font-medium text-[var(--sage)]">
-                  {formatDate(post.date)}
-                </span>
-                <span className="inline-flex items-center gap-1.5 rounded-[8px] border border-black/10 bg-white/45 px-2.5 py-1 text-[12px] font-medium text-[var(--muted)]">
-                  <Clock className="h-3.5 w-3.5" />
-                  {post.readingTime}
-                </span>
-              </div>
-              <p className="text-[clamp(1rem,3.9vw,1.24rem)] leading-[1.58] text-[var(--muted-strong)] md:text-[clamp(1.12rem,2vw,1.55rem)] md:leading-[1.48]">
-                {post.summary}
-              </p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                <CopyArticleLink path={shareUrl} />
-                {post.sourceLinks.length > 0 && (
-                  <a
-                    href="#sources"
-                    className="premium-link inline-flex min-h-11 items-center justify-center gap-2 rounded-[8px] border border-black/10 bg-white/45 px-3.5 py-2 text-[13px] font-medium text-[var(--foreground)] shadow-[0_10px_32px_rgba(17,19,19,0.05)] backdrop-blur transition hover:bg-white"
-                  >
-                    View sources
-                  </a>
-                )}
+            <Reveal className="max-w-[650px]" delay={0.08}>
+              <div className="motion-surface rounded-[8px] border border-black/10 bg-white/45 p-4 shadow-[0_18px_62px_rgba(17,19,19,0.05)] backdrop-blur md:p-5">
+                <div className="mb-5 flex flex-wrap gap-2 md:mb-6">
+                  <span className="rounded-[8px] border border-black/10 bg-white/45 px-2.5 py-1 text-[12px] font-medium text-[var(--sage)]">
+                    {formatDate(post.date)}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-[8px] border border-black/10 bg-white/45 px-2.5 py-1 text-[12px] font-medium text-[var(--muted)]">
+                    <Clock className="h-3.5 w-3.5" />
+                    {post.readingTime}
+                  </span>
+                </div>
+                <p className="text-[clamp(1rem,3.9vw,1.24rem)] leading-[1.58] text-[var(--muted-strong)] md:text-[clamp(1.12rem,2vw,1.55rem)] md:leading-[1.48]">
+                  {post.summary}
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <CopyArticleLink path={shareUrl} />
+                  {post.sourceLinks.length > 0 && (
+                    <a
+                      href="#sources"
+                      className="premium-link inline-flex min-h-11 items-center justify-center gap-2 rounded-[8px] border border-black/10 bg-white/45 px-3.5 py-2 text-[13px] font-medium text-[var(--foreground)] shadow-[0_10px_32px_rgba(17,19,19,0.05)] backdrop-blur transition hover:bg-white"
+                    >
+                      View sources
+                    </a>
+                  )}
+                </div>
               </div>
             </Reveal>
           </div>
 
-          {post.heroImage && (
+          {post.heroImage && !heroImageIsInline && (
             <Reveal>
               <figure className="motion-surface mt-10 overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.72)] p-2 premium-card-shadow backdrop-blur md:mt-16">
                 <div className="relative aspect-[16/9] overflow-hidden rounded-[6px] bg-[var(--surface-cool)]">
