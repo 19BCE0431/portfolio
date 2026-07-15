@@ -56,7 +56,7 @@ export default function LifePage() {
           <Reveal>
             <Link
               href="/#personal"
-              className="premium-link mb-8 inline-flex min-h-11 items-center gap-2 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.72)] px-3.5 py-2 text-[13px] font-medium text-[var(--foreground)] shadow-[0_10px_32px_rgba(16,18,18,0.05)] backdrop-blur transition hover:bg-white md:mb-10 md:min-h-0"
+              className="premium-link mb-8 inline-flex min-h-11 items-center gap-2 rounded-[8px] border border-white/10 bg-white/[0.04] px-3.5 py-2 text-[13px] font-medium text-[var(--foreground)] shadow-[0_10px_32px_rgba(0,0,0,0.3)] backdrop-blur transition hover:border-white/18 hover:bg-white/[0.08] md:mb-10 md:min-h-0"
             >
               <ArrowLeft className="h-4 w-4 text-[var(--muted)]" />
               Back to portfolio
@@ -89,7 +89,7 @@ export default function LifePage() {
                     ].map(([label, value]) => (
                       <div
                         key={label}
-                        className="motion-surface rounded-[8px] border border-black/10 bg-white/45 px-2 py-3"
+                        className="motion-surface rounded-[8px] border border-white/10 bg-white/[0.04] px-2 py-3"
                       >
                         <p className="text-[1.15rem] font-semibold leading-none">
                           {value}

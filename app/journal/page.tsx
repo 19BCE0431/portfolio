@@ -72,7 +72,7 @@ export default function JournalPage() {
                 {journalCategories.slice(0, 5).map((category) => (
                   <span
                     key={category}
-                    className="motion-surface rounded-[8px] border border-black/10 bg-white/45 px-2.5 py-1 text-[12px] text-[var(--muted-strong)] backdrop-blur"
+                    className="motion-surface rounded-[8px] border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[12px] text-[var(--muted-strong)] backdrop-blur"
                   >
                     {category}
                   </span>

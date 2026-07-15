@@ -6,7 +6,7 @@ Copy this structure when creating a LinkedIn adaptation for a portfolio blog.
 ---
 relatedBlogSlug: ""
 relatedBlogUrl: ""
-status: "draft" # draft | approved | posted
+status: "draft" # draft | linkedin_manual_ready
 createdDate: "YYYY-MM-DD"
 approvedDate: ""
 postedDate: ""

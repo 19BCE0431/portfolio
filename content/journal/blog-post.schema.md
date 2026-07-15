@@ -7,7 +7,7 @@ Copy this structure when creating a new weekly portfolio blog.
 title: ""
 slug: ""
 date: "YYYY-MM-DD"
-status: "draft" # draft | review | published
+status: "draft" # draft | review | pending_review | published
 category: ""
 tags: []
 summary: ""

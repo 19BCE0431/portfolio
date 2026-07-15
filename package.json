@@ -18,8 +18,10 @@
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "framer-motion": "latest",
+    "geist": "^1.7.2",
     "lucide-react": "latest",
     "next": "latest",
+    "pdf-parse": "^1.1.1",
     "react": "latest",
     "react-dom": "latest",
     "resend": "^6.12.3"
@@ -29,6 +31,7 @@
   },
   "devDependencies": {
     "@types/node": "latest",
+    "@types/pdf-parse": "^1.1.5",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "eslint": "latest",

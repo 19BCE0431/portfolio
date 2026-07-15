@@ -12,6 +12,7 @@ const ease = [0.16, 1, 0.3, 1] as const;
 const routeLinks = [
   { label: "Archive", href: "/archive", match: "/archive" },
   { label: "Journal", href: "/journal", match: "/journal" },
+  { label: "Tools", href: "/tools", match: "/tools" },
   { label: "Life", href: "/life", match: "/life" },
 ];
 
@@ -19,6 +20,7 @@ function getActiveItem(pathname: string, activeSection: string) {
   if (pathname.startsWith("/archive")) return "work";
   if (pathname.startsWith("/journal")) return "journal";
   if (pathname.startsWith("/life")) return "gallery";
+  if (pathname.startsWith("/tools")) return "ai-tools-lab";
   return activeSection;
 }
 
@@ -95,6 +97,7 @@ export function SiteNav() {
     if (pathname.startsWith("/archive")) return "Archive";
     if (pathname.startsWith("/journal")) return "Journal";
     if (pathname.startsWith("/life")) return "Life";
+    if (pathname.startsWith("/tools")) return "Tools";
 
     return (
       navItems.find((item) => item.sectionId === activeItem)?.label ?? "Intro"
@@ -114,18 +117,18 @@ export function SiteNav() {
             aria-label="Primary navigation"
             className={`fine-border relative grid min-h-12 w-full grid-cols-[1fr_auto] items-center gap-2 overflow-hidden rounded-[8px] border px-2.5 py-1.5 text-[13px] backdrop-blur-2xl transition-all duration-500 xl:grid-cols-[1fr_auto_1fr] ${
               hasScrolled
-                ? "border-black/10 bg-[rgba(251,251,248,0.9)] shadow-[0_18px_60px_rgba(17,19,19,0.09)]"
-                : "border-black/8 bg-[rgba(251,251,248,0.68)] shadow-[0_10px_36px_rgba(17,19,19,0.045)]"
+                ? "border-white/12 bg-[rgba(9,11,13,0.82)] shadow-[0_18px_60px_rgba(0,0,0,0.55)]"
+                : "border-white/8 bg-[rgba(9,11,13,0.56)] shadow-[0_10px_36px_rgba(0,0,0,0.32)]"
             }`}
           >
             <Link
               href="/#intro"
               aria-label={`${profile.name} home`}
               onClick={() => setMobileOpen(false)}
-              className="group flex min-w-0 items-center gap-2 rounded-[7px] px-1.5 py-1.5 font-medium text-[var(--foreground)] transition hover:bg-black/[0.035] focus:outline-none focus:ring-2 focus:ring-black/15"
+              className="group flex min-w-0 items-center gap-2 rounded-[7px] px-1.5 py-1.5 font-medium text-[var(--foreground)] transition hover:bg-white/[0.06] focus:outline-none focus:ring-2 focus:ring-white/20"
             >
-              <span className="relative h-2 w-2 shrink-0 rounded-full bg-[var(--sage)] transition-transform duration-300 group-hover:scale-125">
-                <span className="absolute inset-[-6px] rounded-full border border-[rgba(105,121,107,0.24)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <span className="relative h-2 w-2 shrink-0 rounded-full bg-[var(--cyan)] shadow-[0_0_10px_rgba(34,211,238,0.8)] transition-transform duration-300 group-hover:scale-125">
+                <span className="absolute inset-[-6px] rounded-full border border-[rgba(34,211,238,0.35)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               </span>
               <span className="truncate sm:hidden">Mohit</span>
               <span className="hidden truncate sm:inline">
@@ -133,7 +136,7 @@ export function SiteNav() {
               </span>
             </Link>
 
-            <div className="hidden min-w-0 items-center rounded-[8px] border border-black/[0.06] bg-white/[0.28] p-1 xl:flex">
+            <div className="hidden min-w-0 items-center rounded-[8px] border border-white/[0.07] bg-white/[0.03] p-1 xl:flex">
               {navItems.map((item) => {
                 const isActive = item.sectionId === activeItem;
 
@@ -151,12 +154,12 @@ export function SiteNav() {
                     {isActive && !shouldReduceMotion && (
                       <motion.span
                         layoutId="site-nav-active"
-                        className="absolute inset-0 rounded-[6px] bg-black/[0.065] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]"
+                        className="absolute inset-0 rounded-[6px] bg-white/[0.09] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_16px_rgba(129,140,248,0.25)]"
                         transition={{ duration: 0.38, ease }}
                       />
                     )}
                     {isActive && shouldReduceMotion && (
-                      <span className="absolute inset-0 rounded-[6px] bg-black/[0.06]" />
+                      <span className="absolute inset-0 rounded-[6px] bg-white/[0.08]" />
                     )}
                     <span className="relative z-10">{item.label}</span>
                   </Link>
@@ -174,7 +177,7 @@ export function SiteNav() {
                       key={item.href}
                       href={item.href}
                       aria-current={isActive ? "page" : undefined}
-                      className={`premium-link rounded-[7px] px-2.5 py-1.5 text-[12px] font-medium transition hover:bg-black/[0.04] focus:outline-none focus:ring-2 focus:ring-black/15 ${
+                      className={`premium-link rounded-[7px] px-2.5 py-1.5 text-[12px] font-medium transition hover:bg-white/[0.06] focus:outline-none focus:ring-2 focus:ring-white/20 ${
                         isActive
                           ? "text-[var(--foreground)]"
                           : "text-[var(--muted)]"
@@ -187,14 +190,14 @@ export function SiteNav() {
               </div>
               <Link
                 href="/#contact"
-                className="premium-link group ml-1 inline-flex min-h-9 items-center gap-2 rounded-[8px] border border-black/10 bg-white/48 px-3 py-1.5 text-[12px] font-medium text-[var(--foreground)] shadow-[0_10px_30px_rgba(16,18,18,0.045)] transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-black/15"
+                className="premium-link group ml-1 inline-flex min-h-9 items-center gap-2 rounded-[8px] border border-white/12 bg-white/[0.05] px-3 py-1.5 text-[12px] font-medium text-[var(--foreground)] shadow-[0_10px_30px_rgba(0,0,0,0.3)] transition hover:border-white/22 hover:bg-white/[0.09] focus:outline-none focus:ring-2 focus:ring-white/20"
               >
                 Connect
                 <ArrowUpRight className="h-3.5 w-3.5 text-[var(--muted)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </Link>
             </div>
 
-            <span className="mr-1 hidden max-w-[110px] truncate rounded-full border border-black/8 bg-white/38 px-2.5 py-1 text-[11px] font-medium text-[var(--muted)] sm:inline-flex md:hidden">
+            <span className="mr-1 hidden max-w-[110px] truncate rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[11px] font-medium text-[var(--muted)] sm:inline-flex md:hidden">
               {activeLabel}
             </span>
             <button
@@ -205,7 +208,7 @@ export function SiteNav() {
               aria-controls="mobile-navigation"
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((open) => !open)}
-              className="grid h-9 w-9 place-items-center justify-self-end rounded-[8px] border border-black/10 bg-white/52 text-[var(--foreground)] transition-colors duration-300 hover:bg-white focus:outline-none focus:ring-2 focus:ring-black/15 xl:hidden"
+              className="grid h-9 w-9 place-items-center justify-self-end rounded-[8px] border border-white/12 bg-white/[0.05] text-[var(--foreground)] transition-colors duration-300 hover:bg-white/[0.09] focus:outline-none focus:ring-2 focus:ring-white/20 xl:hidden"
             >
               {mobileOpen ? (
                 <X className="h-4 w-4" aria-hidden="true" />
@@ -229,9 +232,9 @@ export function SiteNav() {
                   shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: -6 }
                 }
                 transition={{ duration: 0.28, ease }}
-                className="fine-border mt-2 overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.96)] p-2 shadow-[0_18px_58px_rgba(17,19,19,0.09)] backdrop-blur-2xl xl:hidden"
+                className="fine-border mt-2 overflow-hidden rounded-[8px] border border-white/12 bg-[rgba(9,11,13,0.96)] p-2 shadow-[0_18px_58px_rgba(0,0,0,0.6)] backdrop-blur-2xl xl:hidden"
               >
-                <div className="grid grid-cols-3 gap-1.5 border-b border-black/10 pb-2">
+                <div className="grid grid-cols-4 gap-1.5 border-b border-white/10 pb-2">
                   {routeLinks.map((item) => {
                     const isActive = pathname.startsWith(item.match);
 
@@ -241,10 +244,10 @@ export function SiteNav() {
                         href={item.href}
                         onClick={() => setMobileOpen(false)}
                         aria-current={isActive ? "page" : undefined}
-                        className={`premium-link min-h-10 rounded-[7px] px-2.5 py-2 text-center text-[12px] font-medium transition focus:outline-none focus:ring-2 focus:ring-black/15 ${
+                        className={`premium-link min-h-10 rounded-[7px] px-2.5 py-2 text-center text-[12px] font-medium transition focus:outline-none focus:ring-2 focus:ring-white/20 ${
                           isActive
-                            ? "bg-black/[0.07] text-[var(--foreground)]"
-                            : "text-[var(--muted)] hover:bg-black/[0.04] hover:text-[var(--foreground)]"
+                            ? "bg-white/[0.09] text-[var(--foreground)]"
+                            : "text-[var(--muted)] hover:bg-white/[0.05] hover:text-[var(--foreground)]"
                         }`}
                       >
                         {item.label}
@@ -262,10 +265,10 @@ export function SiteNav() {
                         href={item.href}
                         onClick={() => setMobileOpen(false)}
                         aria-current={isActive ? "page" : undefined}
-                        className={`premium-link relative min-h-10 rounded-[7px] px-2 py-2 text-center text-[12px] font-medium transition focus:outline-none focus:ring-2 focus:ring-black/15 ${
+                        className={`premium-link relative min-h-10 rounded-[7px] px-2 py-2 text-center text-[12px] font-medium transition focus:outline-none focus:ring-2 focus:ring-white/20 ${
                           isActive
-                            ? "bg-black/[0.06] text-[var(--foreground)]"
-                            : "text-[var(--muted)] hover:bg-black/[0.04] hover:text-[var(--foreground)]"
+                            ? "bg-white/[0.08] text-[var(--foreground)]"
+                            : "text-[var(--muted)] hover:bg-white/[0.05] hover:text-[var(--foreground)]"
                         }`}
                       >
                         {item.label}

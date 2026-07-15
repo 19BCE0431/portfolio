@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-export type JournalStatus = "draft" | "review" | "published";
+export type JournalStatus = "draft" | "review" | "pending_review" | "published";
 
 export type JournalCategory =
   | "AI & Business"
@@ -36,12 +36,13 @@ export type JournalImageDisclosure = {
 
 export type JournalLinkedInShortPost = {
   draftPath?: string;
-  status?: "draft" | "approved" | "posted" | string;
+  status?: "draft" | "linkedin_manual_ready" | string;
   engagementQuestion?: string;
 };
 
 export type JournalBlock =
   | { type: "heading"; text: string }
+  | { type: "image"; src: string; alt: string; caption?: string }
   | { type: "paragraph"; text: string }
   | { type: "list"; items: string[] };
 
@@ -314,7 +315,7 @@ function stripYamlValue(value: string) {
 }
 
 function normalizeStatus(value: unknown): JournalStatus {
-  if (value === "published" || value === "review" || value === "draft") {
+  if (value === "published" || value === "review" || value === "pending_review" || value === "draft") {
     return value;
   }
 
@@ -370,7 +371,8 @@ function markdownToBlocks(markdown: string): JournalBlock[] {
     }
   };
 
-  for (const rawLine of lines) {
+  for (let index = 0; index < lines.length; index += 1) {
+    const rawLine = lines[index];
     const line = rawLine.trim();
 
     if (!line || line.startsWith("<!--")) {
@@ -383,6 +385,26 @@ function markdownToBlocks(markdown: string): JournalBlock[] {
       flushParagraph();
       flushList();
       blocks.push({ type: "heading", text: line.replace(/^##\s+/, "") });
+      continue;
+    }
+
+    const image = line.match(/^!\[([^\]]*)\]\(([^)\s]+)(?:\s+"[^"]*")?\)$/);
+    if (image) {
+      flushParagraph();
+      flushList();
+
+      const nextLine = lines[index + 1]?.trim() || "";
+      const caption = italicCaptionText(nextLine);
+      if (caption) {
+        index += 1;
+      }
+
+      blocks.push({
+        type: "image",
+        src: image[2],
+        alt: image[1],
+        caption,
+      });
       continue;
     }
 
@@ -399,6 +421,11 @@ function markdownToBlocks(markdown: string): JournalBlock[] {
   flushParagraph();
   flushList();
   return blocks;
+}
+
+function italicCaptionText(line: string) {
+  const match = line.match(/^[_*]([^_*].*?)[_*]$/);
+  return match?.[1]?.trim();
 }
 
 function estimateReadingTime(markdown: string) {

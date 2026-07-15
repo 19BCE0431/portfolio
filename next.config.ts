@@ -46,6 +46,14 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  serverExternalPackages: ["pdf-parse"],
+  outputFileTracingIncludes: {
+    "/api/case-war-room/source": [
+      "./node_modules/pdf-parse/lib/**/*",
+      "./node_modules/pdf-parse/node_modules/**/*",
+      "./node_modules/pdf-parse/package.json",
+    ],
+  },
   async headers() {
     return [
       {

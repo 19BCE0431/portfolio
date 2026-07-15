@@ -42,7 +42,7 @@ export function JournalExplorer({
   return (
     <div>
       <div className="sticky top-[74px] z-20 mb-6 py-2 md:top-[88px] md:mb-12">
-        <div className="premium-card-shadow fine-border mobile-flow-rail min-w-0 rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.9)] p-1.5 backdrop-blur-2xl sm:mx-0 sm:flex sm:flex-wrap sm:overflow-visible sm:px-1 sm:gap-2 sm:p-1">
+        <div className="premium-card-shadow fine-border mobile-flow-rail min-w-0 rounded-[8px] border border-white/10 bg-[rgba(9,11,13,0.85)] p-1.5 backdrop-blur-2xl sm:mx-0 sm:flex sm:flex-wrap sm:overflow-visible sm:px-1 sm:gap-2 sm:p-1">
           {(["All", ...categories] as const).map((category) => (
             <button
               key={category}
@@ -52,18 +52,18 @@ export function JournalExplorer({
               className={`premium-link relative min-h-10 shrink-0 overflow-hidden rounded-[7px] px-3 py-2 text-center text-[11px] font-medium leading-[1.18] transition-all duration-300 sm:min-h-0 sm:whitespace-nowrap sm:px-3.5 sm:text-[12px] ${
                 activeCategory === category
                   ? "text-[var(--foreground)]"
-                  : "text-[var(--muted)] hover:bg-black/[0.04] hover:text-[var(--foreground)]"
+                  : "text-[var(--muted)] hover:bg-white/[0.05] hover:text-[var(--foreground)]"
               }`}
             >
               {activeCategory === category && !shouldReduceMotion && (
                 <motion.span
                   layoutId="journal-filter-active"
-                  className="absolute inset-0 rounded-[6px] bg-black/[0.07]"
+                  className="absolute inset-0 rounded-[6px] bg-white/[0.08]"
                   transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
                 />
               )}
               {activeCategory === category && shouldReduceMotion && (
-                <span className="absolute inset-0 rounded-[6px] bg-black/[0.07]" />
+                <span className="absolute inset-0 rounded-[6px] bg-white/[0.08]" />
               )}
               <span className="relative z-10">{category}</span>
             </button>
@@ -85,24 +85,28 @@ export function JournalExplorer({
             >
               <Link
                 href={`/journal/${post.slug}`}
-                className="group editorial-panel motion-surface hover-light relative flex h-full min-h-[250px] flex-col justify-between overflow-hidden p-4 transition duration-500 hover:border-black/20 hover:bg-[rgba(251,251,248,0.96)] hover:shadow-[0_34px_94px_rgba(17,19,19,0.09)] focus:outline-none focus:ring-2 focus:ring-black/15 sm:min-h-[310px] sm:p-6"
+                className="group editorial-panel motion-surface hover-light relative flex h-full min-h-[250px] flex-col justify-between overflow-hidden p-4 transition duration-500 hover:border-white/18 hover:bg-white/[0.055] hover:shadow-[0_34px_94px_rgba(0,0,0,0.45)] focus:outline-none focus:ring-2 focus:ring-white/20 sm:min-h-[310px] sm:p-6"
               >
-                <span className="pointer-events-none absolute inset-x-6 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-transparent via-black/25 to-transparent transition-transform duration-500 group-hover:scale-x-100" />
+                <span className="pointer-events-none absolute inset-x-6 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-500 group-hover:scale-x-100" />
                 <div>
                   {post.heroImage && (
-                    <div className="relative mb-4 aspect-[1.7] overflow-hidden rounded-[8px] border border-black/10 bg-[var(--surface-cool)] shadow-[inset_0_1px_0_rgba(255,255,255,0.58)] sm:mb-5">
+                    <div className="relative mb-4 aspect-[1.7] overflow-hidden rounded-[8px] border border-white/10 bg-[var(--surface-cool)] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:mb-5">
                       <Image
                         src={post.heroImage}
                         alt={post.altText || post.heroImageAlt || post.title}
                         fill
                         sizes="(max-width: 768px) 92vw, (max-width: 1280px) 45vw, 32vw"
                         unoptimized={post.heroImage.endsWith(".svg")}
-                        className="object-cover transition duration-700 ease-[var(--ease)] group-hover:scale-[1.025]"
+                        className={`transition duration-700 ease-[var(--ease)] group-hover:scale-[1.025] ${
+                          post.heroImage.includes("trusted-employee-system-note")
+                            ? "object-contain p-2"
+                            : "object-cover"
+                        }`}
                       />
                     </div>
                   )}
                   <div className="mb-4 flex flex-wrap items-center gap-2 sm:mb-6">
-                    <span className="rounded-[8px] border border-black/10 bg-white/45 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--sage)]">
+                    <span className="rounded-[8px] border border-white/12 bg-white/[0.05] px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--cyan)]">
                       {post.category}
                     </span>
                     <span className="inline-flex items-center gap-1.5 text-[12px] text-[var(--muted)]">
@@ -123,7 +127,7 @@ export function JournalExplorer({
                   )}
                 </div>
 
-                <div className="mt-5 border-t border-black/10 pt-4 sm:mt-7">
+                <div className="mt-5 border-t border-white/10 pt-4 sm:mt-7">
                   <div className="mb-3 flex items-center gap-2 text-[12px] text-[var(--muted)] sm:mb-4">
                     <CalendarDays className="h-3.5 w-3.5" />
                     {formatDate(post.date)}

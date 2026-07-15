@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { archiveProjects } from "./data/archive";
 import { getPublishedJournalPosts } from "./data/journal";
+import { aiTools } from "./data/tools";
 
 const siteUrl = "https://mohitsaikrishna.in";
 
@@ -26,6 +27,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: `${siteUrl}/tools`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.75,
+    },
+    {
       url: `${siteUrl}/life`,
       lastModified: now,
       changeFrequency: "monthly",
@@ -40,6 +47,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.65,
   }));
 
+  const toolRoutes: MetadataRoute.Sitemap = aiTools.map((tool) => ({
+    url: `${siteUrl}${tool.route}`,
+    lastModified: now,
+    changeFrequency: tool.status === "In Build" ? "weekly" : "monthly",
+    priority: tool.status === "In Build" ? 0.72 : 0.62,
+  }));
+
   const journalRoutes: MetadataRoute.Sitemap = getPublishedJournalPosts().map((post) => ({
     url: `${siteUrl}/journal/${post.slug}`,
     lastModified: new Date(post.date),
@@ -52,5 +66,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
           : 0.7,
   }));
 
-  return [...staticRoutes, ...journalRoutes, ...archiveRoutes];
+  return [...staticRoutes, ...toolRoutes, ...journalRoutes, ...archiveRoutes];
 }

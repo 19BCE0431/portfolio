@@ -71,10 +71,10 @@ export function ProjectCard({
         href={`/archive/${project.slug}`}
         onMouseMove={handlePointerMove}
         onMouseLeave={resetPointer}
-        className={`project-card-premium group motion-surface hover-light relative flex h-full cursor-pointer flex-col overflow-hidden rounded-[8px] border p-3 backdrop-blur transition duration-500 focus:outline-none focus:ring-2 focus:ring-black/15 sm:p-4 ${
+        className={`project-card-premium group motion-surface hover-light relative flex h-full cursor-pointer flex-col overflow-hidden rounded-[8px] border p-3 backdrop-blur transition duration-500 focus:outline-none focus:ring-2 focus:ring-white/20 sm:p-4 ${
           featured
-            ? "border-black/15 bg-[rgba(16,18,18,0.93)] text-white shadow-[0_36px_110px_rgba(16,18,18,0.16)] hover:border-black/20"
-            : "premium-card-shadow border-black/10 bg-[rgba(255,253,248,0.76)] hover:border-black/20 hover:bg-[rgba(255,253,248,0.96)] hover:shadow-[0_34px_94px_rgba(16,18,18,0.09)]"
+            ? "border-[rgba(129,140,248,0.32)] bg-[linear-gradient(160deg,rgba(129,140,248,0.14),rgba(34,211,238,0.05)_46%,rgba(12,15,17,0.94))] text-white shadow-[0_0_60px_rgba(129,140,248,0.16),0_36px_120px_rgba(0,0,0,0.55)] hover:border-[rgba(129,140,248,0.5)]"
+            : "premium-card-shadow border-white/10 bg-white/[0.035] hover:border-white/18 hover:bg-white/[0.055] hover:shadow-[0_34px_94px_rgba(0,0,0,0.45)]"
         } ${compact ? "min-h-[300px] sm:min-h-[352px]" : "min-h-[368px] sm:min-h-[458px]"}`}
       >
         <span className="pointer-events-none absolute inset-x-6 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-transparent via-current to-transparent opacity-30 transition-transform duration-500 group-hover:scale-x-100" />
@@ -82,8 +82,8 @@ export function ProjectCard({
           aria-hidden="true"
           className={`pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${
             featured
-              ? "bg-[radial-gradient(circle_at_var(--x,20%)_var(--y,0%),rgba(104,121,109,0.2),transparent_38%)]"
-              : "bg-[radial-gradient(circle_at_var(--x,20%)_var(--y,0%),rgba(104,121,109,0.11),transparent_38%)]"
+              ? "bg-[radial-gradient(circle_at_var(--x,20%)_var(--y,0%),rgba(129,140,248,0.3),transparent_38%)]"
+              : "bg-[radial-gradient(circle_at_var(--x,20%)_var(--y,0%),rgba(34,211,238,0.14),transparent_38%)]"
           }`}
         />
 
@@ -108,7 +108,7 @@ export function ProjectCard({
                 className={`shrink-0 rounded-[8px] border px-2.5 py-1 text-[11px] font-medium ${
                   featured
                     ? "border-white/12 text-white/66"
-                    : "border-black/10 text-[var(--sage)]"
+                    : "border-white/12 text-[var(--cyan)]"
                 }`}
               >
                 {project.status}
@@ -130,11 +130,7 @@ export function ProjectCard({
               {project.shortDescription}
             </p>
 
-            <div
-              className={`mt-4 grid gap-3 border-t pt-4 ${
-                featured ? "border-white/10" : "border-black/10"
-              }`}
-            >
+            <div className="mt-4 grid gap-3 border-t border-white/10 pt-4">
               <div>
                 <p
                   className={`text-[10.5px] font-semibold uppercase tracking-[0.16em] ${
@@ -172,11 +168,7 @@ export function ProjectCard({
             </div>
           </div>
 
-          <div
-            className={`mt-5 flex items-end justify-between gap-4 border-t pt-4 ${
-              featured ? "border-white/10" : "border-black/10"
-            }`}
-          >
+          <div className="mt-5 flex items-end justify-between gap-4 border-t border-white/10 pt-4">
             <span
               className={`min-w-0 break-words text-[12px] leading-[1.45] ${
                 featured ? "text-white/46" : "text-[var(--muted)]"
@@ -188,7 +180,7 @@ export function ProjectCard({
               className={`grid h-9 w-9 shrink-0 place-items-center rounded-full border transition-colors duration-300 ${
                 featured
                   ? "border-white/12 bg-white/[0.06] text-white/62 group-hover:bg-white/[0.1]"
-                  : "border-black/10 bg-white/45 text-[var(--muted)] group-hover:bg-white"
+                  : "border-white/12 bg-white/[0.04] text-[var(--muted)] group-hover:bg-white/[0.08]"
               }`}
               style={
                 shouldReduceMotion

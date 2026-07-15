@@ -2,10 +2,13 @@ import type { Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import { AnalyticsEvents } from "./components/AnalyticsEvents";
 import { MicrosoftClarity } from "./components/MicrosoftClarity";
 import { PageTransition } from "./components/PageTransition";
 import { SiteNav } from "./components/SiteNav";
+import { SpotlightCursor } from "./components/SpotlightCursor";
 import "./globals.css";
 import { profile } from "./data/portfolio";
 
@@ -130,17 +133,22 @@ export default function RootLayout({
     process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || "wswfgi70h5";
 
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
+    >
       <body className="antialiased">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify([personJsonLd, websiteJsonLd]).replace(
-              /</g,
-              "\\u003c",
-            ),
-          }}
-        />
+        {[personJsonLd, websiteJsonLd].map((jsonLd) => (
+          <script
+            key={jsonLd["@type"]}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+            }}
+          />
+        ))}
+        <SpotlightCursor />
         <SiteNav />
         <PageTransition>{children}</PageTransition>
         <AnalyticsEvents />

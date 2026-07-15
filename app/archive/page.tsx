@@ -83,7 +83,7 @@ export default function ArchivePage() {
                 ].map(([label, value]) => (
                   <div
                     key={label}
-                    className="motion-surface rounded-[8px] border border-black/10 bg-white/45 px-3 py-3 backdrop-blur"
+                    className="motion-surface rounded-[8px] border border-white/10 bg-white/[0.04] px-3 py-3 backdrop-blur"
                   >
                     <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
                       {label}
