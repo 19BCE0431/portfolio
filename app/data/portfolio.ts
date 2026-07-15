@@ -67,8 +67,10 @@ export const navItems = [
 export const sectionNavItems = [
   { label: "Intro", shortLabel: "Intro", href: "#intro", sectionId: "intro" },
   { label: "Direction", shortLabel: "Lens", href: "#direction", sectionId: "direction" },
+  { label: "Background", shortLabel: "Base", href: "#background", sectionId: "background" },
   { label: "Work", shortLabel: "Work", href: "#work", sectionId: "work" },
   { label: "MBA Tools Desk", shortLabel: "Tools", href: "#ai-tools-lab", sectionId: "ai-tools-lab" },
+  { label: "Living System", shortLabel: "System", href: "#system", sectionId: "system" },
   { label: "Recognition", shortLabel: "Signal", href: "#recognition", sectionId: "recognition" },
   { label: "MBA", shortLabel: "MBA", href: "#mba-life", sectionId: "mba-life" },
   { label: "Journal", shortLabel: "Notes", href: "#journal", sectionId: "journal" },

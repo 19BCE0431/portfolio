@@ -73,7 +73,7 @@ export function JournalExplorer({
 
       <motion.div layout className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         <AnimatePresence mode="popLayout">
-          {visiblePosts.map((post) => (
+          {visiblePosts.map((post, index) => (
             <motion.article
               key={post.slug}
               layout
@@ -95,6 +95,7 @@ export function JournalExplorer({
                         src={post.heroImage}
                         alt={post.altText || post.heroImageAlt || post.title}
                         fill
+                        priority={index < 3}
                         sizes="(max-width: 768px) 92vw, (max-width: 1280px) 45vw, 32vw"
                         unoptimized={post.heroImage.endsWith(".svg")}
                         className={`transition duration-700 ease-[var(--ease)] group-hover:scale-[1.025] ${

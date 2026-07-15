@@ -301,7 +301,7 @@ export function LifeGallery({
                   </button>
                 ))}
               </div>
-              <span className="text-[11px] font-medium text-[var(--muted)]">
+              <span className="shrink-0 whitespace-nowrap text-[11px] font-medium tabular-nums text-[var(--muted)]">
                 {String(activeImageIndex + 1).padStart(2, "0")} /{" "}
                 {String(activeCluster.images.length).padStart(2, "0")}
               </span>

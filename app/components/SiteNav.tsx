@@ -16,6 +16,15 @@ const routeLinks = [
   { label: "Life", href: "/life", match: "/life" },
 ];
 
+const desktopSectionLinks = [
+  { label: "Intro", sectionId: "intro", href: "/#intro" },
+  { label: "Lens", sectionId: "direction", href: "/#direction" },
+  { label: "Work", sectionId: "work", href: "/#work" },
+  { label: "Lab", sectionId: "ai-tools-lab", href: "/#ai-tools-lab" },
+  { label: "Notes", sectionId: "journal", href: "/#journal" },
+  { label: "Contact", sectionId: "contact", href: "/#contact" },
+];
+
 function getActiveItem(pathname: string, activeSection: string) {
   if (pathname.startsWith("/archive")) return "work";
   if (pathname.startsWith("/journal")) return "journal";
@@ -137,7 +146,7 @@ export function SiteNav() {
             </Link>
 
             <div className="hidden min-w-0 items-center rounded-[8px] border border-white/[0.07] bg-white/[0.03] p-1 xl:flex">
-              {navItems.map((item) => {
+              {desktopSectionLinks.map((item) => {
                 const isActive = item.sectionId === activeItem;
 
                 return (

@@ -91,6 +91,21 @@ const storySpines = [
   },
 ];
 
+const workSignalCards = [
+  {
+    label: "Discovery",
+    value: "Visual search, RAG, product matching",
+  },
+  {
+    label: "Signals",
+    value: "Pricing, logistics, anomalies, order drops",
+  },
+  {
+    label: "Automation",
+    value: "Documents, content loops, decision support",
+  },
+];
+
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
 }
@@ -345,7 +360,7 @@ function GlideDeck({
           ))}
         </div>
         <span
-          className={`text-[11px] font-medium ${
+          className={`shrink-0 whitespace-nowrap text-[11px] font-medium tabular-nums ${
             tone === "dark" ? "text-white/44" : "text-[var(--muted)]"
           }`}
         >
@@ -1014,6 +1029,21 @@ function ArchivePreview() {
               View full project library
               <ArrowUpRight className="h-4 w-4 text-[var(--muted)]" />
             </Link>
+            <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
+              {workSignalCards.map((signal) => (
+                <div
+                  key={signal.label}
+                  className="rounded-[8px] border border-white/10 bg-white/[0.035] px-3.5 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+                >
+                  <p className="font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-[var(--cyan)]">
+                    {signal.label}
+                  </p>
+                  <p className="mt-2 text-[0.82rem] leading-[1.42] text-[var(--muted-strong)]">
+                    {signal.value}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </Reveal>
       </div>
