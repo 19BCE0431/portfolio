@@ -18,18 +18,22 @@ const routeLinks = [
 
 const desktopSectionLinks = [
   { label: "Intro", sectionId: "intro", href: "/#intro" },
-  { label: "Lens", sectionId: "direction", href: "/#direction" },
+  { label: "Story", sectionId: "story", href: "/#story" },
   { label: "Work", sectionId: "work", href: "/#work" },
-  { label: "Lab", sectionId: "ai-tools-lab", href: "/#ai-tools-lab" },
+  { label: "Resume", sectionId: "resume", href: "/#resume" },
   { label: "Notes", sectionId: "journal", href: "/#journal" },
   { label: "Contact", sectionId: "contact", href: "/#contact" },
 ];
 
+const mobileSectionLinks = desktopSectionLinks.filter((item) =>
+  ["intro", "story", "work", "resume", "contact"].includes(item.sectionId),
+);
+
 function getActiveItem(pathname: string, activeSection: string) {
   if (pathname.startsWith("/archive")) return "work";
   if (pathname.startsWith("/journal")) return "journal";
-  if (pathname.startsWith("/life")) return "gallery";
-  if (pathname.startsWith("/tools")) return "ai-tools-lab";
+  if (pathname.startsWith("/life")) return "life";
+  if (pathname.startsWith("/tools")) return "tools";
   return activeSection;
 }
 
@@ -265,7 +269,7 @@ export function SiteNav() {
                   })}
                 </div>
                 <div className="mt-2 grid grid-cols-3 gap-1.5">
-                  {navItems.map((item) => {
+                  {mobileSectionLinks.map((item) => {
                     const isActive = item.sectionId === activeItem;
 
                     return (

@@ -53,29 +53,23 @@ export const profile = {
 
 export const navItems = [
   { label: "Intro", href: "/#intro", sectionId: "intro" },
-  { label: "Direction", href: "/#direction", sectionId: "direction" },
+  { label: "Story", href: "/#story", sectionId: "story" },
   { label: "Work", href: "/#work", sectionId: "work" },
-  { label: "Tools", href: "/#ai-tools-lab", sectionId: "ai-tools-lab" },
-  { label: "Recognition", href: "/#recognition", sectionId: "recognition" },
-  { label: "MBA", href: "/#mba-life", sectionId: "mba-life" },
+  { label: "Resume", href: "/#resume", sectionId: "resume" },
+  { label: "Tools", href: "/#tools", sectionId: "tools" },
   { label: "Journal", href: "/#journal", sectionId: "journal" },
-  { label: "Personal", href: "/#personal", sectionId: "personal" },
-  { label: "Gallery", href: "/#gallery", sectionId: "gallery" },
+  { label: "Life", href: "/#life", sectionId: "life" },
   { label: "Contact", href: "/#contact", sectionId: "contact" },
 ];
 
 export const sectionNavItems = [
   { label: "Intro", shortLabel: "Intro", href: "#intro", sectionId: "intro" },
-  { label: "Direction", shortLabel: "Lens", href: "#direction", sectionId: "direction" },
-  { label: "Background", shortLabel: "Base", href: "#background", sectionId: "background" },
+  { label: "Story", shortLabel: "Story", href: "#story", sectionId: "story" },
   { label: "Work", shortLabel: "Work", href: "#work", sectionId: "work" },
-  { label: "MBA Tools Desk", shortLabel: "Tools", href: "#ai-tools-lab", sectionId: "ai-tools-lab" },
-  { label: "Living System", shortLabel: "System", href: "#system", sectionId: "system" },
-  { label: "Recognition", shortLabel: "Signal", href: "#recognition", sectionId: "recognition" },
-  { label: "MBA", shortLabel: "MBA", href: "#mba-life", sectionId: "mba-life" },
+  { label: "Resume", shortLabel: "CV", href: "#resume", sectionId: "resume" },
+  { label: "MBA Tools Desk", shortLabel: "Tools", href: "#tools", sectionId: "tools" },
   { label: "Journal", shortLabel: "Notes", href: "#journal", sectionId: "journal" },
-  { label: "Personal", shortLabel: "Shelf", href: "#personal", sectionId: "personal" },
-  { label: "Gallery", shortLabel: "Life", href: "#gallery", sectionId: "gallery" },
+  { label: "Life", shortLabel: "Life", href: "#life", sectionId: "life" },
   { label: "Contact", shortLabel: "Hello", href: "#contact", sectionId: "contact" },
 ];
 

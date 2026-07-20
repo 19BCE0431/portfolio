@@ -9,7 +9,6 @@ import { MicrosoftClarity } from "./components/MicrosoftClarity";
 import { PageTransition } from "./components/PageTransition";
 import { SectionNavigator } from "./components/SectionNavigator";
 import { SiteNav } from "./components/SiteNav";
-import { SpotlightCursor } from "./components/SpotlightCursor";
 import "./globals.css";
 import { profile } from "./data/portfolio";
 
@@ -67,7 +66,7 @@ export const metadata: Metadata = {
     locale: "en_IN",
     images: [
       {
-        url: "/opengraph-image",
+        url: "/og.png",
         width: 1200,
         height: 630,
         alt: `${profile.name} portfolio preview`,
@@ -79,7 +78,7 @@ export const metadata: Metadata = {
     title: `${profile.shortName} | Product, Strategy & AI`,
     description:
       "IIM Sirmaur MBA candidate exploring product strategy, business analytics, AI workflows, and decision-making across technology and markets.",
-    images: ["/twitter-image"],
+    images: ["/og.png"],
   },
   icons: {
     icon: [{ url: "/icon", type: "image/png" }],
@@ -149,7 +148,6 @@ export default function RootLayout({
             }}
           />
         ))}
-        <SpotlightCursor />
         <SiteNav />
         <SectionNavigator />
         <PageTransition>{children}</PageTransition>
