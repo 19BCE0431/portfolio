@@ -21,6 +21,7 @@ import { getProjectBySlug, type ArchiveProject } from "../data/archive";
 import type { JournalPost } from "../data/journal";
 import { lifeGalleryImages } from "../data/media";
 import { profile } from "../data/portfolio";
+import { WorkMotionScene } from "./WorkMotionScene";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -81,20 +82,32 @@ function Reveal({
   children,
   className,
   delay = 0,
+  direction = "up",
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
+  direction?: "left" | "right" | "up";
 }) {
   const shouldReduceMotion = useReducedMotion();
+  const initialOffset =
+    direction === "left"
+      ? { x: -58, y: 0 }
+      : direction === "right"
+        ? { x: 58, y: 0 }
+        : { x: 0, y: 42 };
 
   return (
     <motion.div
       className={className}
-      initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.18 }}
-      transition={{ duration: 0.62, delay, ease }}
+      initial={
+        shouldReduceMotion
+          ? false
+          : { opacity: 0, ...initialOffset, scale: 0.985, filter: "blur(8px)" }
+      }
+      whileInView={{ opacity: 1, x: 0, y: 0, scale: 1, filter: "blur(0px)" }}
+      viewport={{ once: true, amount: 0.16, margin: "-6% 0px" }}
+      transition={{ duration: 0.88, delay, ease }}
     >
       {children}
     </motion.div>
@@ -173,8 +186,8 @@ function Hero() {
     target: heroRef,
     offset: ["start start", "end start"],
   });
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "4%"]);
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1.01, 1.055]);
+  const mediaY = useTransform(scrollYProgress, [0, 1], ["0%", "6%"]);
+  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, 1.035]);
   const copyY = useTransform(scrollYProgress, [0, 1], [0, -20]);
   const copyOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 0.62]);
 
@@ -182,16 +195,9 @@ function Hero() {
     <section id="intro" ref={heroRef} className="lux-hero">
       <motion.div
         className="lux-hero-media"
-        style={shouldReduceMotion ? undefined : { y: imageY, scale: imageScale }}
+        style={shouldReduceMotion ? undefined : { y: mediaY, scale: mediaScale }}
       >
-        <Image
-          src="/images/profile/hero-workspace-v2.png"
-          alt="Mohit Sai Krishna working at a desk in a modern studio"
-          fill
-          priority
-          sizes="100vw"
-          className="lux-hero-image"
-        />
+        <WorkMotionScene />
       </motion.div>
       <div className="lux-hero-shade" aria-hidden="true" />
 
@@ -240,20 +246,40 @@ function Hero() {
 }
 
 function Profile() {
+  const profileRef = useRef<HTMLElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: profileRef,
+    offset: ["start end", "end start"],
+  });
+  const portraitY = useTransform(scrollYProgress, [0, 1], ["-3%", "3%"]);
+
   return (
-    <section id="profile" className="lux-profile lux-section">
+    <section id="profile" ref={profileRef} className="lux-profile lux-section">
       <div className="lux-shell lux-profile-grid">
-        <Reveal className="lux-profile-image">
-          <Image
-            src={profile.portrait}
-            alt={profile.portraitAlt}
-            fill
-            sizes="(max-width: 760px) 100vw, 42vw"
-          />
-          <span>On campus, IIM Sirmaur</span>
+        <Reveal className="lux-profile-visual" direction="left">
+          <div className="lux-profile-image">
+            <motion.div
+              className="lux-profile-image-inner"
+              style={shouldReduceMotion ? undefined : { y: portraitY }}
+            >
+              <Image
+                src="/images/profile/profile-campus-01.jpg"
+                alt="Mohit Sai Krishna on the IIM Sirmaur campus"
+                fill
+                loading="eager"
+                sizes="(max-width: 760px) 100vw, 42vw"
+              />
+            </motion.div>
+            <div className="lux-profile-image-wash" aria-hidden="true" />
+          </div>
+          <div className="lux-profile-caption">
+            <span>Current chapter</span>
+            <strong>IIM Sirmaur · India</strong>
+          </div>
         </Reveal>
 
-        <Reveal className="lux-profile-copy" delay={0.06}>
+        <Reveal className="lux-profile-copy" delay={0.08} direction="right">
           <p className="lux-eyebrow">Profile</p>
           <h2>Technology taught me how to build. Business is teaching me what deserves to be built.</h2>
           <p className="lux-profile-lede">
@@ -288,11 +314,11 @@ function Work() {
     <section id="work" className="lux-work lux-section">
       <div className="lux-shell">
         <div className="lux-section-head">
-          <Reveal>
+          <Reveal direction="left">
             <p className="lux-eyebrow lux-eyebrow-light">Selected work</p>
             <h2>Systems built around real decisions.</h2>
           </Reveal>
-          <Reveal delay={0.06}>
+          <Reveal delay={0.08} direction="right">
             <p>
               Three examples from applied AI and operations. The full archive
               holds the broader technical record.
@@ -306,7 +332,12 @@ function Work() {
 
         <div className="lux-project-list">
           {selectedProjects.map((project, index) => (
-            <Reveal key={project.slug} className="lux-project" delay={index * 0.04}>
+            <Reveal
+              key={project.slug}
+              className="lux-project"
+              delay={index * 0.045}
+              direction={index % 2 === 0 ? "left" : "right"}
+            >
               <div className="lux-project-copy">
                 <div className="lux-project-meta">
                   <span>0{index + 1}</span>
@@ -352,7 +383,7 @@ function Resume() {
   return (
     <section id="resume" className="lux-resume lux-section">
       <div className="lux-shell lux-resume-grid">
-        <Reveal className="lux-resume-intro">
+        <Reveal className="lux-resume-intro" direction="left">
           <p className="lux-eyebrow">Resume</p>
           <h2>A technical beginning. A broader business direction.</h2>
           <p>
@@ -371,12 +402,13 @@ function Resume() {
           </a>
         </Reveal>
 
-        <div className="lux-timeline">
+        <Reveal className="lux-timeline" direction="right" delay={0.08}>
           {timeline.map((entry, index) => (
             <Reveal
               key={`${entry.period}-${entry.title}`}
               className="lux-timeline-row"
               delay={index * 0.035}
+              direction="up"
             >
               <span className="lux-timeline-period">{entry.period}</span>
               <div>
@@ -386,7 +418,7 @@ function Resume() {
               </div>
             </Reveal>
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -397,11 +429,11 @@ function Notes({ posts }: { posts: JournalPost[] }) {
     <section id="notes" className="lux-notes lux-section">
       <div className="lux-shell">
         <div className="lux-section-head lux-section-head-dark">
-          <Reveal>
+          <Reveal direction="left">
             <p className="lux-eyebrow lux-eyebrow-light">Field notes</p>
             <h2>Ideas made clearer by writing them down.</h2>
           </Reveal>
-          <Reveal delay={0.06}>
+          <Reveal delay={0.08} direction="right">
             <p>
               Short reflections on product, markets, AI, consumer behaviour,
               and what business school is changing in how I think.
@@ -415,7 +447,11 @@ function Notes({ posts }: { posts: JournalPost[] }) {
 
         <div className="lux-note-list">
           {posts.slice(0, 3).map((post, index) => (
-            <Reveal key={post.slug} delay={index * 0.035}>
+            <Reveal
+              key={post.slug}
+              delay={index * 0.045}
+              direction={index % 2 === 0 ? "left" : "right"}
+            >
               <Link href={`/journal/${post.slug}`} className="lux-note-row">
                 <span>0{index + 1}</span>
                 <div>
@@ -438,11 +474,11 @@ function Life() {
     <section id="life" className="lux-life lux-section">
       <div className="lux-shell">
         <div className="lux-life-copy">
-          <Reveal>
+          <Reveal direction="left">
             <p className="lux-eyebrow">Outside the work</p>
             <h2>The quieter parts matter too.</h2>
           </Reveal>
-          <Reveal delay={0.06}>
+          <Reveal delay={0.08} direction="right">
             <p>
               Hills, travel, friends, photography, and the small pauses that
               keep ambition from becoming the only thing in the frame.
@@ -460,6 +496,7 @@ function Life() {
               key={image.src}
               className={`lux-life-frame lux-life-frame-${index + 1}`}
               delay={index * 0.04}
+              direction={index % 2 === 0 ? "left" : "right"}
             >
               <Image
                 src={image.src}
