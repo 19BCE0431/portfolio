@@ -4,7 +4,8 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { navItems, profile } from "../data/portfolio";
+import { navItems } from "../data/portfolio";
+import { useActiveSection } from "./ActiveSectionProvider";
 
 const sectionLinks = [
   { label: "Profile", href: "/#profile" },
@@ -22,9 +23,9 @@ const routeLinks = [
 
 export function SiteNav() {
   const shouldReduceMotion = useReducedMotion();
+  const { activeSection } = useActiveSection();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("intro");
 
   useEffect(() => {
     const update = () => setHasScrolled(window.scrollY > 24);
@@ -44,32 +45,6 @@ export function SiteNav() {
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [mobileOpen]);
 
-  useEffect(() => {
-    const sectionIds = navItems.map((item) => item.sectionId).filter(Boolean);
-    const elements = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter((element): element is HTMLElement => Boolean(element));
-
-    if (elements.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
-
-        if (visible?.target.id) setActiveSection(visible.target.id);
-      },
-      {
-        rootMargin: "-32% 0px -52% 0px",
-        threshold: [0.02, 0.2, 0.5],
-      },
-    );
-
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <header className="lux-nav-wrap">
       <nav
@@ -79,7 +54,6 @@ export function SiteNav() {
         <Link
           href="/#intro"
           className="lux-nav-brand"
-          aria-label={`${profile.name} home`}
         >
           <span>MSK</span>
           <strong>Mohit Sai Krishna</strong>

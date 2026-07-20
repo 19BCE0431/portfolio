@@ -269,12 +269,16 @@ export function WorkMotionScene() {
     let width = 0;
     let height = 0;
     let isVisible = true;
+    let lastRenderTime = 0;
     let pointer = { x: 0, y: 0 };
     let targetPointer = { x: 0, y: 0 };
 
     const resize = () => {
       const bounds = wrapper.getBoundingClientRect();
-      const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
+      const ratio = Math.min(
+        window.devicePixelRatio || 1,
+        bounds.width < 760 ? 1.25 : 1.5,
+      );
       width = Math.max(1, bounds.width);
       height = Math.max(1, bounds.height);
       canvas.width = Math.round(width * ratio);
@@ -298,6 +302,16 @@ export function WorkMotionScene() {
 
     const render = (time: number) => {
       if (!isVisible) return;
+
+      const targetFrameDuration = width < 760 ? 1000 / 30 : 1000 / 45;
+      if (
+        !shouldReduceMotion &&
+        time - lastRenderTime < targetFrameDuration
+      ) {
+        frame = requestAnimationFrame(render);
+        return;
+      }
+      lastRenderTime = time;
 
       const phase = shouldReduceMotion ? 0.28 : (time % 12000) / 12000;
       pointer = {

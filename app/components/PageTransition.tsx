@@ -16,12 +16,10 @@ export function PageTransition({ children }: { children: ReactNode }) {
     <AnimatePresence mode="wait" initial={false}>
       <motion.div
         key={pathname}
+        id="main-content"
+        tabIndex={-1}
         className="motion-page"
-        initial={
-          shouldReduceMotion
-            ? false
-            : { opacity: 0, y: 14, scale: 0.996, filter: "blur(4px)" }
-        }
+        initial={false}
         animate={
           shouldReduceMotion
             ? { opacity: 1 }

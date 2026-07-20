@@ -16,18 +16,14 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useSyncExternalStore } from "react";
 import { getProjectBySlug, type ArchiveProject } from "../data/archive";
 import type { JournalPost } from "../data/journal";
 import { lifeGalleryImages } from "../data/media";
 import { profile } from "../data/portfolio";
-import {
-  loaderTiming,
-  motionDuration,
-  motionEase,
-  motionSpring,
-} from "../lib/motionSystem";
+import { motionSpring } from "../lib/motionSystem";
 import { MagneticButton } from "./MagneticButton";
+import { useActiveSection } from "./ActiveSectionProvider";
 import {
   MotionHeading,
   MotionMedia,
@@ -37,11 +33,22 @@ import {
 } from "./MotionPrimitives";
 import { WorkMotionScene } from "./WorkMotionScene";
 
-/* Hero entrance is timed to land as the preloader curtain lifts, so the type
-   is still rising into place when the page is revealed. */
-const HERO_START = loaderTiming.heroStart;
-
 const heroLines = ["Mohit Sai", "Krishna"];
+const desktopMotionQuery = "(min-width: 761px) and (hover: hover) and (pointer: fine)";
+
+function subscribeToDesktopMotion(callback: () => void) {
+  const mediaQuery = window.matchMedia(desktopMotionQuery);
+  mediaQuery.addEventListener("change", callback);
+  return () => mediaQuery.removeEventListener("change", callback);
+}
+
+function getDesktopMotionSupport() {
+  return window.matchMedia(desktopMotionQuery).matches;
+}
+
+function getServerDesktopMotionSupport() {
+  return false;
+}
 
 const projectSlugs = [
   "applied-image-search",
@@ -109,35 +116,12 @@ function formatDate(date: string) {
 function ScrollGuide() {
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, motionSpring.progress);
-  const [activeSection, setActiveSection] = useState(sections[0]);
-
-  useEffect(() => {
-    const elements = sections
-      .map((section) => document.getElementById(section.id))
-      .filter((element): element is HTMLElement => Boolean(element));
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
-
-        if (visible?.target.id) {
-          const section = sections.find((item) => item.id === visible.target.id);
-          if (section) setActiveSection(section);
-        }
-      },
-      {
-        rootMargin: "-34% 0px -50% 0px",
-        threshold: [0.02, 0.2, 0.45],
-      },
-    );
-
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-  }, []);
-
-  const activeIndex = sections.findIndex((section) => section.id === activeSection.id);
+  const { activeSection: activeSectionId } = useActiveSection();
+  const activeIndex = Math.max(
+    0,
+    sections.findIndex((section) => section.id === activeSectionId),
+  );
+  const activeSection = sections[activeIndex];
 
   return (
     <>
@@ -160,6 +144,11 @@ function ScrollGuide() {
 function Hero() {
   const heroRef = useRef<HTMLElement>(null);
   const shouldReduceMotion = useReducedMotion();
+  const supportsParallax = useSyncExternalStore(
+    subscribeToDesktopMotion,
+    getDesktopMotionSupport,
+    getServerDesktopMotionSupport,
+  );
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
@@ -173,7 +162,11 @@ function Hero() {
     <section id="intro" ref={heroRef} className="lux-hero">
       <motion.div
         className="lux-hero-media"
-        style={shouldReduceMotion ? undefined : { y: mediaY, scale: mediaScale }}
+        style={
+          shouldReduceMotion || !supportsParallax
+            ? undefined
+            : { y: mediaY, scale: mediaScale }
+        }
       >
         <WorkMotionScene />
       </motion.div>
@@ -181,52 +174,36 @@ function Hero() {
 
       <motion.div
         className="lux-hero-copy lux-shell"
-        style={shouldReduceMotion ? undefined : { y: copyY, opacity: copyOpacity }}
+        style={
+          shouldReduceMotion || !supportsParallax
+            ? undefined
+            : { y: copyY, opacity: copyOpacity }
+        }
       >
-        <motion.p
-          className="lux-hero-context"
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: motionDuration.standard, delay: HERO_START, ease: motionEase.enter }}
-        >
+        <p className="lux-hero-context lux-hero-enter-context">
           Product · Strategy · Applied AI
-        </motion.p>
+        </p>
 
         {/* Masked per-line reveal — the type rises out of its own baseline */}
         <h1>
           {heroLines.map((line, index) => (
             <span key={line} className="lux-hero-line">
-              <motion.span
-                initial={shouldReduceMotion ? false : { y: "115%" }}
-                animate={{ y: "0%" }}
-                transition={{
-                  duration: 1.15,
-                  delay: HERO_START + 0.1 + index * 0.1,
-                  ease: motionEase.enter,
-                }}
+              <span
+                className="lux-hero-enter-line"
+                style={{ animationDelay: `${0.68 + index * 0.1}s` }}
               >
                 {line}
-              </motion.span>
+              </span>
             </span>
           ))}
         </h1>
 
-        <motion.p
-          className="lux-hero-thesis"
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: motionDuration.standard, delay: HERO_START + 0.42, ease: motionEase.enter }}
-        >
+        <p className="lux-hero-thesis lux-hero-enter-thesis">
           I connect technical depth with business judgment to make complex
           products, markets, and decisions easier to understand.
-        </motion.p>
+        </p>
 
-        <motion.div
-          className="lux-hero-actions"
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: motionDuration.standard, delay: HERO_START + 0.55, ease: motionEase.enter }}
-        >
+        <div className="lux-hero-actions lux-hero-enter-actions">
           <MagneticButton>
             <Link href="#profile" className="lux-button lux-button-light">
               Explore the portfolio
@@ -244,7 +221,7 @@ function Hero() {
               <Download aria-hidden="true" />
             </a>
           </MagneticButton>
-        </motion.div>
+        </div>
       </motion.div>
 
       <div className="lux-hero-foot lux-shell">
@@ -280,7 +257,6 @@ function Profile() {
                 src="/images/profile/profile-campus-01.jpg"
                 alt="Mohit Sai Krishna on the IIM Sirmaur campus"
                 fill
-                loading="eager"
                 sizes="(max-width: 760px) 100vw, 42vw"
               />
             </motion.div>
@@ -357,7 +333,7 @@ function Work() {
                   <span>0{index + 1}</span>
                   <span>{project.category}</span>
                 </div>
-                <h3>{project.title}</h3>
+                <h3 id={`project-${project.slug}-title`}>{project.title}</h3>
                 <p>{project.shortDescription}</p>
                 <dl>
                   <div>
@@ -379,7 +355,7 @@ function Work() {
                 <Link
                   href={`/archive/${project.slug}`}
                   className="lux-project-visual-link"
-                  aria-label={`Read ${project.title}`}
+                  aria-labelledby={`project-${project.slug}-title`}
                 >
                   <MotionMedia className="lux-project-media" parallax={3}>
                     {project.visual?.image && (
@@ -391,7 +367,9 @@ function Work() {
                       />
                     )}
                   </MotionMedia>
-                  <span className="lux-project-depth-index">0{index + 1}</span>
+                  <span className="lux-project-depth-index" aria-hidden="true">
+                    0{index + 1}
+                  </span>
                 </Link>
               </TiltSurface>
             </MotionReveal>

@@ -20,7 +20,12 @@ export function MagneticButton({
   const springY = useSpring(y, motionSpring.magnetic);
 
   const handlePointerMove = (event: MouseEvent<HTMLDivElement>) => {
-    if (shouldReduceMotion) return;
+    if (
+      shouldReduceMotion ||
+      !window.matchMedia("(hover: hover) and (pointer: fine)").matches
+    ) {
+      return;
+    }
 
     const rect = event.currentTarget.getBoundingClientRect();
     x.set((event.clientX - rect.left - rect.width / 2) * strength);

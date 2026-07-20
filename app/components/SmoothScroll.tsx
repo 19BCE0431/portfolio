@@ -19,7 +19,15 @@ export function SmoothScroll() {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (shouldReduceMotion) return;
+    // Touch platforms already provide high-quality compositor-driven inertial
+    // scrolling. Avoid a permanent JavaScript frame loop where Lenis would not
+    // improve the interaction.
+    if (
+      shouldReduceMotion ||
+      !window.matchMedia("(hover: hover) and (pointer: fine)").matches
+    ) {
+      return;
+    }
 
     const lenis = new Lenis({
       smoothWheel: true,

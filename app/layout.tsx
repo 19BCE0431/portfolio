@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { Fraunces } from "next/font/google";
 import { AnalyticsEvents } from "./components/AnalyticsEvents";
-import { MicrosoftClarity } from "./components/MicrosoftClarity";
+import { ActiveSectionProvider } from "./components/ActiveSectionProvider";
+import { DeferredThirdPartyAnalytics } from "./components/DeferredThirdPartyAnalytics";
 import { PageTransition } from "./components/PageTransition";
 import { Preloader } from "./components/Preloader";
 import { SiteNav } from "./components/SiteNav";
@@ -52,6 +52,11 @@ export const metadata: Metadata = {
   authors: [{ name: profile.name }],
   creator: profile.name,
   publisher: profile.name,
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   alternates: {
     canonical: "/",
   },
@@ -94,6 +99,13 @@ export const metadata: Metadata = {
     icon: [{ url: "/icon", type: "image/png" }],
     apple: [{ url: "/apple-icon", type: "image/png" }],
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  colorScheme: "dark light",
+  themeColor: "#09090b",
 };
 
 const personJsonLd = {
@@ -144,7 +156,7 @@ export default function RootLayout({
 
   return (
     <html
-      lang="en"
+      lang="en-IN"
       data-scroll-behavior="smooth"
       className={`${GeistSans.variable} ${GeistMono.variable} ${fraunces.variable}`}
     >
@@ -158,16 +170,23 @@ export default function RootLayout({
             }}
           />
         ))}
-        <Preloader />
-        <SmoothScroll />
-        <SpotlightCursor />
-        <SiteNav />
-        <PageTransition>{children}</PageTransition>
-        <AnalyticsEvents />
+        <a className="skip-link" href="#main-content">
+          Skip to content
+        </a>
+        <ActiveSectionProvider>
+          <Preloader />
+          <SmoothScroll />
+          <SpotlightCursor />
+          <SiteNav />
+          <PageTransition>{children}</PageTransition>
+          <AnalyticsEvents />
+        </ActiveSectionProvider>
         <Analytics />
         <SpeedInsights />
-        <MicrosoftClarity projectId={clarityProjectId} />
-        <GoogleAnalytics gaId={gaMeasurementId} />
+        <DeferredThirdPartyAnalytics
+          clarityProjectId={clarityProjectId}
+          gaMeasurementId={gaMeasurementId}
+        />
       </body>
     </html>
   );

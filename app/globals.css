@@ -149,6 +149,30 @@ a:focus-visible {
     0 0 0 4px rgba(129, 140, 248, 0.5);
 }
 
+.skip-link {
+  position: fixed;
+  z-index: 10001;
+  top: 12px;
+  left: 12px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 4px;
+  color: #10110f;
+  background: #f4f4ef;
+  font-size: 0.82rem;
+  font-weight: 700;
+  transform: translateY(calc(-100% - 24px));
+  transition: transform 180ms var(--ease);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.motion-page:focus {
+  outline: none;
+}
+
 .section-shell {
   width: min(calc(100% - 28px), 1320px);
   margin-inline: auto;
@@ -1200,6 +1224,12 @@ div[id="gallery"] {
   .mobile-flow-rail {
     scroll-behavior: auto !important;
     scroll-snap-type: none;
+  }
+}
+
+@media (max-width: 760px), (pointer: coarse) {
+  .lux-preloader {
+    display: none;
   }
 }
 
@@ -4158,7 +4188,7 @@ div[id="gallery"] {
   padding-bottom: 0.08em;
 }
 
-.lux-preloader-mask h1 {
+.lux-preloader-name {
   margin: 0;
   font-size: clamp(2.9rem, 8vw, 8rem);
   font-weight: 450;
@@ -4365,7 +4395,7 @@ div[id="gallery"] {
     bottom: 14vh;
   }
 
-  .lux-preloader-mask h1 {
+  .lux-preloader-name {
     max-width: 9ch;
     font-size: clamp(3rem, 15vw, 4.8rem);
     line-height: 0.96;
@@ -5553,6 +5583,105 @@ html.lenis body {
 .lux-home h1,
 .lux-home h2,
 .lux-home h3,
-.lux-preloader h1 {
+.lux-preloader-name {
   letter-spacing: 0;
+}
+
+/* First-paint choreography runs before hydration, preserving the approved
+   motion while keeping slow devices out of the critical rendering path. */
+.lux-preloader {
+  animation: lux-preloader-exit 680ms var(--motion-enter) 820ms both;
+}
+
+.lux-preloader-kicker {
+  opacity: 0;
+  transform: translateY(7px);
+  animation: lux-first-paint-rise 720ms var(--motion-enter) 80ms both;
+}
+
+.lux-preloader-name {
+  transform: translateY(110%);
+  animation: lux-preloader-name 1020ms var(--motion-enter) 140ms both;
+}
+
+.lux-preloader-progress i {
+  transform: scaleX(0);
+  animation: lux-preloader-progress 820ms var(--motion-enter) 80ms both;
+}
+
+.lux-hero-enter-context,
+.lux-hero-enter-thesis,
+.lux-hero-enter-actions {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: lux-first-paint-rise 720ms var(--motion-enter) both;
+}
+
+.lux-hero-enter-context {
+  transform: translateY(14px);
+  animation-delay: 580ms;
+}
+
+.lux-hero-enter-thesis {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+.lux-hero-enter-actions {
+  animation-delay: 1.13s;
+}
+
+.lux-hero-enter-line {
+  transform: translateY(115%);
+  animation: lux-hero-first-paint-line 1150ms var(--motion-enter) both;
+}
+
+@keyframes lux-preloader-exit {
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes lux-first-paint-rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lux-preloader-name {
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes lux-preloader-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes lux-hero-first-paint-line {
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lux-preloader {
+    display: none;
+  }
+
+  .lux-preloader-kicker,
+  .lux-preloader-name,
+  .lux-preloader-progress i,
+  .lux-hero-enter-context,
+  .lux-hero-enter-thesis,
+  .lux-hero-enter-actions,
+  .lux-hero-enter-line {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
 }
