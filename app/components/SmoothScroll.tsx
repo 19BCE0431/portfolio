@@ -22,13 +22,10 @@ export function SmoothScroll() {
     if (shouldReduceMotion) return;
 
     const lenis = new Lenis({
-      duration: 1.05,
-      // Refined ease-out — long tail, no overshoot. Reads as "weighted glass".
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 1.6,
-      lerp: 0.09,
+      wheelMultiplier: 0.94,
+      touchMultiplier: 1.25,
+      lerp: 0.082,
     });
 
     setLenis(lenis);
@@ -40,8 +37,15 @@ export function SmoothScroll() {
     };
     frame = requestAnimationFrame(raf);
 
+    const handleVisibility = () => {
+      if (document.hidden) lenis.stop();
+      else lenis.start();
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+
     return () => {
       cancelAnimationFrame(frame);
+      document.removeEventListener("visibilitychange", handleVisibility);
       setLenis(null);
       lenis.destroy();
     };
@@ -54,7 +58,7 @@ export function SmoothScroll() {
     const lenis = getLenis();
     if (lenis) {
       lenis.scrollTo(0, { immediate: true });
-      lenis.resize();
+      requestAnimationFrame(() => lenis.resize());
     } else {
       window.scrollTo({ top: 0, behavior: "auto" });
     }

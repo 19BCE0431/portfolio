@@ -4078,6 +4078,330 @@ div[id="gallery"] {
   }
 }
 
+/* ==========================================================================
+   Launch motion system
+   One restrained vocabulary: masked entrances, editorial travel, shallow
+   depth, and cool neutral light. Motion never carries essential information.
+   ========================================================================== */
+:root {
+  --motion-fast: 320ms;
+  --motion-standard: 720ms;
+  --motion-scene: 1240ms;
+  --motion-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-micro: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.lux-home h1,
+.lux-home h2,
+.lux-home h3 {
+  letter-spacing: 0;
+}
+
+.motion-page {
+  min-height: 100vh;
+  transform-origin: 50% 0;
+}
+
+.lux-preloader {
+  position: fixed;
+  z-index: 10000;
+  inset: 0;
+  overflow: hidden;
+  color: #f4f4f0;
+  background: #111312;
+}
+
+.lux-preloader-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.16;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.13) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.13) 1px, transparent 1px);
+  background-size: min(12vw, 150px) min(12vw, 150px);
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
+}
+
+.lux-preloader-index {
+  position: absolute;
+  top: clamp(24px, 4vw, 56px);
+  right: clamp(24px, 5vw, 72px);
+  left: clamp(24px, 5vw, 72px);
+  display: flex;
+  justify-content: space-between;
+  color: rgba(244, 244, 240, 0.58);
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.lux-preloader-content {
+  position: absolute;
+  right: clamp(24px, 8vw, 120px);
+  bottom: clamp(48px, 12vh, 132px);
+  left: clamp(24px, 8vw, 120px);
+}
+
+.lux-preloader-kicker {
+  display: block;
+  margin-bottom: 14px;
+  color: rgba(244, 244, 240, 0.58);
+  font-size: clamp(0.66rem, 1vw, 0.78rem);
+  font-weight: 650;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.lux-preloader-mask {
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+
+.lux-preloader-mask h1 {
+  margin: 0;
+  font-size: clamp(2.9rem, 8vw, 8rem);
+  font-weight: 450;
+  line-height: 0.94;
+  letter-spacing: 0;
+}
+
+.lux-preloader-progress {
+  width: min(360px, 45vw);
+  height: 1px;
+  margin-top: clamp(28px, 4vw, 52px);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.lux-preloader-progress i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #f4f4f0;
+  transform-origin: left center;
+}
+
+.motion-cursor-ring,
+.motion-cursor-dot {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: difference;
+}
+
+.motion-cursor-ring {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #fff;
+}
+
+.motion-cursor-dot {
+  width: 4px;
+  height: 4px;
+  background: #fff;
+}
+
+.lux-section {
+  isolation: isolate;
+  overflow: clip;
+}
+
+.lux-section > .lux-shell {
+  position: relative;
+  z-index: 1;
+}
+
+.motion-section-light {
+  position: absolute;
+  z-index: 0;
+  top: -18%;
+  left: 22%;
+  width: 56%;
+  height: 136%;
+  pointer-events: none;
+  transform: skewX(-13deg);
+}
+
+.motion-section-light-dark {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(232, 236, 230, 0.045) 47%,
+    rgba(255, 255, 255, 0.09) 50%,
+    transparent 54%
+  );
+}
+
+.motion-media-inner {
+  position: absolute;
+  inset: -6%;
+  overflow: hidden;
+}
+
+.motion-media-inner img {
+  object-fit: cover;
+}
+
+.lux-project-visual {
+  overflow: hidden;
+  transform-origin: 50% 58%;
+  transition: box-shadow var(--motion-standard) var(--motion-enter);
+}
+
+.lux-project-visual-link,
+.lux-project-media {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.lux-project-media {
+  overflow: hidden;
+}
+
+.lux-project-depth-index {
+  position: absolute;
+  z-index: 2;
+  right: 18px;
+  bottom: 16px;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  color: #fff;
+  background: rgba(12, 14, 13, 0.28);
+  backdrop-filter: blur(10px);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.lux-timeline {
+  position: relative;
+}
+
+.lux-timeline-track {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: -1px;
+  width: 1px;
+  background: rgba(21, 24, 22, 0.14);
+}
+
+.lux-timeline-track i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #1d211f;
+  transform-origin: top center;
+}
+
+.lux-timeline-row {
+  position: relative;
+}
+
+.lux-timeline-node {
+  position: absolute;
+  z-index: 2;
+  top: 2.1rem;
+  left: -5px;
+  width: 9px;
+  height: 9px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background: var(--background, #f3f3ef);
+  transition:
+    transform var(--motion-fast) var(--motion-enter),
+    background-color var(--motion-fast) var(--motion-micro);
+}
+
+.lux-life-frame > .motion-media-inner {
+  z-index: 0;
+}
+
+.lux-life-frame > p {
+  z-index: 2;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lux-project:hover .lux-project-depth-index {
+    color: #111312;
+    background: rgba(255, 255, 255, 0.88);
+  }
+
+  .lux-project:hover .lux-project-media img,
+  .lux-life-frame:hover .motion-media-inner img {
+    transform: scale(1.025);
+  }
+
+  .lux-timeline-row:hover .lux-timeline-node {
+    background: #1d211f;
+    transform: scale(1.28);
+  }
+
+  .lux-note-row > svg,
+  .lux-profile-links svg,
+  .lux-project-copy > a svg,
+  .lux-life-copy a svg {
+    transition: transform var(--motion-fast) var(--motion-enter);
+  }
+
+  .lux-note-row:hover > svg,
+  .lux-profile-links a:hover svg,
+  .lux-project-copy > a:hover svg,
+  .lux-life-copy a:hover svg {
+    transform: translate(3px, -3px);
+  }
+}
+
+@media (max-width: 760px) {
+  .lux-preloader-content {
+    bottom: 14vh;
+  }
+
+  .lux-preloader-mask h1 {
+    max-width: 9ch;
+    font-size: clamp(3rem, 15vw, 4.8rem);
+    line-height: 0.96;
+  }
+
+  .lux-preloader-progress {
+    width: 100%;
+  }
+
+  .motion-section-light {
+    left: 8%;
+    width: 82%;
+  }
+
+  .motion-cursor-ring,
+  .motion-cursor-dot {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-section-light {
+    display: none;
+  }
+
+  .motion-media-inner {
+    transform: none !important;
+  }
+
+  .lux-project-visual,
+  .lux-timeline-node,
+  .lux-note-row > svg {
+    transition: none !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lux-nav,
   .lux-button,
@@ -4955,4 +5279,280 @@ div[id="gallery"] {
   .lux-note-row {
     transition: none;
   }
+}
+
+/* ==========================================================================
+   Flagship elevation layer
+   ========================================================================== */
+
+/* Lenis smooth scroll — required helper styles (default, non-transform mode) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+/* Editorial display serif (Fraunces) — high-contrast, optical-sized */
+.display-serif {
+  font-family: var(--font-display), "Fraunces Fallback", Georgia, "Times New Roman", serif;
+  font-optical-sizing: auto;
+}
+
+/* Layer the serif onto the homepage's hero + section headings for an
+   editorial-luxury voice, while UI/body/labels stay on Geist. */
+.lux-hero h1 {
+  font-family: var(--font-display), Georgia, serif;
+  font-optical-sizing: auto;
+  font-weight: 460;
+  letter-spacing: -0.022em;
+}
+
+.lux-profile-copy h2,
+.lux-work h2,
+.lux-resume h2,
+.lux-resume-intro h2,
+.lux-notes h2,
+.lux-life h2,
+.lux-section h2 {
+  font-family: var(--font-display), Georgia, serif;
+  font-optical-sizing: auto;
+  font-weight: 440;
+  letter-spacing: -0.014em;
+}
+
+/* --- Hero: masked per-line type reveal ------------------------------------ */
+.lux-hero h1 .lux-hero-line {
+  display: block;
+  overflow: hidden;
+  /* descenders need room inside the mask, pulled back so rhythm is unchanged */
+  padding-bottom: 0.09em;
+  margin-bottom: -0.09em;
+}
+
+.lux-hero h1 .lux-hero-line > span {
+  display: block;
+  will-change: transform;
+}
+
+/* --- Buttons: weight, lift, and a single pass of light -------------------- */
+.lux-button {
+  position: relative;
+  overflow: hidden;
+  transition:
+    background-color 240ms var(--ease),
+    border-color 240ms var(--ease),
+    color 240ms var(--ease),
+    box-shadow 460ms var(--ease-out-soft);
+}
+
+.lux-button::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(
+    120deg,
+    transparent 24%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 76%
+  );
+  transform: translateX(-130%);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lux-button:hover::after {
+    transform: translateX(130%);
+    transition: transform 780ms var(--ease);
+  }
+
+  .lux-button-light:hover {
+    box-shadow: 0 20px 48px rgba(58, 82, 240, 0.3);
+  }
+
+  .lux-button-quiet:hover {
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.34);
+  }
+}
+
+/* --- Text links: the existing underline redraws on hover ------------------ */
+/* These links already carry a static `border-bottom`. Rather than stacking a
+   second line beneath it, the border is made transparent and replaced by a
+   pseudo-element in the same position — visible by default, but able to wipe
+   out and redraw from the left on hover. Layout and spacing are unchanged. */
+.lux-profile-links a,
+.lux-section-head a,
+.lux-project-copy > a,
+.lux-life-copy a {
+  position: relative;
+  border-bottom-color: transparent;
+}
+
+.lux-profile-links a::after,
+.lux-section-head a::after,
+.lux-project-copy > a::after,
+.lux-life-copy a::after {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  content: "";
+  background: currentColor;
+  opacity: 0.6;
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+@keyframes lux-underline-redraw {
+  0% {
+    transform: scaleX(1);
+    transform-origin: right center;
+  }
+  45% {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+  55% {
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lux-profile-links a:hover::after,
+  .lux-section-head a:hover::after,
+  .lux-project-copy > a:hover::after,
+  .lux-life-copy a:hover::after {
+    animation: lux-underline-redraw 640ms var(--ease);
+  }
+}
+
+/* --- Project + note rows: depth on approach ------------------------------- */
+.lux-project-visual {
+  transition: box-shadow 660ms var(--ease-out-soft);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lux-project:hover .lux-project-visual {
+    box-shadow: 0 44px 96px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* --- Respect reduced motion for every addition above ---------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .lux-hero h1 .lux-hero-line > span {
+    transform: none !important;
+  }
+
+  .lux-button::after {
+    display: none;
+  }
+
+  .lux-profile-links a::after,
+  .lux-section-head a::after,
+  .lux-project-copy > a::after,
+  .lux-life-copy a::after {
+    animation: none !important;
+    transform: scaleX(1);
+  }
+
+  .lux-project-visual {
+    transition: none;
+  }
+}
+
+/* --- Optical size correction for the serif -------------------------------- */
+/* Fraunces sets noticeably larger than the grotesque it replaced (wider forms,
+   taller x-height), so the previously-tuned scale overshoots and eats vertical
+   space. These trims restore the original line counts and section rhythm. */
+.lux-profile-copy h2,
+.lux-resume-intro h2,
+.lux-work h2,
+.lux-notes h2,
+.lux-life h2 {
+  font-size: 3.35rem;
+}
+
+@media (max-width: 980px) {
+  .lux-profile-copy h2,
+  .lux-resume-intro h2,
+  .lux-work h2,
+  .lux-notes h2,
+  .lux-life h2 {
+    font-size: 2.68rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .lux-profile-copy h2,
+  .lux-resume-intro h2,
+  .lux-work h2,
+  .lux-notes h2,
+  .lux-life h2 {
+    font-size: 2.24rem;
+    line-height: 1.08;
+  }
+}
+
+@media (max-width: 390px) {
+  .lux-profile-copy h2,
+  .lux-resume-intro h2,
+  .lux-work h2,
+  .lux-notes h2,
+  .lux-life h2 {
+    font-size: 2rem;
+  }
+}
+
+/* Final cascade ownership for the motion layer. */
+.lux-home .lux-project-visual-link,
+.lux-home .lux-project-media,
+.lux-home .lux-life-media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: auto;
+  height: auto;
+}
+
+.lux-home .lux-project-media,
+.lux-home .lux-life-frame > .motion-media-inner {
+  overflow: hidden;
+}
+
+.lux-home .motion-media-inner {
+  position: absolute;
+  inset: -6%;
+  width: auto;
+  height: auto;
+}
+
+.lux-home .lux-life-frame > .motion-media-inner {
+  z-index: 0;
+}
+
+.lux-home .lux-life-frame > p {
+  z-index: 2;
+}
+
+.lux-home h1,
+.lux-home h2,
+.lux-home h3,
+.lux-preloader h1 {
+  letter-spacing: 0;
 }

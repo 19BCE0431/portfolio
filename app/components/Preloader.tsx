@@ -2,8 +2,11 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
-
-const ease = [0.16, 1, 0.3, 1] as const;
+import {
+  loaderTiming,
+  motionDuration,
+  motionEase,
+} from "../lib/motionSystem";
 
 // Mounts once per hard page load (root layout persists across client nav), so
 // the intro plays on first paint and never replays on in-app route changes.
@@ -12,13 +15,13 @@ export function Preloader() {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    if (shouldReduceMotion) {
-      setVisible(false);
-      return;
-    }
+    if (shouldReduceMotion) return;
 
     document.body.style.overflow = "hidden";
-    const timeout = window.setTimeout(() => setVisible(false), 1750);
+    const timeout = window.setTimeout(
+      () => setVisible(false),
+      loaderTiming.hold,
+    );
 
     return () => {
       window.clearTimeout(timeout);
@@ -37,45 +40,61 @@ export function Preloader() {
       {visible && (
         <motion.div
           key="preloader"
-          className="fixed inset-0 z-[100] grid place-items-center overflow-hidden bg-[#05070a]"
+          className="lux-preloader"
           initial={{ y: 0 }}
           exit={{ y: "-100%" }}
-          transition={{ duration: 0.95, ease }}
+          transition={{
+            duration: loaderTiming.exitDuration,
+            ease: motionEase.enter,
+          }}
           aria-hidden="true"
         >
-          <div className="pointer-events-none absolute inset-0 opacity-70">
-            <div className="premium-grid absolute inset-0 opacity-[0.08] [mask-image:radial-gradient(circle_at_50%_45%,black,transparent_70%)]" />
-            <div className="absolute left-1/2 top-1/2 h-[42vh] w-[42vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(129,140,248,0.16),transparent_70%)] blur-3xl" />
+          <div className="lux-preloader-grid" />
+          <div className="lux-preloader-index">
+            <span>MSK</span>
+            <span>Portfolio · 2026</span>
           </div>
 
-          <div className="relative flex flex-col items-center gap-6 px-8 text-center">
+          <div className="lux-preloader-content">
             <motion.span
-              className="text-[11px] font-medium uppercase tracking-[0.34em] text-white/40"
-              style={{ fontFamily: "var(--font-mono)" }}
-              initial={{ opacity: 0, y: 8 }}
+              className="lux-preloader-kicker"
+              initial={{ opacity: 0, y: 7 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15, duration: 0.6, ease }}
+              transition={{
+                delay: 0.08,
+                duration: motionDuration.standard,
+                ease: motionEase.enter,
+              }}
             >
-              Portfolio
+              Product · Strategy · Applied AI
             </motion.span>
 
-            <div className="overflow-hidden">
+            <div className="lux-preloader-mask">
               <motion.h1
-                className="display-serif text-[clamp(2.4rem,10vw,5rem)] font-light leading-[0.98] tracking-[-0.01em] text-white"
+                className="display-serif"
                 initial={{ y: "110%" }}
                 animate={{ y: "0%" }}
-                transition={{ delay: 0.28, duration: 0.85, ease }}
+                transition={{
+                  delay: 0.14,
+                  duration: motionDuration.slow,
+                  ease: motionEase.enter,
+                }}
               >
                 Mohit Sai Krishna
               </motion.h1>
             </div>
 
-            <motion.span
-              className="h-px w-0 bg-gradient-to-r from-transparent via-[var(--cyan)] to-transparent"
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: "min(240px, 60vw)", opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.9, ease }}
-            />
+            <div className="lux-preloader-progress">
+              <motion.i
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{
+                  delay: 0.08,
+                  duration: loaderTiming.hold / 1000,
+                  ease: motionEase.glide,
+                }}
+              />
+            </div>
           </div>
         </motion.div>
       )}

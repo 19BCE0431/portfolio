@@ -2,6 +2,7 @@
 
 import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import { type MouseEvent, type ReactNode } from "react";
+import { motionSpring } from "../lib/motionSystem";
 
 export function MagneticButton({
   children,
@@ -15,8 +16,8 @@ export function MagneticButton({
   const shouldReduceMotion = useReducedMotion();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 200, damping: 18, mass: 0.4 });
-  const springY = useSpring(y, { stiffness: 200, damping: 18, mass: 0.4 });
+  const springX = useSpring(x, motionSpring.magnetic);
+  const springY = useSpring(y, motionSpring.magnetic);
 
   const handlePointerMove = (event: MouseEvent<HTMLDivElement>) => {
     if (shouldReduceMotion) return;

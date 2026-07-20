@@ -1,7 +1,8 @@
 "use client";
 
 import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
-import { useEffect, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { motionSpring } from "../lib/motionSystem";
 
 const hoverQuery = "(hover: hover) and (pointer: fine)";
 
@@ -28,8 +29,10 @@ export function SpotlightCursor() {
   );
   const x = useMotionValue(-400);
   const y = useMotionValue(-400);
-  const springX = useSpring(x, { stiffness: 60, damping: 22, mass: 0.6 });
-  const springY = useSpring(y, { stiffness: 60, damping: 22, mass: 0.6 });
+  const springX = useSpring(x, motionSpring.cursor);
+  const springY = useSpring(y, motionSpring.cursor);
+  const [interactive, setInteractive] = useState(false);
+  const interactiveRef = useRef(false);
 
   useEffect(() => {
     if (!enabled) return;
@@ -37,6 +40,16 @@ export function SpotlightCursor() {
     const handleMove = (event: PointerEvent) => {
       x.set(event.clientX);
       y.set(event.clientY);
+
+      const target = event.target;
+      const nextInteractive =
+        target instanceof Element &&
+        Boolean(target.closest("a, button, [data-cursor]"));
+
+      if (nextInteractive !== interactiveRef.current) {
+        interactiveRef.current = nextInteractive;
+        setInteractive(nextInteractive);
+      }
     };
 
     window.addEventListener("pointermove", handleMove, { passive: true });
@@ -46,17 +59,31 @@ export function SpotlightCursor() {
   if (!enabled || shouldReduceMotion) return null;
 
   return (
-    <motion.div
-      aria-hidden="true"
-      className="pointer-events-none fixed left-0 top-0 z-[2] h-[560px] w-[560px] rounded-full opacity-60 mix-blend-screen"
-      style={{
-        x: springX,
-        y: springY,
-        translateX: "-50%",
-        translateY: "-50%",
-        background:
-          "radial-gradient(circle, rgba(129,140,248,0.1), rgba(34,211,238,0.05) 42%, transparent 68%)",
-      }}
-    />
+    <>
+      <motion.div
+        aria-hidden="true"
+        className="motion-cursor-ring"
+        animate={{ scale: interactive ? 1.55 : 1, opacity: interactive ? 0.72 : 0.36 }}
+        transition={motionSpring.cursor}
+        style={{
+          x: springX,
+          y: springY,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
+      />
+      <motion.div
+        aria-hidden="true"
+        className="motion-cursor-dot"
+        animate={{ scale: interactive ? 0.6 : 1 }}
+        transition={motionSpring.cursor}
+        style={{
+          x: springX,
+          y: springY,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
+      />
+    </>
   );
 }

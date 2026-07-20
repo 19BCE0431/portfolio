@@ -16,14 +16,32 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getProjectBySlug, type ArchiveProject } from "../data/archive";
 import type { JournalPost } from "../data/journal";
 import { lifeGalleryImages } from "../data/media";
 import { profile } from "../data/portfolio";
+import {
+  loaderTiming,
+  motionDuration,
+  motionEase,
+  motionSpring,
+} from "../lib/motionSystem";
+import { MagneticButton } from "./MagneticButton";
+import {
+  MotionHeading,
+  MotionMedia,
+  MotionReveal,
+  SectionLight,
+  TiltSurface,
+} from "./MotionPrimitives";
 import { WorkMotionScene } from "./WorkMotionScene";
 
-const ease = [0.16, 1, 0.3, 1] as const;
+/* Hero entrance is timed to land as the preloader curtain lifts, so the type
+   is still rising into place when the page is revealed. */
+const HERO_START = loaderTiming.heroStart;
+
+const heroLines = ["Mohit Sai", "Krishna"];
 
 const projectSlugs = [
   "applied-image-search",
@@ -78,42 +96,6 @@ const sections = [
   { id: "contact", label: "Connect" },
 ];
 
-function Reveal({
-  children,
-  className,
-  delay = 0,
-  direction = "up",
-}: {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-  direction?: "left" | "right" | "up";
-}) {
-  const shouldReduceMotion = useReducedMotion();
-  const initialOffset =
-    direction === "left"
-      ? { x: -58, y: 0 }
-      : direction === "right"
-        ? { x: 58, y: 0 }
-        : { x: 0, y: 42 };
-
-  return (
-    <motion.div
-      className={className}
-      initial={
-        shouldReduceMotion
-          ? false
-          : { opacity: 0, ...initialOffset, scale: 0.985, filter: "blur(8px)" }
-      }
-      whileInView={{ opacity: 1, x: 0, y: 0, scale: 1, filter: "blur(0px)" }}
-      viewport={{ once: true, amount: 0.16, margin: "-6% 0px" }}
-      transition={{ duration: 0.88, delay, ease }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
 function formatDate(date: string) {
   const parsed = new Date(date);
   if (Number.isNaN(parsed.getTime())) return date;
@@ -126,11 +108,7 @@ function formatDate(date: string) {
 
 function ScrollGuide() {
   const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 28,
-    mass: 0.3,
-  });
+  const progress = useSpring(scrollYProgress, motionSpring.progress);
   const [activeSection, setActiveSection] = useState(sections[0]);
 
   useEffect(() => {
@@ -203,35 +181,70 @@ function Hero() {
 
       <motion.div
         className="lux-hero-copy lux-shell"
-        initial={shouldReduceMotion ? false : { opacity: 0, y: 22 }}
-        animate={{ opacity: 1, y: 0 }}
         style={shouldReduceMotion ? undefined : { y: copyY, opacity: copyOpacity }}
-        transition={{ duration: 0.82, delay: 0.12, ease }}
       >
-        <p className="lux-hero-context">Product · Strategy · Applied AI</p>
+        <motion.p
+          className="lux-hero-context"
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: motionDuration.standard, delay: HERO_START, ease: motionEase.enter }}
+        >
+          Product · Strategy · Applied AI
+        </motion.p>
+
+        {/* Masked per-line reveal — the type rises out of its own baseline */}
         <h1>
-          <span>Mohit Sai </span>
-          <span>Krishna</span>
+          {heroLines.map((line, index) => (
+            <span key={line} className="lux-hero-line">
+              <motion.span
+                initial={shouldReduceMotion ? false : { y: "115%" }}
+                animate={{ y: "0%" }}
+                transition={{
+                  duration: 1.15,
+                  delay: HERO_START + 0.1 + index * 0.1,
+                  ease: motionEase.enter,
+                }}
+              >
+                {line}
+              </motion.span>
+            </span>
+          ))}
         </h1>
-        <p className="lux-hero-thesis">
+
+        <motion.p
+          className="lux-hero-thesis"
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: motionDuration.standard, delay: HERO_START + 0.42, ease: motionEase.enter }}
+        >
           I connect technical depth with business judgment to make complex
           products, markets, and decisions easier to understand.
-        </p>
-        <div className="lux-hero-actions">
-          <Link href="#profile" className="lux-button lux-button-light">
-            Explore the portfolio
-            <ArrowDown aria-hidden="true" />
-          </Link>
-          <a
-            href={profile.resume}
-            target="_blank"
-            rel="noreferrer"
-            className="lux-button lux-button-quiet"
-          >
-            Resume
-            <Download aria-hidden="true" />
-          </a>
-        </div>
+        </motion.p>
+
+        <motion.div
+          className="lux-hero-actions"
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: motionDuration.standard, delay: HERO_START + 0.55, ease: motionEase.enter }}
+        >
+          <MagneticButton>
+            <Link href="#profile" className="lux-button lux-button-light">
+              Explore the portfolio
+              <ArrowDown aria-hidden="true" />
+            </Link>
+          </MagneticButton>
+          <MagneticButton>
+            <a
+              href={profile.resume}
+              target="_blank"
+              rel="noreferrer"
+              className="lux-button lux-button-quiet"
+            >
+              Resume
+              <Download aria-hidden="true" />
+            </a>
+          </MagneticButton>
+        </motion.div>
       </motion.div>
 
       <div className="lux-hero-foot lux-shell">
@@ -257,7 +270,7 @@ function Profile() {
   return (
     <section id="profile" ref={profileRef} className="lux-profile lux-section">
       <div className="lux-shell lux-profile-grid">
-        <Reveal className="lux-profile-visual" direction="left">
+        <MotionReveal className="lux-profile-visual" direction="left">
           <div className="lux-profile-image">
             <motion.div
               className="lux-profile-image-inner"
@@ -277,11 +290,11 @@ function Profile() {
             <span>Current chapter</span>
             <strong>IIM Sirmaur · India</strong>
           </div>
-        </Reveal>
+        </MotionReveal>
 
-        <Reveal className="lux-profile-copy" delay={0.08} direction="right">
+        <MotionReveal className="lux-profile-copy" delay={0.08} direction="right">
           <p className="lux-eyebrow">Profile</p>
-          <h2>Technology taught me how to build. Business is teaching me what deserves to be built.</h2>
+          <MotionHeading>Technology taught me how to build. Business is teaching me what deserves to be built.</MotionHeading>
           <p className="lux-profile-lede">
             I began in Computer Science and Data Science at VIT Vellore, then
             worked on live AI and automation systems at BigHaat. Now, during my
@@ -303,7 +316,7 @@ function Profile() {
               <Mail aria-hidden="true" />
             </a>
           </div>
-        </Reveal>
+        </MotionReveal>
       </div>
     </section>
   );
@@ -312,13 +325,14 @@ function Profile() {
 function Work() {
   return (
     <section id="work" className="lux-work lux-section">
+      <SectionLight className="motion-section-light-dark" />
       <div className="lux-shell">
         <div className="lux-section-head">
-          <Reveal direction="left">
+          <MotionReveal direction="left">
             <p className="lux-eyebrow lux-eyebrow-light">Selected work</p>
-            <h2>Systems built around real decisions.</h2>
-          </Reveal>
-          <Reveal delay={0.08} direction="right">
+            <MotionHeading>Systems built around real decisions.</MotionHeading>
+          </MotionReveal>
+          <MotionReveal delay={0.08} direction="right">
             <p>
               Three examples from applied AI and operations. The full archive
               holds the broader technical record.
@@ -327,12 +341,12 @@ function Work() {
               View full archive
               <ArrowUpRight aria-hidden="true" />
             </Link>
-          </Reveal>
+          </MotionReveal>
         </div>
 
         <div className="lux-project-list">
           {selectedProjects.map((project, index) => (
-            <Reveal
+            <MotionReveal
               key={project.slug}
               className="lux-project"
               delay={index * 0.045}
@@ -361,17 +375,26 @@ function Work() {
                 </Link>
               </div>
 
-              <div className="lux-project-visual">
-                {project.visual?.image && (
-                  <Image
-                    src={project.visual.image}
-                    alt={project.visual.alt}
-                    fill
-                    sizes="(max-width: 760px) 100vw, 44vw"
-                  />
-                )}
-              </div>
-            </Reveal>
+              <TiltSurface className="lux-project-visual" cursorLabel="View project">
+                <Link
+                  href={`/archive/${project.slug}`}
+                  className="lux-project-visual-link"
+                  aria-label={`Read ${project.title}`}
+                >
+                  <MotionMedia className="lux-project-media" parallax={3}>
+                    {project.visual?.image && (
+                      <Image
+                        src={project.visual.image}
+                        alt={project.visual.alt}
+                        fill
+                        sizes="(max-width: 760px) 100vw, 44vw"
+                      />
+                    )}
+                  </MotionMedia>
+                  <span className="lux-project-depth-index">0{index + 1}</span>
+                </Link>
+              </TiltSurface>
+            </MotionReveal>
           ))}
         </div>
       </div>
@@ -380,12 +403,20 @@ function Work() {
 }
 
 function Resume() {
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start 78%", "end 38%"],
+  });
+  const timelineProgress = useSpring(scrollYProgress, motionSpring.progress);
+
   return (
     <section id="resume" className="lux-resume lux-section">
       <div className="lux-shell lux-resume-grid">
-        <Reveal className="lux-resume-intro" direction="left">
+        <MotionReveal className="lux-resume-intro" direction="left">
           <p className="lux-eyebrow">Resume</p>
-          <h2>A technical beginning. A broader business direction.</h2>
+          <MotionHeading>A technical beginning. A broader business direction.</MotionHeading>
           <p>
             The path so far moves from engineering and data science into
             product judgment, markets, and the operating realities around
@@ -400,25 +431,31 @@ function Resume() {
             Open full resume
             <Download aria-hidden="true" />
           </a>
-        </Reveal>
+        </MotionReveal>
 
-        <Reveal className="lux-timeline" direction="right" delay={0.08}>
+        <MotionReveal className="lux-timeline" direction="right" delay={0.08}>
+          <div ref={timelineRef} className="lux-timeline-track" aria-hidden="true">
+            <motion.i
+              style={shouldReduceMotion ? { scaleY: 1 } : { scaleY: timelineProgress }}
+            />
+          </div>
           {timeline.map((entry, index) => (
-            <Reveal
+            <MotionReveal
               key={`${entry.period}-${entry.title}`}
               className="lux-timeline-row"
               delay={index * 0.035}
               direction="up"
             >
+              <i className="lux-timeline-node" aria-hidden="true" />
               <span className="lux-timeline-period">{entry.period}</span>
               <div>
                 <p>{entry.place}</p>
                 <h3>{entry.title}</h3>
                 <span>{entry.note}</span>
               </div>
-            </Reveal>
+            </MotionReveal>
           ))}
-        </Reveal>
+        </MotionReveal>
       </div>
     </section>
   );
@@ -429,11 +466,11 @@ function Notes({ posts }: { posts: JournalPost[] }) {
     <section id="notes" className="lux-notes lux-section">
       <div className="lux-shell">
         <div className="lux-section-head lux-section-head-dark">
-          <Reveal direction="left">
+          <MotionReveal direction="left">
             <p className="lux-eyebrow lux-eyebrow-light">Field notes</p>
-            <h2>Ideas made clearer by writing them down.</h2>
-          </Reveal>
-          <Reveal delay={0.08} direction="right">
+            <MotionHeading>Ideas made clearer by writing them down.</MotionHeading>
+          </MotionReveal>
+          <MotionReveal delay={0.08} direction="right">
             <p>
               Short reflections on product, markets, AI, consumer behaviour,
               and what business school is changing in how I think.
@@ -442,12 +479,12 @@ function Notes({ posts }: { posts: JournalPost[] }) {
               Browse the journal
               <ArrowUpRight aria-hidden="true" />
             </Link>
-          </Reveal>
+          </MotionReveal>
         </div>
 
         <div className="lux-note-list">
           {posts.slice(0, 3).map((post, index) => (
-            <Reveal
+            <MotionReveal
               key={post.slug}
               delay={index * 0.045}
               direction={index % 2 === 0 ? "left" : "right"}
@@ -461,7 +498,7 @@ function Notes({ posts }: { posts: JournalPost[] }) {
                 </div>
                 <ArrowUpRight aria-hidden="true" />
               </Link>
-            </Reveal>
+            </MotionReveal>
           ))}
         </div>
       </div>
@@ -474,11 +511,11 @@ function Life() {
     <section id="life" className="lux-life lux-section">
       <div className="lux-shell">
         <div className="lux-life-copy">
-          <Reveal direction="left">
+          <MotionReveal direction="left">
             <p className="lux-eyebrow">Outside the work</p>
-            <h2>The quieter parts matter too.</h2>
-          </Reveal>
-          <Reveal delay={0.08} direction="right">
+            <MotionHeading>The quieter parts matter too.</MotionHeading>
+          </MotionReveal>
+          <MotionReveal delay={0.08} direction="right">
             <p>
               Hills, travel, friends, photography, and the small pauses that
               keep ambition from becoming the only thing in the frame.
@@ -487,25 +524,31 @@ function Life() {
               View the life archive
               <ArrowUpRight aria-hidden="true" />
             </Link>
-          </Reveal>
+          </MotionReveal>
         </div>
 
         <div className="lux-life-grid">
           {lifeFrames.map((image, index) => (
-            <Reveal
+            <MotionReveal
               key={image.src}
               className={`lux-life-frame lux-life-frame-${index + 1}`}
               delay={index * 0.04}
               direction={index % 2 === 0 ? "left" : "right"}
             >
-              <Image
-                src={image.src}
-                alt={image.alt}
+              <MotionMedia
+                className="lux-life-media"
+                parallax={index === 1 ? 5 : 3}
                 fill
-                sizes="(max-width: 760px) 100vw, 55vw"
-              />
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  sizes="(max-width: 760px) 100vw, 55vw"
+                />
+              </MotionMedia>
               <p>{image.caption}</p>
-            </Reveal>
+            </MotionReveal>
           ))}
         </div>
       </div>
