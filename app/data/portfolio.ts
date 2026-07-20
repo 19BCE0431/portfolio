@@ -53,22 +53,20 @@ export const profile = {
 
 export const navItems = [
   { label: "Intro", href: "/#intro", sectionId: "intro" },
-  { label: "Story", href: "/#story", sectionId: "story" },
+  { label: "Profile", href: "/#profile", sectionId: "profile" },
   { label: "Work", href: "/#work", sectionId: "work" },
   { label: "Resume", href: "/#resume", sectionId: "resume" },
-  { label: "Tools", href: "/#tools", sectionId: "tools" },
-  { label: "Journal", href: "/#journal", sectionId: "journal" },
+  { label: "Notes", href: "/#notes", sectionId: "notes" },
   { label: "Life", href: "/#life", sectionId: "life" },
   { label: "Contact", href: "/#contact", sectionId: "contact" },
 ];
 
 export const sectionNavItems = [
   { label: "Intro", shortLabel: "Intro", href: "#intro", sectionId: "intro" },
-  { label: "Story", shortLabel: "Story", href: "#story", sectionId: "story" },
+  { label: "Profile", shortLabel: "Profile", href: "#profile", sectionId: "profile" },
   { label: "Work", shortLabel: "Work", href: "#work", sectionId: "work" },
   { label: "Resume", shortLabel: "CV", href: "#resume", sectionId: "resume" },
-  { label: "MBA Tools Desk", shortLabel: "Tools", href: "#tools", sectionId: "tools" },
-  { label: "Journal", shortLabel: "Notes", href: "#journal", sectionId: "journal" },
+  { label: "Notes", shortLabel: "Notes", href: "#notes", sectionId: "notes" },
   { label: "Life", shortLabel: "Life", href: "#life", sectionId: "life" },
   { label: "Contact", shortLabel: "Hello", href: "#contact", sectionId: "contact" },
 ];

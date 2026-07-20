@@ -7,7 +7,6 @@ import { GeistMono } from "geist/font/mono";
 import { AnalyticsEvents } from "./components/AnalyticsEvents";
 import { MicrosoftClarity } from "./components/MicrosoftClarity";
 import { PageTransition } from "./components/PageTransition";
-import { SectionNavigator } from "./components/SectionNavigator";
 import { SiteNav } from "./components/SiteNav";
 import "./globals.css";
 import { profile } from "./data/portfolio";
@@ -149,7 +148,6 @@ export default function RootLayout({
           />
         ))}
         <SiteNav />
-        <SectionNavigator />
         <PageTransition>{children}</PageTransition>
         <AnalyticsEvents />
         <Analytics />
