@@ -7,10 +7,16 @@ import {
   Download,
   Mail,
 } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { getProjectBySlug, type ArchiveProject } from "../data/archive";
 import type { JournalPost } from "../data/journal";
 import { lifeGalleryImages } from "../data/media";
@@ -61,6 +67,16 @@ const lifeFrames = [
   lifeGalleryImages[2],
 ].filter(Boolean);
 
+const sections = [
+  { id: "intro", label: "Introduction" },
+  { id: "profile", label: "Profile" },
+  { id: "work", label: "Selected work" },
+  { id: "resume", label: "Resume" },
+  { id: "notes", label: "Field notes" },
+  { id: "life", label: "Outside the work" },
+  { id: "contact", label: "Connect" },
+];
+
 function Reveal({
   children,
   className,
@@ -95,36 +111,109 @@ function formatDate(date: string) {
   }).format(parsed);
 }
 
-function Hero() {
-  const shouldReduceMotion = useReducedMotion();
+function ScrollGuide() {
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 28,
+    mass: 0.3,
+  });
+  const [activeSection, setActiveSection] = useState(sections[0]);
+
+  useEffect(() => {
+    const elements = sections
+      .map((section) => document.getElementById(section.id))
+      .filter((element): element is HTMLElement => Boolean(element));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
+
+        if (visible?.target.id) {
+          const section = sections.find((item) => item.id === visible.target.id);
+          if (section) setActiveSection(section);
+        }
+      },
+      {
+        rootMargin: "-34% 0px -50% 0px",
+        threshold: [0.02, 0.2, 0.45],
+      },
+    );
+
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+
+  const activeIndex = sections.findIndex((section) => section.id === activeSection.id);
 
   return (
-    <section id="intro" className="lux-hero">
-      <Image
-        src="/images/mba-life/iim-campus-01.jpg"
-        alt="IIM Sirmaur campus in the hills"
-        fill
-        priority
-        sizes="100vw"
-        className="lux-hero-image"
+    <>
+      <motion.div
+        className="lux-scroll-progress"
+        style={{ scaleX: progress }}
+        aria-hidden="true"
       />
+      <aside className="lux-scroll-marker" aria-label="Current page section">
+        <span>{String(activeIndex + 1).padStart(2, "0")}</span>
+        <div aria-hidden="true">
+          <motion.i style={{ scaleY: progress }} />
+        </div>
+        <strong>{activeSection.label}</strong>
+      </aside>
+    </>
+  );
+}
+
+function Hero() {
+  const heroRef = useRef<HTMLElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "4%"]);
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1.01, 1.055]);
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, -20]);
+  const copyOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 0.62]);
+
+  return (
+    <section id="intro" ref={heroRef} className="lux-hero">
+      <motion.div
+        className="lux-hero-media"
+        style={shouldReduceMotion ? undefined : { y: imageY, scale: imageScale }}
+      >
+        <Image
+          src="/images/profile/hero-workspace-v2.png"
+          alt="Mohit Sai Krishna working at a desk in a modern studio"
+          fill
+          priority
+          sizes="100vw"
+          className="lux-hero-image"
+        />
+      </motion.div>
       <div className="lux-hero-shade" aria-hidden="true" />
 
       <motion.div
         className="lux-hero-copy lux-shell"
         initial={shouldReduceMotion ? false : { opacity: 0, y: 22 }}
         animate={{ opacity: 1, y: 0 }}
+        style={shouldReduceMotion ? undefined : { y: copyY, opacity: copyOpacity }}
         transition={{ duration: 0.82, delay: 0.12, ease }}
       >
-        <p className="lux-hero-context">MBA at IIM Sirmaur · India</p>
-        <h1>Mohit Sai Krishna</h1>
+        <p className="lux-hero-context">Product · Strategy · Applied AI</p>
+        <h1>
+          <span>Mohit Sai </span>
+          <span>Krishna</span>
+        </h1>
         <p className="lux-hero-thesis">
-          Product thinker with a technical foundation, exploring how data, AI,
-          and market context can lead to better business decisions.
+          I connect technical depth with business judgment to make complex
+          products, markets, and decisions easier to understand.
         </p>
         <div className="lux-hero-actions">
           <Link href="#profile" className="lux-button lux-button-light">
-            Read my story
+            Explore the portfolio
             <ArrowDown aria-hidden="true" />
           </Link>
           <a
@@ -140,8 +229,11 @@ function Hero() {
       </motion.div>
 
       <div className="lux-hero-foot lux-shell">
-        <span>Product · Strategy · Applied AI</span>
-        <span>Portfolio 2026</span>
+        <span>MBA Candidate · IIM Sirmaur</span>
+        <span className="lux-hero-scroll-cue">
+          Scroll to explore
+          <ArrowDown aria-hidden="true" />
+        </span>
       </div>
     </section>
   );
@@ -391,6 +483,7 @@ export function PremiumPortfolio({
 }) {
   return (
     <main className="lux-home">
+      <ScrollGuide />
       <Hero />
       <Profile />
       <Work />

@@ -1,4 +1,12 @@
-import { ArrowUpRight, Contact, FileText, Mail, MapPin } from "lucide-react";
+import {
+  ArrowUpRight,
+  Camera,
+  Contact,
+  FileText,
+  Mail,
+  MapPin,
+  MessageCircle,
+} from "lucide-react";
 import { profile } from "../data/portfolio";
 
 const contactLinks = [
@@ -17,6 +25,16 @@ const contactLinks = [
     href: profile.resume,
     icon: FileText,
   },
+  {
+    label: "Instagram",
+    href: profile.instagram,
+    icon: Camera,
+  },
+  {
+    label: "WhatsApp",
+    href: profile.whatsApp,
+    icon: MessageCircle,
+  },
 ];
 
 export function Footer() {
@@ -26,11 +44,11 @@ export function Footer() {
         <div className="lux-footer-main">
           <div>
             <p className="lux-eyebrow lux-eyebrow-light">A good place to begin</p>
-            <h2>Let&apos;s talk about a question worth solving.</h2>
+            <h2>Let&apos;s connect.</h2>
           </div>
           <p>
-            Product, strategy, applied AI, retail, or the business decisions
-            around technology. Email is the simplest way to start.
+            Product, strategy, applied AI, retail, or simply something here
+            that made you curious. Choose the channel that feels natural.
           </p>
         </div>
 

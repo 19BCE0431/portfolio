@@ -24,6 +24,7 @@ export function SiteNav() {
   const shouldReduceMotion = useReducedMotion();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("intro");
 
   useEffect(() => {
     const update = () => setHasScrolled(window.scrollY > 24);
@@ -43,6 +44,32 @@ export function SiteNav() {
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [mobileOpen]);
 
+  useEffect(() => {
+    const sectionIds = navItems.map((item) => item.sectionId).filter(Boolean);
+    const elements = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((element): element is HTMLElement => Boolean(element));
+
+    if (elements.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
+
+        if (visible?.target.id) setActiveSection(visible.target.id);
+      },
+      {
+        rootMargin: "-32% 0px -52% 0px",
+        threshold: [0.02, 0.2, 0.5],
+      },
+    );
+
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <header className="lux-nav-wrap">
       <nav
@@ -60,7 +87,12 @@ export function SiteNav() {
 
         <div className="lux-nav-center" aria-label="Homepage sections">
           {sectionLinks.map((item) => (
-            <Link key={item.href} href={item.href}>
+            <Link
+              key={item.href}
+              href={item.href}
+              className={item.href.endsWith(`#${activeSection}`) ? "is-active" : ""}
+              aria-current={item.href.endsWith(`#${activeSection}`) ? "location" : undefined}
+            >
               {item.label}
             </Link>
           ))}
@@ -70,6 +102,10 @@ export function SiteNav() {
           Connect
           <ArrowUpRight aria-hidden="true" />
         </Link>
+
+        <span className="lux-nav-current">
+          {navItems.find((item) => item.sectionId === activeSection)?.label ?? "Intro"}
+        </span>
 
         <button
           type="button"
@@ -101,6 +137,8 @@ export function SiteNav() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
+                    aria-current={item.sectionId === activeSection ? "location" : undefined}
+                    className={item.sectionId === activeSection ? "is-active" : ""}
                   >
                     {item.label}
                   </Link>
