@@ -19,7 +19,14 @@ export function PageTransition({ children }: { children: ReactNode }) {
         id="main-content"
         tabIndex={-1}
         className="motion-page"
-        initial={false}
+        // Entrance mirrors the exit so a route change reads as one continuous
+        // movement. AnimatePresence's `initial={false}` still suppresses this
+        // on first paint, where the preloader already owns the entrance.
+        initial={
+          shouldReduceMotion
+            ? { opacity: 1 }
+            : { opacity: 0, y: 12, scale: 0.997, filter: "blur(4px)" }
+        }
         animate={
           shouldReduceMotion
             ? { opacity: 1 }
@@ -31,7 +38,9 @@ export function PageTransition({ children }: { children: ReactNode }) {
             : { opacity: 0, y: -10, scale: 0.998, filter: "blur(3px)" }
         }
         transition={{
-          duration: motionDuration.standard,
+          duration: shouldReduceMotion
+            ? motionDuration.micro
+            : motionDuration.standard,
           ease: motionEase.enter,
         }}
       >

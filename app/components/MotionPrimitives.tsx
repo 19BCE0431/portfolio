@@ -9,16 +9,47 @@ import {
   useTransform,
 } from "framer-motion";
 import {
+  useEffect,
   useRef,
+  useSyncExternalStore,
   type MouseEvent,
   type ReactNode,
 } from "react";
 import {
   motionDuration,
   motionEase,
+  motionPointer,
   motionSpring,
+  motionVelocity,
   motionViewport,
 } from "../lib/motionSystem";
+import { useScrollVelocity } from "../lib/useScrollVelocity";
+
+const finePointerQuery = "(hover: hover) and (pointer: fine)";
+
+function subscribeToFinePointer(callback: () => void) {
+  const query = window.matchMedia(finePointerQuery);
+  query.addEventListener("change", callback);
+  return () => query.removeEventListener("change", callback);
+}
+
+function getFinePointer() {
+  return window.matchMedia(finePointerQuery).matches;
+}
+
+function getServerFinePointer() {
+  return false;
+}
+
+/** Pointer-driven effects are desktop-only: on touch there is no cursor to
+ *  parallax against, and running the listeners would cost battery for nothing. */
+export function useFinePointer() {
+  return useSyncExternalStore(
+    subscribeToFinePointer,
+    getFinePointer,
+    getServerFinePointer,
+  );
+}
 
 type RevealDirection = "up" | "left" | "right" | "none";
 
@@ -141,6 +172,15 @@ export function MotionMedia({
   );
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.055, 1, 1.055]);
 
+  // Momentum response: fast scrolling shears the frame very slightly so media
+  // reads as having mass. Clamped tight — this should register subconsciously.
+  const velocity = useScrollVelocity();
+  const skewY = useTransform(
+    velocity,
+    [-1, 0, 1],
+    [motionVelocity.maxSkewDeg, 0, -motionVelocity.maxSkewDeg],
+  );
+
   return (
     <motion.div
       ref={mediaRef}
@@ -161,7 +201,7 @@ export function MotionMedia({
     >
       <motion.div
         className="motion-media-inner"
-        style={shouldReduceMotion ? undefined : { y, scale }}
+        style={shouldReduceMotion ? undefined : { y, scale, skewY }}
       >
         {children}
       </motion.div>
@@ -251,5 +291,72 @@ export function SectionLight({
       style={shouldReduceMotion ? undefined : { x, opacity }}
       aria-hidden="true"
     />
+  );
+}
+
+/**
+ * Pointer-driven parallax. Translates children against cursor position to
+ * create spatial depth in a scene — distinct from scroll parallax, which
+ * conveys travel. Layer several at different depths for a real sense of space.
+ *
+ * Desktop-only and reduced-motion aware: on touch it renders a plain wrapper
+ * with zero listeners attached.
+ */
+export function MouseParallax({
+  children,
+  className,
+  depth = motionPointer.standard,
+  invert = false,
+}: {
+  children: ReactNode;
+  className?: string;
+  depth?: number;
+  invert?: boolean;
+}) {
+  const shouldReduceMotion = useReducedMotion();
+  const isFinePointer = useFinePointer();
+  const active = isFinePointer && !shouldReduceMotion;
+
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const springX = useSpring(x, motionSpring.tilt);
+  const springY = useSpring(y, motionSpring.tilt);
+
+  useEffect(() => {
+    if (!active) return;
+
+    const direction = invert ? -1 : 1;
+    let frame = 0;
+
+    const handleMove = (event: PointerEvent) => {
+      // rAF-throttled: pointermove can fire far above frame rate
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const nx = (event.clientX / window.innerWidth) * 2 - 1;
+        const ny = (event.clientY / window.innerHeight) * 2 - 1;
+        x.set(nx * depth * direction);
+        y.set(ny * depth * direction);
+      });
+    };
+
+    window.addEventListener("pointermove", handleMove, { passive: true });
+
+    return () => {
+      window.removeEventListener("pointermove", handleMove);
+      if (frame) cancelAnimationFrame(frame);
+      x.set(0);
+      y.set(0);
+    };
+  }, [active, depth, invert, x, y]);
+
+  if (!active) {
+    return <div className={className}>{children}</div>;
+  }
+
+  return (
+    <motion.div className={className} style={{ x: springX, y: springY }}>
+      {children}
+    </motion.div>
   );
 }

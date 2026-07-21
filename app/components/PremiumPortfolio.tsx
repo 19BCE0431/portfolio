@@ -21,13 +21,14 @@ import { getProjectBySlug, type ArchiveProject } from "../data/archive";
 import type { JournalPost } from "../data/journal";
 import { lifeGalleryImages } from "../data/media";
 import { profile } from "../data/portfolio";
-import { motionSpring } from "../lib/motionSystem";
+import { motionPointer, motionSpring } from "../lib/motionSystem";
 import { MagneticButton } from "./MagneticButton";
 import { useActiveSection } from "./ActiveSectionProvider";
 import {
   MotionHeading,
   MotionMedia,
   MotionReveal,
+  MouseParallax,
   SectionLight,
   TiltSurface,
 } from "./MotionPrimitives";
@@ -234,7 +235,11 @@ function Hero() {
             : { y: mediaY, scale: mediaScale }
         }
       >
-        <WorkMotionScene />
+        {/* Pointer parallax sits inside scroll parallax so the scene has two
+            independent depth cues: travel (scroll) and space (cursor). */}
+        <MouseParallax depth={motionPointer.subtle} invert>
+          <WorkMotionScene />
+        </MouseParallax>
       </motion.div>
       <div className="lux-hero-shade" aria-hidden="true" />
 

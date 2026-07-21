@@ -21,6 +21,10 @@ export const motionSpring = {
   cursor: { type: "spring", stiffness: 250, damping: 28, mass: 0.34 },
   tilt: { type: "spring", stiffness: 150, damping: 24, mass: 0.62 },
   progress: { type: "spring", stiffness: 120, damping: 28, mass: 0.3 },
+  /** Velocity must track input almost immediately and settle hard. A soft
+   *  spring lags the scroll and then overshoots on the deceleration tail,
+   *  which reads as the effect firing *after* you stop — visibly broken. */
+  velocity: { type: "spring", stiffness: 420, damping: 46, mass: 0.18 },
 } satisfies Record<string, Transition>;
 
 export const motionViewport = {
@@ -39,4 +43,37 @@ export const loaderTiming = {
   heroStart: 0.58,
   hold: 820,
   exitDuration: 0.68,
+} as const;
+
+/**
+ * Scroll-velocity response. Fast scrolling applies a small skew/scale to media
+ * so the page reads as having physical momentum rather than teleporting.
+ * Clamped hard — past ~6deg this stops feeling like weight and starts feeling
+ * like a broken transform.
+ */
+export const motionVelocity = {
+  /** px/frame that maps to the maximum response */
+  saturation: 58,
+  maxSkewDeg: 2.6,
+  maxScale: 0.028,
+  /** how quickly the value falls back to rest */
+  decay: 0.86,
+} as const;
+
+/**
+ * Layered parallax depths. Negative moves against the scroll (recedes),
+ * positive moves with it (advances). Kept small: parallax should suggest
+ * depth, not draw attention to itself.
+ */
+export const motionParallax = {
+  far: -14,
+  mid: -7,
+  near: 6,
+} as const;
+
+/** Pointer-driven parallax — max px offset at the extremes of the viewport. */
+export const motionPointer = {
+  subtle: 6,
+  standard: 12,
+  pronounced: 20,
 } as const;
