@@ -5354,6 +5354,7 @@ html.lenis body {
 .lux-resume-intro h2,
 .lux-notes h2,
 .lux-life h2,
+.lux-footer h2,
 .lux-section h2 {
   font-family: var(--font-display), Georgia, serif;
   font-optical-sizing: auto;
