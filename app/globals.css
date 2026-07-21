@@ -5906,3 +5906,45 @@ h3.display-serif {
   font-weight: 450;
   letter-spacing: -0.02em;
 }
+
+/* Project outcome — the "what changed" line, promoted to a first-class
+   element. Uses the display serif so it inherits the same voice as the Proof
+   numerals, tying evidence together across the page. */
+.lux-project-outcome {
+  margin: 26px 0 30px;
+  padding-left: 18px;
+  border-left: 2px solid rgba(139, 152, 255, 0.55);
+}
+
+.lux-project-outcome > span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.44);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.lux-project-outcome > p {
+  margin: 0;
+  max-width: 34ch;
+  color: rgba(255, 255, 255, 0.94);
+  font-optical-sizing: auto;
+  font-size: clamp(1.18rem, 1.9vw, 1.62rem);
+  font-weight: 430;
+  letter-spacing: -0.012em;
+  line-height: 1.28;
+}
+
+@media (max-width: 760px) {
+  .lux-project-outcome {
+    margin: 20px 0 24px;
+    padding-left: 14px;
+  }
+
+  .lux-project-outcome > p {
+    max-width: none;
+  }
+}

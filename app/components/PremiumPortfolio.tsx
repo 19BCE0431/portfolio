@@ -406,6 +406,16 @@ function Work() {
                 </div>
                 <h3 id={`project-${project.slug}-title`}>{project.title}</h3>
                 <p>{project.shortDescription}</p>
+
+                {/* The outcome is the most important thing about a project and
+                    was previously not surfaced anywhere in the showcase. */}
+                {project.impact && (
+                  <div className="lux-project-outcome">
+                    <span>Outcome</span>
+                    <p className="display-serif">{project.impact}</p>
+                  </div>
+                )}
+
                 <dl>
                   <div>
                     <dt>Context</dt>
