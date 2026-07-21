@@ -252,7 +252,7 @@ function Hero() {
         }
       >
         <p className="lux-hero-context lux-hero-enter-context">
-          Product · Strategy · Applied AI
+          Digital portfolio · Product strategy · Applied AI
         </p>
 
         {/* Masked per-line reveal — the type rises out of its own baseline */}

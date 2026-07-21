@@ -41,14 +41,20 @@ export function Preloader() {
   return (
     <div className="lux-preloader" aria-hidden="true">
       <div className="lux-preloader-grid" />
+      <div className="lux-preloader-scene">
+        <span className="lux-preloader-scene-line" />
+        <span className="lux-preloader-scene-panel lux-preloader-scene-panel-a" />
+        <span className="lux-preloader-scene-panel lux-preloader-scene-panel-b" />
+        <span className="lux-preloader-scene-panel lux-preloader-scene-panel-c" />
+      </div>
       <div className="lux-preloader-index">
         <span>MSK</span>
-        <span>Portfolio · 2026</span>
+        <span>Digital portfolio · 2026</span>
       </div>
 
       <div className="lux-preloader-content">
         <span className="lux-preloader-kicker">
-          Product · Strategy · Applied AI
+          Product strategy · Applied AI · Systems thinking
         </span>
 
         <div className="lux-preloader-mask">
