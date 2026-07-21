@@ -97,10 +97,76 @@ const sections = [
   { id: "intro", label: "Introduction" },
   { id: "profile", label: "Profile" },
   { id: "work", label: "Selected work" },
+  { id: "capability", label: "Capability" },
   { id: "resume", label: "Resume" },
+  { id: "proof", label: "Proof" },
   { id: "notes", label: "Field notes" },
   { id: "life", label: "Outside the work" },
   { id: "contact", label: "Connect" },
+];
+
+// Grouped from the real skills/workingModes lists — arranged as a narrative
+// (why each cluster exists) rather than an undifferentiated tag cloud.
+const capabilityGroups = [
+  {
+    label: "Business lens",
+    note: "The questions asked before any code is written.",
+    items: [
+      "Product thinking",
+      "Marketing curiosity",
+      "Strategy cases",
+      "Consumer behaviour",
+      "Decision support",
+      "Data storytelling",
+    ],
+  },
+  {
+    label: "Applied AI",
+    note: "Where a model has to survive a real workflow.",
+    items: ["LLMs", "RAG", "Chainlit", "Streamlit", "Dashboards"],
+  },
+  {
+    label: "Engineering",
+    note: "Building the system end to end, not just the demo.",
+    items: ["Python", "Java", "C++", "JavaScript", "FastAPI", "Node", "Express", "React"],
+  },
+  {
+    label: "Data",
+    note: "Where the evidence actually lives.",
+    items: ["PostgreSQL", "MySQL", "MongoDB", "Trino/PrestoSQL", "Selenium", "Scrapy"],
+  },
+];
+
+// Every figure below is drawn from the verified credibility markers.
+const proofPoints = [
+  {
+    figure: "Top 10%",
+    label: "Academic Excellence",
+    detail: "IIM Sirmaur · Batch 2025-26",
+  },
+  {
+    figure: "9.15",
+    suffix: "/10",
+    label: "B.Tech CGPA",
+    detail: "Computer Science · VIT Vellore",
+  },
+  {
+    figure: "500",
+    suffix: "+",
+    label: "LeetCode problems",
+    detail: "Sustained problem-solving practice",
+  },
+  {
+    figure: "97.9",
+    suffix: "%ile",
+    label: "JEE Mains",
+    detail: "National engineering entrance",
+  },
+  {
+    figure: "1143",
+    label: "TS EAMCET rank",
+    detail: "Out of 2.42 lakh candidates",
+  },
 ];
 
 function formatDate(date: string) {
@@ -380,6 +446,95 @@ function Work() {
   );
 }
 
+function Capability() {
+  return (
+    <section id="capability" className="lux-capability lux-section">
+      <div className="lux-shell">
+        <div className="lux-section-head">
+          <MotionReveal direction="left">
+            <p className="lux-eyebrow">Capability</p>
+            <MotionHeading>
+              A technical toolkit, pointed at business questions.
+            </MotionHeading>
+          </MotionReveal>
+          <MotionReveal delay={0.08} direction="right">
+            <p>
+              The stack matters less than what it is aimed at. These are the
+              tools I reach for, grouped by the kind of problem they answer.
+            </p>
+          </MotionReveal>
+        </div>
+
+        <div className="lux-capability-grid">
+          {capabilityGroups.map((group, index) => (
+            <MotionReveal
+              key={group.label}
+              className="lux-capability-group"
+              delay={index * 0.055}
+              direction="up"
+            >
+              <div className="lux-capability-head">
+                <span className="lux-capability-index">
+                  0{index + 1}
+                </span>
+                <h3>{group.label}</h3>
+              </div>
+              <p className="lux-capability-note">{group.note}</p>
+              <ul className="lux-capability-list">
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </MotionReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Proof() {
+  return (
+    <section id="proof" className="lux-proof lux-section">
+      <SectionLight className="motion-section-light-dark" />
+      <div className="lux-shell">
+        <div className="lux-section-head">
+          <MotionReveal direction="left">
+            <p className="lux-eyebrow lux-eyebrow-light">Proof</p>
+            <MotionHeading>Numbers that were earned slowly.</MotionHeading>
+          </MotionReveal>
+          <MotionReveal delay={0.08} direction="right">
+            <p>
+              Not the whole story, but the part that can be checked. Academics,
+              entrances, and the quieter habit of showing up to hard problems.
+            </p>
+          </MotionReveal>
+        </div>
+
+        <div className="lux-proof-grid">
+          {proofPoints.map((point, index) => (
+            <MotionReveal
+              key={point.label}
+              className="lux-proof-item"
+              delay={index * 0.05}
+              direction="up"
+            >
+              <p className="lux-proof-figure display-serif">
+                {point.figure}
+                {point.suffix && (
+                  <span className="lux-proof-suffix">{point.suffix}</span>
+                )}
+              </p>
+              <h3>{point.label}</h3>
+              <span>{point.detail}</span>
+            </MotionReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Resume() {
   const timelineRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
@@ -545,7 +700,9 @@ export function PremiumPortfolio({
       <Hero />
       <Profile />
       <Work />
+      <Capability />
       <Resume />
+      <Proof />
       <Notes posts={journalPosts} />
       <Life />
     </main>

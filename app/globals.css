@@ -5685,3 +5685,205 @@ html.lenis body {
     animation: none;
   }
 }
+
+/* ==========================================================================
+   Capability — crisp white specification sheet
+   ========================================================================== */
+
+.lux-capability {
+  background: #ffffff;
+  color: var(--lux-ink);
+}
+
+.lux-capability-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: rgba(16, 16, 20, 0.1);
+  border-block: 1px solid rgba(16, 16, 20, 0.1);
+}
+
+.lux-capability-group {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: #ffffff;
+  padding: 44px 34px 48px;
+  transition: background 520ms var(--ease, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.lux-capability-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.lux-capability-index {
+  color: #9aa0ab;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.lux-capability-group h3 {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-optical-sizing: auto;
+  font-size: 1.42rem;
+  font-weight: 450;
+  letter-spacing: -0.012em;
+  line-height: 1.1;
+}
+
+.lux-capability-note {
+  margin: 0;
+  max-width: 30ch;
+  color: #5d626c;
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+.lux-capability-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lux-capability-list li {
+  border: 1px solid rgba(16, 16, 20, 0.12);
+  border-radius: 999px;
+  padding: 6px 12px;
+  color: #33363d;
+  font-size: 0.8rem;
+  line-height: 1.2;
+  transition:
+    border-color 320ms ease,
+    color 320ms ease,
+    transform 320ms ease;
+}
+
+/* ==========================================================================
+   Proof — near-black stage, numerals as the hero
+   ========================================================================== */
+
+.lux-proof {
+  background: #0b0b0d;
+  color: #f7f7f8;
+}
+
+/* Explicit track count — `auto-fit` was emitting a trailing 0px track,
+   which rendered a stray hairline against the 1px-gap background. */
+.lux-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  border-block: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 1180px) {
+  .lux-proof-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .lux-proof-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.lux-proof-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #0b0b0d;
+  padding: 46px 30px 50px;
+  transition: background 520ms ease;
+}
+
+.lux-proof-figure {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  margin: 0 0 6px;
+  color: #ffffff;
+  font-optical-sizing: auto;
+  font-size: clamp(2.6rem, 4.2vw, 3.55rem);
+  font-weight: 420;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+}
+
+.lux-proof-suffix {
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.42em;
+  font-weight: 450;
+  letter-spacing: 0;
+}
+
+.lux-proof-item h3 {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.lux-proof-item span {
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lux-capability-group:hover {
+    background: #f7f8fa;
+  }
+
+  .lux-capability-group:hover .lux-capability-list li {
+    border-color: rgba(16, 16, 20, 0.2);
+  }
+
+  .lux-capability-list li:hover {
+    border-color: rgba(16, 16, 20, 0.42);
+    color: #101014;
+    transform: translateY(-1px);
+  }
+
+  .lux-proof-item:hover {
+    background: #121216;
+  }
+}
+
+@media (max-width: 1100px) {
+  .lux-capability-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .lux-capability-grid,
+  .lux-proof-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lux-capability-group {
+    padding: 34px 24px 38px;
+  }
+
+  .lux-proof-item {
+    padding: 34px 24px 36px;
+  }
+
+  .lux-capability-note {
+    max-width: none;
+  }
+}
