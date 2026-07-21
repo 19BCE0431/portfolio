@@ -65,7 +65,7 @@ export default function ArchivePage() {
                   "shaped how",
                   "I think.",
                 ]}
-                className="max-w-[820px] text-[clamp(2rem,9.8vw,4.4rem)] font-semibold leading-[1.02] tracking-[0] md:text-[clamp(2.75rem,6.7vw,6.25rem)] md:leading-[0.94]"
+                className="display-serif max-w-[820px] text-[clamp(2rem,9.8vw,4.4rem)] font-semibold leading-[1.02] tracking-[0] md:text-[clamp(2.75rem,6.7vw,6.25rem)] md:leading-[0.94]"
               />
             </Reveal>
             <Reveal delay={0.08}>

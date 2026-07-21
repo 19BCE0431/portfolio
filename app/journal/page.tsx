@@ -58,7 +58,7 @@ export default function JournalPage() {
                 as="h1"
                 lines={["Notes I want", "to think with."]}
                 mobileLines={["Notes I want", "to think with."]}
-                className="max-w-[860px] text-[clamp(2rem,9vw,4.4rem)] font-semibold leading-[1.03] tracking-[0] md:text-[clamp(2.75rem,6.7vw,6.25rem)] md:leading-[0.94]"
+                className="display-serif max-w-[860px] text-[clamp(2rem,9vw,4.4rem)] font-semibold leading-[1.03] tracking-[0] md:text-[clamp(2.75rem,6.7vw,6.25rem)] md:leading-[0.94]"
               />
             </Reveal>
             <Reveal delay={0.08}>

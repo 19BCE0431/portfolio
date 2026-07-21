@@ -70,7 +70,7 @@ export default function LifePage() {
                 as="h1"
                 lines={["A few frames", "from outside", "the resume."]}
                 mobileLines={["A few frames", "from outside", "the resume."]}
-                className="max-w-[840px] text-[clamp(2.1rem,9.6vw,4.6rem)] font-semibold leading-[1.03] tracking-[0] md:text-[clamp(2.75rem,6.7vw,6.25rem)] md:leading-[0.94]"
+                className="display-serif max-w-[840px] text-[clamp(2.1rem,9.6vw,4.6rem)] font-semibold leading-[1.03] tracking-[0] md:text-[clamp(2.75rem,6.7vw,6.25rem)] md:leading-[0.94]"
               />
             </Reveal>
             <Reveal delay={0.08}>

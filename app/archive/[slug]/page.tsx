@@ -168,7 +168,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 as="h1"
                 lines={titleLines}
                 mobileLines={mobileTitleLines}
-                className="max-w-[820px] text-[clamp(2rem,9.8vw,4.45rem)] font-semibold leading-[1.03] tracking-[0] md:text-[clamp(2.8rem,6.8vw,6.45rem)] md:leading-[0.94]"
+                className="display-serif max-w-[820px] text-[clamp(2rem,9.8vw,4.45rem)] font-semibold leading-[1.03] tracking-[0] md:text-[clamp(2.8rem,6.8vw,6.45rem)] md:leading-[0.94]"
               />
             </Reveal>
 

@@ -284,7 +284,7 @@ export default async function ToolPage({ params }: ToolPageProps) {
                 as="h1"
                 lines={titleLines}
                 mobileLines={mobileTitleLines}
-                className="max-w-[860px] text-[clamp(2rem,9.8vw,4.5rem)] font-semibold leading-[1.03] tracking-[0] md:text-[clamp(2.9rem,6.8vw,6.5rem)] md:leading-[0.94]"
+                className="display-serif max-w-[860px] text-[clamp(2rem,9.8vw,4.5rem)] font-semibold leading-[1.03] tracking-[0] md:text-[clamp(2.9rem,6.8vw,6.5rem)] md:leading-[0.94]"
               />
               <div className="mt-6 flex flex-wrap gap-2">
                 <StatusBadge status={tool.status} />

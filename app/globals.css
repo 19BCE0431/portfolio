@@ -5887,3 +5887,13 @@ html.lenis body {
     max-width: none;
   }
 }
+
+/* Display-serif headings on inner pages: Tailwind's font-semibold (600) is far
+   too heavy for a high-contrast serif at display sizes. Element+class
+   specificity (0,0,1,1) intentionally outranks the .font-semibold utility. */
+h1.display-serif,
+h2.display-serif,
+h3.display-serif {
+  font-weight: 450;
+  letter-spacing: -0.02em;
+}

@@ -231,7 +231,7 @@ export default async function JournalDetailPage({ params }: JournalDetailProps) 
               <HeadingReveal
                 as="h1"
                 lines={[post.title]}
-                className="max-w-[820px] text-[clamp(2rem,8.4vw,4.55rem)] font-semibold leading-[1.04] tracking-[0] md:text-[clamp(2.45rem,4.8vw,5.1rem)] md:leading-[0.98]"
+                className="display-serif max-w-[820px] text-[clamp(2rem,8.4vw,4.55rem)] font-semibold leading-[1.04] tracking-[0] md:text-[clamp(2.45rem,4.8vw,5.1rem)] md:leading-[0.98]"
               />
             </Reveal>
             <Reveal className="max-w-[650px]" delay={0.08}>
