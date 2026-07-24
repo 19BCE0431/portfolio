@@ -4384,12 +4384,18 @@ div[id="gallery"] {
 
 .motion-media-inner img {
   object-fit: cover;
+  /* Promote to its own compositor layer so 3D tilt on the parent doesn't
+     re-rasterise the image each frame — that re-raster was the hover jitter. */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .lux-project-visual {
   overflow: hidden;
   transform-origin: 50% 58%;
   transition: box-shadow var(--motion-standard) var(--motion-enter);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 .lux-project-visual-link,

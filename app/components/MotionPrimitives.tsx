@@ -201,8 +201,8 @@ export function MotionMedia({
 export function TiltSurface({
   children,
   className,
-  maxTilt = 3.2,
-  lift = 7,
+  maxTilt = 2,
+  lift = 5,
   cursorLabel,
 }: {
   children: ReactNode;

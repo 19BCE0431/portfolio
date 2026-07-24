@@ -108,39 +108,107 @@ export const viewport: Viewport = {
   themeColor: "#09090b",
 };
 
+const siteUrl = "https://mohitsaikrishna.in";
+
 const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
+  "@id": `${siteUrl}/#person`,
   name: profile.name,
   alternateName: profile.shortName,
-  url: "https://mohitsaikrishna.in",
-  image: `https://mohitsaikrishna.in${profile.portrait}`,
+  url: siteUrl,
+  image: `${siteUrl}${profile.portrait}`,
   jobTitle: "MBA Candidate",
-  affiliation: {
-    "@type": "CollegeOrUniversity",
-    name: "IIM Sirmaur",
+  description:
+    "MBA candidate at IIM Sirmaur (Batch 2025-27, top 10% academic standing) with a Computer Science and Data Science foundation from VIT Vellore and applied AI experience at BigHaat. Works at the intersection of product strategy, marketing, business analytics, and AI-enabled systems.",
+  email: `mailto:${profile.email}`,
+  nationality: "Indian",
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "IN",
   },
+  knowsLanguage: ["English", "Hindi", "Telugu"],
+  alumniOf: [
+    {
+      "@type": "CollegeOrUniversity",
+      name: "Indian Institute of Management Sirmaur",
+      sameAs: "https://www.iimsirmaur.ac.in/",
+    },
+    {
+      "@type": "CollegeOrUniversity",
+      name: "Vellore Institute of Technology",
+      sameAs: "https://vit.ac.in/",
+    },
+  ],
+  worksFor: {
+    "@type": "Organization",
+    name: "BigHaat Agro",
+  },
+  hasOccupation: [
+    {
+      "@type": "Occupation",
+      name: "Data Science Engineer",
+      occupationLocation: { "@type": "Country", name: "India" },
+      skills:
+        "Applied AI, RAG, price intelligence, document intelligence, anomaly detection, automation",
+    },
+    {
+      "@type": "Occupation",
+      name: "MBA Candidate",
+      skills:
+        "Product strategy, product marketing, business analytics, consumer behaviour, decision support",
+    },
+  ],
+  hasCredential: [
+    {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "degree",
+      name: "MBA (in progress) — IIM Sirmaur, Batch 2025-27",
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "degree",
+      name: "B.Tech, Computer Science — VIT Vellore, CGPA 9.15/10",
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "award",
+      name: "Academic Excellence — Top 10% of IIM Sirmaur Batch 2025-26",
+    },
+  ],
   knowsAbout: [
     "Product Strategy",
     "Product Marketing",
     "Business Analytics",
+    "Applied AI",
+    "Retrieval-Augmented Generation",
     "AI Workflows",
     "Data Science",
     "Consumer Behavior",
-    "Retail",
+    "Decision Support Systems",
+    "Retail and Agri-commerce",
   ],
   sameAs: [profile.linkedIn, profile.instagram].filter(Boolean),
+};
+
+const profilePageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": `${siteUrl}/#profilepage`,
+  url: siteUrl,
+  name: `${profile.name} — Portfolio`,
+  dateModified: new Date().toISOString(),
+  mainEntity: { "@id": `${siteUrl}/#person` },
+  inLanguage: "en-IN",
 };
 
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": `${siteUrl}/#website`,
   name: `${profile.shortName} Portfolio`,
-  url: "https://mohitsaikrishna.in",
-  author: {
-    "@type": "Person",
-    name: profile.name,
-  },
+  url: siteUrl,
+  author: { "@id": `${siteUrl}/#person` },
   inLanguage: "en-IN",
 };
 
@@ -161,7 +229,7 @@ export default function RootLayout({
       className={`${GeistSans.variable} ${GeistMono.variable} ${fraunces.variable}`}
     >
       <body className="antialiased">
-        {[personJsonLd, websiteJsonLd].map((jsonLd) => (
+        {[personJsonLd, profilePageJsonLd, websiteJsonLd].map((jsonLd) => (
           <script
             key={jsonLd["@type"]}
             type="application/ld+json"
