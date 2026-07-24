@@ -3475,20 +3475,24 @@ div[id="gallery"] {
   border-top: 1px solid #d4d6cf;
 }
 
+/* padding-left carves a dedicated rail gutter so the vertical line + node dots
+   never sit under the period label or content. */
 .lux-timeline-row {
   display: grid;
   grid-template-columns: 116px 1fr;
-  gap: 38px;
-  padding-block: 34px;
+  gap: 40px;
+  padding-block: 36px;
+  padding-left: 48px;
   border-bottom: 1px solid #d4d6cf;
 }
 
 .lux-timeline-period {
   padding-top: 5px;
-  color: #777b73;
+  color: #6f736b;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 .lux-timeline-row p {
@@ -3990,10 +3994,29 @@ div[id="gallery"] {
     position: static;
   }
 
+  /* On phones the period becomes a label stacked above the entry — a 2-column
+     grid at this width forced the rail, period, and title to collide. */
   .lux-timeline-row {
-    grid-template-columns: 88px 1fr;
-    gap: 20px;
-    padding-block: 28px;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding-block: 26px;
+    padding-left: 34px;
+  }
+
+  .lux-timeline-period {
+    padding-top: 0;
+    margin-bottom: 2px;
+  }
+
+  .lux-timeline-node {
+    top: 1.9rem;
+    left: 4px;
+    width: 12px;
+    height: 12px;
+  }
+
+  .lux-timeline-track {
+    left: 9px;
   }
 
   .lux-timeline-row h3 {
@@ -4401,21 +4424,25 @@ div[id="gallery"] {
   position: relative;
 }
 
+/* Rail lives inside the row's left gutter (padding-left). Track sits at 15px
+   from the timeline edge; nodes are centred on it. Content clears at 48px. */
 .lux-timeline-track {
   position: absolute;
   z-index: 1;
   top: 0;
   bottom: 0;
-  left: -1px;
-  width: 1px;
-  background: rgba(21, 24, 22, 0.14);
+  left: 15px;
+  width: 2px;
+  border-radius: 2px;
+  background: rgba(21, 24, 22, 0.12);
 }
 
 .lux-timeline-track i {
   display: block;
   width: 100%;
   height: 100%;
-  background: #1d211f;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #1d211f, #4c5f89);
   transform-origin: top center;
 }
 
@@ -4423,19 +4450,22 @@ div[id="gallery"] {
   position: relative;
 }
 
+/* Node centred on the 2px track at left:15 → node left = 16 - (14/2) = 9px.
+   A soft ring lifts it off the line. */
 .lux-timeline-node {
   position: absolute;
   z-index: 2;
-  top: 2.1rem;
-  left: -5px;
-  width: 9px;
-  height: 9px;
-  border: 2px solid currentColor;
+  top: 2.55rem;
+  left: 9px;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #4c5f89;
   border-radius: 50%;
-  background: var(--background, #f3f3ef);
+  background: #edf1fa;
+  box-shadow: 0 0 0 4px #edf1fa;
   transition:
     transform var(--motion-fast) var(--motion-enter),
-    background-color var(--motion-fast) var(--motion-micro);
+    border-color var(--motion-fast) var(--motion-micro);
 }
 
 .lux-life-frame > .motion-media-inner {

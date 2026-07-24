@@ -20,10 +20,8 @@ import {
   motionEase,
   motionPointer,
   motionSpring,
-  motionVelocity,
   motionViewport,
 } from "../lib/motionSystem";
-import { useScrollVelocity } from "../lib/useScrollVelocity";
 
 const finePointerQuery = "(hover: hover) and (pointer: fine)";
 
@@ -172,15 +170,6 @@ export function MotionMedia({
   );
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.055, 1, 1.055]);
 
-  // Momentum response: fast scrolling shears the frame very slightly so media
-  // reads as having mass. Clamped tight — this should register subconsciously.
-  const velocity = useScrollVelocity();
-  const skewY = useTransform(
-    velocity,
-    [-1, 0, 1],
-    [motionVelocity.maxSkewDeg, 0, -motionVelocity.maxSkewDeg],
-  );
-
   return (
     <motion.div
       ref={mediaRef}
@@ -201,7 +190,7 @@ export function MotionMedia({
     >
       <motion.div
         className="motion-media-inner"
-        style={shouldReduceMotion ? undefined : { y, scale, skewY }}
+        style={shouldReduceMotion ? undefined : { y, scale }}
       >
         {children}
       </motion.div>
