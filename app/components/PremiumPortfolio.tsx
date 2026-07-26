@@ -160,12 +160,19 @@ const capabilityGroups = [
   },
 ];
 
-// Every figure below is drawn from the verified credibility markers.
+// Reframed to lead with academic standing and a real business outcome rather
+// than entrance-exam ranks. Every figure is drawn from verified data.
 const proofPoints = [
   {
     figure: "Top 10%",
     label: "Academic Excellence",
     detail: "IIM Sirmaur · Batch 2025-26",
+  },
+  {
+    figure: "28",
+    suffix: "%",
+    label: "Order lift, shipped",
+    detail: "Image-led discovery · BigHaat",
   },
   {
     figure: "9.15",
@@ -177,18 +184,7 @@ const proofPoints = [
     figure: "500",
     suffix: "+",
     label: "LeetCode problems",
-    detail: "Sustained problem-solving practice",
-  },
-  {
-    figure: "97.9",
-    suffix: "%ile",
-    label: "JEE Mains",
-    detail: "National engineering entrance",
-  },
-  {
-    figure: "1143",
-    label: "TS EAMCET rank",
-    detail: "Out of 2.42 lakh candidates",
+    detail: "Sustained engineering practice",
   },
 ];
 
@@ -607,49 +603,108 @@ function Work() {
   );
 }
 
+const capabilityMarqueeA = [
+  "Product thinking",
+  "Marketing curiosity",
+  "Strategy cases",
+  "Consumer behaviour",
+  "Decision support",
+  "Data storytelling",
+  "LLMs",
+  "RAG",
+  "Chainlit",
+  "Streamlit",
+  "Dashboards",
+];
+
+const capabilityMarqueeB = [
+  "Python",
+  "Java",
+  "C++",
+  "JavaScript",
+  "FastAPI",
+  "Node",
+  "Express",
+  "React",
+  "PostgreSQL",
+  "MySQL",
+  "MongoDB",
+  "Trino/PrestoSQL",
+  "Selenium",
+  "Scrapy",
+];
+
+function CapabilityMarquee({
+  items,
+  reverse = false,
+}: {
+  items: string[];
+  reverse?: boolean;
+}) {
+  // Doubled so the -50% translate loops seamlessly.
+  const loop = [...items, ...items];
+  return (
+    <div
+      className="lux-cap-marquee"
+      data-reverse={reverse ? "true" : undefined}
+      aria-hidden="true"
+    >
+      <div className="lux-cap-marquee-track">
+        {loop.map((item, index) => (
+          <span key={`${item}-${index}`} className="lux-cap-chip">
+            {item}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Capability() {
   return (
     <section id="capability" className="lux-capability lux-section">
       <div className="lux-shell">
-        <div className="lux-section-head">
+        <div className="lux-capability-top">
           <MotionReveal direction="left">
             <p className="lux-eyebrow">Capability</p>
             <MotionHeading>
-              A technical toolkit, pointed at business questions.
+              Engineering depth, aimed at business questions.
             </MotionHeading>
           </MotionReveal>
           <MotionReveal delay={0.08} direction="right">
-            <p>
-              The stack matters less than what it is aimed at. These are the
-              tools I reach for, grouped by the kind of problem they answer.
+            <p className="lux-capability-lede">
+              Four ways of working, one instinct: reduce a complicated system to
+              a clear choice. The stack below is what that instinct reaches for.
             </p>
           </MotionReveal>
         </div>
 
-        <div className="lux-capability-grid">
+        <div className="lux-capability-domains">
           {capabilityGroups.map((group, index) => (
             <MotionReveal
               key={group.label}
-              className="lux-capability-group"
-              delay={index * 0.055}
+              className="lux-capability-domain"
+              delay={index * 0.05}
               direction="up"
             >
-              <div className="lux-capability-head">
-                <span className="lux-capability-index">
-                  0{index + 1}
-                </span>
-                <h3>{group.label}</h3>
-              </div>
-              <p className="lux-capability-note">{group.note}</p>
-              <ul className="lux-capability-list">
-                {group.items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
+              <span className="lux-capability-domain-index">0{index + 1}</span>
+              <h3 className="display-serif">{group.label}</h3>
+              <p>{group.note}</p>
             </MotionReveal>
           ))}
         </div>
       </div>
+
+      <div className="lux-capability-marquees">
+        <CapabilityMarquee items={capabilityMarqueeA} />
+        <CapabilityMarquee items={capabilityMarqueeB} reverse />
+      </div>
+
+      <ul className="sr-only">
+        {[...capabilityMarqueeA, ...capabilityMarqueeB].map((skill) => (
+          <li key={skill}>{skill}</li>
+        ))}
+      </ul>
     </section>
   );
 }
@@ -662,12 +717,12 @@ function Proof() {
         <div className="lux-section-head">
           <MotionReveal direction="left">
             <p className="lux-eyebrow lux-eyebrow-light">Proof</p>
-            <MotionHeading>Numbers that were earned slowly.</MotionHeading>
+            <MotionHeading>Signals worth checking.</MotionHeading>
           </MotionReveal>
           <MotionReveal delay={0.08} direction="right">
             <p>
-              Not the whole story, but the part that can be checked. Academics,
-              entrances, and the quieter habit of showing up to hard problems.
+              Academic standing, engineering rigour, and a shipped business
+              result — the parts of the story that can be verified.
             </p>
           </MotionReveal>
         </div>

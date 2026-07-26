@@ -5984,7 +5984,7 @@ html.lenis body {
    which rendered a stray hairline against the 1px-gap background. */
 .lux-proof-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1px;
   background: rgba(255, 255, 255, 0.1);
   border-block: 1px solid rgba(255, 255, 255, 0.1);
@@ -5992,7 +5992,7 @@ html.lenis body {
 
 @media (max-width: 1180px) {
   .lux-proof-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -6271,4 +6271,193 @@ h3.display-serif {
   border-radius: 2px;
   background: linear-gradient(90deg, #8b98ff, #6fb7c8);
   transition: transform 120ms linear;
+}
+
+/* ==========================================================================
+   Capability — redesigned: domain legend + kinetic skill marquee
+   ========================================================================== */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.lux-capability-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.7fr);
+  align-items: end;
+  gap: 72px;
+  margin-bottom: 64px;
+}
+
+.lux-capability-top h2 {
+  max-width: 720px;
+  font-size: clamp(2rem, 4.4vw, 4.2rem);
+  font-weight: 520;
+  line-height: 1.02;
+}
+
+.lux-capability-lede {
+  margin: 0;
+  color: #55596033;
+  color: #565a61;
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.lux-capability-domains {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.lux-capability-domain {
+  padding-top: 22px;
+  border-top: 1px solid rgba(16, 16, 20, 0.16);
+}
+
+.lux-capability-domain-index {
+  display: block;
+  margin-bottom: 18px;
+  color: #9aa0ab;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+}
+
+.lux-capability-domain h3 {
+  margin: 0 0 10px;
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  font-weight: 450;
+  letter-spacing: -0.014em;
+}
+
+.lux-capability-domain p {
+  margin: 0;
+  max-width: 26ch;
+  color: #5d626c;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+/* Kinetic marquee — full-bleed, edge-faded, pauses on hover */
+.lux-capability-marquees {
+  display: grid;
+  gap: 16px;
+  margin-top: 72px;
+  overflow: hidden;
+}
+
+.lux-cap-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+
+.lux-cap-marquee-track {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  will-change: transform;
+  animation: cap-marquee 46s linear infinite;
+}
+
+.lux-cap-marquee[data-reverse="true"] .lux-cap-marquee-track {
+  animation-direction: reverse;
+}
+
+.lux-cap-marquee:hover .lux-cap-marquee-track {
+  animation-play-state: paused;
+}
+
+.lux-cap-chip {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 26px;
+  border: 1px solid rgba(16, 16, 20, 0.14);
+  border-radius: 999px;
+  color: #26282d;
+  font-size: clamp(1rem, 1.5vw, 1.22rem);
+  font-weight: 450;
+  white-space: nowrap;
+  transition: border-color 260ms ease, color 260ms ease, background 260ms ease;
+}
+
+.lux-cap-chip::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #8b98ff;
+  opacity: 0.7;
+}
+
+.lux-cap-marquee[data-reverse="true"] .lux-cap-chip::before {
+  background: #6fb7c8;
+}
+
+@media (hover: hover) {
+  .lux-cap-chip:hover {
+    border-color: rgba(16, 16, 20, 0.4);
+    color: #101014;
+    background: #f6f7fa;
+  }
+}
+
+@keyframes cap-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 900px) {
+  .lux-capability-top {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    margin-bottom: 48px;
+  }
+
+  .lux-capability-domains {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 20px;
+  }
+
+  .lux-capability-marquees {
+    margin-top: 52px;
+  }
+
+  .lux-cap-chip {
+    padding: 12px 20px;
+  }
+}
+
+@media (max-width: 520px) {
+  .lux-capability-domains {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lux-cap-marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .lux-cap-marquee-track {
+    flex-wrap: wrap;
+    width: auto;
+    animation: none;
+  }
 }
