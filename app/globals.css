@@ -3092,7 +3092,12 @@ div[id="gallery"] {
   align-items: flex-end;
   isolation: isolate;
   overflow: hidden;
-  background: #1a1b18;
+  /* Layered depth instead of flat black: an indigo glow rising behind the
+     wordmark, a cool accent at top-right, over a deep base. */
+  background:
+    radial-gradient(82% 62% at 12% 92%, rgba(76, 95, 137, 0.22), transparent 60%),
+    radial-gradient(68% 52% at 100% 2%, rgba(34, 211, 238, 0.1), transparent 58%),
+    #121311;
   color: #fafaf7;
 }
 
@@ -3108,7 +3113,14 @@ div[id="gallery"] {
   position: absolute;
   z-index: -1;
   inset: 0;
-  background: rgba(11, 12, 10, 0.5);
+  /* Gradient shade: lighter up top so the data scene reads, deeper toward the
+     wordmark for legibility and weight. */
+  background: linear-gradient(
+    180deg,
+    rgba(11, 12, 10, 0.28) 0%,
+    rgba(11, 12, 10, 0.42) 48%,
+    rgba(9, 10, 9, 0.72) 100%
+  );
 }
 
 .lux-hero-copy {
