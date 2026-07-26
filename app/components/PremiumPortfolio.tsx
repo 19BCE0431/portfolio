@@ -16,7 +16,15 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useSyncExternalStore } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type KeyboardEvent as ReactKeyboardEvent,
+  type MouseEvent as ReactMouseEvent,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 import { getProjectBySlug, type ArchiveProject } from "../data/archive";
 import type { JournalPost } from "../data/journal";
 import { lifeGalleryImages } from "../data/media";
@@ -49,6 +57,20 @@ function getDesktopMotionSupport() {
 
 function getServerDesktopMotionSupport() {
   return false;
+}
+
+// Pinned horizontal scroll needs real width + a precise pointer. Below this we
+// fall back to a native horizontal swipe rail.
+const pinnedQuery = "(min-width: 1000px) and (hover: hover) and (pointer: fine)";
+
+function subscribeToPinned(callback: () => void) {
+  const mediaQuery = window.matchMedia(pinnedQuery);
+  mediaQuery.addEventListener("change", callback);
+  return () => mediaQuery.removeEventListener("change", callback);
+}
+
+function getPinnedSupport() {
+  return window.matchMedia(pinnedQuery).matches;
 }
 
 const projectSlugs = [
@@ -369,93 +391,217 @@ function Profile() {
   );
 }
 
+function ProjectPanel({
+  project,
+  index,
+}: {
+  project: ArchiveProject;
+  index: number;
+}) {
+  return (
+    <article className="lux-project">
+      <div className="lux-project-copy">
+        <div className="lux-project-meta">
+          <span>0{index + 1}</span>
+          <span>{project.category}</span>
+        </div>
+        <h3 id={`project-${project.slug}-title`} className="display-serif">
+          {project.title}
+        </h3>
+        <p>{project.shortDescription}</p>
+
+        {project.impact && (
+          <div className="lux-project-outcome">
+            <span>Outcome</span>
+            <p className="display-serif">{project.impact}</p>
+          </div>
+        )}
+
+        <dl>
+          <div>
+            <dt>Context</dt>
+            <dd>{project.context}</dd>
+          </div>
+          <div>
+            <dt>My role</dt>
+            <dd>{project.contribution}</dd>
+          </div>
+        </dl>
+        <Link href={`/archive/${project.slug}`}>
+          Read the case
+          <ArrowUpRight aria-hidden="true" />
+        </Link>
+      </div>
+
+      <TiltSurface className="lux-project-visual" cursorLabel="View project">
+        <Link
+          href={`/archive/${project.slug}`}
+          className="lux-project-visual-link"
+          aria-labelledby={`project-${project.slug}-title`}
+        >
+          <MotionMedia className="lux-project-media" parallax={3}>
+            {project.visual?.image && (
+              <Image
+                src={project.visual.image}
+                alt={project.visual.alt}
+                fill
+                sizes="(max-width: 1000px) 86vw, 52vw"
+              />
+            )}
+          </MotionMedia>
+          <span className="lux-project-depth-index" aria-hidden="true">
+            0{index + 1}
+          </span>
+        </Link>
+      </TiltSurface>
+    </article>
+  );
+}
+
+function WorkHead() {
+  return (
+    <div className="lux-work-intro">
+      <p className="lux-eyebrow lux-eyebrow-light">Selected work</p>
+      <MotionHeading>Systems built around real decisions.</MotionHeading>
+      <p className="lux-work-intro-lede">
+        Three examples from applied AI and operations. The full archive holds
+        the broader technical record.
+      </p>
+      <Link href="/archive" className="lux-work-intro-link">
+        View full archive
+        <ArrowUpRight aria-hidden="true" />
+      </Link>
+    </div>
+  );
+}
+
 function Work() {
+  const railRef = useRef<HTMLDivElement>(null);
+  const wideEnough = useSyncExternalStore(
+    subscribeToPinned,
+    getPinnedSupport,
+    () => false,
+  );
+  const [progress, setProgress] = useState(0);
+  const drag = useRef({ active: false, startX: 0, startLeft: 0, moved: false });
+
+  // Rail progress for the affordance bar. Native scrollLeft — untouched by
+  // Lenis, so this is robust and can never freeze the page.
+  const updateProgress = () => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const max = rail.scrollWidth - rail.clientWidth;
+    setProgress(max > 0 ? rail.scrollLeft / max : 0);
+  };
+
+  // Desktop only: translate vertical wheel into horizontal travel while the
+  // cursor is over the rail AND the rail still has room. At either end the
+  // handler yields, so the page keeps scrolling vertically — no scroll trap.
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail || !wideEnough) return;
+
+    const onWheel = (event: WheelEvent) => {
+      const max = rail.scrollWidth - rail.clientWidth;
+      if (max <= 0) return;
+      const delta = Math.abs(event.deltaY) > Math.abs(event.deltaX)
+        ? event.deltaY
+        : event.deltaX;
+      const atStart = rail.scrollLeft <= 0;
+      const atEnd = rail.scrollLeft >= max - 1;
+      if ((delta < 0 && atStart) || (delta > 0 && atEnd)) return;
+      event.preventDefault();
+      rail.scrollLeft += delta;
+    };
+
+    rail.addEventListener("wheel", onWheel, { passive: false });
+    return () => rail.removeEventListener("wheel", onWheel);
+  }, [wideEnough]);
+
+  const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "mouse") return;
+    const rail = railRef.current;
+    if (!rail) return;
+    drag.current = {
+      active: true,
+      startX: event.clientX,
+      startLeft: rail.scrollLeft,
+      moved: false,
+    };
+  };
+
+  const onPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (!drag.current.active) return;
+    const rail = railRef.current;
+    if (!rail) return;
+    const dx = event.clientX - drag.current.startX;
+    if (Math.abs(dx) > 4) drag.current.moved = true;
+    rail.scrollLeft = drag.current.startLeft - dx;
+  };
+
+  const endDrag = () => {
+    drag.current.active = false;
+  };
+
+  // Suppress the click that follows a drag so a dragged card doesn't navigate.
+  const onClickCapture = (event: ReactMouseEvent<HTMLDivElement>) => {
+    if (drag.current.moved) {
+      event.preventDefault();
+      event.stopPropagation();
+      drag.current.moved = false;
+    }
+  };
+
+  const onKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const step = rail.clientWidth * 0.8;
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      rail.scrollBy({ left: step, behavior: "smooth" });
+    } else if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      rail.scrollBy({ left: -step, behavior: "smooth" });
+    }
+  };
+
   return (
     <section id="work" className="lux-work lux-section">
       <SectionLight className="motion-section-light-dark" />
       <div className="lux-shell">
-        <div className="lux-section-head">
-          <MotionReveal direction="left">
-            <p className="lux-eyebrow lux-eyebrow-light">Selected work</p>
-            <MotionHeading>Systems built around real decisions.</MotionHeading>
-          </MotionReveal>
-          <MotionReveal delay={0.08} direction="right">
-            <p>
-              Three examples from applied AI and operations. The full archive
-              holds the broader technical record.
-            </p>
-            <Link href="/archive">
-              View full archive
-              <ArrowUpRight aria-hidden="true" />
-            </Link>
-          </MotionReveal>
-        </div>
+        <MotionReveal className="lux-work-head-mobile">
+          <WorkHead />
+        </MotionReveal>
+      </div>
 
-        <div className="lux-project-list">
-          {selectedProjects.map((project, index) => (
-            <MotionReveal
-              key={project.slug}
-              className="lux-project"
-              delay={index * 0.045}
-              direction={index % 2 === 0 ? "left" : "right"}
-            >
-              <div className="lux-project-copy">
-                <div className="lux-project-meta">
-                  <span>0{index + 1}</span>
-                  <span>{project.category}</span>
-                </div>
-                <h3 id={`project-${project.slug}-title`}>{project.title}</h3>
-                <p>{project.shortDescription}</p>
+      <div
+        ref={railRef}
+        className="lux-work-rail"
+        role="list"
+        aria-label="Selected work — scroll horizontally"
+        tabIndex={0}
+        onScroll={updateProgress}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerLeave={endDrag}
+        onClickCapture={onClickCapture}
+        onKeyDown={onKeyDown}
+      >
+        {selectedProjects.map((project, index) => (
+          <div className="lux-work-rail-item" role="listitem" key={project.slug}>
+            <ProjectPanel project={project} index={index} />
+          </div>
+        ))}
+      </div>
 
-                {/* The outcome is the most important thing about a project and
-                    was previously not surfaced anywhere in the showcase. */}
-                {project.impact && (
-                  <div className="lux-project-outcome">
-                    <span>Outcome</span>
-                    <p className="display-serif">{project.impact}</p>
-                  </div>
-                )}
-
-                <dl>
-                  <div>
-                    <dt>Context</dt>
-                    <dd>{project.context}</dd>
-                  </div>
-                  <div>
-                    <dt>My role</dt>
-                    <dd>{project.contribution}</dd>
-                  </div>
-                </dl>
-                <Link href={`/archive/${project.slug}`}>
-                  Read the case
-                  <ArrowUpRight aria-hidden="true" />
-                </Link>
-              </div>
-
-              <TiltSurface className="lux-project-visual" cursorLabel="View project">
-                <Link
-                  href={`/archive/${project.slug}`}
-                  className="lux-project-visual-link"
-                  aria-labelledby={`project-${project.slug}-title`}
-                >
-                  <MotionMedia className="lux-project-media" parallax={3}>
-                    {project.visual?.image && (
-                      <Image
-                        src={project.visual.image}
-                        alt={project.visual.alt}
-                        fill
-                        sizes="(max-width: 760px) 100vw, 44vw"
-                      />
-                    )}
-                  </MotionMedia>
-                  <span className="lux-project-depth-index" aria-hidden="true">
-                    0{index + 1}
-                  </span>
-                </Link>
-              </TiltSurface>
-            </MotionReveal>
-          ))}
-        </div>
+      <div className="lux-shell lux-work-rail-foot">
+        <span className="lux-work-rail-hint">
+          {wideEnough ? "Scroll or drag" : "Swipe"} to explore
+        </span>
+        <span className="lux-work-rail-bar" aria-hidden="true">
+          <i style={{ transform: `scaleX(${0.14 + progress * 0.86})` }} />
+        </span>
       </div>
     </section>
   );

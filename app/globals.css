@@ -3232,15 +3232,19 @@ div[id="gallery"] {
 
 .lux-profile-grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
   align-items: center;
-  gap: 104px;
+  gap: 84px;
 }
 
+/* Portrait was oversized (690px). A tighter 3:4 frame reads as more composed
+   and gives the copy room to lead. */
 .lux-profile-image {
   position: relative;
-  min-height: 690px;
+  aspect-ratio: 3 / 4;
+  max-height: 540px;
   overflow: hidden;
+  border-radius: 12px;
   background: #d8d9d4;
 }
 
@@ -6139,4 +6143,132 @@ h3.display-serif {
   .lux-project-outcome > p {
     max-width: none;
   }
+}
+
+/* ==========================================================================
+   Work — robust horizontal rail (native scrollLeft; drag/wheel/keys/swipe)
+   ========================================================================== */
+
+.lux-work {
+  overflow: clip;
+}
+
+.lux-work-head-mobile {
+  margin-bottom: 40px;
+}
+
+.lux-work-rail {
+  display: flex;
+  gap: clamp(16px, 2.4vw, 40px);
+  padding-inline: clamp(20px, 5vw, 72px);
+  padding-block: 8px 4px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  outline: none;
+}
+
+.lux-work-rail:focus-visible {
+  outline: 2px solid rgba(139, 152, 255, 0.7);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.lux-work-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.lux-work-rail-item {
+  flex: 0 0 87vw;
+  scroll-snap-align: center;
+}
+
+.lux-work-rail-item .lux-project {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  height: auto;
+  padding-block: 0;
+  border-bottom: 0;
+}
+
+/* Image-led card: visual on top regardless of DOM order. */
+.lux-work-rail-item .lux-project-visual {
+  order: -1;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+}
+
+.lux-work-rail-item .lux-project-copy {
+  order: 0;
+}
+
+/* Desktop: side-by-side panels, cursor grab, calmer travel */
+@media (min-width: 1000px) {
+  .lux-work-rail {
+    cursor: grab;
+    gap: clamp(32px, 3vw, 64px);
+  }
+
+  .lux-work-rail:active {
+    cursor: grabbing;
+  }
+
+  .lux-work-rail-item {
+    flex-basis: min(1040px, 76vw);
+  }
+
+  .lux-work-rail-item .lux-project {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    align-items: center;
+    gap: clamp(36px, 3.4vw, 64px);
+  }
+
+  .lux-work-rail-item .lux-project-visual {
+    aspect-ratio: 16 / 11;
+  }
+
+  /* Prevent text selection while dragging the rail */
+  .lux-work-rail * {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+/* Foot: hint + progress affordance */
+.lux-work-rail-foot {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.lux-work-rail-hint {
+  flex: 0 0 auto;
+  color: rgba(245, 245, 240, 0.44);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.lux-work-rail-bar {
+  position: relative;
+  flex: 1 1 auto;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(245, 245, 240, 0.12);
+  overflow: hidden;
+}
+
+.lux-work-rail-bar i {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #8b98ff, #6fb7c8);
+  transition: transform 120ms linear;
 }
