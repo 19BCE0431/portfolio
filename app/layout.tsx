@@ -8,8 +8,10 @@ import { AnalyticsEvents } from "./components/AnalyticsEvents";
 import { ActiveSectionProvider } from "./components/ActiveSectionProvider";
 import { DeferredThirdPartyAnalytics } from "./components/DeferredThirdPartyAnalytics";
 import { PageTransition } from "./components/PageTransition";
+import { Preloader } from "./components/Preloader";
 import { SiteNav } from "./components/SiteNav";
 import "./globals.css";
+import "./portfolio-reboot.css";
 import { profile } from "./data/portfolio";
 
 const fraunces = Fraunces({
@@ -239,6 +241,7 @@ export default function RootLayout({
           Skip to content
         </a>
         <ActiveSectionProvider>
+          <Preloader />
           <SiteNav />
           <PageTransition>{children}</PageTransition>
           <AnalyticsEvents />
