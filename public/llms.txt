@@ -38,7 +38,7 @@ Scrapy, Git.
 ## Selected work
 
 - **Image-Led Product Discovery** — visual-intent product discovery for
-  agri-commerce; increased orders by 28%.
+  agri-commerce and product discovery workflows.
 - **Order Drop Early Warning** — a faster operational signal layer replacing
   end-of-day diagnosis.
 - **Faster Product Lookup with RAG** — retrieval system reducing manual
