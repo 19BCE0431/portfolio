@@ -26,3 +26,18 @@ weekly-insight-manifest.json
 linkedin-post-result.json
 .vercel
 .env*.local
+
+# SSH / key material — never track (guards against accidental keygen output)
+*ssh-agent*
+*.pem
+id_rsa
+id_ed25519
+id_ed25519.pub
+*.key
+
+# Private outreach data (third-party PII) — local only, must never be published
+outreach/
+
+# test + build artifacts
+test-results/
+tsconfig.tsbuildinfo

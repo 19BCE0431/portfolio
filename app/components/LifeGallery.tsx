@@ -122,7 +122,7 @@ export function LifeGallery({
     <div className="grid gap-8">
       <div className="grid gap-4 lg:grid-cols-[0.78fr_1fr] lg:items-end lg:gap-12">
         <div>
-          <p className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/45 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--sage)]">
+          <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--cyan)]">
             <Layers2 className="h-3.5 w-3.5" />
             Curated clusters
           </p>
@@ -147,10 +147,10 @@ export function LifeGallery({
               type="button"
               onClick={() => selectCluster(cluster.id)}
               aria-pressed={isActive}
-              className={`premium-link group relative min-h-11 shrink-0 overflow-hidden rounded-[8px] border px-3.5 py-2 text-left transition duration-300 focus:outline-none focus:ring-2 focus:ring-black/15 ${
+              className={`premium-link group relative min-h-11 shrink-0 overflow-hidden rounded-[8px] border px-3.5 py-2 text-left transition duration-300 focus:outline-none focus:ring-2 focus:ring-white/20 ${
                 isActive
-                  ? "border-black/18 bg-[rgba(16,18,18,0.92)] text-white shadow-[0_18px_62px_rgba(16,18,18,0.14)]"
-                  : "border-black/10 bg-[rgba(255,253,248,0.68)] text-[var(--foreground)] hover:bg-white"
+                  ? "border-[rgba(129,140,248,0.4)] bg-[linear-gradient(160deg,rgba(129,140,248,0.2),rgba(34,211,238,0.06))] text-white shadow-[0_18px_62px_rgba(129,140,248,0.16)]"
+                  : "border-white/10 bg-white/[0.035] text-[var(--foreground)] hover:bg-white/[0.07]"
               }`}
             >
               <span className="relative z-10 block text-[0.86rem] font-medium">
@@ -175,11 +175,11 @@ export function LifeGallery({
           animate={{ opacity: 1, y: 0 }}
           exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: -10 }}
           transition={{ duration: 0.34, ease }}
-          className="life-gallery-stage motion-surface overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.58)] p-3 shadow-[0_34px_120px_rgba(16,18,18,0.08)] backdrop-blur md:p-4"
+          className="life-gallery-stage motion-surface overflow-hidden rounded-[8px] border border-white/10 bg-white/[0.03] p-3 shadow-[0_34px_120px_rgba(0,0,0,0.42)] backdrop-blur md:p-4"
         >
           <div className="mb-5 grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--sage)]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--cyan)]">
                 {activeCluster.intent}
               </p>
               <h3 className="mt-2 max-w-[760px] text-[clamp(1.45rem,5.8vw,2.65rem)] font-semibold leading-[1.08] tracking-[0]">
@@ -194,7 +194,7 @@ export function LifeGallery({
                 type="button"
                 onClick={() => scrollBy("previous")}
                 aria-label={`Show previous ${activeCluster.label} image`}
-                className="grid h-10 w-10 place-items-center rounded-[8px] border border-black/10 bg-white/55 text-[var(--foreground)] transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-black/15"
+                className="grid h-10 w-10 place-items-center rounded-[8px] border border-white/10 bg-white/[0.05] text-[var(--foreground)] transition hover:bg-white/[0.09] focus:outline-none focus:ring-2 focus:ring-white/20"
               >
                 <ArrowLeft className="h-4 w-4" />
               </button>
@@ -202,7 +202,7 @@ export function LifeGallery({
                 type="button"
                 onClick={() => scrollBy("next")}
                 aria-label={`Show next ${activeCluster.label} image`}
-                className="grid h-10 w-10 place-items-center rounded-[8px] border border-black/10 bg-white/55 text-[var(--foreground)] transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-black/15"
+                className="grid h-10 w-10 place-items-center rounded-[8px] border border-white/10 bg-white/[0.05] text-[var(--foreground)] transition hover:bg-white/[0.09] focus:outline-none focus:ring-2 focus:ring-white/20"
               >
                 <ArrowRight className="h-4 w-4" />
               </button>
@@ -212,11 +212,11 @@ export function LifeGallery({
           <div className="relative">
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute bottom-4 right-0 top-0 z-10 w-12 bg-gradient-to-l from-[rgba(251,251,248,0.92)] to-transparent"
+              className="pointer-events-none absolute bottom-4 right-0 top-0 z-10 w-12 bg-gradient-to-l from-[rgba(9,11,13,0.92)] to-transparent"
             />
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute bottom-4 left-0 top-0 z-10 w-6 bg-gradient-to-r from-[rgba(251,251,248,0.9)] to-transparent"
+              className="pointer-events-none absolute bottom-4 left-0 top-0 z-10 w-6 bg-gradient-to-r from-[rgba(9,11,13,0.9)] to-transparent"
             />
             <div
               ref={railRef}
@@ -236,7 +236,7 @@ export function LifeGallery({
               {activeCluster.images.map((image, index) => (
                 <motion.figure
                   key={image.src}
-                  className={`gallery-frame-card motion-surface group min-w-[82%] snap-start overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.78)] p-2 shadow-[0_26px_82px_rgba(16,18,18,0.08)] backdrop-blur sm:min-w-[420px] ${
+                  className={`gallery-frame-card motion-surface group min-w-[82%] snap-start overflow-hidden rounded-[8px] border border-white/10 bg-white/[0.04] p-2 shadow-[0_26px_82px_rgba(0,0,0,0.42)] backdrop-blur sm:min-w-[420px] ${
                     image.orientation === "portrait"
                       ? "md:min-w-[350px]"
                       : "md:min-w-[560px]"
@@ -267,7 +267,7 @@ export function LifeGallery({
                     />
                   </div>
                   <figcaption className="grid gap-2 px-1 py-3">
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--sage)]">
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--cyan)]">
                       {activeCluster.label} {String(index + 1).padStart(2, "0")}
                     </span>
                     <span className="text-[0.95rem] leading-[1.55] text-[var(--muted-strong)]">
@@ -289,19 +289,19 @@ export function LifeGallery({
                     aria-label={`Show image ${index + 1} of ${activeCluster.images.length}`}
                     aria-current={activeImageIndex === index ? true : undefined}
                     onClick={() => scrollToImage(index)}
-                    className="grid h-7 min-w-7 place-items-center rounded-full focus:outline-none focus:ring-2 focus:ring-black/15"
+                    className="grid h-7 min-w-7 place-items-center rounded-full focus:outline-none focus:ring-2 focus:ring-white/20"
                   >
                     <span
                       className={`block h-1.5 rounded-full transition-all ${
                         activeImageIndex === index
                           ? "w-6 bg-[var(--foreground)]"
-                          : "w-1.5 bg-black/20 hover:bg-black/36"
+                          : "w-1.5 bg-white/20 hover:bg-white/36"
                       }`}
                     />
                   </button>
                 ))}
               </div>
-              <span className="text-[11px] font-medium text-[var(--muted)]">
+              <span className="shrink-0 whitespace-nowrap text-[11px] font-medium tabular-nums text-[var(--muted)]">
                 {String(activeImageIndex + 1).padStart(2, "0")} /{" "}
                 {String(activeCluster.images.length).padStart(2, "0")}
               </span>
@@ -310,7 +310,7 @@ export function LifeGallery({
         </motion.div>
       </AnimatePresence>
 
-      <div className="grid gap-3 rounded-[8px] border border-black/10 bg-[rgba(16,18,18,0.92)] p-5 text-white shadow-[0_30px_100px_rgba(16,18,18,0.12)] md:grid-cols-[auto_1fr_auto] md:items-center md:p-6">
+      <div className="grid gap-3 rounded-[8px] border border-white/10 bg-white/[0.035] p-5 text-white shadow-[0_30px_100px_rgba(0,0,0,0.4)] md:grid-cols-[auto_1fr_auto] md:items-center md:p-6">
         <div className="grid h-11 w-11 place-items-center rounded-[8px] border border-white/10 bg-white/[0.06]">
           <Archive className="h-5 w-5 text-white/70" />
         </div>

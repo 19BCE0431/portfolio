@@ -1,0 +1,98 @@
+{
+  "id": "2026-05-23-emi-pricing-interface",
+  "topic": "EMI is a pricing interface, not a payment option",
+  "selectedWhy": "Recent cycles have covered AI operating-model lenses and an e-commerce returns-as-insurance mechanism. This cycle shifts to a different India-relevant lever: the EMI/BNPL widget at checkout. The non-obvious thesis is that EMI changes the unit of comparison from total price to monthly outflow, so checkout becomes a pricing interface (and an underwriting decision), with measurable impacts across growth, unit economics, and customer operations.",
+  "riskLevel": "low",
+  "journalTitle": "EMI Is a Pricing Interface, Not a Payment Option",
+  "journalSlug": "emi-pricing-interface",
+  "journalUrl": "https://mohitsaikrishna.in/journal/emi-pricing-interface?utm_source=linkedin&utm_medium=post&utm_campaign=emi_pricing_interface",
+  "journalPath": "content/journal/2026-05-23-emi-pricing-interface.md",
+  "linkedinDraftPath": "content/linkedin-drafts/2026-05-23-emi-pricing-interface.md",
+  "linkedinDraft": "Your price tag is not ₹49,999.\n\nIt’s ₹2,999/month.\n\nIn India, EMI/BNPL isn’t just a way to pay. It’s increasingly the way the price is understood at the decision moment.\n\nOnce customers compare monthly outflow instead of total cost, checkout stops being a payments choice.\nIt becomes a pricing interface.\n\nThat framing shift edits the unit of comparison — and units matter more than we admit.\nYou’re no longer competing only on product vs product.\nYou’re competing against the customer’s monthly commitments.\n\nAnd even when MRP doesn’t move, “no-cost EMI” still has a cost somewhere (fees, subvention, margin, promo budget).\nIf your discounting discipline only tracks coupons, you can miss the biggest leak: the checkout itself quietly becomes the discount.\n\nA few practical implications:\n\n- EMI changes valuation: customers ask “Can I live with ₹Y/month?” instead of “Is it worth ₹X?”\n- EMI changes your funnel: it can lift conversion + AOV, but also shifts who you attract (and what support load follows).\n- EMI is underwriting: defaults, tenure options, and which SKUs are financeable are strategy decisions.\n- Measure the full loop: repeat rate, post-purchase friction (cancels/returns/disputes), and net margin after financing — not just conversion.\n\nFull version here:\nhttps://mohitsaikrishna.in/journal/emi-pricing-interface?utm_source=linkedin&utm_medium=post&utm_campaign=emi_pricing_interface\n\nIf your checkout has EMI/BNPL, what decision is it really optimizing today: affordability, conversion, or brand trust?\n\n#ConsumerBehavior #PricingStrategy #Ecommerce #Payments",
+  "predictedPostAt": "2026-05-26T03:40:00.000Z",
+  "createdAt": "2026-05-23T03:05:50.000Z",
+  "expiresAt": "2026-05-24T03:05:56.000Z",
+  "status": "pending_approval",
+  "candidateTopics": [
+    {
+      "topic": "EMI is a pricing interface, not a payment option",
+      "angle": "In India, EMI/BNPL changes the unit of comparison from total price to monthly outflow; treat checkout design like pricing + underwriting, not a payments toggle.",
+      "timeliness": 9,
+      "audienceRelevance": 10,
+      "nonObviousness": 10,
+      "engagementPotential": 9,
+      "journalDepthPotential": 10,
+      "personalBrandFit": 10,
+      "riskLevel": "low",
+      "totalScore": 9.7
+    },
+    {
+      "topic": "A discount is not a coupon. It's any mechanism that changes reference price.",
+      "angle": "A pricing/consumer-behavior lens: coupons, no-cost EMI, and wallet cashbacks all rewrite reference price differently - so they create different long-run demand and fairness expectations.",
+      "timeliness": 8,
+      "audienceRelevance": 9,
+      "nonObviousness": 9,
+      "engagementPotential": 8,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 9,
+      "riskLevel": "low",
+      "totalScore": 9.0
+    },
+    {
+      "topic": "Metrics don't go stale. Incentives do.",
+      "angle": "A business analytics lens: dashboards fail when metric definitions become political and incentives shift; build metric contracts tied to decisions, not vanity monitoring.",
+      "timeliness": 8,
+      "audienceRelevance": 9,
+      "nonObviousness": 9,
+      "engagementPotential": 8,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 9,
+      "riskLevel": "low",
+      "totalScore": 8.9
+    },
+    {
+      "topic": "Search is packaging: ranking decides which products get a 'chance'",
+      "angle": "Retail/e-commerce lens: the search and browse experience is a packaging layer that decides which SKUs get trial; measure discovery friction as a growth lever, not just conversion.",
+      "timeliness": 8,
+      "audienceRelevance": 9,
+      "nonObviousness": 9,
+      "engagementPotential": 8,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 9,
+      "riskLevel": "low",
+      "totalScore": 8.8
+    }
+  ],
+  "sourceLinks": [
+    {
+      "title": "Guidelines on Digital Lending",
+      "url": "https://www.rbi.org.in/scripts/FS_Notification.aspx?Id=12382",
+      "publisher": "Reserve Bank of India",
+      "claimSupported": "Regulatory framing for digital lending apps and practices, relevant to pay-later/EMI experiences at checkout."
+    },
+    {
+      "title": "Over 70% of fintechs' loan book unsecured: Financial Stability Report",
+      "url": "https://www.business-standard.com/finance/news/fintechs-unsecured-loans-rbi-financial-stability-report-125123100962_1.html",
+      "publisher": "Business Standard",
+      "claimSupported": "Signals growth in unsecured consumer lending and younger borrower exposure, raising the importance of trust and post-purchase handling."
+    },
+    {
+      "title": "INDIA CELEBRATES 10 YEARS OF UPI - A Decade of Transforming India's Digital Payment Landscape",
+      "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2257135&lang=3&reg=3",
+      "publisher": "Press Information Bureau (Govt. of India)",
+      "claimSupported": "Shows how payments in India have become a high-frequency habit - making checkout design a behavioral lever, not a technical detail."
+    },
+    {
+      "title": "The Framing Effect of Price Format",
+      "url": "https://www.hbs.edu/ris/Publication%20Files/06-055_1d39117b-bffa-46e9-a732-b3554ff3d480.pdf",
+      "publisher": "Harvard Business School (Working Paper)",
+      "claimSupported": "Evidence and mechanisms for how partitioned prices change what buyers pay attention to during valuation."
+    }
+  ],
+  "scores": {
+    "linkedinFinal": 9.3,
+    "journalQuality": 9.4,
+    "risk": 9.6
+  }
+}
+

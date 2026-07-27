@@ -1,0 +1,82 @@
+{
+  "id": "2026-06-01-attribution-is-not-incrementality",
+  "cycleType": "tuesday_market",
+  "topic": "Attribution isn’t incrementality: ROAS measures credit, not lift",
+  "selectedWhy": "Recent posts covered pricing mechanics (returns as insurance, EMI as pricing interface), customer operations (cancellation as research), AI operating models, and retail discovery (catalog eligibility). This cycle shifts to growth measurement — a high-stakes, under-discussed mechanism where teams confuse attribution certainty with causal truth. The non-obvious tension: dashboards with decimals can still fund the wrong growth because they reward credit assignment (where demand landed) rather than incrementality (what spend caused).",
+  "riskLevel": "low",
+  "journalTitle": "Attribution Isn’t Incrementality: ROAS Measures Credit, Not Lift",
+  "journalSlug": "attribution-is-not-incrementality",
+  "journalUrl": "https://mohitsaikrishna.in/journal/attribution-is-not-incrementality?utm_source=linkedin&utm_medium=post&utm_campaign=attribution_incrementality",
+  "journalPath": "content/journal/2026-06-01-attribution-is-not-incrementality.md",
+  "linkedinDraftPath": "content/linkedin-drafts/2026-06-01-attribution-is-not-incrementality.md",
+  "linkedinDraft": "Attribution doesn’t tell you what worked.\\n\\nIt tells you who got the credit.\\n\\nThis is why a team can have “great ROAS” and still not be growing.\\n\\nAttribution is answering a different question than the one leaders think they’re asking.\\n\\nROAS dashboards are credit-allocation systems built from observed paths. They’re useful for optimizing inside a channel — but they’re not a reliable measure of what your spend *caused*. Incrementality is a counterfactual question (“what would have happened without this campaign?”), which is why lift tests (holdouts, geo splits, etc.) are the right tool when you’re deciding where the next chunk of budget should go.\\n\\nA few practical implications:\\n\\n- Separate two decisions: optimization within a channel vs allocation across channels.\\n- Use platform ROAS tactically: iterate creative/audiences; don’t treat it as causal truth.\\n- Anchor on blended outcomes: blended CAC/payback + new customer rate are harder to game.\\n- Run periodic lift tests: one high-confidence holdout per quarter beats weekly dashboard debates.\\n- Watch for the trap: channels that harvest existing intent can look “efficient” while starving long-term demand creation.\\n\\nFull version here:\\nhttps://mohitsaikrishna.in/journal/attribution-is-not-incrementality?utm_source=linkedin&utm_medium=post&utm_campaign=attribution_incrementality\\n\\nWhen you last moved budget, what evidence actually changed your mind: a platform ROAS number, a blended business metric, or a lift test?\\n\\n#Growth #MarketingAnalytics #BusinessAnalytics #Experimentation",
+  "journalPreview": "Attribution is a confidence trap. It feels precise because the dashboard has decimals.\\n\\nThe mismatch: attribution mostly tells you where demand landed; incrementality asks what spend caused. If you don’t separate the two, you’ll keep funding intent-harvesting channels and starving demand creation.\\n\\nPlaybook: anchor on a few blended truth metrics, use attribution tactically within channels, and run periodic lift tests for budget allocation.",
+  "predictedPostAt": "2026-06-02T03:15:00.000Z",
+  "createdAt": "2026-06-01T00:00:00.000Z",
+  "expiresAt": "2026-06-04T00:00:00.000Z",
+  "status": "pending_approval",
+  "candidateTopics": [
+    {
+      "topic": "Attribution isn’t incrementality: ROAS measures credit, not lift",
+      "angle": "A practical growth measurement lens: separate credit assignment from causal impact; use lift tests for allocation decisions and attribution for in-channel optimization.",
+      "timeliness": 9,
+      "audienceRelevance": 10,
+      "nonObviousness": 10,
+      "engagementPotential": 9,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 10,
+      "riskLevel": "low",
+      "totalScore": 9.5
+    },
+    {
+      "topic": "Positioning is a filter, not a slogan",
+      "angle": "Product marketing mechanism: positioning works when it pre-qualifies who should buy and who should walk away; align acquisition, sales, and retention to the same trade-off.",
+      "timeliness": 8,
+      "audienceRelevance": 9,
+      "nonObviousness": 9,
+      "engagementPotential": 8,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 9,
+      "riskLevel": "low",
+      "totalScore": 8.8
+    },
+    {
+      "topic": "Your onboarding is a pricing page in disguise",
+      "angle": "Consumer behavior + SaaS growth: onboarding teaches users what they are ‘allowed’ to value; defaults and limitations silently shape willingness-to-pay and churn.",
+      "timeliness": 7,
+      "audienceRelevance": 8,
+      "nonObviousness": 9,
+      "engagementPotential": 8,
+      "journalDepthPotential": 8,
+      "personalBrandFit": 8,
+      "riskLevel": "low",
+      "totalScore": 8.4
+    }
+  ],
+  "sourceLinks": [
+    {
+      "title": "Guidelines for Incremental Measurement in Commerce Media",
+      "url": "https://www.iab.com/guidelines/guidelines-for-incremental-measurement-in-commerce-media/",
+      "publisher": "IAB",
+      "claimSupported": "Incrementality and attribution answer different questions; incrementality needs a credible counterfactual."
+    },
+    {
+      "title": "Is Your Digital-Advertising Campaign Working?",
+      "url": "https://insight.kellogg.northwestern.edu/article/is-your-digital-advertising-campaign-working",
+      "publisher": "Kellogg Insight",
+      "claimSupported": "Causal ad effectiveness typically requires experimental approaches; observational measures can be biased."
+    },
+    {
+      "title": "About conversion lift experiments",
+      "url": "https://support.google.com/google-ads/answer/7381742",
+      "publisher": "Google Ads Help",
+      "claimSupported": "Lift studies estimate incremental conversions via test/control comparisons."
+    }
+  ],
+  "scores": {
+    "linkedinFinal": 9.4,
+    "journalQuality": 9.5,
+    "risk": 9.6
+  }
+}
+

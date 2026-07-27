@@ -78,8 +78,8 @@ export function ProjectVisual({
     <div
       className={`project-visual-frame relative overflow-hidden rounded-[8px] border ${
         dark
-          ? "border-white/10 bg-white/[0.035]"
-          : "border-black/10 bg-[rgba(255,253,248,0.62)]"
+          ? "border-[rgba(129,140,248,0.28)] bg-[rgba(129,140,248,0.06)]"
+          : "border-white/10 bg-white/[0.03]"
       } ${compact ? "aspect-[1.55]" : "aspect-[1.45]"}`}
     >
       {!imageMissing && imageSrc ? (
@@ -124,8 +124,8 @@ export function ProjectVisual({
           role="img"
           className={`media-lift relative h-full w-full overflow-hidden ${
             dark
-              ? "bg-[linear-gradient(135deg,rgba(255,255,255,0.08),rgba(104,121,109,0.12))]"
-              : "bg-[linear-gradient(135deg,#fbf8f0,#eef1ed_54%,#f7f1ea)]"
+              ? "bg-[linear-gradient(135deg,rgba(129,140,248,0.14),rgba(34,211,238,0.06))]"
+              : "bg-[linear-gradient(135deg,rgba(255,255,255,0.045),rgba(129,140,248,0.05)_54%,rgba(255,255,255,0.02))]"
           }`}
           whileHover={shouldReduceMotion ? undefined : { scale: 1.018 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -133,36 +133,36 @@ export function ProjectVisual({
           <div
             aria-hidden="true"
             className={`absolute inset-0 ${
-              dark ? "opacity-[0.16]" : "opacity-[0.2]"
+              dark ? "opacity-[0.18]" : "opacity-[0.14]"
             }`}
             style={{
               backgroundImage:
-                "linear-gradient(rgba(16,18,18,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(16,18,18,0.06) 1px, transparent 1px)",
+                "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)",
               backgroundSize: "38px 38px",
             }}
           />
           <div
             aria-hidden="true"
             className={`absolute left-[12%] top-[18%] h-px w-[76%] ${
-              dark ? "bg-white/14" : "bg-black/10"
+              dark ? "bg-white/16" : "bg-white/10"
             }`}
           />
           <div
             aria-hidden="true"
             className={`absolute left-[16%] top-[52%] h-px w-[58%] ${
-              dark ? "bg-white/14" : "bg-black/10"
+              dark ? "bg-white/16" : "bg-white/10"
             }`}
           />
           <div
             aria-hidden="true"
             className={`absolute bottom-[18%] left-[28%] h-px w-[52%] ${
-              dark ? "bg-white/14" : "bg-black/10"
+              dark ? "bg-white/16" : "bg-white/10"
             }`}
           />
           <div
             aria-hidden="true"
             className={`absolute rounded-full border ${
-              dark ? "border-white/14" : "border-black/10"
+              dark ? "border-white/16" : "border-white/10"
             }`}
             style={{
               left: lineOne,
@@ -174,7 +174,7 @@ export function ProjectVisual({
           <div
             aria-hidden="true"
             className={`absolute rounded-full border ${
-              dark ? "border-white/14 bg-white/[0.035]" : "border-black/10 bg-white/40"
+              dark ? "border-white/16 bg-white/[0.04]" : "border-white/10 bg-white/[0.025]"
             }`}
             style={{
               left: lineTwo,
@@ -186,7 +186,7 @@ export function ProjectVisual({
           <div
             aria-hidden="true"
             className={`absolute rounded-full border ${
-              dark ? "border-white/14" : "border-black/10"
+              dark ? "border-white/16" : "border-white/10"
             }`}
             style={{
               left: lineThree,
@@ -199,8 +199,8 @@ export function ProjectVisual({
             <div
               className={`grid h-14 w-14 place-items-center rounded-[8px] border backdrop-blur md:h-16 md:w-16 ${
                 dark
-                  ? "border-white/12 bg-white/[0.05] text-white/72"
-                  : "border-black/10 bg-[rgba(255,253,248,0.68)] text-[var(--sage)]"
+                  ? "border-[rgba(129,140,248,0.3)] bg-white/[0.05] text-[var(--indigo)]"
+                  : "border-white/10 bg-white/[0.04] text-[var(--cyan)]"
               }`}
             >
               <Icon className="h-6 w-6" />
@@ -211,7 +211,7 @@ export function ProjectVisual({
               className={`rounded-[7px] border px-2.5 py-1 text-[11px] font-medium ${
                 dark
                   ? "border-white/10 bg-white/[0.05] text-white/58"
-                  : "border-black/10 bg-white/50 text-[var(--muted)]"
+                  : "border-white/8 bg-white/[0.04] text-[var(--muted)]"
               }`}
             >
               {project.visual?.label ?? "Visual slot"}

@@ -1,0 +1,92 @@
+{
+  "id": "2026-05-21-returns-price-trust",
+  "topic": "Returns are pricing: you're selling an option",
+  "selectedWhy": "Recent drafts have focused on AI and operating-model reframes. This cycle shifts to a retail/e-commerce mechanism that still feels senior and actionable: return policies act like an insurance contract that changes willingness-to-try and who your pricing attracts. It connects pricing strategy, consumer behavior, customer operations, and analytics without repeating prior AI-infrastructure or agentic angles.",
+  "riskLevel": "low",
+  "journalTitle": "Returns Are Pricing: You're Selling an Option",
+  "journalSlug": "returns-price-trust",
+  "journalUrl": "https://mohitsaikrishna.in/journal/returns-price-trust?utm_source=linkedin&utm_medium=post&utm_campaign=returns_price_trust",
+  "journalPath": "content/journal/2026-05-21-returns-price-trust.md",
+  "linkedinDraftPath": "content/linkedin-drafts/2026-05-21-returns-price-trust.md",
+  "linkedinDraft": "Your return policy is a pricing decision.\n\nIt’s the only pricing decision most brands hide on a help page.\n\nReturns are usually discussed like an operations problem: reverse logistics, refund tickets, warehouse flow.\n\nBut the customer reads the policy before purchase as a risk signal.\n\nA generous return policy is an insurance offer.\nYou’re selling an option to be wrong.\n\nThat option increases willingness-to-try (and sometimes willingness-to-pay).\n\nBut it also attracts behaviors you may not have underwritten: bracketing, serial returns, low-intent browsing.\n\nThe strategy is not “strict vs lenient”.\nIt’s deciding who gets the insurance, when, and what it costs the system.\n\nA few practical implications:\n\n- “Free returns” shifts downside risk from customer → business. That’s why it lifts conversion.\n- If you don’t segment that risk transfer, customers will: chronic returners arbitrage generosity.\n- Return rate is often created upstream (product accuracy, marketing promises, assortment clarity), not in the warehouse.\n- A strong returns strategy is four parts: risk allocation, fair friction, disposition economics, and a prevention loop.\n\nI expanded the longer version here:\nhttps://mohitsaikrishna.in/journal/returns-price-trust?utm_source=linkedin&utm_medium=post&utm_campaign=returns_price_trust\n\nWhere in your business is a “policy page” actually a revenue lever in disguise?\n\n#PricingStrategy #Ecommerce #ProductStrategy #ConsumerBehavior",
+  "predictedPostAt": "2026-05-26T03:40:00.000Z",
+  "createdAt": "2026-05-21T03:06:50.876Z",
+  "expiresAt": "2026-05-22T03:06:50.876Z",
+  "status": "pending_approval",
+  "candidateTopics": [
+    {
+      "topic": "Returns are pricing: you're selling an option",
+      "angle": "Treat returns as an insurance contract that changes willingness-to-try, willingness-to-pay, and the customer behaviors your pricing attracts; build a strategy across product, marketing, ops, and analytics.",
+      "timeliness": 9,
+      "audienceRelevance": 10,
+      "nonObviousness": 10,
+      "engagementPotential": 9,
+      "journalDepthPotential": 10,
+      "personalBrandFit": 10,
+      "riskLevel": "low",
+      "totalScore": 9.7
+    },
+    {
+      "topic": "Promotions don't test price. They rewrite reference price.",
+      "angle": "A pricing/consumer-behavior lens: many discount experiments fail because they change perceived fairness and train waiting behavior, not because demand is inherently elastic.",
+      "timeliness": 8,
+      "audienceRelevance": 9,
+      "nonObviousness": 10,
+      "engagementPotential": 8,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 9,
+      "riskLevel": "low",
+      "totalScore": 9.1
+    },
+    {
+      "topic": "Refund speed is product marketing",
+      "angle": "In trust-sensitive markets, the time-to-refund and dispute handling shape conversion and repeat rate more than an extra 5% discount; operations becomes the brand.",
+      "timeliness": 9,
+      "audienceRelevance": 9,
+      "nonObviousness": 9,
+      "engagementPotential": 8,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 9,
+      "riskLevel": "low",
+      "totalScore": 9.0
+    },
+    {
+      "topic": "High return rate is often a catalog problem, not a customer problem",
+      "angle": "Merchandising and content accuracy (near-duplicate SKUs, unclear differentiation, imperfect imagery/specs) create returns upstream; fix selection and expectation-setting before tightening policy.",
+      "timeliness": 8,
+      "audienceRelevance": 9,
+      "nonObviousness": 9,
+      "engagementPotential": 8,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 9,
+      "riskLevel": "low",
+      "totalScore": 8.9
+    }
+  ],
+  "sourceLinks": [
+    {
+      "title": "When Convenience Backfires",
+      "url": "https://business.columbia.edu/insights/magazine/when-convenience-backfires",
+      "publisher": "Columbia Business School",
+      "claimSupported": "How omnichannel convenience creates operational and inventory friction with real economic impact."
+    },
+    {
+      "title": "Multichannel Experience, Product Attributes, and Consumer Return Behavior: An Empirical Analysis",
+      "url": "https://journals.sagepub.com/doi/10.1177/10591478261422031",
+      "publisher": "SAGE Journals",
+      "claimSupported": "Evidence that channel experience and product attributes influence return behavior, supporting targeted interventions rather than one-size policies."
+    },
+    {
+      "title": "Reverse logistics (point of view)",
+      "url": "https://www2.deloitte.com/content/dam/Deloitte/us/Documents/process-and-operations/reverse-logistics-pov.pdf",
+      "publisher": "Deloitte",
+      "claimSupported": "Why returns should be treated as a cross-functional operating system (policy, process, logistics, analytics)."
+    }
+  ],
+  "scores": {
+    "linkedinFinal": 9.3,
+    "journalQuality": 9.3,
+    "risk": 9.6
+  }
+}
+

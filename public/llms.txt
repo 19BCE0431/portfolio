@@ -1,0 +1,65 @@
+# Mohit Sai Krishna Peddakotla
+
+> MBA candidate at IIM Sirmaur (Batch 2025-27) with a Computer Science and Data
+> Science foundation and applied-AI experience in agri-commerce. Works at the
+> intersection of product strategy, marketing, business analytics, and
+> AI-enabled systems — translating technical depth into business judgment.
+
+## Profile
+
+- **Name:** Mohit Sai Krishna Peddakotla
+- **Current role:** MBA Candidate, Indian Institute of Management (IIM) Sirmaur, Batch 2025-27
+- **Academic standing:** Academic Excellence — top 10% of Batch 2025-26
+- **Prior degree:** B.Tech, Computer Science — VIT Vellore (CGPA 9.15/10)
+- **Location:** India
+- **Website:** https://mohitsaikrishna.in
+- **LinkedIn:** https://www.linkedin.com/in/mohit-sai-krishna-peddakotla/
+
+## Experience
+
+- **Data Science Engineer, BigHaat Agro (2024-2025):** Applied AI, search,
+  pricing intelligence, operations, document intelligence, and automation in
+  agri-commerce.
+- **Data Science Intern, BigHaat Agro (2023-2024):** Operational analytics,
+  alerting, web intelligence, and decision-support systems.
+
+## Focus areas
+
+Product strategy, product marketing, business analytics, consumer behaviour,
+decision support, applied AI, Retrieval-Augmented Generation (RAG), data
+storytelling, and AI-enabled workflows.
+
+## Technical skills
+
+Python, Java, C++, JavaScript, FastAPI, Node, Express, React, LLMs, RAG,
+Chainlit, Streamlit, PostgreSQL, MySQL, MongoDB, Trino/PrestoSQL, Selenium,
+Scrapy, Git.
+
+## Selected work
+
+- **Image-Led Product Discovery** — visual-intent product discovery for
+  agri-commerce; increased orders by 28%.
+- **Order Drop Early Warning** — a faster operational signal layer replacing
+  end-of-day diagnosis.
+- **Faster Product Lookup with RAG** — retrieval system reducing manual
+  internal-search effort.
+
+Full archive: https://mohitsaikrishna.in/archive
+
+## Recognition
+
+- 500+ LeetCode problems solved
+- JEE Mains: 97.9 percentile
+- TS EAMCET: rank 1143 out of ~2.42 lakh candidates
+
+## Key pages
+
+- Home: https://mohitsaikrishna.in
+- Project archive: https://mohitsaikrishna.in/archive
+- Writing / journal: https://mohitsaikrishna.in/journal
+- MBA tools: https://mohitsaikrishna.in/tools
+
+## Contact
+
+Email: cm.mohhithh@gmail.com — best for product, strategy, applied-AI, and
+business conversations.

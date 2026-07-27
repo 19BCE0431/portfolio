@@ -27,18 +27,18 @@ export function ArchiveExplorer({ projects }: { projects: ArchiveProject[] }) {
               className={`premium-link relative min-h-10 shrink-0 overflow-hidden rounded-[7px] px-3 py-2 text-center text-[11px] font-medium leading-[1.18] transition-all duration-300 sm:min-h-0 sm:whitespace-nowrap sm:px-3.5 sm:text-[12px] ${
                 activeFilter === filter
                   ? "text-[var(--foreground)]"
-                  : "text-[var(--muted)] hover:bg-black/[0.04] hover:text-[var(--foreground)]"
+                  : "text-[var(--muted)] hover:bg-white/[0.05] hover:text-[var(--foreground)]"
               }`}
             >
               {activeFilter === filter && !shouldReduceMotion && (
                 <motion.span
                   layoutId="archive-filter-active"
-                  className="absolute inset-0 rounded-[6px] bg-black/[0.07] shadow-[inset_0_1px_0_rgba(255,255,255,0.62)]"
+                  className="absolute inset-0 rounded-[6px] bg-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
                   transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
                 />
               )}
               {activeFilter === filter && shouldReduceMotion && (
-                <span className="absolute inset-0 rounded-[6px] bg-black/[0.07]" />
+                <span className="absolute inset-0 rounded-[6px] bg-white/[0.08]" />
               )}
               <span className="relative z-10">{filter}</span>
             </button>
@@ -46,7 +46,7 @@ export function ArchiveExplorer({ projects }: { projects: ArchiveProject[] }) {
         </div>
       </div>
 
-      <div className="mb-5 flex flex-col gap-2 border-y border-black/10 py-4 text-[0.9rem] text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between">
+      <div className="mb-5 flex flex-col gap-2 border-y border-white/10 py-4 text-[0.9rem] text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between">
         <span>
           Showing {visibleProjects.length} of {projects.length} archive items
         </span>

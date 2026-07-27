@@ -1,0 +1,87 @@
+{
+  "id": "2026-06-02-positioning-routes-demand",
+  "cycleType": "thursday_market",
+  "topic": "Positioning is a routing system for demand",
+  "selectedWhy": "Recent cycles covered AI operating models, pricing mechanics, cancellation UX, discovery infrastructure, and attribution. This cycle shifts into product marketing and brand strategy with a fresher mechanism: in fragmented, AI-assisted buying journeys, positioning no longer works only as messaging. It routes who recognizes fit, what proof survives comparison, and whether the same expectation holds across search, landing pages, sales, pricing, and support.",
+  "riskLevel": "low",
+  "journalTitle": "Positioning Is a Routing System for Demand",
+  "journalSlug": "positioning-routes-demand",
+  "journalUrl": "https://mohitsaikrishna.in/journal/positioning-routes-demand?utm_source=linkedin&utm_medium=post&utm_campaign=positioning_routes_demand",
+  "journalPath": "content/journal/2026-06-02-positioning-routes-demand.md",
+  "linkedinDraftPath": "content/linkedin-drafts/2026-06-02-positioning-routes-demand.md",
+  "linkedinDraft": "If your positioning only lives in a brand deck, your search results will rewrite it.\\n\\nAI summaries will help.\\n\\nIn fragmented buying journeys, positioning no longer shows up in one controlled brand moment. It gets reconstructed across search, landing pages, pricing, sales, and support.\\n\\nThat is why I think positioning behaves less like a copywriting exercise and more like a routing system for demand. If the promise drifts across surfaces, the business pays for it upstream and downstream: the wrong buyers self-select in, the right buyers fail to recognize fit, sales gets noisier, support has to repair expectations, and discount pressure rises because the product is being compared on the wrong axis.\\n\\nA few practical implications:\\n\\n- Drift is expensive: weak positioning does not just hurt recall; it creates low-quality pipeline and preventable support friction.\\n- Metadata matters: in search and AI-assisted discovery, the market often meets your structured product language before it meets your polished manifesto.\\n- Positioning should constrain execution: naming, proof, comparison pages, sales talk tracks, and onboarding should all express the same trade-off.\\n- Judge it by operating outcomes: lead quality, objection clarity, expectation fit, and churn reasons are positioning signals too.\\n- Use one hard test: can the same promise survive a homepage, search snippet, product page, sales deck, and support explanation without changing meaning?\\n\\nFull version here:\\nhttps://mohitsaikrishna.in/journal/positioning-routes-demand?utm_source=linkedin&utm_medium=post&utm_campaign=positioning_routes_demand\\n\\nWhere does your positioning drift most today: search, pricing page, sales deck, or support?\\n\\n#ProductMarketing #BrandStrategy #ProductStrategy #Growth",
+  "journalPreview": "Positioning fails long before brand recall studies notice. In AI-assisted, multi-surface journeys, the real job is to keep one strategic promise intact across search, pages, sales, pricing, and support so the right demand recognizes fit and the wrong demand filters itself out.",
+  "predictedPostAt": "2026-06-04T03:15:00.000Z",
+  "createdAt": "2026-06-02T00:00:00.000Z",
+  "expiresAt": "2026-06-05T00:00:00.000Z",
+  "status": "pending_approval",
+  "candidateTopics": [
+    {
+      "topic": "Positioning is a routing system for demand",
+      "angle": "In fragmented, AI-assisted buying journeys, positioning needs to survive search, pages, sales, pricing, and support. Treat it as a demand-quality system, not only a messaging exercise.",
+      "timeliness": 9,
+      "audienceRelevance": 10,
+      "nonObviousness": 10,
+      "engagementPotential": 9,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 10,
+      "riskLevel": "low",
+      "totalScore": 9.5
+    },
+    {
+      "topic": "Support queues are demand signals, not just cost centers",
+      "angle": "Support volumes often reveal onboarding gaps, packaging confusion, and positioning drift earlier than brand trackers or NPS dashboards do.",
+      "timeliness": 8,
+      "audienceRelevance": 9,
+      "nonObviousness": 9,
+      "engagementPotential": 8,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 9,
+      "riskLevel": "low",
+      "totalScore": 8.8
+    },
+    {
+      "topic": "Dashboards are decision rights in disguise",
+      "angle": "Metrics systems fail when teams treat charts as neutral reporting instead of contracts about who acts, when, and with what guardrails.",
+      "timeliness": 8,
+      "audienceRelevance": 9,
+      "nonObviousness": 9,
+      "engagementPotential": 8,
+      "journalDepthPotential": 9,
+      "personalBrandFit": 9,
+      "riskLevel": "low",
+      "totalScore": 8.8
+    }
+  ],
+  "sourceLinks": [
+    {
+      "title": "The new B2B growth equation",
+      "url": "https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/the-new-b2b-growth-equation",
+      "publisher": "McKinsey",
+      "claimSupported": "Customers increasingly expect many channels and consistent movement across them, which raises the cost of positioning drift."
+    },
+    {
+      "title": "When AI meets desire: Innovating human-centered luxury experiences in the agentic age",
+      "url": "https://www.mckinsey.com/industries/retail/our-insights/when-ai-meets-desire-innovating-human-centered-luxury-experiences-in-the-agentic-age",
+      "publisher": "McKinsey",
+      "claimSupported": "AI-mediated shopping shifts interpretation of intent upstream, before buyers reach brand-controlled surfaces."
+    },
+    {
+      "title": "How AI Mode is changing the way people search in the U.S.",
+      "url": "https://blog.google/products-and-platforms/products/search/ai-mode-us-insights/",
+      "publisher": "Google",
+      "claimSupported": "Search queries are becoming longer and more planning-led, making vague category language more expensive."
+    },
+    {
+      "title": "How we’re helping retailers thrive with new Universal Commerce Protocol features and AI tools on Google",
+      "url": "https://blog.google/products-and-platforms/products/shopping/shopping-updates-google-marketing-live/",
+      "publisher": "Google",
+      "claimSupported": "Google is giving merchants tools to monitor brand performance in AI-driven shopping surfaces, which signals that intermediary interpretation now matters."
+    }
+  ],
+  "scores": {
+    "linkedinFinal": 9.4,
+    "journalQuality": 9.4,
+    "risk": 9.6
+  }
+}

@@ -46,7 +46,11 @@ import {
   thesisPoints,
   workingModes,
 } from "../data/portfolio";
+import { AIToolsLab } from "./AIToolsLab";
+import { ActionLink } from "./ActionLink";
+import { AnimatedGradientMesh } from "./AnimatedGradientMesh";
 import { HeadingReveal } from "./HeadingReveal";
+import { MagneticButton } from "./MagneticButton";
 import { ProjectCard } from "./ProjectCard";
 import { ProjectVisual } from "./ProjectVisual";
 import { Reveal } from "./Reveal";
@@ -84,6 +88,21 @@ const storySpines = [
     title: "The softer parts are not extras. They explain the attention behind the work.",
     text: "Campus frames, books, badminton, chess, running, photos, sketches, cooking, and retail observation sit here because they keep the portfolio from becoming only output.",
     cues: ["play", "notes", "movement", "life"],
+  },
+];
+
+const workSignalCards = [
+  {
+    label: "Discovery",
+    value: "Visual search, RAG, product matching",
+  },
+  {
+    label: "Signals",
+    value: "Pricing, logistics, anomalies, order drops",
+  },
+  {
+    label: "Automation",
+    value: "Documents, content loops, decision support",
   },
 ];
 
@@ -163,73 +182,6 @@ function ExperienceBackdrop() {
         style={shouldReduceMotion ? undefined : { scaleX: smoothProgress }}
       />
     </div>
-  );
-}
-
-function SmartLink({
-  href,
-  children,
-  className,
-  ariaLabel,
-}: {
-  href: string;
-  children: ReactNode;
-  className: string;
-  ariaLabel?: string;
-}) {
-  if (href.startsWith("/")) {
-    return (
-      <Link href={href} className={className} aria-label={ariaLabel}>
-        {children}
-      </Link>
-    );
-  }
-
-  const isExternal = href.startsWith("http");
-
-  return (
-    <a
-      href={href}
-      className={className}
-      aria-label={ariaLabel}
-      target={isExternal ? "_blank" : undefined}
-      rel={isExternal ? "noopener noreferrer" : undefined}
-    >
-      {children}
-    </a>
-  );
-}
-
-function ActionLink({
-  href,
-  children,
-  variant = "light",
-  icon,
-}: {
-  href: string;
-  children: ReactNode;
-  variant?: "light" | "dark";
-  icon?: ReactNode;
-}) {
-  const shouldReduceMotion = useReducedMotion();
-  const className =
-    variant === "dark"
-      ? "premium-link group inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-[8px] border border-white/12 bg-white/[0.08] px-4 py-2.5 text-[13px] font-medium text-white/88 shadow-[0_18px_48px_rgba(0,0,0,0.16)] transition hover:border-white/22 hover:bg-white/[0.12] focus:outline-none focus:ring-2 focus:ring-white/20 sm:w-auto"
-      : "premium-link group hover-light inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.78)] px-4 py-2.5 text-[13px] font-medium text-[var(--foreground)] shadow-[0_18px_54px_rgba(16,18,18,0.06)] backdrop-blur transition hover:border-black/18 hover:bg-white focus:outline-none focus:ring-2 focus:ring-black/15 sm:w-auto";
-
-  return (
-    <motion.span
-      className="inline-flex w-full sm:w-auto"
-      whileHover={shouldReduceMotion ? undefined : { y: -2 }}
-      whileTap={shouldReduceMotion ? undefined : { scale: 0.985 }}
-      transition={{ duration: 0.24, ease: premiumEase }}
-    >
-      <SmartLink href={href} className={className}>
-        {icon}
-        <span>{children}</span>
-        <ArrowUpRight className="h-3.5 w-3.5 opacity-55 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-      </SmartLink>
-    </motion.span>
   );
 }
 
@@ -315,7 +267,7 @@ function GlideDeck({
         <div className="flex items-center gap-2">
           <span
             className={`h-1.5 w-1.5 rounded-full ${
-              tone === "dark" ? "bg-white/52" : "bg-[var(--sage)]"
+              tone === "dark" ? "bg-white/52" : "bg-[var(--cyan)]"
             }`}
             aria-hidden="true"
           />
@@ -336,7 +288,7 @@ function GlideDeck({
             className={`grid h-9 w-9 place-items-center rounded-[8px] border transition focus:outline-none focus:ring-2 ${
               tone === "dark"
                 ? "border-white/10 bg-white/[0.055] text-white/68 hover:bg-white/[0.09] focus:ring-white/20 disabled:text-white/22"
-                : "border-black/10 bg-white/55 text-[var(--foreground)] hover:bg-white focus:ring-black/15 disabled:text-black/22"
+                : "border-white/10 bg-white/[0.05] text-[var(--foreground)] hover:bg-white/[0.09] focus:ring-white/20 disabled:text-white/22"
             }`}
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
@@ -349,7 +301,7 @@ function GlideDeck({
             className={`grid h-9 w-9 place-items-center rounded-[8px] border transition focus:outline-none focus:ring-2 ${
               tone === "dark"
                 ? "border-white/10 bg-white/[0.055] text-white/68 hover:bg-white/[0.09] focus:ring-white/20 disabled:text-white/22"
-                : "border-black/10 bg-white/55 text-[var(--foreground)] hover:bg-white focus:ring-black/15 disabled:text-black/22"
+                : "border-white/10 bg-white/[0.05] text-[var(--foreground)] hover:bg-white/[0.09] focus:ring-white/20 disabled:text-white/22"
             }`}
           >
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -363,7 +315,7 @@ function GlideDeck({
           className={`pointer-events-none absolute bottom-3 right-0 top-0 z-10 w-10 ${
             tone === "dark"
               ? "bg-gradient-to-l from-[rgba(13,15,16,0.92)] to-transparent"
-              : "bg-gradient-to-l from-[rgba(244,245,241,0.95)] to-transparent"
+              : "bg-gradient-to-l from-[rgba(7,9,10,0.92)] to-transparent"
           }`}
         />
         <div
@@ -395,26 +347,20 @@ function GlideDeck({
               onClick={() => scrollToIndex(index)}
               aria-label={`Show item ${index + 1} of ${items.length}`}
               aria-current={activeIndex === index ? "true" : undefined}
-              className={`grid h-7 min-w-7 place-items-center rounded-full focus:outline-none focus:ring-2 ${
-                tone === "dark" ? "focus:ring-white/20" : "focus:ring-black/15"
-              }`}
+              className="grid h-7 min-w-7 place-items-center rounded-full focus:outline-none focus:ring-2 focus:ring-white/20"
             >
               <span
                 className={`block h-1.5 rounded-full transition-all ${
                   activeIndex === index
-                    ? tone === "dark"
-                      ? "w-6 bg-white/78"
-                      : "w-6 bg-[var(--foreground)]"
-                    : tone === "dark"
-                      ? "w-1.5 bg-white/22 hover:bg-white/38"
-                      : "w-1.5 bg-black/20 hover:bg-black/36"
+                    ? "w-6 bg-[var(--foreground)]"
+                    : "w-1.5 bg-white/22 hover:bg-white/38"
                 }`}
               />
             </button>
           ))}
         </div>
         <span
-          className={`text-[11px] font-medium ${
+          className={`shrink-0 whitespace-nowrap text-[11px] font-medium tabular-nums ${
             tone === "dark" ? "text-white/44" : "text-[var(--muted)]"
           }`}
         >
@@ -448,8 +394,8 @@ function AmbientField({ progress }: { progress: MotionValue<number> }) {
         animate={shouldReduceMotion ? undefined : { rotate: [8, -6, 8] }}
         transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
       />
-      <div className="absolute right-[14vw] top-[32%] hidden h-2 w-2 rounded-full bg-[var(--sage)] shadow-[0_0_48px_rgba(104,121,109,0.45)] sm:block" />
-      <div className="absolute right-[33vw] top-[48%] hidden h-1.5 w-1.5 rounded-full bg-[var(--steel)] opacity-70 sm:block" />
+      <div className="absolute right-[14vw] top-[32%] hidden h-2 w-2 rounded-full bg-[var(--cyan)] shadow-[0_0_48px_rgba(34,211,238,0.55)] sm:block" />
+      <div className="absolute right-[33vw] top-[48%] hidden h-1.5 w-1.5 rounded-full bg-[var(--indigo)] opacity-70 sm:block" />
     </motion.div>
   );
 }
@@ -459,7 +405,7 @@ function PortraitFrame({ compact = false }: { compact?: boolean }) {
 
   return (
     <div
-      className={`relative overflow-hidden rounded-[8px] border border-black/10 bg-[var(--surface-cool)] ${
+      className={`relative overflow-hidden rounded-[8px] border border-white/10 bg-[var(--surface-cool)] ${
         compact ? "aspect-square" : "aspect-[4/5]"
       }`}
     >
@@ -467,7 +413,7 @@ function PortraitFrame({ compact = false }: { compact?: boolean }) {
         <div
           role="img"
           aria-label={profile.portraitAlt}
-          className="grid h-full place-items-center bg-[linear-gradient(145deg,#eef0ee,#fffdf8)] px-8 text-center"
+          className="grid h-full place-items-center bg-[linear-gradient(145deg,#12151a,#1c2028)] px-8 text-center"
         >
           <div>
             <p className="editorial-kicker">Portrait</p>
@@ -504,7 +450,7 @@ function HeroVisual({ progress }: { progress: MotionValue<number> }) {
         className="relative mx-auto w-full max-w-[330px] sm:max-w-[390px] lg:mx-0 lg:max-w-[430px]"
         style={{ y: shouldReduceMotion ? 0 : portraitY }}
       >
-        <div className="absolute -inset-5 rounded-[8px] bg-[linear-gradient(135deg,rgba(104,121,109,0.14),rgba(104,119,137,0.06)_48%,rgba(154,127,99,0.12))] blur-2xl" />
+        <div className="absolute -inset-5 rounded-[8px] bg-[linear-gradient(135deg,rgba(129,140,248,0.18),rgba(34,211,238,0.08)_48%,rgba(251,146,60,0.14))] blur-2xl" />
         <motion.figure
           className="premium-panel motion-surface hero-portrait-card relative overflow-hidden p-2"
           whileHover={shouldReduceMotion ? undefined : { y: -5 }}
@@ -513,7 +459,7 @@ function HeroVisual({ progress }: { progress: MotionValue<number> }) {
           <PortraitFrame />
           <figcaption className="grid gap-3 px-1 pb-1 pt-4 text-[12px] leading-[1.45] text-[var(--muted)]">
             {heroMarkers.map((marker) => (
-              <div key={marker.label} className="flex items-center justify-between gap-4 border-t border-black/10 pt-2 first:border-t-0 first:pt-0">
+              <div key={marker.label} className="flex items-center justify-between gap-4 border-t border-white/10 pt-2 first:border-t-0 first:pt-0">
                 <span>{marker.label}</span>
                 <span className="text-right text-[var(--muted-strong)]">
                   {marker.value}
@@ -587,7 +533,7 @@ function QuietScrollCue() {
       animate={{ opacity: 0.72 }}
       transition={{ delay: 1, duration: 0.6, ease: premiumEase }}
     >
-      <span className="relative block h-11 w-px overflow-hidden bg-black/10">
+      <span className="relative block h-11 w-px overflow-hidden bg-white/12">
         <motion.span
           className="absolute left-0 top-0 h-5 w-px bg-[var(--foreground)]"
           animate={shouldReduceMotion ? undefined : { y: [0, 28, 0] }}
@@ -609,6 +555,7 @@ function Hero() {
       id="intro"
       className="hero-shell hero-stage relative grid min-h-[92svh] scroll-mt-28 items-center gap-8 overflow-hidden pb-10 pt-[5.75rem] md:min-h-[100svh] md:gap-10 md:pb-16 md:pt-28 lg:grid-cols-[minmax(0,0.96fr)_minmax(330px,0.46fr)] lg:gap-14"
     >
+      <AnimatedGradientMesh className="opacity-70" />
       <AmbientField progress={scrollYProgress} />
       <motion.div
         aria-hidden="true"
@@ -658,20 +605,26 @@ function Hero() {
         </Reveal>
         <Reveal delay={0.16}>
           <div className="mt-7 grid max-w-[560px] grid-cols-2 gap-2.5 sm:mt-9 sm:flex sm:max-w-none sm:flex-wrap sm:gap-3 [&>*:last-child]:col-span-2">
-            <ActionLink href={`mailto:${profile.email}`} icon={<Mail className="h-4 w-4 text-[var(--sage)]" />}>
-              Email
-            </ActionLink>
-            <ActionLink href="/#work" icon={<MoveRight className="h-4 w-4 text-[var(--steel)]" />}>
-              See the work
-            </ActionLink>
-            <ActionLink href="/#personal" icon={<Sparkles className="h-4 w-4 text-[var(--clay)]" />}>
-              Meet the human
-            </ActionLink>
+            <MagneticButton className="w-full sm:w-auto">
+              <ActionLink href={`mailto:${profile.email}`} icon={<Mail className="h-4 w-4 text-[var(--sage)]" />}>
+                Email
+              </ActionLink>
+            </MagneticButton>
+            <MagneticButton className="w-full sm:w-auto">
+              <ActionLink href="/#work" icon={<MoveRight className="h-4 w-4 text-[var(--steel)]" />}>
+                See the work
+              </ActionLink>
+            </MagneticButton>
+            <MagneticButton className="w-full sm:w-auto">
+              <ActionLink href="/#personal" icon={<Sparkles className="h-4 w-4 text-[var(--clay)]" />}>
+                Meet the human
+              </ActionLink>
+            </MagneticButton>
           </div>
         </Reveal>
         <MobilePortraitStrip />
         <Reveal delay={0.2}>
-          <div className="mt-10 hidden gap-3 border-y border-black/10 py-5 sm:grid-cols-3 md:mt-14 md:grid">
+          <div className="mt-10 hidden gap-3 border-y border-white/10 py-5 sm:grid-cols-3 md:mt-14 md:grid">
             {heroMarkers.map((marker) => (
               <div key={marker.label}>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
@@ -783,10 +736,10 @@ function DirectionNoteCard({
   const Icon = note.icon;
 
   return (
-    <article className="editorial-panel motion-surface hover-light group h-full min-h-[212px] p-5 transition duration-500 hover:-translate-y-1 hover:bg-white md:min-h-[220px] md:p-6">
+    <article className="editorial-panel motion-surface hover-light group h-full min-h-[212px] p-5 transition duration-500 hover:-translate-y-1 hover:bg-white/[0.055] md:min-h-[220px] md:p-6">
       <div className="flex items-start justify-between gap-4">
-        <Icon className="h-5 w-5 text-[var(--sage)]" />
-        <span className="grid h-8 w-8 place-items-center rounded-full border border-black/10 text-[12px] text-[var(--sage)] transition group-hover:translate-x-1">
+        <Icon className="h-5 w-5 text-[var(--cyan)]" />
+        <span className="grid h-8 w-8 place-items-center rounded-full border border-white/10 text-[12px] text-[var(--cyan)] transition group-hover:translate-x-1">
           0{index + 1}
         </span>
       </div>
@@ -827,7 +780,7 @@ function Direction() {
                   unclear? What would make the next step lighter, safer, or more
                   worth taking?
                 </p>
-                <div className="mt-6 h-px overflow-hidden bg-black/10">
+                <div className="mt-6 h-px overflow-hidden bg-white/12">
                   <motion.div
                     className="h-full origin-left bg-[var(--foreground)]"
                     style={shouldReduceMotion ? undefined : { scaleX: lineScale }}
@@ -1076,6 +1029,21 @@ function ArchivePreview() {
               View full project library
               <ArrowUpRight className="h-4 w-4 text-[var(--muted)]" />
             </Link>
+            <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
+              {workSignalCards.map((signal) => (
+                <div
+                  key={signal.label}
+                  className="rounded-[8px] border border-white/10 bg-white/[0.035] px-3.5 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+                >
+                  <p className="font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-[var(--cyan)]">
+                    {signal.label}
+                  </p>
+                  <p className="mt-2 text-[0.82rem] leading-[1.42] text-[var(--muted-strong)]">
+                    {signal.value}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </Reveal>
       </div>
@@ -1128,8 +1096,8 @@ function SystemNodeCard({
   return (
     <article className="editorial-panel motion-surface hover-light group relative h-full min-h-[192px] overflow-hidden p-5 md:min-h-[190px] md:p-6">
       <div className="flex items-start justify-between gap-4">
-        <Icon className="h-5 w-5 text-[var(--sage)]" />
-        <span className="grid h-8 w-8 place-items-center rounded-full border border-black/10 text-[12px] text-[var(--sage)] transition group-hover:translate-x-1">
+        <Icon className="h-5 w-5 text-[var(--cyan)]" />
+        <span className="grid h-8 w-8 place-items-center rounded-full border border-white/10 text-[12px] text-[var(--cyan)] transition group-hover:translate-x-1">
           0{index + 1}
         </span>
       </div>
@@ -1249,7 +1217,7 @@ function RecognitionSection() {
               <p className="max-w-[640px] text-[0.95rem] leading-[1.58] text-[var(--muted-strong)]">
                 {recognition.caption}
               </p>
-              <span className="rounded-[8px] border border-black/10 bg-white/50 px-2.5 py-1 text-[12px] text-[var(--sage)]">
+              <span className="rounded-[8px] border border-white/12 bg-white/[0.06] px-2.5 py-1 text-[12px] text-[var(--cyan)]">
                 Top 10
               </span>
             </div>
@@ -1268,7 +1236,7 @@ function MbaImageCard({
   index: number;
 }) {
   return (
-    <article className="motion-surface group h-full overflow-hidden rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.68)] p-2 shadow-[0_28px_80px_rgba(16,18,18,0.07)] backdrop-blur">
+    <article className="motion-surface group h-full overflow-hidden rounded-[8px] border border-white/10 bg-white/[0.035] p-2 shadow-[0_28px_80px_rgba(0,0,0,0.4)] backdrop-blur">
       <div
         className={`relative overflow-hidden rounded-[6px] bg-[var(--surface-cool)] ${
           index === 0 ? "aspect-[1.42]" : "aspect-[4/5] md:aspect-[0.78]"
@@ -1347,7 +1315,7 @@ function JournalPreview({ posts }: { posts: JournalPost[] }) {
   return (
     <section
       id="journal"
-      className="section-shell scene-section border-y border-black/10 py-12 md:py-24"
+      className="section-shell scene-section border-y border-white/10 py-12 md:py-24"
     >
       <div className="mb-10 grid gap-8 md:mb-12 lg:grid-cols-[0.82fr_1fr] lg:items-end lg:gap-16">
         <Reveal>
@@ -1375,7 +1343,7 @@ function JournalPreview({ posts }: { posts: JournalPost[] }) {
         </Reveal>
       </div>
 
-      <div className="divide-y divide-black/10 border-y border-black/10">
+      <div className="divide-y divide-white/10 border-y border-white/10">
         {hasPosts ? (
           posts.map((post, index) => (
             <Reveal key={post.slug} delay={index * 0.04}>
@@ -1444,7 +1412,7 @@ function BookShelfCard({
 
   return (
     <motion.article
-      className={`book-card book-card-${book.accent} motion-surface group flex h-full min-h-[360px] flex-col justify-between overflow-hidden rounded-[8px] border border-white/12 p-3 shadow-[0_26px_80px_rgba(16,18,18,0.08)] sm:p-4 md:min-h-[390px] lg:min-h-[410px]`}
+      className={`book-card book-card-${book.accent} motion-surface group flex h-full min-h-[360px] flex-col justify-between overflow-hidden rounded-[8px] border border-white/12 p-3 shadow-[0_26px_80px_rgba(0,0,0,0.45)] sm:p-4 md:min-h-[390px] lg:min-h-[410px]`}
       whileHover={
         shouldReduceMotion
           ? undefined
@@ -1554,7 +1522,7 @@ function FuturePhotoStrip() {
     <div className="grid grid-cols-2 gap-3">
       {profile.photoSlots.map((slot) => (
         <div key={slot.id} className="editorial-panel motion-surface min-w-0 overflow-hidden p-2">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-[6px] bg-[linear-gradient(145deg,#eef1ed,#fffdf8)]">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[6px] bg-[linear-gradient(145deg,#12151a,#1c2028)]">
             <Image
               src={slot.src}
               alt={`${slot.label}: ${slot.note}`}
@@ -1584,12 +1552,12 @@ function InterestMotif({
   title: string;
   featured?: boolean;
 }) {
-  const lineColor = featured ? "bg-white/18" : "bg-black/10";
-  const borderColor = featured ? "border-white/14" : "border-black/10";
-  const softFill = featured ? "bg-white/[0.07]" : "bg-black/[0.035]";
+  const lineColor = featured ? "bg-white/18" : "bg-white/10";
+  const borderColor = featured ? "border-white/14" : "border-white/10";
+  const softFill = featured ? "bg-white/[0.07]" : "bg-white/[0.03]";
   const accentFill = featured
-    ? "bg-[rgba(216,194,154,0.7)]"
-    : "bg-[rgba(104,121,109,0.55)]";
+    ? "bg-[rgba(129,140,248,0.75)]"
+    : "bg-[rgba(34,211,238,0.55)]";
 
   if (title === "Badminton") {
     return (
@@ -1635,7 +1603,7 @@ function InterestMotif({
         <span className={`absolute left-8 top-7 h-9 w-9 rounded-full ${accentFill}`} />
         <span className={`absolute bottom-8 left-7 h-px w-[78%] ${lineColor}`} />
         <span className={`absolute bottom-8 left-7 h-14 w-[84%] rounded-[50%] border-t ${borderColor}`} />
-        <span className={`absolute bottom-12 right-10 h-2 w-20 rounded-full ${featured ? "bg-white/18" : "bg-[rgba(104,121,109,0.2)]"}`} />
+        <span className={`absolute bottom-12 right-10 h-2 w-20 rounded-full ${featured ? "bg-white/18" : "bg-[rgba(34,211,238,0.2)]"}`} />
       </div>
     );
   }
@@ -1648,7 +1616,7 @@ function InterestMotif({
       >
         <span className={`absolute left-8 top-6 h-16 w-24 rounded-[8px] border ${borderColor}`} />
         <span className={`absolute left-[68px] top-10 h-8 w-8 rounded-full border ${borderColor}`} />
-        <span className={`absolute right-8 top-8 h-12 w-20 rounded-[8px] ${featured ? "bg-white/10" : "bg-white/50"}`} />
+        <span className={`absolute right-8 top-8 h-12 w-20 rounded-[8px] ${featured ? "bg-white/10" : "bg-white/[0.06]"}`} />
         <span className={`absolute bottom-5 left-8 h-px w-[74%] ${lineColor}`} />
       </div>
     );
@@ -1717,7 +1685,7 @@ function PersonalInterestCard({
     <motion.article
       className={`interest-card motion-surface hover-light group relative h-full min-h-[366px] overflow-hidden rounded-[8px] border p-5 transition duration-500 lg:min-h-0 lg:p-6 ${
         interest.featured
-          ? "border-black/12 bg-[rgba(16,18,18,0.92)] text-white shadow-[0_34px_110px_rgba(16,18,18,0.16)]"
+          ? "border-[rgba(129,140,248,0.32)] bg-[linear-gradient(160deg,rgba(129,140,248,0.14),rgba(34,211,238,0.05)_46%,rgba(12,15,17,0.94))] text-white shadow-[0_0_50px_rgba(129,140,248,0.16),0_34px_110px_rgba(0,0,0,0.5)]"
           : "editorial-panel"
       }`}
       style={
@@ -1736,14 +1704,14 @@ function PersonalInterestCard({
       <div className="flex items-start justify-between gap-4">
         <Icon
           className={`h-5 w-5 ${
-            interest.featured ? "text-white/68" : "text-[var(--sage)]"
+            interest.featured ? "text-white/68" : "text-[var(--cyan)]"
           }`}
         />
         <span
           className={`grid h-8 w-8 place-items-center rounded-full border text-[12px] transition group-hover:translate-x-1 ${
             interest.featured
               ? "border-white/12 text-white/50"
-              : "border-black/10 text-[var(--sage)]"
+              : "border-white/10 text-[var(--cyan)]"
           }`}
         >
           0{index + 1}
@@ -1794,7 +1762,7 @@ function PersonalInterests() {
           <Reveal delay={0.08}>
             <Link
               href="/life"
-              className="premium-link group mt-5 flex items-center justify-between gap-4 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.68)] px-4 py-3 text-[0.95rem] font-medium text-[var(--foreground)] shadow-[0_18px_54px_rgba(16,18,18,0.055)] backdrop-blur transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-black/15 lg:max-w-[460px]"
+              className="premium-link group mt-5 flex items-center justify-between gap-4 rounded-[8px] border border-white/10 bg-white/[0.04] px-4 py-3 text-[0.95rem] font-medium text-[var(--foreground)] shadow-[0_18px_54px_rgba(0,0,0,0.32)] backdrop-blur transition hover:border-white/18 hover:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-white/20 lg:max-w-[460px]"
             >
               <span>Life, lightly documented</span>
               <ArrowUpRight className="h-4 w-4 text-[var(--muted)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -1841,7 +1809,7 @@ function ClosingBridge() {
       <Reveal>
         <Link
           href="#contact"
-          className="premium-link motion-surface group flex flex-col gap-5 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.64)] p-5 shadow-[0_30px_90px_rgba(16,18,18,0.07)] backdrop-blur transition hover:bg-white md:flex-row md:items-center md:justify-between md:p-7"
+          className="premium-link motion-surface group flex flex-col gap-5 rounded-[8px] border border-white/10 bg-white/[0.04] p-5 shadow-[0_30px_90px_rgba(0,0,0,0.4)] backdrop-blur transition hover:border-white/18 hover:bg-white/[0.08] md:flex-row md:items-center md:justify-between md:p-7"
         >
           <span className="max-w-[760px] text-[clamp(1.35rem,3.8vw,2.4rem)] font-semibold leading-[1.1]">
             If you are building, hiring, discussing a market, or shaping a
@@ -1866,6 +1834,7 @@ export function HomePageClient({ journalPosts }: { journalPosts: JournalPost[] }
       <Direction />
       <Background />
       <ArchivePreview />
+      <AIToolsLab />
       <FeaturedSystem />
       <RecognitionSection />
       <MbaChapterSection />

@@ -5,8 +5,12 @@
       "schedule": "0 1 * * *"
     },
     {
-      "path": "/api/cron/linkedin-content-cycle",
-      "schedule": "0 3 * * 1,4"
+      "path": "/api/cron/linkedin-content-cycle/tuesday",
+      "schedule": "0 5 * * 2"
+    },
+    {
+      "path": "/api/cron/linkedin-content-cycle/thursday",
+      "schedule": "0 10 * * 4"
     }
   ]
 }

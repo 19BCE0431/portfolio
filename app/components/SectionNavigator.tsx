@@ -88,10 +88,10 @@ export function SectionNavigator() {
       className="fixed right-4 z-40 hidden xl:block"
       style={{ top: "50svh", transform: "translateY(-50%)" }}
     >
-      <div className="relative grid gap-1.5 rounded-[8px] border border-black/10 bg-[rgba(251,251,248,0.76)] p-1.5 shadow-[0_18px_62px_rgba(17,19,19,0.09)] backdrop-blur-2xl">
+      <div className="relative grid gap-1.5 rounded-[8px] border border-white/12 bg-[rgba(9,11,13,0.72)] p-1.5 shadow-[0_18px_62px_rgba(0,0,0,0.5)] backdrop-blur-2xl">
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute top-3 h-[calc(100%-24px)] w-px bg-black/[0.055]"
+          className="pointer-events-none absolute top-3 h-[calc(100%-24px)] w-px bg-white/[0.09]"
           style={{ left: "50%", transform: "translateX(-50%)" }}
         />
         {sectionNavItems.map((item) => {
@@ -104,26 +104,26 @@ export function SectionNavigator() {
               aria-label={`Jump to ${item.label}`}
               aria-current={isActive ? "location" : undefined}
               onClick={() => jumpToSection(item.sectionId)}
-              className={`group relative grid h-8 w-8 place-items-center rounded-[7px] transition-colors duration-300 hover:bg-black/[0.055] focus:outline-none focus:ring-2 focus:ring-black/15 ${
-                isActive ? "bg-black/[0.07]" : ""
+              className={`group relative grid h-8 w-8 place-items-center rounded-[7px] transition-colors duration-300 hover:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-white/20 ${
+                isActive ? "bg-white/[0.09]" : ""
               }`}
             >
               {isActive && !shouldReduceMotion && (
                 <motion.span
                   layoutId="section-dock-active"
-                  className="absolute inset-0 rounded-[7px] border border-black/10 bg-white/52 shadow-[0_8px_24px_rgba(16,18,18,0.08)]"
+                  className="absolute inset-0 rounded-[7px] border border-white/14 bg-white/[0.06] shadow-[0_8px_24px_rgba(129,140,248,0.2)]"
                   transition={{ duration: 0.32, ease }}
                 />
               )}
               <span
                 className={`relative z-10 rounded-full transition-all duration-300 ${
                   isActive
-                    ? "h-2.5 w-2.5 bg-[var(--foreground)]"
+                    ? "h-2.5 w-2.5 bg-[var(--cyan)] shadow-[0_0_10px_rgba(34,211,238,0.7)]"
                     : "h-1.5 w-1.5 bg-[var(--muted)] opacity-45 group-hover:opacity-80"
                 }`}
               />
               <span
-                className="pointer-events-none absolute right-10 whitespace-nowrap rounded-[7px] border border-black/10 bg-[rgba(251,251,248,0.96)] px-2.5 py-1 text-[11px] font-medium text-[var(--foreground)] opacity-0 shadow-[0_12px_36px_rgba(17,19,19,0.09)] transition duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
+                className="pointer-events-none absolute right-10 whitespace-nowrap rounded-[7px] border border-white/12 bg-[rgba(9,11,13,0.96)] px-2.5 py-1 text-[11px] font-medium text-[var(--foreground)] opacity-0 shadow-[0_12px_36px_rgba(0,0,0,0.5)] transition duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
                 style={{ top: "50%", transform: "translateY(-50%)" }}
               >
                 {item.label}

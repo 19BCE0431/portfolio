@@ -53,25 +53,21 @@ export const profile = {
 
 export const navItems = [
   { label: "Intro", href: "/#intro", sectionId: "intro" },
-  { label: "Direction", href: "/#direction", sectionId: "direction" },
+  { label: "Profile", href: "/#profile", sectionId: "profile" },
   { label: "Work", href: "/#work", sectionId: "work" },
-  { label: "Recognition", href: "/#recognition", sectionId: "recognition" },
-  { label: "MBA", href: "/#mba-life", sectionId: "mba-life" },
-  { label: "Journal", href: "/#journal", sectionId: "journal" },
-  { label: "Personal", href: "/#personal", sectionId: "personal" },
-  { label: "Gallery", href: "/#gallery", sectionId: "gallery" },
+  { label: "Resume", href: "/#resume", sectionId: "resume" },
+  { label: "Notes", href: "/#notes", sectionId: "notes" },
+  { label: "Life", href: "/#life", sectionId: "life" },
   { label: "Contact", href: "/#contact", sectionId: "contact" },
 ];
 
 export const sectionNavItems = [
   { label: "Intro", shortLabel: "Intro", href: "#intro", sectionId: "intro" },
-  { label: "Direction", shortLabel: "Lens", href: "#direction", sectionId: "direction" },
+  { label: "Profile", shortLabel: "Profile", href: "#profile", sectionId: "profile" },
   { label: "Work", shortLabel: "Work", href: "#work", sectionId: "work" },
-  { label: "Recognition", shortLabel: "Signal", href: "#recognition", sectionId: "recognition" },
-  { label: "MBA", shortLabel: "MBA", href: "#mba-life", sectionId: "mba-life" },
-  { label: "Journal", shortLabel: "Notes", href: "#journal", sectionId: "journal" },
-  { label: "Personal", shortLabel: "Shelf", href: "#personal", sectionId: "personal" },
-  { label: "Gallery", shortLabel: "Life", href: "#gallery", sectionId: "gallery" },
+  { label: "Resume", shortLabel: "CV", href: "#resume", sectionId: "resume" },
+  { label: "Notes", shortLabel: "Notes", href: "#notes", sectionId: "notes" },
+  { label: "Life", shortLabel: "Life", href: "#life", sectionId: "life" },
   { label: "Contact", shortLabel: "Hello", href: "#contact", sectionId: "contact" },
 ];
 

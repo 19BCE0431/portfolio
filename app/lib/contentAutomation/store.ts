@@ -101,6 +101,50 @@ export async function publishGeneratedFiles(files: Array<{ path: string; content
   };
 }
 
+export async function readContentFile(filePath: string) {
+  const github = getGitHubRepoConfig();
+
+  if (github.configured) {
+    const file = await fetchGitHubFile(filePath);
+    if (!file?.content) return null;
+
+    return {
+      content: Buffer.from(file.content, "base64").toString("utf8"),
+      sha: file.sha,
+    };
+  }
+
+  try {
+    return {
+      content: await fs.readFile(path.join(process.cwd(), filePath), "utf8"),
+      sha: undefined,
+    };
+  } catch {
+    return null;
+  }
+}
+
+export async function writeContentFile(filePath: string, content: string, message: string) {
+  const github = getGitHubRepoConfig();
+
+  if (github.configured) {
+    const existing = await fetchGitHubFile(filePath);
+
+    return putGitHubFile({
+      path: filePath,
+      content,
+      message,
+      sha: existing?.sha,
+    });
+  }
+
+  await fs.writeFile(path.join(process.cwd(), filePath), content, "utf8");
+
+  return {
+    ok: true,
+  };
+}
+
 async function readLocalRun(runId: string) {
   try {
     const raw = await fs.readFile(path.join(process.cwd(), runPath(runId)), "utf8");

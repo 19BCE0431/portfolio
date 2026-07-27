@@ -81,7 +81,7 @@ function DetailSection({
 }) {
   return (
     <Reveal>
-      <section className="grid gap-4 border-t border-black/10 py-6 md:grid-cols-[240px_1fr] md:gap-14 md:py-10">
+      <section className="grid gap-4 border-t border-white/10 py-6 md:grid-cols-[240px_1fr] md:gap-14 md:py-10">
         <h2 className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[var(--muted)] md:pt-1">
           {title}
         </h2>
@@ -154,7 +154,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <Reveal>
             <Link
               href="/archive"
-              className="premium-link mb-8 inline-flex min-h-11 items-center gap-2 rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.72)] px-3.5 py-2 text-[13px] font-medium text-[var(--foreground)] shadow-[0_10px_32px_rgba(16,18,18,0.05)] backdrop-blur transition hover:bg-white md:mb-10 md:min-h-0"
+              className="premium-link mb-8 inline-flex min-h-11 items-center gap-2 rounded-[8px] border border-white/10 bg-white/[0.04] px-3.5 py-2 text-[13px] font-medium text-[var(--foreground)] shadow-[0_10px_32px_rgba(0,0,0,0.3)] backdrop-blur transition hover:border-white/18 hover:bg-white/[0.08] md:mb-10 md:min-h-0"
             >
               <ArrowLeft className="h-4 w-4 text-[var(--muted)]" />
               Back to archive
@@ -168,16 +168,16 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 as="h1"
                 lines={titleLines}
                 mobileLines={mobileTitleLines}
-                className="max-w-[820px] text-[clamp(2rem,9.8vw,4.45rem)] font-semibold leading-[1.03] tracking-[0] md:text-[clamp(2.8rem,6.8vw,6.45rem)] md:leading-[0.94]"
+                className="display-serif max-w-[820px] text-[clamp(2rem,9.8vw,4.45rem)] font-semibold leading-[1.03] tracking-[0] md:text-[clamp(2.8rem,6.8vw,6.45rem)] md:leading-[0.94]"
               />
             </Reveal>
 
             <Reveal className="max-w-[690px]" delay={0.08}>
               <div className="mb-5 flex flex-wrap gap-2 md:mb-6">
-                <span className="rounded-[8px] border border-black/10 bg-white/45 px-2.5 py-1 text-[12px] font-medium text-[var(--sage)]">
+                <span className="rounded-[8px] border border-white/12 bg-white/[0.05] px-2.5 py-1 text-[12px] font-medium text-[var(--cyan)]">
                   {project.status}
                 </span>
-                <span className="rounded-[8px] border border-black/10 bg-white/45 px-2.5 py-1 text-[12px] font-medium text-[var(--muted)]">
+                <span className="rounded-[8px] border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[12px] font-medium text-[var(--muted)]">
                   {project.filter}
                 </span>
               </div>
@@ -194,7 +194,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </Reveal>
 
           <Reveal>
-            <div className="mt-10 grid gap-3 border-y border-black/10 py-4 md:mt-16 md:grid-cols-3 md:py-6">
+            <div className="mt-10 grid gap-3 border-y border-white/10 py-4 md:mt-16 md:grid-cols-3 md:py-6">
               <div>
                 <p className="editorial-kicker">Changed</p>
                 <p className="mt-3 text-[0.98rem] leading-[1.58] text-[var(--muted-strong)]">
@@ -213,7 +213,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   {project.tools.slice(0, 5).map((tool) => (
                     <span
                       key={tool}
-                      className="rounded-[8px] border border-black/10 bg-[rgba(255,253,248,0.6)] px-2.5 py-1 text-[12px] text-[var(--muted-strong)]"
+                      className="rounded-[8px] border border-white/10 bg-white/[0.035] px-2.5 py-1 text-[12px] text-[var(--muted-strong)]"
                     >
                       {tool}
                     </span>
@@ -244,9 +244,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     {livingSystemFlow.map((step, index) => (
                       <div
                         key={step}
-                        className="motion-surface rounded-[8px] border border-black/10 bg-white/42 p-4 backdrop-blur"
+                        className="motion-surface rounded-[8px] border border-white/10 bg-white/[0.04] p-4 backdrop-blur"
                       >
-                        <span className="text-[11px] font-semibold text-[var(--sage)]">
+                        <span className="text-[11px] font-semibold text-[var(--cyan)]">
                           0{index + 1}
                         </span>
                         <p className="mt-4 text-[0.95rem] leading-[1.45] text-[var(--muted-strong)]">
@@ -277,7 +277,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     {project.tools.map((tool) => (
                       <span
                         key={tool}
-                        className="min-h-8 rounded-[8px] border border-black/10 bg-white/45 px-2.5 py-1.5 text-[12px] text-[var(--muted-strong)]"
+                        className="min-h-8 rounded-[8px] border border-white/10 bg-white/[0.035] px-2.5 py-1.5 text-[12px] text-[var(--muted-strong)]"
                       >
                         {tool}
                       </span>
@@ -301,7 +301,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     {project.tools.map((tool) => (
                       <span
                         key={tool}
-                        className="min-h-8 rounded-[8px] border border-black/10 bg-white/45 px-2.5 py-1.5 text-[12px] text-[var(--muted-strong)]"
+                        className="min-h-8 rounded-[8px] border border-white/10 bg-white/[0.035] px-2.5 py-1.5 text-[12px] text-[var(--muted-strong)]"
                       >
                         {tool}
                       </span>
@@ -321,7 +321,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             )}
           </div>
 
-          <div className="mt-12 border-t border-black/10 pt-8">
+          <div className="mt-12 border-t border-white/10 pt-8">
             <Link
               href="/archive"
               className="interactive-underline group inline-flex items-center gap-2 text-[0.95rem] font-medium text-[var(--foreground)]"

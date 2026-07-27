@@ -1,4 +1,3 @@
-import { getLinkedInPostingStatus } from "../linkedin/post";
 import type { AutomationConfigStatus } from "./types";
 
 export const SITE_URL =
@@ -33,7 +32,6 @@ export function getGitHubRepoConfig() {
 
 export function getAutomationConfigStatus(): AutomationConfigStatus {
   const missing: string[] = [];
-  const linkedin = getLinkedInPostingStatus();
   const github = getGitHubRepoConfig();
   const emailTo = getContentAutomationEmailTo();
   const emailFrom = getContentAutomationEmailFrom();
@@ -44,9 +42,8 @@ export function getAutomationConfigStatus(): AutomationConfigStatus {
   if (!process.env.LINKEDIN_APPROVAL_SECRET) missing.push("LINKEDIN_APPROVAL_SECRET");
   if (!github.configured) missing.push("GITHUB_CONTENT_TOKEN and GITHUB_CONTENT_REPO");
   if (!process.env.OPENAI_API_KEY) missing.push("OPENAI_API_KEY");
-
-  for (const item of linkedin.missing) {
-    missing.push(item);
+  if (process.env.LINKEDIN_AUTO_POST === "true") {
+    missing.push("LINKEDIN_AUTO_POST=false");
   }
 
   return {
@@ -54,7 +51,7 @@ export function getAutomationConfigStatus(): AutomationConfigStatus {
     canUseApprovalTokens: Boolean(process.env.LINKEDIN_APPROVAL_SECRET),
     canPersistApprovalState: github.configured,
     canPublishJournalAutomatically: github.configured && Boolean(process.env.OPENAI_API_KEY),
-    canPostToLinkedIn: linkedin.enabled,
+    canPostToLinkedIn: false,
     missing,
   };
 }

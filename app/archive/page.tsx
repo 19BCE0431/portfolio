@@ -65,7 +65,7 @@ export default function ArchivePage() {
                   "shaped how",
                   "I think.",
                 ]}
-                className="max-w-[820px] text-[clamp(2rem,9.8vw,4.4rem)] font-semibold leading-[1.02] tracking-[0] md:text-[clamp(2.75rem,6.7vw,6.25rem)] md:leading-[0.94]"
+                className="display-serif max-w-[820px] text-[clamp(2rem,9.8vw,4.4rem)] font-semibold leading-[1.02] tracking-[0] md:text-[clamp(2.75rem,6.7vw,6.25rem)] md:leading-[0.94]"
               />
             </Reveal>
             <Reveal delay={0.08}>
@@ -83,7 +83,7 @@ export default function ArchivePage() {
                 ].map(([label, value]) => (
                   <div
                     key={label}
-                    className="motion-surface rounded-[8px] border border-black/10 bg-white/45 px-3 py-3 backdrop-blur"
+                    className="motion-surface rounded-[8px] border border-white/10 bg-white/[0.04] px-3 py-3 backdrop-blur"
                   >
                     <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--muted)]">
                       {label}

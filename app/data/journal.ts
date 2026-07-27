@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-export type JournalStatus = "draft" | "review" | "published";
+export type JournalStatus = "draft" | "review" | "pending_review" | "published";
 
 export type JournalCategory =
   | "AI & Business"
@@ -36,7 +36,7 @@ export type JournalImageDisclosure = {
 
 export type JournalLinkedInShortPost = {
   draftPath?: string;
-  status?: "draft" | "approved" | "posted" | string;
+  status?: "draft" | "linkedin_manual_ready" | string;
   engagementQuestion?: string;
 };
 
@@ -315,7 +315,7 @@ function stripYamlValue(value: string) {
 }
 
 function normalizeStatus(value: unknown): JournalStatus {
-  if (value === "published" || value === "review" || value === "draft") {
+  if (value === "published" || value === "review" || value === "pending_review" || value === "draft") {
     return value;
   }
 
