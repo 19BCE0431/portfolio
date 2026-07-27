@@ -43,12 +43,12 @@ export function Footer() {
       <div className="lux-shell">
         <div className="lux-footer-main">
           <div>
-            <p className="lux-eyebrow lux-eyebrow-light">A good place to begin</p>
-            <h2>Let&apos;s connect.</h2>
+            <p className="lux-eyebrow lux-eyebrow-light">Open to a good conversation</p>
+            <h2>Let&apos;s make the next move clearer.</h2>
           </div>
           <p>
-            Product, strategy, applied AI, retail, or simply something here
-            that made you curious. Choose the channel that feels natural.
+            For product, strategy, applied AI, or a thoughtful collaboration —
+            choose the channel that feels most natural.
           </p>
         </div>
 

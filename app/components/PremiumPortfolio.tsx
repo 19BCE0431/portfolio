@@ -17,30 +17,23 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import {
-  useEffect,
   useRef,
-  useState,
   useSyncExternalStore,
-  type KeyboardEvent as ReactKeyboardEvent,
-  type MouseEvent as ReactMouseEvent,
-  type PointerEvent as ReactPointerEvent,
 } from "react";
 import { getProjectBySlug, type ArchiveProject } from "../data/archive";
 import type { JournalPost } from "../data/journal";
 import { lifeGalleryImages } from "../data/media";
 import { profile } from "../data/portfolio";
-import { motionPointer, motionSpring } from "../lib/motionSystem";
+import { motionSpring } from "../lib/motionSystem";
 import { MagneticButton } from "./MagneticButton";
 import { useActiveSection } from "./ActiveSectionProvider";
 import {
   MotionHeading,
   MotionMedia,
   MotionReveal,
-  MouseParallax,
   SectionLight,
   TiltSurface,
 } from "./MotionPrimitives";
-import { WorkMotionScene } from "./WorkMotionScene";
 
 const heroLines = ["Mohit Sai", "Krishna"];
 const desktopMotionQuery = "(min-width: 761px) and (hover: hover) and (pointer: fine)";
@@ -57,20 +50,6 @@ function getDesktopMotionSupport() {
 
 function getServerDesktopMotionSupport() {
   return false;
-}
-
-// Pinned horizontal scroll needs real width + a precise pointer. Below this we
-// fall back to a native horizontal swipe rail.
-const pinnedQuery = "(min-width: 1000px) and (hover: hover) and (pointer: fine)";
-
-function subscribeToPinned(callback: () => void) {
-  const mediaQuery = window.matchMedia(pinnedQuery);
-  mediaQuery.addEventListener("change", callback);
-  return () => mediaQuery.removeEventListener("change", callback);
-}
-
-function getPinnedSupport() {
-  return window.matchMedia(pinnedQuery).matches;
 }
 
 const projectSlugs = [
@@ -253,11 +232,16 @@ function Hero() {
             : { y: mediaY, scale: mediaScale }
         }
       >
-        {/* Pointer parallax sits inside scroll parallax so the scene has two
-            independent depth cues: travel (scroll) and space (cursor). */}
-        <MouseParallax depth={motionPointer.subtle} invert>
-          <WorkMotionScene />
-        </MouseParallax>
+        <div className="lux-hero-signal lux-hero-signal-primary">
+          <span>Current focus</span>
+          <strong>Product systems</strong>
+          <i aria-hidden="true" />
+        </div>
+        <div className="lux-hero-signal lux-hero-signal-secondary">
+          <span>From signal</span>
+          <strong>To clear action</strong>
+        </div>
+        <div className="lux-hero-orbit" aria-hidden="true" />
       </motion.div>
       <div className="lux-hero-shade" aria-hidden="true" />
 
@@ -394,6 +378,14 @@ function ProjectPanel({
   project: ArchiveProject;
   index: number;
 }) {
+  const editorialVisual = project.slug === "applied-image-search";
+  const visual = editorialVisual
+    ? {
+        image: "/images/projects/image-led-discovery-editorial-v2.png",
+        alt: "Editorial still life representing image-led product discovery",
+      }
+    : project.visual;
+
   return (
     <article className="lux-project">
       <div className="lux-project-copy">
@@ -436,10 +428,10 @@ function ProjectPanel({
           aria-labelledby={`project-${project.slug}-title`}
         >
           <MotionMedia className="lux-project-media" parallax={3}>
-            {project.visual?.image && (
+            {visual?.image && (
               <Image
-                src={project.visual.image}
-                alt={project.visual.alt}
+                src={visual.image}
+                alt={visual.alt}
                 fill
                 sizes="(max-width: 1000px) 86vw, 52vw"
               />
@@ -472,191 +464,27 @@ function WorkHead() {
 }
 
 function Work() {
-  const railRef = useRef<HTMLDivElement>(null);
-  const wideEnough = useSyncExternalStore(
-    subscribeToPinned,
-    getPinnedSupport,
-    () => false,
-  );
-  const [progress, setProgress] = useState(0);
-  const drag = useRef({ active: false, startX: 0, startLeft: 0, moved: false });
-
-  // Rail progress for the affordance bar. Native scrollLeft — untouched by
-  // Lenis, so this is robust and can never freeze the page.
-  const updateProgress = () => {
-    const rail = railRef.current;
-    if (!rail) return;
-    const max = rail.scrollWidth - rail.clientWidth;
-    setProgress(max > 0 ? rail.scrollLeft / max : 0);
-  };
-
-  // Desktop only: translate vertical wheel into horizontal travel while the
-  // cursor is over the rail AND the rail still has room. At either end the
-  // handler yields, so the page keeps scrolling vertically — no scroll trap.
-  useEffect(() => {
-    const rail = railRef.current;
-    if (!rail || !wideEnough) return;
-
-    const onWheel = (event: WheelEvent) => {
-      const max = rail.scrollWidth - rail.clientWidth;
-      if (max <= 0) return;
-      const delta = Math.abs(event.deltaY) > Math.abs(event.deltaX)
-        ? event.deltaY
-        : event.deltaX;
-      const atStart = rail.scrollLeft <= 0;
-      const atEnd = rail.scrollLeft >= max - 1;
-      if ((delta < 0 && atStart) || (delta > 0 && atEnd)) return;
-      event.preventDefault();
-      rail.scrollLeft += delta;
-    };
-
-    rail.addEventListener("wheel", onWheel, { passive: false });
-    return () => rail.removeEventListener("wheel", onWheel);
-  }, [wideEnough]);
-
-  const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (event.pointerType !== "mouse") return;
-    const rail = railRef.current;
-    if (!rail) return;
-    drag.current = {
-      active: true,
-      startX: event.clientX,
-      startLeft: rail.scrollLeft,
-      moved: false,
-    };
-  };
-
-  const onPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (!drag.current.active) return;
-    const rail = railRef.current;
-    if (!rail) return;
-    const dx = event.clientX - drag.current.startX;
-    if (Math.abs(dx) > 4) drag.current.moved = true;
-    rail.scrollLeft = drag.current.startLeft - dx;
-  };
-
-  const endDrag = () => {
-    drag.current.active = false;
-  };
-
-  // Suppress the click that follows a drag so a dragged card doesn't navigate.
-  const onClickCapture = (event: ReactMouseEvent<HTMLDivElement>) => {
-    if (drag.current.moved) {
-      event.preventDefault();
-      event.stopPropagation();
-      drag.current.moved = false;
-    }
-  };
-
-  const onKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
-    const rail = railRef.current;
-    if (!rail) return;
-    const step = rail.clientWidth * 0.8;
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      rail.scrollBy({ left: step, behavior: "smooth" });
-    } else if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      rail.scrollBy({ left: -step, behavior: "smooth" });
-    }
-  };
-
   return (
     <section id="work" className="lux-work lux-section">
       <SectionLight className="motion-section-light-dark" />
       <div className="lux-shell">
-        <MotionReveal className="lux-work-head-mobile">
+        <MotionReveal className="lux-work-head">
           <WorkHead />
         </MotionReveal>
-      </div>
-
-      <div
-        ref={railRef}
-        className="lux-work-rail"
-        role="list"
-        aria-label="Selected work — scroll horizontally"
-        tabIndex={0}
-        onScroll={updateProgress}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={endDrag}
-        onPointerLeave={endDrag}
-        onClickCapture={onClickCapture}
-        onKeyDown={onKeyDown}
-      >
-        {selectedProjects.map((project, index) => (
-          <div className="lux-work-rail-item" role="listitem" key={project.slug}>
+        <div className="lux-project-stack">
+          {selectedProjects.map((project, index) => (
+            <MotionReveal
+              className="lux-project-stack-item"
+              key={project.slug}
+              delay={index * 0.06}
+              direction="up"
+            >
             <ProjectPanel project={project} index={index} />
-          </div>
-        ))}
-      </div>
-
-      <div className="lux-shell lux-work-rail-foot">
-        <span className="lux-work-rail-hint">
-          {wideEnough ? "Scroll or drag" : "Swipe"} to explore
-        </span>
-        <span className="lux-work-rail-bar" aria-hidden="true">
-          <i style={{ transform: `scaleX(${0.14 + progress * 0.86})` }} />
-        </span>
+            </MotionReveal>
+          ))}
+        </div>
       </div>
     </section>
-  );
-}
-
-const capabilityMarqueeA = [
-  "Product thinking",
-  "Marketing curiosity",
-  "Strategy cases",
-  "Consumer behaviour",
-  "Decision support",
-  "Data storytelling",
-  "LLMs",
-  "RAG",
-  "Chainlit",
-  "Streamlit",
-  "Dashboards",
-];
-
-const capabilityMarqueeB = [
-  "Python",
-  "Java",
-  "C++",
-  "JavaScript",
-  "FastAPI",
-  "Node",
-  "Express",
-  "React",
-  "PostgreSQL",
-  "MySQL",
-  "MongoDB",
-  "Trino/PrestoSQL",
-  "Selenium",
-  "Scrapy",
-];
-
-function CapabilityMarquee({
-  items,
-  reverse = false,
-}: {
-  items: string[];
-  reverse?: boolean;
-}) {
-  // Doubled so the -50% translate loops seamlessly.
-  const loop = [...items, ...items];
-  return (
-    <div
-      className="lux-cap-marquee"
-      data-reverse={reverse ? "true" : undefined}
-      aria-hidden="true"
-    >
-      <div className="lux-cap-marquee-track">
-        {loop.map((item, index) => (
-          <span key={`${item}-${index}`} className="lux-cap-chip">
-            {item}
-          </span>
-        ))}
-      </div>
-    </div>
   );
 }
 
@@ -690,21 +518,15 @@ function Capability() {
               <span className="lux-capability-domain-index">0{index + 1}</span>
               <h3 className="display-serif">{group.label}</h3>
               <p>{group.note}</p>
+              <ul>
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
             </MotionReveal>
           ))}
         </div>
       </div>
-
-      <div className="lux-capability-marquees">
-        <CapabilityMarquee items={capabilityMarqueeA} />
-        <CapabilityMarquee items={capabilityMarqueeB} reverse />
-      </div>
-
-      <ul className="sr-only">
-        {[...capabilityMarqueeA, ...capabilityMarqueeB].map((skill) => (
-          <li key={skill}>{skill}</li>
-        ))}
-      </ul>
     </section>
   );
 }

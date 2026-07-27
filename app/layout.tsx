@@ -8,10 +8,7 @@ import { AnalyticsEvents } from "./components/AnalyticsEvents";
 import { ActiveSectionProvider } from "./components/ActiveSectionProvider";
 import { DeferredThirdPartyAnalytics } from "./components/DeferredThirdPartyAnalytics";
 import { PageTransition } from "./components/PageTransition";
-import { Preloader } from "./components/Preloader";
 import { SiteNav } from "./components/SiteNav";
-import { SmoothScroll } from "./components/SmoothScroll";
-import { SpotlightCursor } from "./components/SpotlightCursor";
 import "./globals.css";
 import { profile } from "./data/portfolio";
 
@@ -242,9 +239,6 @@ export default function RootLayout({
           Skip to content
         </a>
         <ActiveSectionProvider>
-          <Preloader />
-          <SmoothScroll />
-          <SpotlightCursor />
           <SiteNav />
           <PageTransition>{children}</PageTransition>
           <AnalyticsEvents />
