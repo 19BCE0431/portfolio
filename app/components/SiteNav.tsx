@@ -7,7 +7,7 @@ import { useActiveSection } from "./ActiveSectionProvider";
 
 const links = [
   { label: "Profile", href: "/#profile", id: "profile" },
-  { label: "Archive", href: "/#work", id: "work" },
+  { label: "Archive", href: "/archive", id: "work" },
   { label: "Experience", href: "/#resume", id: "resume" },
   { label: "Writing", href: "/#notes", id: "notes" },
 ];

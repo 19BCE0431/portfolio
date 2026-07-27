@@ -54,6 +54,16 @@ const timeline = [
   ["2019—23", "Computer Science", "VIT Vellore · B.Tech CSE · 9.15/10 CGPA."],
 ];
 
+const featuredProjectSlugs = [
+  "applied-image-search",
+  "order-drop-detection",
+  "document-intelligence-system",
+];
+
+const featuredProjects = featuredProjectSlugs
+  .map((slug) => archiveProjects.find((project) => project.slug === slug))
+  .filter((project): project is (typeof archiveProjects)[number] => Boolean(project));
+
 function formatDate(date: string) {
   const parsed = new Date(date);
   return Number.isNaN(parsed.getTime())
@@ -74,7 +84,7 @@ function Hero() {
           </p>
           <div className="atelier-hero-actions">
             <Link href="#work" className="atelier-button atelier-button-primary">
-              Explore full archive <ArrowDown aria-hidden="true" />
+              Explore selected work <ArrowDown aria-hidden="true" />
             </Link>
             <a href={profile.resume} target="_blank" rel="noreferrer" className="atelier-button atelier-button-ghost">
               Resume <Download aria-hidden="true" />
@@ -90,7 +100,7 @@ function Hero() {
         <div className="atelier-hero-portrait">
           <div className="atelier-portrait-caption">
             <span>Mohit Sai Krishna</span>
-            <small>MBA · Product systems · India</small>
+            <small>Product · Strategy · Applied AI</small>
           </div>
           <Image src={profile.portrait} alt={profile.portraitAlt} fill priority sizes="(max-width: 760px) 92vw, 42vw" />
           <div className="atelier-portrait-stamp">MSK<br /><i>01</i></div>
@@ -159,25 +169,26 @@ function WorkCarousel() {
       <div className="atelier-shell">
         <div className="atelier-work-head">
           <div>
-            <p className="atelier-kicker atelier-kicker-light">Full project archive</p>
-            <h2>Systems, studies, and decisions—across the full record.</h2>
+            <p className="atelier-kicker atelier-kicker-light">Selected work</p>
+            <h2>Work with a clear decision at its centre.</h2>
           </div>
           <div className="atelier-carousel-controls">
-            <span>{String(active + 1).padStart(2, "0")} <i /> {String(archiveProjects.length).padStart(2, "0")}</span>
+            <Link href="/archive" className="atelier-show-all">View full archive <ArrowUpRight aria-hidden="true" /></Link>
+            <span>{String(active + 1).padStart(2, "0")} <i /> {String(featuredProjects.length).padStart(2, "0")}</span>
             <button type="button" onClick={() => move(-1)} aria-label="Previous project"><ArrowLeft aria-hidden="true" /></button>
             <button type="button" onClick={() => move(1)} aria-label="Next project"><ArrowRight aria-hidden="true" /></button>
           </div>
         </div>
       </div>
-      <div ref={railRef} className="atelier-work-rail" role="region" aria-label="Project archive. Swipe or use controls to browse.">
-        {archiveProjects.map((project, index) => {
+      <div ref={railRef} className="atelier-work-rail" role="region" aria-label="Selected projects. Swipe or use controls to browse.">
+        {featuredProjects.map((project, index) => {
           const visual = project.slug === "applied-image-search"
             ? { image: "/images/projects/image-led-discovery-editorial-v2.png", alt: "Editorial still life representing image-led product discovery" }
             : project.visual;
           return (
             <article className="atelier-work-card" key={project.slug}>
               <div className={`atelier-work-image ${visual?.image ? "" : "atelier-work-placeholder"}`}>
-                {visual?.image ? <Image src={visual.image} alt={visual.alt} fill sizes="(max-width: 760px) 84vw, 58vw" /> : <span className="atelier-placeholder-label">{project.filter}</span>}
+                {visual?.image ? <Image src={visual.image} alt={visual.alt} fill loading={index === 0 ? "eager" : "lazy"} sizes="(max-width: 760px) 84vw, 58vw" /> : <span className="atelier-placeholder-label">{project.filter}</span>}
                 <span>{String(index + 1).padStart(2, "0")}</span>
               </div>
               <div className="atelier-work-copy">
@@ -192,7 +203,7 @@ function WorkCarousel() {
           );
         })}
       </div>
-      <div className="atelier-shell"><p className="atelier-swipe-hint">Every archive item is here. Swipe, trackpad-scroll, or use the arrows to move through the work.</p></div>
+      <div className="atelier-shell"><p className="atelier-swipe-hint">A focused selection. Browse the complete record in the archive.</p></div>
     </section>
   );
 }
