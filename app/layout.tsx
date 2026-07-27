@@ -3,7 +3,6 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
-import { Fraunces } from "next/font/google";
 import { AnalyticsEvents } from "./components/AnalyticsEvents";
 import { ActiveSectionProvider } from "./components/ActiveSectionProvider";
 import { DeferredThirdPartyAnalytics } from "./components/DeferredThirdPartyAnalytics";
@@ -13,13 +12,6 @@ import { SiteNav } from "./components/SiteNav";
 import "./globals.css";
 import "./portfolio-reboot.css";
 import { profile } from "./data/portfolio";
-
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-display",
-  axes: ["opsz", "SOFT"],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mohitsaikrishna.in"),
@@ -225,7 +217,7 @@ export default function RootLayout({
     <html
       lang="en-IN"
       data-scroll-behavior="smooth"
-      className={`${GeistSans.variable} ${GeistMono.variable} ${fraunces.variable}`}
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
       <body className="antialiased">
         {[personJsonLd, profilePageJsonLd, websiteJsonLd].map((jsonLd) => (

@@ -6,6 +6,7 @@
 }
 
 :root {
+  --font-display: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
   /* Base surfaces — matched to the already-shipping tool workspaces so
      Case War Room / SIP Readiness / AI Tools Lab need near-zero rework. */
   --background: #10110f;
