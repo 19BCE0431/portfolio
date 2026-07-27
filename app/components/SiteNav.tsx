@@ -7,7 +7,7 @@ import { useActiveSection } from "./ActiveSectionProvider";
 
 const links = [
   { label: "Profile", href: "/#profile", id: "profile" },
-  { label: "Selected work", href: "/#work", id: "work" },
+  { label: "Archive", href: "/#work", id: "work" },
   { label: "Experience", href: "/#resume", id: "resume" },
   { label: "Writing", href: "/#notes", id: "notes" },
 ];
@@ -16,9 +16,14 @@ export function SiteNav() {
   const { activeSection } = useActiveSection();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 50);
+    const update = () => {
+      setScrolled(window.scrollY > 50);
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(scrollable > 0 ? window.scrollY / scrollable : 0);
+    };
     update();
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
@@ -57,6 +62,7 @@ export function SiteNav() {
         >
           {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
         </button>
+        <i className="atelier-nav-progress" aria-hidden="true" style={{ transform: `scaleX(${progress})` }} />
       </nav>
 
       {open && (

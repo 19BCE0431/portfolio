@@ -169,7 +169,7 @@ export const archiveProjects: ArchiveProject[] = [
     contribution:
       "Built an image-led discovery workflow using OpenAI, FastAPI, and image processing to connect uploaded visuals with relevant product and content signals.",
     tools: ["OpenAI", "FastAPI", "Image processing"],
-    impact: "Increased orders by 28%.",
+    impact: "Improved product discovery in an agri-commerce setting.",
     learning:
       "Applied AI becomes valuable when it removes effort at a specific moment in the purchase journey.",
     futureDirection:
