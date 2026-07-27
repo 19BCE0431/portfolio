@@ -21,6 +21,21 @@ const routeLinks = [
   { label: "Life", href: "/life" },
 ];
 
+const ease = [0.16, 1, 0.3, 1] as const;
+
+const routeLinks = [
+  { label: "Archive", href: "/archive", match: "/archive" },
+  { label: "Journal", href: "/journal", match: "/journal" },
+  { label: "Life", href: "/life", match: "/life" },
+];
+
+function getActiveItem(pathname: string, activeSection: string) {
+  if (pathname.startsWith("/archive")) return "work";
+  if (pathname.startsWith("/journal")) return "journal";
+  if (pathname.startsWith("/life")) return "gallery";
+  return activeSection;
+}
+
 export function SiteNav() {
   const shouldReduceMotion = useReducedMotion();
   const { activeSection } = useActiveSection();
@@ -44,6 +59,17 @@ export function SiteNav() {
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [mobileOpen]);
+
+  const activeItem = getActiveItem(pathname, activeSection);
+  const activeLabel = useMemo(() => {
+    if (pathname.startsWith("/archive")) return "Archive";
+    if (pathname.startsWith("/journal")) return "Journal";
+    if (pathname.startsWith("/life")) return "Life";
+
+    return (
+      navItems.find((item) => item.sectionId === activeItem)?.label ?? "Intro"
+    );
+  }, [activeItem, pathname]);
 
   return (
     <header className="lux-nav-wrap">
