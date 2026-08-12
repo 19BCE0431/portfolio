@@ -1,0 +1,234 @@
+/* ==========================================================================
+   ROUTES — archive, journal, tools, life.
+   These pages are built from Tailwind utilities plus a small set of semantic
+   helpers defined in the legacy layer. Rather than rewriting them, this file
+   re-points the legacy design tokens at the new palette and re-treats those
+   helpers, so moving from the homepage into a case study never feels like
+   landing on a different site.
+
+   Unlayered, so every declaration here outranks the legacy layer.
+   ========================================================================== */
+
+:root {
+  /* --- Legacy surface tokens → the obsidian ladder ------------------------ */
+  --background: var(--base);
+  --surface-soft: var(--raised);
+  --surface-cool: var(--panel);
+  --deep: var(--void);
+  --deep-soft: var(--raised);
+
+  /* --- Legacy ink -------------------------------------------------------- */
+  --foreground: var(--text);
+  --muted: var(--text-dim);
+  --muted-strong: var(--text-soft);
+  --deep-muted: var(--text-soft);
+  --ivory: var(--text);
+
+  /* NOTE: `--surface` is deliberately NOT remapped. The legacy system uses it
+     as its brightest tone — the fill behind high-contrast CTAs and the text
+     colour on dark accent sections — so pointing it at a dark value would make
+     those buttons vanish. The new system's equivalent is `--panel`. */
+
+  /* --- Legacy accents. These shipped as desaturated greys (#858d86,
+     #aeb6ad) despite being named for electric hues, which is the main reason
+     the inner routes read as washed out. ---------------------------------- */
+  --indigo: var(--accent);
+  --cyan: var(--accent-cyan);
+  --copper: #e0a97a;
+
+  /* Secondary hues feed the AI Tools Lab's accent map and the reading-shelf
+     book cards. Saturated to match, and kept legible on obsidian. */
+  --sage: #6fd4a4;
+  --steel: #78a4d8;
+  --clay: #e0a97a;
+  --mauve: #c08adf;
+  --chartreuse: #b6e06a;
+  --blush: #f08fa8;
+
+  --shadow-soft: var(--shadow-panel);
+  --ease: var(--ease-out);
+  --ease-out-soft: var(--ease-soft);
+}
+
+/* Align the legacy container width with the new shell so a case study's
+   left edge lines up with the homepage's. */
+.section-shell {
+  width: min(calc(100% - var(--gutter) * 2), var(--shell));
+}
+
+/* ==========================================================================
+   SURFACES
+   `.premium-panel` and `.motion-surface` carry almost every card, rail, and
+   filter bar on the inner routes.
+   ========================================================================== */
+.premium-panel,
+.editorial-panel {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012)),
+    var(--raised);
+  box-shadow: var(--shadow-panel);
+  backdrop-filter: blur(18px);
+}
+
+/* The legacy hover wash mixed muted sage and rose tints. Replaced with the
+   system's accent bloom so hover states match the homepage's panels. */
+.motion-surface::after {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent 42%),
+    radial-gradient(circle at 30% 0%, rgba(91, 124, 255, 0.18), transparent 46%),
+    radial-gradient(circle at 92% 12%, rgba(51, 225, 255, 0.12), transparent 38%);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .motion-surface:hover {
+    border-color: var(--line-accent);
+    box-shadow: var(--shadow-lift), 0 0 60px -30px rgba(91, 124, 255, 0.55);
+    transform: translateY(-3px);
+  }
+}
+
+.project-card-premium::before,
+.gallery-frame-card::before,
+.life-gallery-stage::before,
+.interest-card::before {
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.12), transparent 30%),
+    radial-gradient(circle at 25% 0%, rgba(91, 124, 255, 0.16), transparent 48%),
+    linear-gradient(180deg, transparent, rgba(4, 5, 10, 0.3));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-card-premium:hover,
+  .gallery-frame-card:hover,
+  .interest-card:hover {
+    border-color: var(--line-accent);
+    box-shadow: var(--shadow-lift), 0 0 60px -30px rgba(91, 124, 255, 0.5);
+  }
+}
+
+/* `.fine-border` drew a near-black hairline (rgba(16,18,18,.14)) — a legacy
+   value from when these panels sat on cream. It was invisible on obsidian. */
+.fine-border::before {
+  opacity: 1;
+  background: var(--gradient-edge);
+}
+
+/* Background grid motif, tinted to the accent instead of neutral white. */
+.premium-grid {
+  background-image:
+    linear-gradient(rgba(120, 155, 255, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120, 155, 255, 0.07) 1px, transparent 1px);
+  background-size: 52px 52px;
+}
+
+.orbital-line {
+  border-color: var(--line-accent);
+  box-shadow: 0 0 60px -20px rgba(91, 124, 255, 0.5);
+}
+
+/* ==========================================================================
+   TYPE
+   `.display-serif` resolved to `var(--font-display)` — which is Geist Sans,
+   not a serif, and the name has been misleading since the font swap. Keep it
+   on the display sans (the headings pair it with font-semibold, and the new
+   editorial serif only ships a 400 weight), but give it the homepage's
+   optical tracking so titles match across routes.
+   ========================================================================== */
+.display-serif {
+  font-family: var(--font-display);
+  font-weight: 640;
+  letter-spacing: -0.045em;
+}
+
+/* ==========================================================================
+   READING
+   Long-form case studies and journal entries.
+   ========================================================================== */
+article p,
+.prose p {
+  text-wrap: pretty;
+}
+
+article a:not([class]),
+.prose a:not([class]) {
+  color: var(--accent-bright);
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line-accent);
+  transition: color var(--dur) var(--ease-out);
+}
+
+article a:not([class]):hover,
+.prose a:not([class]):hover { color: var(--accent-cyan); }
+
+blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: 22px;
+  color: var(--text);
+  font-family: var(--font-editorial);
+  font-size: 1.3rem;
+  font-style: italic;
+  line-height: 1.48;
+}
+
+/* ==========================================================================
+   MEDIA
+   Legacy imagery was tuned for light panels. On obsidian it needs to sit back
+   a touch and come forward on hover.
+   ========================================================================== */
+.project-visual-frame img,
+.gallery-frame-card img,
+.project-card-premium img {
+  filter: saturate(0.88) contrast(1.03) brightness(0.94);
+  transition: filter var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+}
+
+.project-card-premium:hover img,
+.gallery-frame-card:hover img {
+  filter: saturate(1) contrast(1.02) brightness(1);
+  transform: scale(1.03);
+}
+
+/* ==========================================================================
+   CONTROLS
+   Archive filters and journal tabs: the selected state now carries the accent
+   rather than just a slightly lighter grey.
+   ========================================================================== */
+[aria-pressed="true"],
+[aria-selected="true"] {
+  color: var(--text-strong);
+}
+
+/* The filter rail's active pill is an absolutely-positioned white wash. */
+.premium-panel [aria-pressed="true"] > span[class*="bg-white"],
+.premium-panel [aria-selected="true"] > span[class*="bg-white"] {
+  background: rgba(91, 124, 255, 0.2);
+  box-shadow: inset 0 0 0 1px var(--line-accent), var(--glow-core);
+}
+
+/* ==========================================================================
+   HORIZONTAL RAILS
+   Hide scrollbars on the snap rails so they read as designed strips.
+   ========================================================================== */
+.snap-strip,
+.mobile-flow-rail {
+  scrollbar-width: none;
+}
+
+.snap-strip::-webkit-scrollbar,
+.mobile-flow-rail::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-visual-frame img,
+  .gallery-frame-card img,
+  .project-card-premium img {
+    transition: none;
+  }
+  .project-card-premium:hover img,
+  .gallery-frame-card:hover img {
+    transform: none;
+  }
+}

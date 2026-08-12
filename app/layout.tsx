@@ -3,15 +3,35 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import { Instrument_Serif } from "next/font/google";
 import { AnalyticsEvents } from "./components/AnalyticsEvents";
 import { ActiveSectionProvider } from "./components/ActiveSectionProvider";
+import { Cursor } from "./components/Cursor";
 import { DeferredThirdPartyAnalytics } from "./components/DeferredThirdPartyAnalytics";
+import { PointerField } from "./components/Kinetics";
 import { PageTransition } from "./components/PageTransition";
 import { Preloader } from "./components/Preloader";
 import { SiteNav } from "./components/SiteNav";
+import { SmoothScroll } from "./components/SmoothScroll";
+// Order matters: legacy is confined to a cascade layer inside globals.css, and
+// everything below it is unlayered, so the new system always wins.
 import "./globals.css";
-import "./portfolio-reboot.css";
+import "./styles/foundation.css";
+import "./styles/motion.css";
+import "./styles/chrome.css";
+import "./styles/home.css";
+import "./styles/routes.css";
 import { profile } from "./data/portfolio";
+
+// The one serif in the system — used for a single emphasised phrase per
+// heading. Self-hosted by next/font, which the `font-src 'self'` CSP requires.
+const instrumentSerif = Instrument_Serif({
+  weight: "400",
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-instrument",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mohitsaikrishna.in"),
@@ -217,7 +237,7 @@ export default function RootLayout({
     <html
       lang="en-IN"
       data-scroll-behavior="smooth"
-      className={`${GeistSans.variable} ${GeistMono.variable}`}
+      className={`${GeistSans.variable} ${GeistMono.variable} ${instrumentSerif.variable}`}
     >
       <body className="antialiased">
         {[personJsonLd, profilePageJsonLd, websiteJsonLd].map((jsonLd) => (
@@ -233,6 +253,12 @@ export default function RootLayout({
           Skip to content
         </a>
         <ActiveSectionProvider>
+          {/* The motion layer, finally mounted: inertial scroll, the shared
+              pointer/velocity field, and the custom cursor. Each one no-ops
+              under prefers-reduced-motion or on coarse pointers. */}
+          <SmoothScroll />
+          <PointerField />
+          <Cursor />
           <Preloader />
           <SiteNav />
           <PageTransition>{children}</PageTransition>

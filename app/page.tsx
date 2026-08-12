@@ -1,11 +1,11 @@
 import { Footer } from "./components/Footer";
-import { PremiumPortfolio } from "./components/PremiumPortfolio";
+import { HomeExperience } from "./components/home";
 import { getRecentPublishedJournalPosts } from "./data/journal";
 
 export default function Home() {
   return (
     <>
-      <PremiumPortfolio journalPosts={getRecentPublishedJournalPosts(3)} />
+      <HomeExperience journalPosts={getRecentPublishedJournalPosts(3)} />
       <Footer />
     </>
   );

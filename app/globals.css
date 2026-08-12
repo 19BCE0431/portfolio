@@ -1,10 +1,18 @@
 @import "tailwindcss";
 
+/* Legacy cascade — six stacked redesigns preserved for the inner routes
+   (archive, journal, tools, life) and the tool workspaces. Confined to a
+   layer so the new design system can override any of it without a
+   specificity fight. Layer order keeps legacy above Tailwind utilities,
+   exactly as it behaved when it was unlayered. */
+@layer theme, base, components, utilities, legacy;
+
 @theme inline {
   --font-sans: var(--font-geist-sans), "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), "Geist Mono Fallback", ui-monospace, monospace;
 }
 
+@layer legacy {
 :root {
   --font-display: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
   /* Base surfaces — matched to the already-shipping tool workspaces so
@@ -7470,3 +7478,5 @@ h3.display-serif {
   .lux-footer-links > a:last-child { border-bottom: 0; }
 }
 @media (prefers-reduced-motion: reduce) { .lux-hero-media, .lux-project-stack-item { transform: none !important; } }
+
+}
