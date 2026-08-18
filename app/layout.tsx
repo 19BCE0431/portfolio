@@ -6,6 +6,7 @@ import { GeistMono } from "geist/font/mono";
 import { Instrument_Serif } from "next/font/google";
 import { AnalyticsEvents } from "./components/AnalyticsEvents";
 import { ActiveSectionProvider } from "./components/ActiveSectionProvider";
+import { ChatbaseWidget } from "./components/ChatbaseWidget";
 import { Cursor } from "./components/Cursor";
 import { DeferredThirdPartyAnalytics } from "./components/DeferredThirdPartyAnalytics";
 import { PointerField } from "./components/Kinetics";
@@ -270,6 +271,7 @@ export default function RootLayout({
           clarityProjectId={clarityProjectId}
           gaMeasurementId={gaMeasurementId}
         />
+        <ChatbaseWidget />
       </body>
     </html>
   );
